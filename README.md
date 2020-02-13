@@ -1,2 +1,2 @@
 # 10votes-frontend
-Frontend for 10 votes
+Frontend for 10votes
