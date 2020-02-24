@@ -5,6 +5,12 @@ const Nav = props => (
         <Link href="/">
             <a>home</a>
         </Link>
+        <Link href="/items">
+            <a>items</a>
+        </Link>
+        <Link href="/sell">
+            <a>sell</a>
+        </Link>
         <Link href="/apage">
             <a>a page</a>
         </Link>
