@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes, { string } from 'prop-types';
 import Link from 'next/link';
+import DeleteItem from './DeleteItem';
+import AddToCart from './AddToCart';
 
 class Item extends Component{
-    static PropTypes = {
+    static propTypes = {
         item: PropTypes.object.isRequired
     };
     render(){
@@ -19,6 +21,15 @@ class Item extends Component{
                         {item.image && <img src={item.image} alt={item.title} />}
                     </a>
                 </Link>
+                <Link
+                    href={{
+                    pathname: 'update',
+                    query: { id: item.id },
+                    }}>
+                    <a>Edit ✏️</a>
+                </Link>
+                <AddToCart id={item.id} />
+                <DeleteItem id={item.id}>delete item</DeleteItem>
             </div>
         );
     }

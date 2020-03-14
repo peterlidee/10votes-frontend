@@ -31,6 +31,7 @@ class CreateItem extends Component{
         image: '',
         largeImage: '',
         price: 0,
+        imageLoading: false,
     }
     handleChange = (e) => {
         const { name, type, value } = e.target;
@@ -40,6 +41,7 @@ class CreateItem extends Component{
         })
     }
     uploadFile = async (e) => {
+        this.setState({ imageLoading: true });
         const files = e.target.files;
         const data = new FormData();
         data.append('file', files[0]);
@@ -49,9 +51,11 @@ class CreateItem extends Component{
             method: 'POST',
             body: data
         });
+        //console.log('res', res);
         const file = await res.json();
-        console.log(file);
+        //console.log('file', file);
         this.setState({
+            imageLoading: false,
             image: file.secure_url,
             largeImage: file.eager[0].secure_url
         });
@@ -74,12 +78,13 @@ class CreateItem extends Component{
                         })
                     }}>
                         <Error error={error} />
-                        <fieldset disabled={loading}>
+                        <fieldset disabled={loading || this.state.imageLoading}>
                             <label htmlFor="file">
                                 Image
                                 <input type="file" id="file" name="file" placeholder="upload an image" onChange={this.uploadFile} required />
                                 {this.state.image && <img src={this.state.image} alt="upload preview" width="200" />}
                             </label>
+                            {this.state.imageLoading && <p>...loading image</p>}
                             <label htmlFor="title">
                                 Title
                                 <input type="text" id="title" name="title" placeholder="title" value={this.state.title} onChange={this.handleChange} required />
