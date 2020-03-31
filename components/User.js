@@ -14,11 +14,12 @@ const CURRENT_USER_QUERY = gql`
                 quantity
                 item{
                     id
-                    title
                     image
-                    price
-                    description
                 }
+            }
+            items{
+                id
+                image
             }
         }
     }

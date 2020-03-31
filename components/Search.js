@@ -76,7 +76,7 @@ class AutoComplete extends React.Component{
                                     <div>items will go here:</div>
                                     <div>
                                         {this.state.items.map((item, i) => {
-                                            console.log('item', item.title, i, 'highlightedIndex', highlightedIndex);
+                                            //console.log('item', item.title, i, 'highlightedIndex', highlightedIndex);
                                             return(
                                                 <div style={{borderLeft: `10px solid ${i === highlightedIndex ? "blue" : "red"}` }} 
                                                     key={item.id} 

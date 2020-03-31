@@ -8,9 +8,6 @@ const ALL_ITEMS_QUERY = gql`
     query ALL_ITEMS_QUERY($skip: Int = 0, $first: Int = ${perPage}){
         items(skip: $skip, first: $first){
             id
-            title
-            price
-            description
             image
             largeImage
         }
@@ -30,6 +27,7 @@ class Items extends React.Component{
                         //console.log(data);
                         if(loading) return <p>...loading</p>
                         if(error) return <p>Error: {error.message}</p>
+                        //console.log('alldata', data)
                         return <div>
                             {data.items.map(item => <Item item={item} key={item.id} />)}
                         </div>

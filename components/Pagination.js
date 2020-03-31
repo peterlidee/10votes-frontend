@@ -28,7 +28,6 @@ const Pagination = props => (
                 <div>
                     <Head><title>10 votes | page {page} of {pages}</title></Head>
                     <Link 
-                        prefetch
                         href={{
                             pathname: 'items',
                             query: { page: page - 1 },
@@ -39,7 +38,6 @@ const Pagination = props => (
                     <p>Page {page} of {pages}</p>
                     <p>{count} items total</p>
                     <Link 
-                        prefetch
                         href={{
                             pathname: 'items',
                             query: { page: page >= pages ? page : page + 1 },

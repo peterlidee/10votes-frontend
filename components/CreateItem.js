@@ -3,101 +3,171 @@ import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import Router from 'next/router';
 import Error from './Error';
+import ManageTags from './tag/ManageTags';
+import ManageLocation from './location/ManageLocation';
+import { CURRENT_USER_QUERY } from './User';
 
 const CREATE_ITEM_MUTATION = gql`
     mutation CREATE_ITEM_MUTATION(
-        $title: String!
-        $description: String!
         $image: String
         $largeImage: String
-        $price: Int!
+        $location: ID!
+        $tags: [ID]!
     ){
         createItem(
-            title: $title
-            description: $description
             image: $image
             largeImage: $largeImage
-            price: $price
+            location: $location
+            tags: $tags
         ){
             id
+            location{
+                id
+                itemCount
+            }
         }
     }
 `;
 
 class CreateItem extends Component{
     state = {
-        title: '',
-        description: '',
-        image: '',
+        image: '123.jpg',
         largeImage: '',
-        price: 0,
-        imageLoading: false,
+        loading: false,
+        locationSelection: {},
+        tagSelection: [],
+        errorMessage: "",
     }
-    handleChange = (e) => {
-        const { name, type, value } = e.target;
-        const val = type === 'number' ? parseFloat(value) : value;
-        this.setState({
-            [name] : val
-        })
-    }
+
     uploadFile = async (e) => {
-        this.setState({ imageLoading: true });
+        this.handleLoading(true);
         const files = e.target.files;
         const data = new FormData();
         data.append('file', files[0]);
         data.append('upload_preset', '10votes');
-        
         const res = await fetch('https://api.cloudinary.com/v1_1/diidd5fve/image/upload', {
             method: 'POST',
             body: data
         });
-        //console.log('res', res);
         const file = await res.json();
-        //console.log('file', file);
         this.setState({
-            imageLoading: false,
             image: file.secure_url,
             largeImage: file.eager[0].secure_url
         });
-
+        this.handleLoading(false);
     }
+
+    handleLocationSelection = (location) => {
+        this.setState({
+            locationSelection: location,
+            errorMessage: "",
+        })
+    }
+
+    handleTagSelection = (tag) => {
+        const selection = [...this.state.tagSelection];
+        const index = selection.findIndex(selectedTag => selectedTag.id === tag.id);
+        // is the id already in selection?
+        if(index >= 0){
+            // true, remove it
+            // find index
+            selection.splice(index, 1);
+            this.setState({ tagSelection: selection });
+        }else{
+            // no index found, add tag
+            // only 3 selections permitted
+            if(selection.length < 3){
+                selection.push(tag);
+                this.setState({ tagSelection: selection });
+            }else{
+                // selection limited reached
+            }
+        }
+    }
+
+    handleLoading = (bool) => {
+        this.setState({ loading: bool });
+    }
+    handleCancelAll = () => {
+        this.setState({
+            image: "",
+            largeImage: "",
+            errorMessage: "",
+            loading: false,
+            locationSelection: {},
+            tagSelection: [],
+        });
+    }
+
     render(){
         return(
-            <Mutation mutation={ CREATE_ITEM_MUTATION } variables={this.state}>
+            <Mutation mutation={ CREATE_ITEM_MUTATION } variables={{
+                image: this.state.image,
+                largeImage: this.state.largeImage,
+                location: this.state.locationSelection.id ? this.state.locationSelection.id : null,
+                tags: this.state.tagSelection.map(tag => tag.id),
+            }}
+            refetchQueries={[{ query: CURRENT_USER_QUERY }]}>
                 {(createItem, {loading, error}) => (
                     <form onSubmit={ async (e) => {
                         // stop the form from submitting
                         e.preventDefault();
-                        // call the mutation
-                        const res = await createItem();
-                        // change them to the single item page
-                        //console.log(res);
-                        Router.push({
-                            pathname: '/item',
-                            query: { id: res.data.createItem.id },
-                        })
+                        // form validation: are the required fields filled in?
+                        if(!this.state.locationSelection.name){
+                            this.setState({ errorMessage: "Please add a location!" });
+                        }else{
+                            // call the mutation
+                            const res = await createItem();
+                            console.log('frontend res', res);
+                            // change them to the single item page
+                            Router.push({
+                                pathname: '/item',
+                                query: { id: res.data.createItem.id },
+                            });
+                        }
                     }}>
+                        {this.state.errorMessage && 
+                            <p>{this.state.errorMessage}</p>
+                        }
                         <Error error={error} />
-                        <fieldset disabled={loading || this.state.imageLoading}>
-                            <label htmlFor="file">
-                                Image
-                                <input type="file" id="file" name="file" placeholder="upload an image" onChange={this.uploadFile} required />
-                                {this.state.image && <img src={this.state.image} alt="upload preview" width="200" />}
-                            </label>
-                            {this.state.imageLoading && <p>...loading image</p>}
-                            <label htmlFor="title">
-                                Title
-                                <input type="text" id="title" name="title" placeholder="title" value={this.state.title} onChange={this.handleChange} required />
-                            </label>
-                            <label htmlFor="price">
-                                Price
-                                <input type="number" id="price" name="price" placeholder="price" value={this.state.price} onChange={this.handleChange} required />
-                            </label>
-                            <label htmlFor="description">
-                                Description
-                                <textarea id="description" name="description" placeholder="enter a description" value={this.state.description} onChange={this.handleChange} required />
-                            </label>
-                            <button>submit</button>
+                        <fieldset disabled={loading}>
+                            {this.state.image == '' &&
+                                <label htmlFor="file">
+                                    Image
+                                    <input type="file" id="file" name="file" placeholder="upload an image" onChange={this.uploadFile} required />    
+                                    {this.state.loading && <p>...loading image</p>}
+                                </label>
+                            }
+
+                            {this.state.image && 
+                                <>
+                                    <button type="button" onClick={this.handleCancelAll}>&times; cancel</button>
+                                    
+                                    <img src={this.state.image} alt="upload preview" width="300" />
+        
+                                    <ManageLocation 
+                                        selection={this.state.locationSelection}
+                                        handleLocationSelection={this.handleLocationSelection}
+                                        loading={this.state.loading}
+                                        handleLoading={this.handleLoading}
+                                    />
+
+                                    <ManageTags 
+                                        selection={this.state.tagSelection}
+                                        handleTagSelection={this.handleTagSelection}
+                                        loading={this.state.loading}
+                                        handleLoading={this.handleLoading}
+                                    />
+
+                                    {
+                                        // only show submit if location is filled in
+                                        this.state.locationSelection.name && 
+                                            <button disabled={this.state.loading}>submit</button>
+                                    }
+
+                                </>
+                            }
+
                         </fieldset>
                     </form>
                 )}
