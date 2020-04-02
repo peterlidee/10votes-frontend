@@ -10,11 +10,13 @@ const UPDATE_ITEM_MUTATION = gql`
     mutation UPDATE_ITEM_MUTATION(
         $id: ID!
         $location: ID
+        $oldLocation: ID
         $tags: [ID]
     ){
         updateItem(
             id: $id
             location: $location
+            oldLocation: $oldLocation
             tags:  $tags
         ){
             id
@@ -86,7 +88,7 @@ class UpdateItem extends Component{
         }
     }
 
-    updateItem = async(e, updateItemMutation) => {
+    handleUpdateItem = async(e, updateItemMutation, oldLocation) => {
         e.preventDefault();
         if(this.state.locationSelection && !this.state.locationSelection.name){
             this.setState({
@@ -97,9 +99,13 @@ class UpdateItem extends Component{
             let variables = {
                 id: this.props.id,
             };
-            // the location was changed
+            // if a location was selected
             if(this.state.locationSelection){
-                variables.location = this.state.locationSelection.id;
+                // and the location changed
+                if(oldLocation !== this.state.locationSelection.id){
+                    variables.location = this.state.locationSelection.id;
+                    variables.oldLocation = oldLocation;
+                }
             }
             // the tags were changed
             if(this.state.tagSelection){
@@ -122,9 +128,11 @@ class UpdateItem extends Component{
                     if(!data.item) return <p>No data found for id {this.props.id}</p>
                     //console.log('ran query', 'data', data);
                     return(
-                        <Mutation mutation={ UPDATE_ITEM_MUTATION }>
+                        <Mutation 
+                            mutation={ UPDATE_ITEM_MUTATION }
+                            refetchQueries={[ { query: SINGLE_ITEM_QUERY, variables: {id: this.props.id} } ]}>
                             {(updateItem, {loading, error}) => (
-                                <form onSubmit={e => this.updateItem(e, updateItem)}>
+                                <form onSubmit={e => this.handleUpdateItem(e, updateItem, data.item.location.id)}>
                                     <Error error={error} />
                                     {this.state.errorMessage && 
                                         <p>{this.state.errorMessage}</p>
@@ -139,7 +147,11 @@ class UpdateItem extends Component{
                                             <div>
                                                 location: 
                                                 {data.item.location.name} - {data.item.location.country.name} 
-                                                <button type="button" onClick={() => this.handleLocationSelection({})}>&times;</button>
+                                                <button 
+                                                    type="button" 
+                                                    onClick={() => this.handleLocationSelection({})}>
+                                                        &times;
+                                                </button>
                                             </div>
                                         }
                                         {

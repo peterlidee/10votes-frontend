@@ -26,7 +26,7 @@ class ManageTags extends React.Component{
         handleLoading: PropTypes.func.isRequired,
     }
     state = {
-        locationName: '',
+        tagName: '',
         tags: [],
         //selection: [],
     }
@@ -55,13 +55,13 @@ class ManageTags extends React.Component{
     handleSelect = (tag) => {
         this.props.handleTagSelection(tag);
         this.setState({ 
-            locationName: '', 
+            tagName: '', 
             tags: [], 
         });
     }
     render(){
         // check if the tag.name already exists, works asyncronous
-        const tagExists = this.state.tags.findIndex(tag => tag.name.toLowerCase() == this.state.locationName.trim().toLowerCase()) >= 0;
+        const tagExists = this.state.tags.findIndex(tag => tag.name.toLowerCase() == this.state.tagName.trim().toLowerCase()) >= 0;
 
         return(
             <div> 
@@ -79,13 +79,13 @@ class ManageTags extends React.Component{
                 }
                 {this.props.selection.length < 3 &&
                     <>
-                        <label htmlFor="locationName">Add a tag</label>
+                        <label htmlFor="tagName">Add a tag</label>
                         <ApolloConsumer>
                             {(client) => (
                                 <input 
-                                    type="text" name="locationName" id="locationName" 
+                                    type="text" name="tagName" id="tagName" 
                                     minLength="3" maxLength="25"
-                                    value={this.state.locationName} onChange={e => {
+                                    value={this.state.tagName} onChange={e => {
                                         e.preventDefault();
                                         e.persist();
                                         this.handleChange(e);
@@ -95,8 +95,8 @@ class ManageTags extends React.Component{
                         </ApolloConsumer>
                     </>
                 }
-                {this.state.tags.length == 0 && this.state.locationName.trim().length >= 3 &&
-                    <div>No suggestions found for {this.state.locationName}</div>
+                {this.state.tags.length == 0 && this.state.tagName.trim().length >= 3 &&
+                    <div>No suggestions found for {this.state.tagName}</div>
                 }
                 {this.state.tags.length > 0 &&
                     <div>
@@ -113,11 +113,11 @@ class ManageTags extends React.Component{
                 }
                 { 
                 // only show createTag when tag has at least 3 letters
-                this.state.locationName.trim().length >= 3 && 
+                this.state.tagName.trim().length >= 3 && 
                 // do not show it if there is already a tag with the exact same name
                 !tagExists  &&
                     <CreateTag 
-                        data={{ name: this.state.locationName.trim() }} 
+                        data={{ name: this.state.tagName.trim() }} 
                         handleSelect={this.handleSelect} 
                         loading={this.props.loading} />
                 }

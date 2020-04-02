@@ -23,7 +23,9 @@ const CREATE_ITEM_MUTATION = gql`
             id
             location{
                 id
-                itemCount
+                items{
+                    id
+                }
             }
         }
     }
