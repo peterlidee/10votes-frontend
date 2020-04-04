@@ -4,20 +4,22 @@ import gql from 'graphql-tag';
 import Router from 'next/router';
 import Error from './Error';
 import ManageTags from './tag/ManageTags';
-import ManageLocation from './location/ManageLocation';
+import ManageLocation from './ManageLocation';
 import { CURRENT_USER_QUERY } from './User';
 
 const CREATE_ITEM_MUTATION = gql`
     mutation CREATE_ITEM_MUTATION(
         $image: String
         $largeImage: String
-        $location: ID!
+        $locationName: String
+        $locationId: ID
         $tags: [ID]!
     ){
         createItem(
             image: $image
             largeImage: $largeImage
-            location: $location
+            locationName: $locationName
+            locationId: $locationId
             tags: $tags
         ){
             id
@@ -33,10 +35,14 @@ const CREATE_ITEM_MUTATION = gql`
 
 class CreateItem extends Component{
     state = {
-        image: '123.jpg',
+        image: '1234.jpg',
         largeImage: '',
         loading: false,
-        locationSelection: {},
+
+        
+        locationName: '',
+        locationId: '',
+
         tagSelection: [],
         errorMessage: "",
     }
@@ -59,10 +65,17 @@ class CreateItem extends Component{
         this.handleLoading(false);
     }
 
+    handleLocationChange = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
     handleLocationSelection = (location) => {
         this.setState({
-            locationSelection: location,
+            //locationSelection: location,
             errorMessage: "",
+            locationName: location.name,
+            locationId: location.id,
         })
     }
 
@@ -96,38 +109,44 @@ class CreateItem extends Component{
             largeImage: "",
             errorMessage: "",
             loading: false,
-            locationSelection: {},
+            locationName: "",
+            locationId: "",
             tagSelection: [],
         });
+    }
+    handleCreateItem = async (e, createItem) => {
+        e.preventDefault();
+        // form validation: are the required fields filled in?
+        if(!this.state.locationName){
+            this.setState({ errorMessage: "Please add a location!" });
+        }else{
+            // create the variables
+            const variables = {
+                image: this.state.image,
+                largeImage: this.state.largeImage,
+                locationName: this.state.locationName,
+                locationId: this.state.locationId,
+                tags: this.state.tagSelection.map(tag => tag.id),
+            }
+            if(this.state.locationId){
+                variables.locationId = this.state.locationId;
+            }
+            // call the mutation
+            const res = await createItem({ variables });
+
+            // route the user to the single item page, just created
+            Router.push({
+                pathname: '/item',
+                query: { id: res.data.createItem.id },
+            });
+        }
     }
 
     render(){
         return(
-            <Mutation mutation={ CREATE_ITEM_MUTATION } variables={{
-                image: this.state.image,
-                largeImage: this.state.largeImage,
-                location: this.state.locationSelection.id ? this.state.locationSelection.id : null,
-                tags: this.state.tagSelection.map(tag => tag.id),
-            }}
-            refetchQueries={[{ query: CURRENT_USER_QUERY }]}>
+            <Mutation mutation={ CREATE_ITEM_MUTATION } refetchQueries={[{ query: CURRENT_USER_QUERY }]}>
                 {(createItem, {loading, error}) => (
-                    <form onSubmit={ async (e) => {
-                        // stop the form from submitting
-                        e.preventDefault();
-                        // form validation: are the required fields filled in?
-                        if(!this.state.locationSelection.name){
-                            this.setState({ errorMessage: "Please add a location!" });
-                        }else{
-                            // call the mutation
-                            const res = await createItem();
-                            console.log('frontend res', res);
-                            // change them to the single item page
-                            Router.push({
-                                pathname: '/item',
-                                query: { id: res.data.createItem.id },
-                            });
-                        }
-                    }}>
+                    <form onSubmit={ e => this.handleCreateItem(e, createItem) }>
                         {this.state.errorMessage && 
                             <p>{this.state.errorMessage}</p>
                         }
@@ -148,10 +167,10 @@ class CreateItem extends Component{
                                     <img src={this.state.image} alt="upload preview" width="300" />
         
                                     <ManageLocation 
-                                        selection={this.state.locationSelection}
                                         handleLocationSelection={this.handleLocationSelection}
-                                        loading={this.state.loading}
-                                        handleLoading={this.handleLoading}
+                                        handleLocationChange={this.handleLocationChange}
+                                        locationName={this.state.locationName}
+                                        locationId={this.state.locationId}
                                     />
 
                                     <ManageTags 
@@ -161,11 +180,7 @@ class CreateItem extends Component{
                                         handleLoading={this.handleLoading}
                                     />
 
-                                    {
-                                        // only show submit if location is filled in
-                                        this.state.locationSelection.name && 
-                                            <button disabled={this.state.loading}>submit</button>
-                                    }
+                                    <button disabled={this.state.loading}>submit</button>
 
                                 </>
                             }

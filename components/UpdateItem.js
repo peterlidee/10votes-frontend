@@ -3,20 +3,22 @@ import { Mutation, Query, ApolloConsumer } from 'react-apollo';
 import gql from 'graphql-tag';
 import Router from 'next/router';
 import Error from './Error';
-import ManageLocation from './location/ManageLocation';
+import ManageLocation from './ManageLocation';
 import ManageTags from './tag/ManageTags';
 
 const UPDATE_ITEM_MUTATION = gql`
     mutation UPDATE_ITEM_MUTATION(
         $id: ID!
-        $location: ID
-        $oldLocation: ID
+        $locationName: String
+        $locationId: ID
+        $oldLocationId: ID
         $tags: [ID]
     ){
         updateItem(
             id: $id
-            location: $location
-            oldLocation: $oldLocation
+            locationName: $locationName
+            locationId: $locationId
+            oldLocationId: $oldLocationId
             tags:  $tags
         ){
             id
@@ -49,16 +51,29 @@ class UpdateItem extends Component{
     state = {
         loading: false,
         errorMessage: '',
+        locationEdit: false,
+        locationName: '',
+        locationId: '',
     }
     handleLoading = (bool) => {
         this.setState({ loading: bool })
     }
 
+    handleLocationChange = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
     handleLocationSelection = (location) => {
         this.setState({
-            locationSelection: location,
+            //locationSelection: location,
             errorMessage: "",
+            locationName: location.name,
+            locationId: location.id,
         })
+    }
+    handleLocationEdit = () => {
+        this.setState({ locationEdit: true })
     }
 
     handleEditTags = (tags) => {
@@ -90,7 +105,8 @@ class UpdateItem extends Component{
 
     handleUpdateItem = async(e, updateItemMutation, oldLocation) => {
         e.preventDefault();
-        if(this.state.locationSelection && !this.state.locationSelection.name){
+        // check if location isn't empty
+        if(this.state.locationEdit && !this.state.locationName){
             this.setState({
                 errorMessage: "Please add a location!"
             });
@@ -99,14 +115,18 @@ class UpdateItem extends Component{
             let variables = {
                 id: this.props.id,
             };
-            // if a location was selected
-            if(this.state.locationSelection){
+
+            // check if a location was selected
+            if(this.state.locationEdit){
                 // and the location changed
-                if(oldLocation !== this.state.locationSelection.id){
-                    variables.location = this.state.locationSelection.id;
-                    variables.oldLocation = oldLocation;
+                if(oldLocation.name !== this.state.locationName){
+                    variables.locationName = this.state.locationName;
+                    variables.oldLocationId = oldLocation.id;
+                    // if there's a locationId, an existing location was selected, so pass it aswell
+                    if(this.state.locationId) variables.locationId = this.state.locationId;
                 }
-            }
+            } // else the location did not change, don't pass location
+
             // the tags were changed
             if(this.state.tagSelection){
                 variables.tags = this.state.tagSelection.map(tag => tag.id)
@@ -132,38 +152,36 @@ class UpdateItem extends Component{
                             mutation={ UPDATE_ITEM_MUTATION }
                             refetchQueries={[ { query: SINGLE_ITEM_QUERY, variables: {id: this.props.id} } ]}>
                             {(updateItem, {loading, error}) => (
-                                <form onSubmit={e => this.handleUpdateItem(e, updateItem, data.item.location.id)}>
+                                <form onSubmit={e => this.handleUpdateItem(e, updateItem, data.item.location)}>
                                     <Error error={error} />
                                     {this.state.errorMessage && 
                                         <p>{this.state.errorMessage}</p>
                                     }
                                     <fieldset disabled={loading}>
 
+                                        <button tye="button">cancel edit</button>
+
                                         <img src={data.item.image} alt="upload preview" width="300" />
 
-                                        {
-                                            // if the location wasn't altered, it's not in state
-                                            !this.state.locationSelection &&
-                                            <div>
-                                                location: 
-                                                {data.item.location.name} - {data.item.location.country.name} 
-                                                <button 
-                                                    type="button" 
-                                                    onClick={() => this.handleLocationSelection({})}>
-                                                        &times;
-                                                </button>
-                                            </div>
+                                        { // if locationEdit is false, no changes were made, so use query data just to display
+                                            !this.state.locationEdit &&
+                                                <div>
+                                                    location: 
+                                                    {data.item.location.name} - {data.item.location.country.name} 
+                                                    <button type="button" onClick={this.handleLocationEdit}>&times;</button>
+                                                </div>
                                         }
+
                                         {
-                                            // if the location was altered, it's in state
-                                            this.state.locationSelection && 
+                                            // the location 
+                                            this.state.locationEdit &&
                                                 <ManageLocation 
-                                                    selection={this.state.locationSelection}
                                                     handleLocationSelection={this.handleLocationSelection}
-                                                    loading={this.state.loading}
-                                                    handleLoading={this.handleLoading}
-                                                />
+                                                    handleLocationChange={this.handleLocationChange}
+                                                    locationName={this.state.locationName}
+                                                    locationId={this.state.locationId} />
                                         }
+
 
                                         {
                                             // if there's no state.tagSelection, show current database tags + edit button
