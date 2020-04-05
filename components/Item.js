@@ -10,6 +10,7 @@ class Item extends Component{
     };
     render(){
         const {item} = this.props;
+        //console.log('item', this.props.item);
         return(
             <div>
                 <Link href={{

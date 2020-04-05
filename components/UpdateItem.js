@@ -103,6 +103,15 @@ class UpdateItem extends Component{
         }
     }
 
+    handleCancelEdit = () => {
+        this.setState({
+            errorMessage: '',
+            locationEdit: false,
+            locationName: '',
+            locationId: '',
+        })
+    }
+
     handleUpdateItem = async(e, updateItemMutation, oldLocation) => {
         e.preventDefault();
         // check if location isn't empty
@@ -159,7 +168,7 @@ class UpdateItem extends Component{
                                     }
                                     <fieldset disabled={loading}>
 
-                                        <button tye="button">cancel edit</button>
+                                        <button type="button" onClick={this.handleCancelEdit}>cancel edit</button>
 
                                         <img src={data.item.image} alt="upload preview" width="300" />
 
