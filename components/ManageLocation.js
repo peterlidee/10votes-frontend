@@ -59,7 +59,6 @@ class ManageLocation extends React.Component{
     }
 
     render(){
-
         return(
             <div>
 

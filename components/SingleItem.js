@@ -13,6 +13,7 @@ const SINGLE_ITEM_QUERY = gql`
                 id
                 name
                 country{
+                    id
                     name
                 }
             }

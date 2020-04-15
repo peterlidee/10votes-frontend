@@ -3,7 +3,7 @@ import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import Router from 'next/router';
 import Error from './Error';
-import ManageTags from './tag/ManageTags';
+import ManageTags from './ManageTags';
 import ManageLocation from './ManageLocation';
 import { CURRENT_USER_QUERY } from './User';
 
@@ -13,14 +13,16 @@ const CREATE_ITEM_MUTATION = gql`
         $largeImage: String
         $locationName: String
         $locationId: ID
-        $tags: [ID]!
+        $tagNames: [String]!
+        $tagIds: [ID]!
     ){
         createItem(
             image: $image
             largeImage: $largeImage
             locationName: $locationName
             locationId: $locationId
-            tags: $tags
+            tagNames: $tagNames
+            tagIds: $tagIds
         ){
             id
             location{
@@ -35,16 +37,17 @@ const CREATE_ITEM_MUTATION = gql`
 
 class CreateItem extends Component{
     state = {
-        image: '1234.jpg',
+        image: '12345.jpg',
         largeImage: '',
         loading: false,
-
-        
         locationName: '',
         locationId: '',
-
-        tagSelection: [],
         errorMessage: "",
+        tags: [
+            {name: "", id: ""},
+            {name: "", id: ""},
+            {name: "", id: ""},
+        ],
     }
 
     uploadFile = async (e) => {
@@ -72,32 +75,32 @@ class CreateItem extends Component{
     }
     handleLocationSelection = (location) => {
         this.setState({
-            //locationSelection: location,
             errorMessage: "",
             locationName: location.name,
             locationId: location.id,
         })
     }
 
-    handleTagSelection = (tag) => {
-        const selection = [...this.state.tagSelection];
-        const index = selection.findIndex(selectedTag => selectedTag.id === tag.id);
-        // is the id already in selection?
-        if(index >= 0){
-            // true, remove it
-            // find index
-            selection.splice(index, 1);
-            this.setState({ tagSelection: selection });
+    handleTagChange = (value, i) => {
+        //console.log('value is', value)
+        const tags = [...this.state.tags];
+        tags[i] = {name: value, id: ""};
+        this.setState({
+            tags
+        })
+    }
+
+    handleTagSelection = (tagQuery, i) => {
+        const tags = [...this.state.tags];
+        // first, check if the tag isn't already selected
+        if(tags.findIndex(tag => tag.id === tagQuery.id) >= 0){
+            // tag is already selected!
+            tags[i] = {name: "", id: ""}
         }else{
-            // no index found, add tag
-            // only 3 selections permitted
-            if(selection.length < 3){
-                selection.push(tag);
-                this.setState({ tagSelection: selection });
-            }else{
-                // selection limited reached
-            }
+            // new tag
+            tags[i] = { name: tagQuery.name, id: tagQuery.id }
         }
+        this.setState({ tags });
     }
 
     handleLoading = (bool) => {
@@ -111,9 +114,14 @@ class CreateItem extends Component{
             loading: false,
             locationName: "",
             locationId: "",
-            tagSelection: [],
+            tags: [
+                {name: "", id: ""},
+                {name: "", id: ""},
+                {name: "", id: ""},
+            ],
         });
     }
+
     handleCreateItem = async (e, createItem) => {
         e.preventDefault();
         // form validation: are the required fields filled in?
@@ -125,15 +133,29 @@ class CreateItem extends Component{
                 image: this.state.image,
                 largeImage: this.state.largeImage,
                 locationName: this.state.locationName,
-                locationId: this.state.locationId,
-                tags: this.state.tagSelection.map(tag => tag.id),
             }
             if(this.state.locationId){
                 variables.locationId = this.state.locationId;
             }
+
+            // handle tag changes
+            const newTagNames = [];
+            const newTagIds = [];
+            // construct arrays of the new tag names and ids to pass as variables
+            this.state.tags.map(tag => {
+                if(tag.name){ // filter out the empty ones
+                    newTagNames.push(tag.name.trim());
+                    newTagIds.push(tag.id);
+                }
+            });
+            // add to variables
+            variables.tagNames = newTagNames;
+            variables.tagIds = newTagIds;
+            // end handle tag changes
+
             // call the mutation
             const res = await createItem({ variables });
-
+            
             // route the user to the single item page, just created
             Router.push({
                 pathname: '/item',
@@ -174,10 +196,9 @@ class CreateItem extends Component{
                                     />
 
                                     <ManageTags 
-                                        selection={this.state.tagSelection}
+                                        tags={this.state.tags}
+                                        handleTagChange={this.handleTagChange}
                                         handleTagSelection={this.handleTagSelection}
-                                        loading={this.state.loading}
-                                        handleLoading={this.handleLoading}
                                     />
 
                                     <button disabled={this.state.loading}>submit</button>
