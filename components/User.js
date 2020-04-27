@@ -20,6 +20,21 @@ const CURRENT_USER_QUERY = gql`
             items{
                 id
                 image
+                location{
+                    id
+                    name
+                }
+                tags{
+                    id
+                    name
+                }
+                voteCount
+            }
+            votes{
+                id
+                item{
+                    id
+                }
             }
         }
     }

@@ -36,7 +36,12 @@ const Nav = () => (
                     {(me) && (
                         <>
                             <span>my votes: </span>
-                            <span>my pics: {me.items.length}</span>
+                            <Link href="/myvotes">
+                                <a>my votes: {me.votes.length}</a>
+                            </Link>
+                            <Link href="/myitems">
+                                <a>my pics: {me.items.length}</a>
+                            </Link>
                             <span>{me.name}</span>
                             <Link href="/sell">
                                 <a>sell</a>

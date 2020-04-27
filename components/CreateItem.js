@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Mutation } from 'react-apollo';
+import { Query, Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import Router from 'next/router';
+import Link from 'next/link';
 import Error from './Error';
 import ManageTags from './ManageTags';
 import ManageLocation from './ManageLocation';
@@ -166,50 +167,61 @@ class CreateItem extends Component{
 
     render(){
         return(
-            <Mutation mutation={ CREATE_ITEM_MUTATION } refetchQueries={[{ query: CURRENT_USER_QUERY }]}>
-                {(createItem, {loading, error}) => (
-                    <form onSubmit={ e => this.handleCreateItem(e, createItem) }>
-                        {this.state.errorMessage && 
-                            <p>{this.state.errorMessage}</p>
-                        }
-                        <Error error={error} />
-                        <fieldset disabled={loading}>
-                            {this.state.image == '' &&
-                                <label htmlFor="file">
-                                    Image
-                                    <input type="file" id="file" name="file" placeholder="upload an image" onChange={this.uploadFile} required />    
-                                    {this.state.loading && <p>...loading image</p>}
-                                </label>
-                            }
+            <Query query={CURRENT_USER_QUERY}>
+                {({ error, data, loading }) => {
+                    if(loading) return <p>Loading</p>;
+                    if(error) return <Error error={error} />;
+                    if(!loading && data.me && data.me.items.length >= 10){
+                        return <p>You used up all your uploads. Manage them here: <Link href="/myitems"><a>my pics</a></Link></p>
+                    }
+                    return(
+                        <Mutation mutation={ CREATE_ITEM_MUTATION } refetchQueries={[{ query: CURRENT_USER_QUERY }]}>
+                            {(createItem, {loading, error}) => (
+                                <form onSubmit={ e => this.handleCreateItem(e, createItem) }>
+                                    {this.state.errorMessage && 
+                                        <p>{this.state.errorMessage}</p>
+                                    }
+                                    <Error error={error} />
+                                    <fieldset disabled={loading}>
+                                        {this.state.image == '' &&
+                                            <label htmlFor="file">
+                                                Image
+                                                <input type="file" id="file" name="file" placeholder="upload an image" onChange={this.uploadFile} required />    
+                                                {this.state.loading && <p>...loading image</p>}
+                                            </label>
+                                        }
 
-                            {this.state.image && 
-                                <>
-                                    <button type="button" onClick={this.handleCancelAll}>&times; cancel</button>
-                                    
-                                    <img src={this.state.image} alt="upload preview" width="300" />
-        
-                                    <ManageLocation 
-                                        handleLocationSelection={this.handleLocationSelection}
-                                        handleLocationChange={this.handleLocationChange}
-                                        locationName={this.state.locationName}
-                                        locationId={this.state.locationId}
-                                    />
+                                        {this.state.image && 
+                                            <>
+                                                <button type="button" onClick={this.handleCancelAll}>&times; cancel</button>
+                                                
+                                                <img src={this.state.image} alt="upload preview" width="300" />
+                    
+                                                <ManageLocation 
+                                                    handleLocationSelection={this.handleLocationSelection}
+                                                    handleLocationChange={this.handleLocationChange}
+                                                    locationName={this.state.locationName}
+                                                    locationId={this.state.locationId}
+                                                    />
 
-                                    <ManageTags 
-                                        tags={this.state.tags}
-                                        handleTagChange={this.handleTagChange}
-                                        handleTagSelection={this.handleTagSelection}
-                                    />
+                                                <ManageTags 
+                                                    tags={this.state.tags}
+                                                    handleTagChange={this.handleTagChange}
+                                                    handleTagSelection={this.handleTagSelection}
+                                                    />
 
-                                    <button disabled={this.state.loading}>submit</button>
+                                                <button disabled={this.state.loading}>submit</button>
 
-                                </>
-                            }
+                                            </>
+                                        }
 
-                        </fieldset>
-                    </form>
-                )}
-            </Mutation>
+                                    </fieldset>
+                                </form>
+                            )}
+                        </Mutation>
+                    )
+                }}
+            </Query>
         )
     }
 }
