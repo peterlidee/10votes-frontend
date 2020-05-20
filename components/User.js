@@ -23,10 +23,17 @@ const CURRENT_USER_QUERY = gql`
                 location{
                     id
                     name
+                    slug
+                    country{
+                        id
+                        name
+                        countryCode
+                    }
                 }
                 tags{
                     id
                     name
+                    slug
                 }
                 voteCount
             }
@@ -34,6 +41,24 @@ const CURRENT_USER_QUERY = gql`
                 id
                 item{
                     id
+                    image
+                    largeImage
+                    location{
+                        id
+                        name
+                        slug
+                        country{
+                            id
+                            name
+                            countryCode
+                        }
+                    }
+                    tags{
+                        id
+                        name
+                        slug
+                    }
+                    voteCount
                 }
             }
         }

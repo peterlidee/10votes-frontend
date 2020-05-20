@@ -39,7 +39,7 @@ const CREATE_ITEM_MUTATION = gql`
 class CreateItem extends Component{
     state = {
         image: '12345.jpg',
-        largeImage: '',
+        largeImage: '12345-large.jpg',
         loading: false,
         locationName: '',
         locationId: '',

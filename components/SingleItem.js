@@ -5,8 +5,8 @@ import Error from './Error';
 import Head from 'next/head';
 
 const SINGLE_ITEM_QUERY = gql`
-    query SINGLE_ITEM_QUERY($id: ID!){
-        item(where : {id: $id}){
+    query SINGLE_ITEM_QUERY($itemId: ID!){
+        item(where : {id: $itemId}){
             id
             largeImage
             location{
@@ -28,7 +28,7 @@ const SINGLE_ITEM_QUERY = gql`
 class SingleItem extends Component{
     render(){
         return(
-            <Query query={ SINGLE_ITEM_QUERY } variables={{ id: this.props.id }}>
+            <Query query={ SINGLE_ITEM_QUERY } variables={{ itemId: this.props.id }}>
                 {( { error, loading, data } ) => {
                     if(error) return <Error error={error} />
                     if(loading) return <p>loading ...</p>
