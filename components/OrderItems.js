@@ -1,6 +1,6 @@
-import verifyOrderParam from "../lib/verifyOrderParam";
+// import verifyOrderParam from "../lib/verifyOrderParam";
 import Link from 'next/link';
-import PropTypes from 'prop-types';
+import getRouterData from '../lib/getRouterData';
 
 function reverseOrderBy(orderBy){
     const splitOrderBy = orderBy.split('_');
@@ -9,27 +9,15 @@ function reverseOrderBy(orderBy){
 }
 
 const OrderItems = props => {
-
-    // 1. calculate the path to put in Link.href.pathname
-    let hrefPathname = props.path;
-    if(props.query.country) hrefPathname += `/[country]`;
-    if(props.query.place) hrefPathname += `/[place]`;
-    if(props.query.tagslug) hrefPathname += `/[tagslug]`;
-
-    // 2. calculate the path to put in Link.as.pathname
-    let asPathname = props.path;
-    if(props.query.country) asPathname += `/${props.query.country}`;
-    if(props.query.place) asPathname += `/${props.query.place}`;
-    if(props.query.tagslug) asPathname += `/${props.query.tagslug}`;
-
-    // 2. validate the order param
-    const orderBy = verifyOrderParam(props.query.orderBy);
     
-    // 3. find out activeOrder and sortOrder
+    const routerData = getRouterData();
+    //console.log('touerData from orderItems', routerData)
+    // find out activeOrder and sortOrder
+    const orderBy = routerData.orderBy;
     const activeOrder = orderBy.includes('created') ? 'date' : 'votes';
     const sortOrder = orderBy.includes('ASC') ? 'asc': 'desc';
     
-    // temp arrows
+    // temp arrows //TODO
     const arrows = {
         up: String.fromCharCode(9650),
         down : String.fromCharCode(9660),
@@ -43,14 +31,14 @@ const OrderItems = props => {
                 <Link
                     key={option}
                     href={{
-                        pathname: hrefPathname,
+                        pathname: routerData.hrefPath,
                         query: {
                             orderBy: option === activeOrder ? reverseOrderBy(orderBy) : 
                                 option === 'date' ? 'createdAt_DESC' : 'voteCount_DESC',
                         }
                     }}
                     as={{
-                        pathname: asPathname,
+                        pathname: routerData.asPath,
                         query: {
                             orderBy: option === activeOrder ? reverseOrderBy(orderBy) : 
                                 option === 'date' ? 'createdAt_DESC' : 'voteCount_DESC',
@@ -76,10 +64,6 @@ const OrderItems = props => {
             ))}
         </div>
     )
-}
-
-OrderItems.propTypes = {
-    query: PropTypes.object.isRequired,
 }
 
 export default OrderItems;

@@ -29,7 +29,7 @@ class Item extends Component{
 
                 {item.location && <div>location: 
                     <Link 
-                        href="/location/[country]/[place]" 
+                        href="/location/[countryCode]/[place]" 
                         as={`/location/${item.location.country.countryCode}/${item.location.slug}`}
                     >
                         <a>{item.location.name}</a>

@@ -4,7 +4,7 @@ import SingleLocation from "../../../components/SingleLocation";
 
 const Place = props => (
     <div>
-        <SingleLocation query={props.query} />
+        <SingleLocation />
     </div>
 )
 

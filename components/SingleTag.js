@@ -1,27 +1,30 @@
+// this component displays single tags, fe /tags/test
+
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
-//import Link from 'next/link';
+import getRouterData from '../lib/getRouterData';
+import { perPage } from '../config';
 import Error from './Error';
-import Link from 'next/link';
-import Item from './Item';
-//import Item from './Item';
-//import OrderItems from './OrderItems';
-import verifyOrderParam from '../lib/verifyOrderParam';
 import OrderItems from './OrderItems';
+import ItemsCount from './ItemsCount';
+import DisplayItems from './DisplayItems';
 
 const TAG_EXISTS_QUERY = gql`
     query TAG_EXISTS_QUERY($slug: String!){
         tag(where: { slug: $slug }){
             id
+            name
         }
     }
 `;
 
-const ITEM_WITH_TAG_QUERY = gql`
-    query ITEM_WITH_TAG_QUERY($slug: String!, $orderBy: ItemOrderByInput){
+const ITEMS_WITH_TAG_QUERY = gql`
+    query ITEMS_WITH_TAG_QUERY($slug: String!, $orderBy: ItemOrderByInput, $skip: Int = 0, $first: Int = ${perPage}){
         items(
             where: { tags_some: { slug: $slug }},
             orderBy: $orderBy
+            skip: $skip,
+            first: $first
         ){
             id
             image
@@ -52,35 +55,24 @@ const ITEM_WITH_TAG_QUERY = gql`
 const Tag = props => {
     // first check if there's such a tag
     // then call all
+    const routerData = getRouterData(true);
     return (
         <div>
-            <Query query={TAG_EXISTS_QUERY} variables={{ slug: props.query.tagslug }}>
+            <Query query={TAG_EXISTS_QUERY} variables={ routerData.variables }>
                 {({data, loading, error}) => {
                     if(loading) return <p>...loading</p>
                     if(error) return <Error error={error} />
-                    if(!data.tag) return <p>Hmmm, there doesn't seem to be a tag '{props.query.tagslug}' :/.</p>
+                    if(!data.tag) return <p>Hmmm, there doesn't seem to be a tag '{routerData.variables.slug}' :/.</p>
                     return(
                         <div>
-                            <h2>{props.query.tag}</h2>
-                            <OrderItems path="/tags" query={props.query} />
-                            <Query query={ITEM_WITH_TAG_QUERY} variables={{
-                                slug: props.query.tagslug,
-                                orderBy: verifyOrderParam(props.query.orderBy),
+                            <h2><ItemsCount /> items with tag #{data.tag.name}</h2>
+                            <OrderItems />
+                            <Query query={ITEMS_WITH_TAG_QUERY} variables={{
+                                slug: routerData.variables.slug,
+                                orderBy: routerData.orderBy,
+                                skip: routerData.page * perPage - perPage || 0,
                             }}>
-                                {({ loading, error, data }) => {
-                                    if(loading) return <p>...loading</p>
-                                    if(error) return <Error error={error} />
-                                    //console.log("items with tag", data)
-                                    if(!data.items || data.items.length == 0) return(
-                                        <p>No items yet for this tag. Maybe you would like to <Link href="/sell"><a>add one?</a></Link></p>
-                                    )
-                                    const { items } = data;
-                                    return(
-                                        <div>
-                                            {items.map(item => <Item item={item} key={item.id} />)}
-                                        </div>
-                                    )
-                                }}
+                                {payload => <DisplayItems payload={payload} page={routerData.page} taxonomy="tag" />}
                             </Query>
                         </div>
                     )
