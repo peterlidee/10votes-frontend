@@ -9,7 +9,7 @@ import OrderItems from './OrderItems';
 import DisplayItems from './DisplayItems';
 import ItemsCount from './ItemsCount';
 
-const LOCATION_QUERY = gql`
+const LOCATION_EXISTS_QUERY = gql`
     query LOCATION_QUERY($slug: String!, $countryCode: String!){
         locations(where: { AND: [
             { slug: $slug },
@@ -64,7 +64,7 @@ const SingleLocation = props => {
     const routerData = getRouterData(true);
     //console.log('routerdata singleLocation', routerData)
     return(
-        <Query query={LOCATION_QUERY} variables={ routerData.variables }>
+        <Query query={LOCATION_EXISTS_QUERY} variables={ routerData.variables }>
             {({ error, data, loading }) => {
                 if(loading) return <p>...loading</p>
                 if(error) return <Error error={error} />
@@ -92,4 +92,3 @@ const SingleLocation = props => {
 }
 
 export default SingleLocation;
-export { ITEMS_IN_LOCATION_QUERY };
