@@ -29,9 +29,6 @@ const Nav = () => (
                     <Link href="/">
                         <a>home</a>
                     </Link>
-                    <Link href="/items">
-                        <a>items</a>
-                    </Link>
   
                     {(me) && (
                         <>

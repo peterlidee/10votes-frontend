@@ -3,9 +3,11 @@ import Link from 'next/link';
 import User from './User';
 import DeleteMyItem from './DeleteMyItem';
 import Item from './Item';
+import Title from './Title';
 
-const MyItems = props => {
-    return(
+const MyItems = props => (
+    <>
+        <Title>My pics</Title>
         <User>
             {({ loading, error, data }) => {
                 
@@ -18,7 +20,6 @@ const MyItems = props => {
 
                 return(
                     <div>
-                        I'm {me.name}'s items component
                         {me.items.length === 0 &&
                             <>
                                 <p>Looks like you haven't uploaded any pics yet.</p>
@@ -45,7 +46,7 @@ const MyItems = props => {
 
             }}
         </User>
-    )
-}
+    </>
+)
 
 export default MyItems;

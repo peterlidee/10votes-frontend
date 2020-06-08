@@ -8,6 +8,7 @@ import Error from './Error';
 import OrderItems from './OrderItems';
 import DisplayItems from './DisplayItems';
 import ItemsCount from './ItemsCount';
+import Title from './Title';
 
 const LOCATION_EXISTS_QUERY = gql`
     query LOCATION_QUERY($slug: String!, $countryCode: String!){
@@ -72,9 +73,11 @@ const SingleLocation = props => {
                     <p>Hmmm, there doesn't seem to be a place '{routerData.variables.slug} - {routerData.variables.countryCode}' :/.</p>
                 )
                 const { name, country } = data.locations[0];
+                const description = `items in ${name} - ${country.name}`;
                 return(
                     <div>
-                        <h2><ItemsCount /> items in {name} ({ country.name })</h2>
+                        <Title>{description}</Title>
+                        <h2><ItemsCount /> {description}</h2>
                         <OrderItems />
                         <Query query={ITEMS_IN_LOCATION_QUERY} variables={{ 
                             slug: routerData.variables.slug, 

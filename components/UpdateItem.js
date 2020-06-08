@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { Mutation, Query, ApolloConsumer } from 'react-apollo';
 import gql from 'graphql-tag';
-import Router from 'next/router';
+//import Router from 'next/router';
 import Error from './Error';
 import ManageLocation from './ManageLocation';
 import ManageTags from './ManageTags';
 import { CURRENT_USER_QUERY } from './User';
+import Title from './Title';
 
 const UPDATE_ITEM_MUTATION = gql`
     mutation UPDATE_ITEM_MUTATION(
@@ -204,93 +205,100 @@ class UpdateItem extends Component{
     render(){
         if(!this.props.id)return <p>No item found.</p>;
         return(
+            <>
+            <h2>Edit item</h2>
+            <Title>Edit item</Title>
             <Query query={ SINGLE_ITEM_QUERY } variables={{id: this.props.id}}>
-                {({ data, loading }) => {
+                {({ data, loading, error }) => {
                     if(loading) return <p>loading ...</p>
+                    if(error)return <Error error={error} />
                     if(!data.item) return <p>No data found for id {this.props.id}</p>
                     
-                    return (<Query query={CURRENT_USER_QUERY}>
-                        {({data: userData, loading: userLoading, error: userError}) => {
+                    return (
+                        <Query query={CURRENT_USER_QUERY}>
+                            {({data: userData, loading: userLoading, error: userError}) => {
 
-                            // check if logged in user owns this item
-                            if(userError) return <Error error={userError} />;
-                            if(!loading && !userData.me) return <p>something went wrong, please log in.</p>;
-                            if(userData.me.id !== data.item.user.id)return <p>You can only edit your own items!</p>
+                                // check if logged in user owns this item
+                                if(userError) return <Error error={userError} />;
+                                if(!loading && !userData.me) return <p>something went wrong, please log in.</p>;
+                                if(userData.me.id !== data.item.user.id)return <p>You can only edit your own items!</p>
 
-                            //console.log('data from query', data.item.tags);
-                            return(
-                                <Mutation 
-                                    mutation={ UPDATE_ITEM_MUTATION }
-                                    refetchQueries={[ { query: SINGLE_ITEM_QUERY, variables: {id: this.props.id} } ]}>
-                                    {(updateItem, {loading, error}) => (
-                                        <form onSubmit={e => this.handleUpdateItem(e, updateItem, data.item.location, data.item.tags)}>
-                                            <Error error={error} />
-                                            {this.state.errorMessage && 
-                                                <p>{this.state.errorMessage}</p>
-                                            }
-                                            <fieldset disabled={loading}>
-
-                                                <button type="button" onClick={this.handleCancelEdit}>cancel edit</button>
-
-                                                <img src={data.item.image} alt="upload preview" width="300" />
-
-                                                { // if locationEdit is false, no changes were made to location, so use query data just to display
-                                                    !this.state.locationEdit &&
-                                                        <div>
-                                                            location: 
-                                                            {data.item.location.name} - {data.item.location.country.name} 
-                                                            <button type="button" onClick={() => this.handleEdit('location', [])}>&times;</button>
-                                                        </div>
+                                //console.log('data from query', data.item.tags);
+                                return(
+                                    <Mutation 
+                                        mutation={ UPDATE_ITEM_MUTATION }
+                                        refetchQueries={[ { query: SINGLE_ITEM_QUERY, variables: {id: this.props.id} } ]}>
+                                        {(updateItem, {loading, error}) => (
+                                            <form onSubmit={e => this.handleUpdateItem(e, updateItem, data.item.location, data.item.tags)}>
+                                                <Error error={error} />
+                                                {this.state.errorMessage && 
+                                                    <p>{this.state.errorMessage}</p>
                                                 }
+                                                <fieldset disabled={loading}>
 
-                                                {
-                                                    // the location 
-                                                    this.state.locationEdit &&
-                                                        <ManageLocation 
-                                                            handleLocationSelection={this.handleLocationSelection}
-                                                            handleLocationChange={this.handleLocationChange}
-                                                            locationName={this.state.locationName}
-                                                            locationId={this.state.locationId} />
-                                                }
+                                                    <button type="button" onClick={this.handleCancelEdit}>cancel edit</button>
 
-                                                { // if tagsEdit is false, no changes were made to tags, so use query data just to display
-                                                    !this.state.tagsEdit &&
-                                                        <div>
-                                                            {!data.item.tags[0] && <span>No tags entered</span>}
-                                                            {data.item.tags[0] &&
-                                                                <>
-                                                                    tags: 
-                                                                    {data.item.tags.map(tag => <span key={tag.id}>{tag.name}</span>)}
-                                                                </>
-                                                            }
-                                                            <button type="button" onClick={() => this.handleEdit('tags', [...data.item.tags])}>
-                                                                {data.item.tags[0] && <>edit tags</>}
-                                                                {!data.item.tags[0] && <>add tags</>}
-                                                            </button>
-                                                        </div>
-                                                }
+                                                    <img src={data.item.image} alt="upload preview" width="300" />
 
-                                                {
-                                                    // if tagsEdit = true, show manageTags component!
-                                                    this.state.tagsEdit &&
-                                                        <ManageTags 
-                                                            tags={this.state.tags}
-                                                            handleTagChange={this.handleTagChange}
-                                                            handleTagSelection={this.handleTagSelection} />
-                                                }
+                                                    { // if locationEdit is false, no changes were made to location, so use query data just to display
+                                                        !this.state.locationEdit &&
+                                                            <div>
+                                                                location: 
+                                                                {data.item.location.name} - {data.item.location.country.name} 
+                                                                <button type="button" onClick={() => this.handleEdit('location', [])}>&times;</button>
+                                                            </div>
+                                                    }
 
-                                                <button>save changes</button>
+                                                    {
+                                                        // the location 
+                                                        this.state.locationEdit &&
+                                                            <ManageLocation 
+                                                                handleLocationSelection={this.handleLocationSelection}
+                                                                handleLocationChange={this.handleLocationChange}
+                                                                locationName={this.state.locationName}
+                                                                locationId={this.state.locationId} />
+                                                    }
 
-                                            </fieldset>
-                                        </form>
-                                    )}
-                                </Mutation>
-                            )
+                                                    { // if tagsEdit is false, no changes were made to tags, so use query data just to display
+                                                        !this.state.tagsEdit &&
+                                                            <div>
+                                                                {!data.item.tags[0] && <span>No tags entered</span>}
+                                                                {data.item.tags[0] &&
+                                                                    <>
+                                                                        tags: 
+                                                                        {data.item.tags.map(tag => <span key={tag.id}>{tag.name}</span>)}
+                                                                    </>
+                                                                }
+                                                                <button type="button" onClick={() => this.handleEdit('tags', [...data.item.tags])}>
+                                                                    {data.item.tags[0] && <>edit tags</>}
+                                                                    {!data.item.tags[0] && <>add tags</>}
+                                                                </button>
+                                                            </div>
+                                                    }
 
-                        }}
-                    </Query>)
+                                                    {
+                                                        // if tagsEdit = true, show manageTags component!
+                                                        this.state.tagsEdit &&
+                                                            <ManageTags 
+                                                                tags={this.state.tags}
+                                                                handleTagChange={this.handleTagChange}
+                                                                handleTagSelection={this.handleTagSelection} />
+                                                    }
+
+                                                    <button>save changes</button>
+
+                                                </fieldset>
+                                            </form>
+                                        )}
+                                    </Mutation>
+                                )
+
+                            }}
+                        </Query>
+                    )
                 }}
             </Query>
+        </>
         )
     }
 }

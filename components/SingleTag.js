@@ -8,6 +8,7 @@ import Error from './Error';
 import OrderItems from './OrderItems';
 import ItemsCount from './ItemsCount';
 import DisplayItems from './DisplayItems';
+import Title from './Title';
 
 const TAG_EXISTS_QUERY = gql`
     query TAG_EXISTS_QUERY($slug: String!){
@@ -63,9 +64,11 @@ const Tag = props => {
                     if(loading) return <p>...loading</p>
                     if(error) return <Error error={error} />
                     if(!data.tag) return <p>Hmmm, there doesn't seem to be a tag '{routerData.variables.slug}' :/.</p>
+                    const description = `items with tag #${data.tag.name}`;
                     return(
                         <div>
-                            <h2><ItemsCount /> items with tag #{data.tag.name}</h2>
+                            <Title>{description}</Title>
+                            <h2><ItemsCount /> {description}</h2>
                             <OrderItems />
                             <Query query={ITEMS_WITH_TAG_QUERY} variables={{
                                 slug: routerData.variables.slug,

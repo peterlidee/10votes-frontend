@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Query } from "react-apollo";
 import gql from 'graphql-tag';
 import Error from './Error';
-import Head from 'next/head';
 import Link from 'next/link';
+import Title from './Title';
 
 const SINGLE_ITEM_QUERY = gql`
     query SINGLE_ITEM_QUERY($itemId: ID!){
@@ -37,14 +37,17 @@ class SingleItem extends Component{
                     if(error) return <Error error={error} />
                     if(loading) return <p>loading ...</p>
                     if(!data.item) return <p>No item found for {this.props.id}</p>
-                    console.log('data', data)
+                    //console.log('data', data)
                     const {item} = data;
+
+                    // construct a string we will use as title and alt: "Image in {location} {tags}"
+                    const tagsString = item.tags ? item.tags.map(tag => `#${tag.name}`).join(" ") : '';
+                    const description = `Image in ${item.location.name} ${tagsString}`;
+
                     return(
                         <div>
-                            <Head><title>10 votes | {data.item.title}</title></Head>
-                            Single Item Component, {this.props.id}
-                            <p>{data.item.title}</p>
-                            <img src={data.item.largeImage} alt={data.item.title} width="150" />
+                            <Title>{description}</Title>
+                            <img src={item.largeImage} alt={description} width="150" />
                             <div>
                                 location: 
                                 <Link 
@@ -54,18 +57,20 @@ class SingleItem extends Component{
                                     <a>{item.location.name} - {item.location.country.name}</a>
                                 </Link>
                             </div>
-                            <div>
-                                tags: 
-                                {item.tags.map(tag => (
-                                    <Link 
-                                        href="/tags/[tagslug]"
-                                        as={`/tags/${tag.slug}`}
-                                        key={tag.id}
-                                    >
-                                        <a>#{tag.name}</a>
-                                    </Link>                                    
-                                ))}
-                            </div>
+                            {item.tags.length > 0 &&
+                                <div>
+                                    tags:
+                                    {item.tags.map(tag => (
+                                        <Link 
+                                            href="/tags/[tagslug]"
+                                            as={`/tags/${tag.slug}`}
+                                            key={tag.id}
+                                        >
+                                            <a>#{tag.name}</a>
+                                        </Link>                                    
+                                    ))}
+                                </div>
+                            }
                         </div>
                     )
                 }}

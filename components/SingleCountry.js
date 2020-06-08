@@ -8,6 +8,7 @@ import Error from './Error';
 import OrderItems from './OrderItems';
 import DisplayItems from './DisplayItems';
 import ItemsCount from './ItemsCount';
+import Title from './Title';
 
 const COUNTRY_QUERY = gql`
     query COUNTRY_QUERY($countryCode: String!){
@@ -67,9 +68,11 @@ const SingleCountry = props => {
                 if(error) return <Error error={error} />
                 if(!data.country) return <p>Hmmm, there doesn't seem to be a country '{routerData.variables.countryCode}' :/.</p>
                 const countryName = data.country.name;
+                const description = `items in ${countryName}`;
                 return(
                     <div>
-                        <h2><ItemsCount /> items in {countryName}</h2>
+                        <Title>{description}</Title>
+                        <h2><ItemsCount /> {description}</h2>
                         <OrderItems />
                         <Query query={ITEMS_IN_COUNTRY_QUERY} variables={{ 
                             countryCode: routerData.variables.countryCode,

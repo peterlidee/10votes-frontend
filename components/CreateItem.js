@@ -7,6 +7,7 @@ import Error from './Error';
 import ManageTags from './ManageTags';
 import ManageLocation from './ManageLocation';
 import { CURRENT_USER_QUERY } from './User';
+import Title from './Title';
 
 const CREATE_ITEM_MUTATION = gql`
     mutation CREATE_ITEM_MUTATION(
@@ -167,6 +168,9 @@ class CreateItem extends Component{
 
     render(){
         return(
+            <>
+            <Title>Add an item</Title>
+            <h2>Add an item</h2>
             <Query query={CURRENT_USER_QUERY}>
                 {({ error, data, loading }) => {
                     if(loading) return <p>Loading</p>;
@@ -222,6 +226,7 @@ class CreateItem extends Component{
                     )
                 }}
             </Query>
+        </>
         )
     }
 }

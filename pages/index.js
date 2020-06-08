@@ -1,8 +1,8 @@
-import Items from '../components/Items';
+import Home from '../components/Home';
 
 const Index = props => (
     <div>
-        <Items page={parseFloat(props.query.page) || 1} />
+        <Home />
     </div>
 )
 

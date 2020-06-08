@@ -1,0 +1,1 @@
+export const projectName = "10 votes";
