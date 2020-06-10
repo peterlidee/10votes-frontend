@@ -8,7 +8,6 @@ const Header = props => (
             {/*<a href='#'>logo</a>*/}
             <Nav />
         </div>
-        {/*<Cart />*/}
         <div className="search">
             <Search />
         </div>

@@ -11,7 +11,6 @@ function reverseOrderBy(orderBy){
 const OrderItems = props => {
     
     const routerData = getRouterData();
-    //console.log('touerData from orderItems', routerData)
     // find out activeOrder and sortOrder
     const orderBy = routerData.orderBy;
     const activeOrder = orderBy.includes('created') ? 'date' : 'votes';

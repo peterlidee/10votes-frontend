@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes, { string } from 'prop-types';
 import Link from 'next/link';
 import DeleteItem from './DeleteItem';
-import AddToCart from './AddToCart';
 import Voting from './Voting';
 
 
@@ -53,10 +52,6 @@ class Item extends Component{
                     </Link>
                     <DeleteItem id={item.id}>delete item</DeleteItem>
                 </>}
-
-                {/* TODO clean up cart 
-                <AddToCart id={item.id} />
-                */}
 
                 {!this.props.hideVote && <Voting currentItemId={item.id} />}
 
