@@ -1,11 +1,11 @@
 import Signup from '../components/Signup';
-import Signin from '../components/Signin';
+import Login from '../components/account/Login';
 import RequestReset from '../components/RequestReset';
 
 const signupPage = props => (
     <div>
         <Signup />
-        <Signin />
+        <Login />
         <RequestReset />
     </div>
 )

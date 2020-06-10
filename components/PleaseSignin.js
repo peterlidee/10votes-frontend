@@ -1,6 +1,6 @@
 import { Query} from 'react-apollo';
 import { CURRENT_USER_QUERY } from './User';
-import Signin from './Signin';
+import Login from './Login';
 
 const PleaseSignin = props => (
     <Query query={ CURRENT_USER_QUERY }>
@@ -10,7 +10,7 @@ const PleaseSignin = props => (
                 return(
                     <div>
                         <p>You need to be logged in for this.</p>
-                        <Signin />
+                        <Login />
                     </div>
                 )
             }
