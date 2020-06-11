@@ -1,4 +1,4 @@
-import User from './User';
+import User from './account/User';
 import Item from './Item';
 import Error from './Error';
 import Title from './Title';

@@ -6,7 +6,7 @@ import Link from 'next/link';
 import Error from './Error';
 import ManageTags from './ManageTags';
 import ManageLocation from './ManageLocation';
-import { CURRENT_USER_QUERY } from './User';
+import { CURRENT_USER_QUERY } from './account/User';
 import Title from './Title';
 
 const CREATE_ITEM_MUTATION = gql`

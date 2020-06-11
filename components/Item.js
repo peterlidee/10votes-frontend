@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
 import PropTypes, { string } from 'prop-types';
 import Link from 'next/link';
 import DeleteItem from './DeleteItem';
 import Voting from './Voting';
 
 
-class Item extends Component{
+class Item extends React.Component{
     static propTypes = {
         item: PropTypes.object.isRequired,
         //myVotes: PropTypes.object.isRequired,

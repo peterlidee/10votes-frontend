@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
-import Error from './Error';
+import Error from '../Error';
 import { CURRENT_USER_QUERY } from './User';
+import Title from '../Title';
 
 const SIGNUP_MUTATION = gql`
     mutation SIGNUP_MUTATION($email: String!, $name: String!, $password: String!){
@@ -38,6 +38,7 @@ class Signup extends React.Component{
                         this.setState({name: '', email: '', password: ''});
                     }}>
                         <fieldset disabled={loading} aria-busy={loading}>
+                            <Title>Sign up for an account</Title>
                             <h2>Sign up for an account</h2>
                             <Error error={error} />
                             <label htmlFor="email">

@@ -1,5 +1,5 @@
 import MyVotes from '../components/MyVotes';
-import PleaseSignin from '../components/PleaseSignin';
+import PleaseSignin from '../components/account/PleaseSignin';
 
 const myVotesPage = props => (
     <div>

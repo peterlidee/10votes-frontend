@@ -3,8 +3,9 @@ import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
 
-import Error from './Error';
+import Error from '../Error';
 import { CURRENT_USER_QUERY } from './User';
+import Title from '../Title';
 
 const RESET_MUTATION = gql`
     mutation RESET_MUTATION($password: String!, $confirmPassword: String!, $resetToken: String!){
@@ -48,7 +49,9 @@ class Reset extends React.Component{
                         this.setState({ password: '', confirmPassword: '' });
                     }}>
                         <fieldset disabled={loading} aria-busy={loading}>
+                            <Title>Reset your password</Title>
                             <h2>Reset your password</h2>
+                            {!loading && !error && called && <p>Your password was reset.</p>}
                             <Error error={error} />
                             <label htmlFor="password">
                                 Password

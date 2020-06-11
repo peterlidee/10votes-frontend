@@ -1,8 +1,9 @@
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import Error from '../Error';
-import User, { CURRENT_USER_QUERY } from '../User';
+import User, { CURRENT_USER_QUERY } from './User';
 import Title from '../Title';
+import Link from 'next/link';
 
 const LOGIN_MUTATION = gql`
     mutation LOGIN_MUTATION($email: String!, $password: String!){
@@ -44,25 +45,29 @@ class Login extends React.Component{
                                     refetchQueries={[{ query: CURRENT_USER_QUERY }]}
                                 >
                                     {(login, {loading, error}) => (
-                                        <form method="post" onSubmit={async e => {
-                                            e.preventDefault();
-                                            const res = await login();
-                                            this.setState({name: '', email: '', password: ''});
-                                        }}>
-                                            <fieldset disabled={loading} aria-busy={loading}>
-                                                <h2>Log into your account</h2>
-                                                <Error error={error} />
-                                                <label htmlFor="email">
-                                                    email
-                                                    <input type="email" name="email" placeholder="email" value={this.state.email} onChange={this.saveToState}/>
-                                                </label>
-                                                <label htmlFor="password">
-                                                    password
-                                                    <input type="password" name="password"  placeholder="password" value={this.state.password} onChange={this.saveToState}/>
-                                                </label>
-                                                <button type="submit">log in</button>
-                                            </fieldset>
-                                        </form>
+                                        <div>
+                                            <form method="post" onSubmit={async e => {
+                                                e.preventDefault();
+                                                const res = await login();
+                                                this.setState({name: '', email: '', password: ''});
+                                            }}>
+                                                <fieldset disabled={loading} aria-busy={loading}>
+                                                    <h2>Log into your account</h2>
+                                                    <Error error={error} />
+                                                    <label htmlFor="email">
+                                                        email
+                                                        <input type="email" name="email" placeholder="email" value={this.state.email} onChange={this.saveToState}/>
+                                                    </label>
+                                                    <label htmlFor="password">
+                                                        password
+                                                        <input type="password" name="password"  placeholder="password" value={this.state.password} onChange={this.saveToState}/>
+                                                    </label>
+                                                    <button type="submit">log in</button>
+                                                    <p>Euhm ... password? <Link href="/requestreset"><a>reset your password</a></Link></p>
+                                                </fieldset>
+                                                <p>New to 10votes? <Link href="/signup"><a>Create an account</a></Link>.</p>
+                                            </form>
+                                        </div>
                                     )}
                                 </Mutation>
                             )}

@@ -1,6 +1,6 @@
 //import { Query } from 'react-apollo';
 import Link from 'next/link';
-import User from './User';
+import User from './account/User';
 import DeleteMyItem from './DeleteMyItem';
 import Item from './Item';
 import Title from './Title';

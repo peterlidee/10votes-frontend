@@ -1,5 +1,5 @@
 import { Query } from 'react-apollo';
-import { CURRENT_USER_QUERY } from './User';
+import { CURRENT_USER_QUERY } from './account/User';
 import PropTypes from 'prop-types';
 
 import Vote from './Vote';

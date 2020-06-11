@@ -2,22 +2,22 @@ import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
 import { CURRENT_USER_QUERY } from './User';
 
-const SIGN_OUT_MUTATION = gql`
+const LOGOUT_MUTATION = gql`
     mutation SIGN_OUT_MUTATION{
-        signout{
+        logout{
             message
         }
     }
 `;
 
-const Signout = props => (
+const Logout = props => (
     <Mutation 
-        mutation={ SIGN_OUT_MUTATION }
+        mutation={ LOGOUT_MUTATION }
         refetchQueries={[{query: CURRENT_USER_QUERY}]}>
-        {(signout) => {
-            return <button onClick={signout}>sign out</button>
+        {(logout) => {
+            return <button onClick={logout}>log out</button>
         }}
     </Mutation>
 );
 
-export default Signout;
+export default Logout;

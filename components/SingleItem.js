@@ -4,6 +4,7 @@ import gql from 'graphql-tag';
 import Error from './Error';
 import Link from 'next/link';
 import Title from './Title';
+import Voting from './Voting';
 
 const SINGLE_ITEM_QUERY = gql`
     query SINGLE_ITEM_QUERY($itemId: ID!){
@@ -71,6 +72,7 @@ class SingleItem extends Component{
                                     ))}
                                 </div>
                             }
+                            <Voting currentItemId={item.id} />
                         </div>
                     )
                 }}

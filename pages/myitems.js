@@ -1,4 +1,4 @@
-import PleaseSignin from '../components/PleaseSignin';
+import PleaseSignin from '../components/account/PleaseSignin';
 import MyItems from '../components/MyItems';
 
 const myItemsPage = props => (

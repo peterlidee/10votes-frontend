@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import { Mutation } from 'react-apollo';
 
-import User from './User';
-import Signout from './Signout';
+import User from './account/User';
+import Logout from './account/Logout';
 
 const Nav = () => (
     <User>
@@ -13,8 +13,8 @@ const Nav = () => (
             if(!loading && !data) return(
                 <>
                     <p>no data found</p>
-                    <Link href="/signup">
-                        <a>sign in</a>
+                    <Link href="/login">
+                        <a>log in</a>
                     </Link>
                 </>
             );
@@ -41,13 +41,13 @@ const Nav = () => (
                             <Link href="/sell">
                                 <a>sell</a>
                             </Link>
-                            <Signout />
+                            <Logout />
                         </>
                     )}
 
                     {(!me) && (
-                        <Link href="/signup">
-                            <a>sign in</a>
+                        <Link href="/login">
+                            <a>log in</a>
                         </Link>
                     )}
 

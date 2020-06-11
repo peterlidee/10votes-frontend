@@ -1,4 +1,4 @@
-import PleaseSignin from '../components/PleaseSignin';
+import PleaseSignin from '../components/account/PleaseSignin';
 import Permissions from '../components/Permissions';
 
 const PermissionsPage = props => (

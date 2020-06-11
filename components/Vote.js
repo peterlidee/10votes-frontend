@@ -1,7 +1,7 @@
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import Error from './Error';
-import { CURRENT_USER_QUERY } from './User';
+import { CURRENT_USER_QUERY } from './account/User';
 import { ALL_ITEMS_QUERY } from './Items';
 
 const VOTE_MUTATION = gql`

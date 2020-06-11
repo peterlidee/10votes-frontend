@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 import Error from './Error';
 import ManageLocation from './ManageLocation';
 import ManageTags from './ManageTags';
-import { CURRENT_USER_QUERY } from './User';
+import { CURRENT_USER_QUERY } from './account/User';
 import Title from './Title';
 
 const UPDATE_ITEM_MUTATION = gql`

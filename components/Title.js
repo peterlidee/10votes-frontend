@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { projectName, delimiter } from '../projectData'
+import { projectName } from '../projectData'
 
 const Title = props => (
     <Head>
