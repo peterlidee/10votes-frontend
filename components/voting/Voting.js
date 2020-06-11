@@ -1,7 +1,7 @@
 import { Query } from 'react-apollo';
-import { CURRENT_USER_QUERY } from './account/User';
 import PropTypes from 'prop-types';
 
+import { CURRENT_USER_QUERY } from '../account/User';
 import Vote from './Vote';
 import DeleteVote from './DeleteVote';
 

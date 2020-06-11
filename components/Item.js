@@ -1,7 +1,7 @@
 import PropTypes, { string } from 'prop-types';
 import Link from 'next/link';
 import DeleteItem from './DeleteItem';
-import Voting from './Voting';
+import Voting from './voting/Voting';
 
 
 class Item extends React.Component{

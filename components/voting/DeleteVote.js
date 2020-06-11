@@ -1,9 +1,9 @@
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
-import Error from './Error';
-import { ALL_ITEMS_QUERY } from './Items';
-import { CURRENT_USER_QUERY } from './account/User';
-import { VOTED_ITEMS_QUERY } from './MyVotes';
+import Error from '../Error';
+
+import { ALL_ITEMS_QUERY } from '../Items';
+import { CURRENT_USER_QUERY } from '../account/User';
 
 const DELETE_VOTE_MUTATION = gql`
     mutation DELETE_VOTE_MUTATION(

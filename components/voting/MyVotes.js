@@ -1,7 +1,7 @@
-import User from './account/User';
-import Item from './Item';
-import Error from './Error';
-import Title from './Title';
+import User from '../account/User';
+import Item from '../Item';
+import Error from '../Error';
+import Title from '../Title';
 
 const MyVotes = props => (
     <>

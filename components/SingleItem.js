@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 import Error from './Error';
 import Link from 'next/link';
 import Title from './Title';
-import Voting from './Voting';
+import Voting from '../voting/Voting';
 
 const SINGLE_ITEM_QUERY = gql`
     query SINGLE_ITEM_QUERY($itemId: ID!){

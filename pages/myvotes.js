@@ -1,4 +1,4 @@
-import MyVotes from '../components/MyVotes';
+import MyVotes from '../components/voting/MyVotes';
 import PleaseSignin from '../components/account/PleaseSignin';
 
 const myVotesPage = props => (
