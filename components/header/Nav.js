@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import { Mutation } from 'react-apollo';
 
-import User from './account/User';
-import Logout from './account/Logout';
+import User from '../account/User';
+import Logout from '../account/Logout';
 
 const Nav = () => (
     <User>
@@ -30,17 +30,16 @@ const Nav = () => (
   
                     {(me) && (
                         <>
-                            <span>my votes: </span>
                             <Link href="/myvotes">
                                 <a>my votes: {me.votes.length}</a>
                             </Link>
                             <Link href="/myitems">
                                 <a>my pics: {me.items.length}</a>
                             </Link>
-                            <span>{me.name}</span>
-                            <Link href="/sell">
-                                <a>sell</a>
+                            <Link href="/addapicture">
+                                <a>add a picture</a>
                             </Link>
+                            <span>{me.name}</span>
                             <Logout />
                         </>
                     )}

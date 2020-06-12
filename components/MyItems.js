@@ -1,7 +1,6 @@
 //import { Query } from 'react-apollo';
 import Link from 'next/link';
 import User from './account/User';
-import DeleteMyItem from './DeleteMyItem';
 import Item from './Item';
 import Title from './Title';
 
@@ -23,7 +22,7 @@ const MyItems = props => (
                         {me.items.length === 0 &&
                             <>
                                 <p>Looks like you haven't uploaded any pics yet.</p>
-                                <Link href="/sell">
+                                <Link href="/addapicture">
                                     <a>Upload your first pic</a>
                                 </Link>
                             </>
@@ -35,7 +34,7 @@ const MyItems = props => (
                         }
                         {me.items.length < 10 && me.items.length > 0 &&
                             <>
-                                <Link href="/sell">
+                                <Link href="/addapicture">
                                     <a>Upload another pic</a>
                                 </Link>
                                 ({10-me.items.length} uploads left)

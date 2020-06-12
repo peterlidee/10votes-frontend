@@ -1,6 +1,7 @@
 import PropTypes, { string } from 'prop-types';
 import Link from 'next/link';
-import DeleteItem from './DeleteItem';
+
+import DeleteMyItem from './items/DeleteMyItem';
 import Voting from './voting/Voting';
 
 
@@ -44,12 +45,12 @@ class Item extends React.Component{
                 {this.props.showEdit && <>
                     <Link
                         href={{
-                            pathname: 'update',
+                            pathname: '/update',
                             query: { id: item.id },
                         }}>
                         <a>Edit ✏️</a>
                     </Link>
-                    <DeleteItem id={item.id}>delete item</DeleteItem>
+                    <DeleteMyItem id={item.id}>delete item</DeleteMyItem>
                 </>}
 
                 {!this.props.hideVote && <Voting currentItemId={item.id} />}

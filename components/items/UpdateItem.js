@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Mutation, Query, ApolloConsumer } from 'react-apollo';
 import gql from 'graphql-tag';
-//import Router from 'next/router';
-import Error from './Error';
+
 import ManageLocation from './ManageLocation';
 import ManageTags from './ManageTags';
-import { CURRENT_USER_QUERY } from './account/User';
-import Title from './Title';
+import { CURRENT_USER_QUERY } from '../account/User';
+import Error from '../Error';
+import Title from '../Title';
 
 const UPDATE_ITEM_MUTATION = gql`
     mutation UPDATE_ITEM_MUTATION(

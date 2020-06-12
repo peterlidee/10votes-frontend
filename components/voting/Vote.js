@@ -3,7 +3,6 @@ import gql from 'graphql-tag';
 
 import Error from '../Error';
 import { CURRENT_USER_QUERY } from '../account/User';
-import { ALL_ITEMS_QUERY } from '../Items';
 
 const VOTE_MUTATION = gql`
     mutation VOTE_MUTATION($itemId: ID!){
@@ -23,7 +22,7 @@ const Vote = props => (
     <Mutation 
         mutation={VOTE_MUTATION} 
         variables={{ itemId: props.id }}
-        refetchQueries={[ { query: CURRENT_USER_QUERY }, { query: ALL_ITEMS_QUERY } ]}>
+        refetchQueries={[ { query: CURRENT_USER_QUERY }, ]}>
             {(castVote, {loading, error}) => (
                 <>
                     <Error error={error} />

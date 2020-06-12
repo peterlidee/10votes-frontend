@@ -1,8 +1,7 @@
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
-import Error from '../Error';
 
-import { ALL_ITEMS_QUERY } from '../Items';
+import Error from '../Error';
 import { CURRENT_USER_QUERY } from '../account/User';
 
 const DELETE_VOTE_MUTATION = gql`
@@ -31,8 +30,6 @@ const DeleteVote = props => (
         variables={{ voteId: props.voteId, itemId: props.itemId }}
         refetchQueries={[ 
             { query: CURRENT_USER_QUERY }, 
-            { query: ALL_ITEMS_QUERY }, 
-            //{ query: VOTED_ITEMS_QUERY },
         ]}>
             {(deleteVote, {loading, error}) => (
                 <>

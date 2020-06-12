@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import Error from './Error';
 import Link from 'next/link';
 import Item from './Item';
-import Pagination2 from './Pagination2';
+import Pagination from './Pagination';
 
 const DisplayItems = props => {
     const { error, data, loading } = props.payload;
@@ -16,12 +16,12 @@ const DisplayItems = props => {
         return <p>No more items to display.</p>
     }
     if(data.items.length == 0) return(
-        <p>No items yet for this {props.taxonomy}. Maybe you would like to <Link href="/sell"><a>add one?</a></Link></p>
+        <p>No items yet for this {props.taxonomy}. Maybe you would like to <Link href="/addapicture"><a>add one?</a></Link></p>
     )
     return(
         <div>
             { data.items.map(item => <Item item={item} key={item.id} />)}
-            <Pagination2 />
+            <Pagination />
         </div>
     )
 };
