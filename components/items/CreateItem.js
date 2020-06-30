@@ -3,6 +3,7 @@ import { Query, Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import Router from 'next/router';
 import Link from 'next/link';
+import validateFile from '../../lib/validateFile';
 
 import ManageTags from './ManageTags';
 import ManageLocation from './ManageLocation';
@@ -40,8 +41,8 @@ const CREATE_ITEM_MUTATION = gql`
 
 class CreateItem extends Component{
     state = {
-        image: '12345.jpg',
-        largeImage: '12345-large.jpg',
+        image: '',
+        largeImage: '',
         loading: false,
         locationName: '',
         locationId: '',
@@ -56,6 +57,15 @@ class CreateItem extends Component{
     uploadFile = async (e) => {
         this.handleLoading(true);
         const files = e.target.files;
+
+        // validate the file, we only accept .jpeg, .jpg or .png
+        if(!validateFile(files[0])){ // not valid, handle
+            this.handleCancelAll('You can only upload .jpg, .jpeg or .png files.');
+            // reset the form
+            document.getElementById('createItemForm').reset()
+            return null;
+        }
+
         const data = new FormData();
         data.append('file', files[0]);
         data.append('upload_preset', '10votes');
@@ -64,11 +74,23 @@ class CreateItem extends Component{
             body: data
         });
         const file = await res.json();
+        //console.log('file res', file)
+
+        // this is validation of the server response
+        if(file.error){
+            // something went wrong
+            // we cancel all cause input file is the only one shown
+            this.handleCancelAll(`Something went wrong (${file.error.message}), please try again`);
+            // reset the form
+            document.getElementById('createItemForm').reset()
+            return null;
+        }
         this.setState({
             image: file.secure_url,
-            largeImage: file.eager[0].secure_url
+            largeImage: file.eager[0].secure_url,
+            errorMessage: "",
+            loading: false,
         });
-        this.handleLoading(false);
     }
 
     handleLocationChange = (e) => {
@@ -109,11 +131,11 @@ class CreateItem extends Component{
     handleLoading = (bool) => {
         this.setState({ loading: bool });
     }
-    handleCancelAll = () => {
+    handleCancelAll = (errorMessage = "") => {
         this.setState({
             image: "",
             largeImage: "",
-            errorMessage: "",
+            errorMessage: errorMessage,
             loading: false,
             locationName: "",
             locationId: "",
@@ -182,7 +204,7 @@ class CreateItem extends Component{
                     return(
                         <Mutation mutation={ CREATE_ITEM_MUTATION } refetchQueries={[{ query: CURRENT_USER_QUERY }]}>
                             {(createItem, {loading, error}) => (
-                                <form onSubmit={ e => this.handleCreateItem(e, createItem) }>
+                                <form onSubmit={ e => this.handleCreateItem(e, createItem) } id="createItemForm">
                                     {this.state.errorMessage && 
                                         <p>{this.state.errorMessage}</p>
                                     }
@@ -191,14 +213,14 @@ class CreateItem extends Component{
                                         {this.state.image == '' &&
                                             <label htmlFor="file">
                                                 Image
-                                                <input type="file" id="file" name="file" placeholder="upload an image" onChange={this.uploadFile} required />    
+                                                <input type="file" id="file" name="file" placeholder="upload an image" onChange={this.uploadFile} required accept=".jpg, .jpeg, .png" />    
                                                 {this.state.loading && <p>...loading image</p>}
                                             </label>
                                         }
 
                                         {this.state.image && 
                                             <>
-                                                <button type="button" onClick={this.handleCancelAll}>&times; cancel</button>
+                                                <button type="button" onClick={() => this.handleCancelAll('')}>&times; cancel</button>
                                                 
                                                 <img src={this.state.image} alt="upload preview" width="300" />
                     
