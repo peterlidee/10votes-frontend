@@ -2,6 +2,7 @@ import App from 'next/app';
 import Page from '../components/Page';
 import { ApolloProvider } from 'react-apollo';
 import withData from '../lib/withData';
+import '../sass/index.scss';
 
 class MyApp extends App{
     static async getInitialProps({Component, ctx}){
