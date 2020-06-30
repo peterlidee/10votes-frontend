@@ -1,12 +1,13 @@
-import React, { Component } from 'react';
 import { Mutation, Query, ApolloConsumer } from 'react-apollo';
 import gql from 'graphql-tag';
+import Router from 'next/router';
+import { CURRENT_USER_QUERY } from '../account/User';
 
 import ManageLocation from './ManageLocation';
 import ManageTags from './ManageTags';
-import { CURRENT_USER_QUERY } from '../account/User';
 import Error from '../Error';
 import Title from '../Title';
+import Link from 'next/link';
 
 const UPDATE_ITEM_MUTATION = gql`
     mutation UPDATE_ITEM_MUTATION(
@@ -56,7 +57,7 @@ const SINGLE_ITEM_QUERY = gql`
     }
 `;
 
-class UpdateItem extends Component{
+class UpdateItem extends React.Component{
     state = {
         errorMessage: '',
         locationEdit: false,
@@ -192,13 +193,18 @@ class UpdateItem extends Component{
 
             // only call mutations when changes are in variables
             if(variables.locationName || variables.tagNames){
-                console.log('mutation called');
                 const res = await updateItemMutation({
                     variables
                 });
+                // console.log('item updated', res);
+                if(res.data){
+                    // route the user to the single item page, just edited
+                    Router.push({
+                        pathname: '/item',
+                        query: { id: res.data.updateItem.id },
+                    });
+                }
             }
-            //console.log('item updated', res);
-            // TODO route to item
         }
     } // close handleUpdateItem
 
@@ -227,8 +233,9 @@ class UpdateItem extends Component{
                                 return(
                                     <Mutation 
                                         mutation={ UPDATE_ITEM_MUTATION }
-                                        refetchQueries={[ { query: SINGLE_ITEM_QUERY, variables: {id: this.props.id} } ]}>
-                                        {(updateItem, {loading, error}) => (
+                                        refetchQueries={[ { query: SINGLE_ITEM_QUERY, variables: {id: this.props.id} } ]}
+                                    >
+                                        {(updateItem, { error, loading }) => (
                                             <form onSubmit={e => this.handleUpdateItem(e, updateItem, data.item.location, data.item.tags)}>
                                                 <Error error={error} />
                                                 {this.state.errorMessage && 
@@ -292,7 +299,6 @@ class UpdateItem extends Component{
                                         )}
                                     </Mutation>
                                 )
-
                             }}
                         </Query>
                     )

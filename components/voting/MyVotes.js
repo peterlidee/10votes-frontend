@@ -11,10 +11,8 @@ const MyVotes = props => (
 
                 if(loading) return <p>...loading</p>
                 if(error) return <Error error={error} />
-                if(!loading && !data.me) return null;
-
+                if(!data.me) return <p>Uhm, something went wrong. Try again?</p>;
                 const { me } = data;
-                //console.log('me myvotes', me)
 
                 if(!me.votes.length){
                     return <p>Looks like you don't have any votes. Nothing to see here then. :/</p>

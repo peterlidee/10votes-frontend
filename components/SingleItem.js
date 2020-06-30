@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
 import { Query } from "react-apollo";
 import gql from 'graphql-tag';
-import Error from './Error';
 import Link from 'next/link';
+
+import Error from './Error';
 import Title from './Title';
 import Voting from './voting/Voting';
 
@@ -30,15 +30,15 @@ const SINGLE_ITEM_QUERY = gql`
     }
 `;
 
-class SingleItem extends Component{
+class SingleItem extends React.Component{
     render(){
         return(
             <Query query={ SINGLE_ITEM_QUERY } variables={{ itemId: this.props.id }}>
                 {( { error, loading, data } ) => {
+
+                    if(loading) return <p>...loading</p>
                     if(error) return <Error error={error} />
-                    if(loading) return <p>loading ...</p>
-                    if(!data.item) return <p>No item found for {this.props.id}</p>
-                    //console.log('data', data)
+                    if(!data.item) return <p>Uhm, something went wrong. Try again?</p>
                     const {item} = data;
 
                     // construct a string we will use as title and alt: "Image in {location} {tags}"

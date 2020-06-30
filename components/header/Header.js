@@ -1,8 +1,10 @@
 import Nav from './Nav';
 import Search from './Search';
+import ProgressBar from './ProgressBar';
 
 const Header = props => (
     <div>
+        <ProgressBar />
         <div className="bar">
             {/*<a href='#'>logo</a>*/}
             <Nav />

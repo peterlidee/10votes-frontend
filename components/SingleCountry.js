@@ -7,7 +7,7 @@ import getRouterData from '../lib/getRouterData';
 import Error from './Error';
 import OrderItems from './OrderItems';
 import DisplayItems from './DisplayItems';
-import ItemsCount from './ItemsCount';
+import ItemsCount from './items/ItemsCount';
 import Title from './Title';
 
 const COUNTRY_QUERY = gql`

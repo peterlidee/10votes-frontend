@@ -7,7 +7,7 @@ import { perPage } from '../config';
 import Error from './Error';
 import OrderItems from './OrderItems';
 import DisplayItems from './DisplayItems';
-import ItemsCount from './ItemsCount';
+import ItemsCount from './items/ItemsCount';
 import Title from './Title';
 
 const LOCATION_EXISTS_QUERY = gql`

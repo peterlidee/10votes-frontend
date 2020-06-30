@@ -6,7 +6,7 @@ import getRouterData from '../lib/getRouterData';
 import { perPage } from '../config';
 import Error from './Error';
 import OrderItems from './OrderItems';
-import ItemsCount from './ItemsCount';
+import ItemsCount from './items/ItemsCount';
 import DisplayItems from './DisplayItems';
 import Title from './Title';
 
