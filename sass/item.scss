@@ -1,0 +1,182 @@
+/*
+    the styling of the Item component
+*/
+
+// the item gets grid for gap and to allow the image link to center
+.item{
+    display: grid;
+    align-content: start;
+    grid-gap: .5em 0;
+}
+
+
+//
+// .item__image
+//
+
+.item__image__link{
+    justify-self: center;
+}
+.item__image{
+    max-width: 100%;
+    max-height: 650px; // should correspond with .grid gtc // todo check if this needs to be lower
+    display: block; // no inline spaces!
+}
+
+
+//
+// edit items, only shown in my pics part
+//
+
+.item__edit{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: baseline;
+    //padding: .5em;
+    //background: $green;
+}
+.item__edit-link{
+    color: $green;
+    margin-right: .35em;
+    margin-bottom: .5em;
+}
+.item__delete-button{
+    border: none;
+    color: #fff;
+    background: $green;
+    padding: .25em .5em;
+    margin-left: .35em;
+    margin-bottom: .5em;
+    cursor: pointer;
+    border-radius: 2px;
+}
+
+
+//
+// .item__meta -> holds votes, vote button, tags and location
+//
+
+.item__meta{
+    display: flex;
+    // flex-direction: row;
+    align-items: baseline;
+    justify-content: center; // horizontally center all meta
+    flex-wrap: wrap;
+    //flex-wrap: wrap-reverse; // in case the tags or location name are long, place the tags above the button and votes
+    //margin-top: .5em;
+}
+
+
+//
+// button styles
+//
+
+.item__vote-button{
+    //flex: 0 0 65px;
+    padding: 0 .75em;
+    border: none;
+    background: $red;
+    font: 14px/20px 'Roboto', sans-serif;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative; z-index: 100;
+    transition: opacity .075s ease-out;
+    margin-bottom: .5em;
+
+    &:before{
+        box-sizing: border-box;
+        content: "";
+        width: 100%; height: 100%;
+        position: absolute; left: 0; top: 0; 
+        z-index: -10;
+        border-radius: 4px;
+        border: 1px solid #fff;
+        box-shadow: 0 0 0 1px $red;
+        opacity: 0;
+        transition: opacity .1s ease-out;
+    }
+    &:hover:before{
+        opacity: 1;
+    }
+    &[disabled]{ // when mutation is loading, visually show button is 'off'
+        opacity: .5;
+    }
+}
+
+
+//
+// .item__votes -> label and vote number
+//
+
+.item__votes{
+    display: flex;
+    flex-wrap: nowrap; // don't break label and number up
+    margin: 0 .5em .5em 1em; // sets margin with button and with tags
+
+    &__label{
+        font-variant: small-caps;
+        color: $darkfont;
+        margin-left: .15em;
+    }
+    &__number{
+        color: #fff;
+        padding: 0 .3em;
+        position: relative; // to position :before
+        z-index: 100;
+    
+        &:before{
+            content: "";
+            display: block;
+            position: absolute; left: 0; top: 0;
+            width: 100%; height: 100%;
+            z-index: -10; //place below .item__votes__number
+            background: $blue;
+            transform: skew(-12deg);
+        }
+    }
+}
+
+//
+// tags -> hold tags and location
+//
+
+.item__tags{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 0 0 .5em 0;
+    & *{
+        flex-shrink: 0; /* don't let them break with the icon */
+    }
+}
+/* these style location and tags #test #test 2 */
+.item__tag{
+    margin: 0 .25em 0 0; /* margin between tags */
+    color: $darkfont;
+    opacity: 0.55;
+    transition: opacity .1s ease-out;
+
+    &:hover{
+        opacity: 1;
+    }
+    &:last-child{
+        margin: 0;
+    }
+    &--tag:before{
+        content: "#";
+        display: inline-block;
+        padding-right: .1em;
+    }
+    &--location:before{
+        content: "";
+        display: inline-block;
+        width: 14px;
+        height: 14px;
+        background: url("../public/pin.svg") no-repeat 0 0/14px;
+        margin: 0 1px -2px 0;
+    }
+}
+
+// for errors, see _errors.scss

@@ -1,0 +1,19 @@
+
+/* holds the items, layout in 1 centralized column */
+.grid-items{
+    display: grid;
+    grid-template-columns: minmax(350px, 750px);
+    //grid-template-columns: minmax(300px, 500px);
+    grid-gap: 2em;
+    justify-content: center;
+}
+
+@media screen and (min-width: 1100px){
+    
+    /* holds the items, layout in 2 symmetric columns */
+    .grid-items{
+        grid-template-columns: repeat(2, minmax(350px, 750px));
+        //grid-template-columns: repeat(2, minmax(300px, 500px));
+    }
+
+}

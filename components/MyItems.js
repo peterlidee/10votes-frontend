@@ -27,7 +27,7 @@ const MyItems = props => (
                             </>
                         }
                         {me.items.length > 0 &&
-                            <div>
+                            <div className="grid-items">
                                 {me.items.map(item => <Item key={item.id} item={item} showEdit={true} hideVote={true} /> )}
                             </div>
                         }

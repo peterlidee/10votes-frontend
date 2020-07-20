@@ -57,6 +57,16 @@ const ITEMS_IN_LOCATION_QUERY = gql`
                 name
                 slug
             }
+            location{
+                id
+                name
+                slug
+                country{
+                    id
+                    name
+                    countryCode
+                }
+            }
         }
     }
 `;

@@ -106,53 +106,51 @@ class Search extends React.Component{
 
         resetIdCounter();
         return(
-            <div>
-                <Downshift 
-                    itemToString={item => item === null ? '' : `${item.name} (${item.__typename})`}
-                    ref={downshift => (this.downshift = downshift)}
-                    onChange={this.routeToTag}
-                >
-                    {({ getInputProps, getItemProps, isOpen, inputValue, highlightedIndex }) => {
-                        return(
-                            <div>
-                                <ApolloConsumer>
-                                    {(client) => (
-                                        <input 
-                                            {...getInputProps({
-                                                type: 'search',
-                                                placeholder: 'Search for a location or tag',
-                                                id: 'search',
-                                                className: this.state.loading ? 'loading' : '',
-                                                onChange: (e) => {
-                                                    e.persist()
-                                                    this.onChange(e, client)
-                                                },
-                                            })}
-                                        />
-                                    )}
-                                </ApolloConsumer>
-                                {isOpen && (
-                                    <div className="dropdown">
-                                        {limited.map((item, index) => (
-                                            <div 
-                                                {...getItemProps({ item })}
-                                                key={item.id}
-                                                highlighted={ (index === highlightedIndex).toString() }
-                                                style={{ backgroundColor: "#eee", paddingLeft: (index === highlightedIndex) ? "1em": "0", }}
-                                            >
-                                                {item.name} {(item.__typename).toLowerCase()}
-                                            </div>
-                                        ))}
-                                        {!limited.length && !this.state.loading && inputValue.length >= 3 && (
-                                            <div>Nothing found for {inputValue}</div>
-                                        )}
-                                    </div>
+            <Downshift 
+                itemToString={item => item === null ? '' : `${item.name} (${item.__typename})`}
+                ref={downshift => (this.downshift = downshift)}
+                onChange={this.routeToTag}
+            >
+                {({ getInputProps, getItemProps, isOpen, inputValue, highlightedIndex }) => {
+                    return(
+                        <div className="search__container">
+                            <ApolloConsumer>
+                                {(client) => (
+                                    <input 
+                                        {...getInputProps({
+                                            type: 'search',
+                                            placeholder: 'Search for a location or tag',
+                                            id: 'search',
+                                            className: this.state.loading ? 'search__input loading' : 'search__input',
+                                            onChange: (e) => {
+                                                e.persist()
+                                                this.onChange(e, client)
+                                            },
+                                        })}
+                                    />
                                 )}
-                            </div>
-                        )
-                    }}
-                </Downshift>
-            </div>
+                            </ApolloConsumer>
+                            {isOpen && (
+                                <div className="dropdown">
+                                    {limited.map((item, index) => (
+                                        <div 
+                                            {...getItemProps({ item })}
+                                            key={item.id}
+                                            highlighted={ (index === highlightedIndex).toString() }
+                                            style={{ backgroundColor: "#eee", paddingLeft: (index === highlightedIndex) ? "1em": "0", }}
+                                        >
+                                            {item.name} {(item.__typename).toLowerCase()}
+                                        </div>
+                                    ))}
+                                    {!limited.length && !this.state.loading && inputValue.length >= 3 && (
+                                        <div>Nothing found for {inputValue}</div>
+                                    )}
+                                </div>
+                            )}
+                        </div>
+                    )
+                }}
+            </Downshift>
         )
     }
 }

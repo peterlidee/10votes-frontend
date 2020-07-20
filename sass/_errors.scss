@@ -1,0 +1,110 @@
+// base styles
+.error-container{
+    flex: 0 0 100%;
+    order: 100; // override all just in case
+}
+
+.error{
+    display: grid;
+    grid-template-columns: 1em auto 1em;
+    justify-content: center;
+    text-align: center;
+    
+    // styles the ! icons
+    &__icon{
+        position: relative; z-index: 10; // put behind !
+        width: 20px;
+        height: 20px;
+        font-size: 14px;
+        line-height: 1.4285em; // = 20px;
+        color: #fff;
+        
+        &:before{
+            position: absolute; top: 0; left: 0;
+            z-index: -10; // put ! in front
+            content: "";
+            /* style triangle */
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0 10px 18px 10px;
+            border-color: transparent transparent #ff6c00 transparent;
+            transition: scale ease-in .18s;
+        }
+    }
+    // styles the actual error text
+    &__inner{
+        color: $darkfont;
+        font-style: italic;
+        line-height: 1.25em; // = 20px
+        padding: 0 .65em;
+    }
+    // don't show empty errors
+    &.no-error{ 
+        display: none;
+    }
+}
+
+
+// the error animations
+.has-error{
+    transition: 
+        height ease-out .075s, 
+        transform ease-out .1s,
+        opacity ease-out .075s .040s;
+}
+.error{
+    &-enter{
+        height: 0;
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    &-enter-done{
+        height: 3.75em; // 60px
+        transform: translateY(0);
+        opacity: 1;
+    }
+    &-exit{
+        height: 3.75em; // 60px
+        opacity: 1;
+        transition: 
+            height ease-out .15s,
+            opacity ease-out .075s;
+    }
+    &-exit-active{
+        height: 0;
+        opacity: 0;
+    }
+}
+
+.item__meta{
+
+    
+
+
+}
+
+.item__edit{
+    .error__inner{
+        // color: #fff;
+    }
+    .has-error{
+        // margin-top: .5em;
+    }
+    .error{
+          
+        &-enter{
+            height: 0;
+        }
+        &-enter-done{
+            height: 2.5em; // 40px
+        }
+        &-exit{
+            height: 2.5em; // 40px
+        }
+        &-exit-active{
+            height: 0;
+        } 
+
+    }
+}

@@ -1,17 +1,22 @@
+import Link from 'next/link';
+
+import ProgressBar from './ProgressBar';
 import Nav from './Nav';
 import Search from './Search';
-import ProgressBar from './ProgressBar';
 
 const Header = props => (
-    <div>
+    <div className="header__container">
         <ProgressBar />
-        <div className="bar">
-            {/*<a href='#'>logo</a>*/}
-            <Nav />
-        </div>
-        <div className="search">
+        <header className="site__header">
+            <Link href="/">
+                <a className="logo">
+                    <span className="logo__number">10</span>
+                    <span className="logo__label">votes</span>
+                </a>
+            </Link>
             <Search />
-        </div>
+            <Nav />
+        </header>
     </div>
 );
 

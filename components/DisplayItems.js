@@ -20,9 +20,14 @@ const DisplayItems = props => {
     )
     return(
         <div>
-            { data.items.map(item => <Item item={item} key={item.id} />)}
+            <div className="grid-items">
+                {data.items.map(item => <Item key={item.id} item={item} />)}
+            </div>
             <Pagination />
         </div>
+
+                        
+
     )
 };
 

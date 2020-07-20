@@ -1,2 +1,24 @@
 @import '../node_modules/html5-boilerplate/dist/css/normalize.css';
+@import 'typography.scss';
+@import 'variables.scss';
+@import 'mixins';
 
+body{
+    box-sizing: border-box;
+}
+
+body{
+    padding: 1em;
+    background: #f6f6f6;
+}
+
+@media screen and (min-width: 1100px){
+    body{
+        padding: 2em;
+    }
+}
+
+@import 'grids.scss';
+@import 'header';
+@import 'item.scss';
+@import 'errors';

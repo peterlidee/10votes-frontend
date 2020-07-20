@@ -75,7 +75,9 @@ const DisplayHomeItems = props => {
                 return(
                     <div>
                         <h2>{props.title}</h2>
-                        {data.items.map(item => <Item key={item.id} item={item} />)}
+                        <div className="grid-items">
+                            {data.items.map(item => <Item key={item.id} item={item} />)}
+                        </div>
                     </div>
                 )
             }}

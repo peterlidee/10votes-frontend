@@ -3,6 +3,7 @@ import gql from 'graphql-tag';
 
 import Error from '../Error';
 import { CURRENT_USER_QUERY } from '../account/User';
+import NewError from '../NewError';
 
 const DELETE_VOTE_MUTATION = gql`
     mutation DELETE_VOTE_MUTATION(
@@ -33,8 +34,11 @@ const DeleteVote = props => (
         ]}>
             {(deleteVote, {loading, error}) => (
                 <>
-                    <Error error={error} />
-                    <button onClick={deleteVote} disabled={loading}>delete vote</button>
+                    <button onClick={
+                        // we need to catch and handle a possible error, not sure how else to catch this
+                        () => deleteVote().catch(error => console.error(error))
+                    } disabled={loading} className="item__vote-button">undo vote {String.fromCharCode(45)}</button>
+                    <NewError error={error} />
                 </>
             )}
     </Mutation>

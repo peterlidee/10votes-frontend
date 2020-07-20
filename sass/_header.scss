@@ -1,0 +1,96 @@
+.site__header{
+    max-width: 1600px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.logo{
+    flex-shrink: 0;
+    display: flex;
+    flex-wrap: nowrap; // don't break label and number up
+    text-decoration: none;
+    font-size: 26px;
+    line-height: 1.618em;
+    position: relative; top: 2px; // slightly adjust for better positioning
+
+    
+    &__number{
+        color: #fff;
+        padding: 0 .2em 0 .1em;
+        letter-spacing: -2px;
+        position: relative; // to position :before
+        z-index: 100;
+    
+        &:before{
+            content: "";
+            display: block;
+            position: absolute; left: 0; top: 0;
+            width: 100%; height: 100%;
+            z-index: -10; //place below number
+            background: $blue;
+            transform: skew(-12deg);
+        }
+    }
+
+    &__label{
+        font-variant: small-caps;
+        color: $darkfont;
+        margin-left: .15em;
+    }
+
+}
+
+
+//
+// search
+//
+
+.search__container{
+    flex: 0 1 500px;
+    margin: 0 1em;
+}
+.search__input{
+    width: 100%;
+}
+
+
+//
+// site__menu
+//
+.site__menu{
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    *{
+        margin-left: .6em;
+        flex-shrink: 0;
+    }
+}
+
+.upload{
+    //display: flex;
+    //flex-wrap: nowrap;
+    //align-items: center;
+    background: $green;
+    padding: .05em 1em .05em .5em;
+    border-radius: 2px;
+    text-decoration: none;  
+    position: relative;
+
+    &__icon{
+        fill: #fff;
+        width: 15px;
+        height: 18px;
+        position: absolute;
+        left: 3px; top: 5px;
+    }
+    &__label{
+        color: #fff;
+        margin: 0 .35em 0 1.8em;
+    }
+}
+
+.logout__button{
+    @include button-as-link;
+}
