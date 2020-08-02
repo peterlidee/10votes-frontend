@@ -1,0 +1,58 @@
+
+.loader__container{
+}
+
+.loader{
+  width: 24px;
+  height: 10px;
+  position: relative; // default
+
+  &:before, &:after{
+    content: "";
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    position: absolute; top: 0; left: 0;
+  }
+  &:before{
+    background: $red;
+    animation: load-left .8s ease-in-out infinite;
+  }
+  &:after{
+    background: $blue;
+    animation: load-right .8s ease-in-out infinite;
+  }
+
+}
+
+@keyframes load-left{
+  0%  { transform: translateX(0) }
+  50% { transform: translateX(14px) }
+  100%{ transform: translateX(0) }
+}
+@keyframes load-right{
+  0%  { transform: translateX(14px) }
+  50% { transform: translateX(0) }
+  100%{ transform: translateX(14px) }
+}
+
+.search-loader{
+  position: absolute;
+  top: 10px;
+  right: 8px;
+}
+.items-loader{
+  display: flex;
+  justify-content: center;
+}
+
+
+
+
+
+
+
+
+
+

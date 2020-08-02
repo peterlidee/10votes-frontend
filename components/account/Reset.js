@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import Error from '../Error';
 import { CURRENT_USER_QUERY } from './User';
-import Title from '../Title';
+import MetaTitle from '../snippets/MetaTitle';
 
 const RESET_MUTATION = gql`
     mutation RESET_MUTATION($password: String!, $confirmPassword: String!, $resetToken: String!){
@@ -49,7 +49,7 @@ class Reset extends React.Component{
                         this.setState({ password: '', confirmPassword: '' });
                     }}>
                         <fieldset disabled={loading} aria-busy={loading}>
-                            <Title>Reset your password</Title>
+                            <MetaTitle>Reset your password</MetaTitle>
                             <h2>Reset your password</h2>
                             {!loading && !error && called && <p>Your password was reset.</p>}
                             <Error error={error} />

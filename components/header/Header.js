@@ -5,7 +5,7 @@ import Nav from './Nav';
 import Search from './Search';
 
 const Header = props => (
-    <div className="header__container">
+    <>
         <ProgressBar />
         <header className="site__header">
             <Link href="/">
@@ -17,7 +17,7 @@ const Header = props => (
             <Search />
             <Nav />
         </header>
-    </div>
+    </>
 );
 
 export default Header;

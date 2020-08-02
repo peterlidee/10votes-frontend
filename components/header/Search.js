@@ -3,6 +3,7 @@ import Downshift, { resetIdCounter } from 'downshift';
 import Router from 'next/router';
 import { ApolloConsumer } from 'react-apollo';
 import debounce from 'lodash.debounce';
+import Loader from '../snippets/Loader';
 
 const SEARCH_TAGS_QUERY = gql`
     query SEARCH_TAGS_QUERY($search: String!){
@@ -45,11 +46,16 @@ class Search extends React.Component{
         tags: [],
         locations: [],
         loading: false,
+        queryError: false,
+        queryErrorMessage: '',
+        queryCalled: false,
     }
     onChange = debounce (async (e, client) => {
         // turn loading on
         this.setState({
-            loading: true
+            loading: true,
+            queryError: false,
+            queryErrorMessage: '',
         })
 
         // don't query empty fields!
@@ -60,22 +66,46 @@ class Search extends React.Component{
                 loading: false,
             })
         }else{
+            let queryError = false;
+            let queryErrorMessage = "";
             // manually query apollo client
             // search for tags
             const tagsRes = await client.query({
                 query: SEARCH_TAGS_QUERY,
                 variables: { search: e.target.value }
-            })
+            }).catch(error => {
+                queryError = true;
+                queryErrorMessage = error.message;
+                console.log(error.message)
+            });
             // search for locations
             const locationsRes = await client.query({
                 query: SEARCH_LOCATIONS_QUERY,
                 variables: { search: e.target.value },
-            })
-            this.setState({
-                tags: tagsRes.data.tags,
-                locations: locationsRes.data.locations,
-                loading: false,
-            })
+            }).catch(error => {
+                queryError = true;
+                queryErrorMessage = error.message;
+                console.log(error.message)
+            });
+            if(queryError){
+                this.setState({
+                    queryError,
+                    queryErrorMessage,
+                    queryCalled: true,
+                    loading: false,
+                    tags: [],
+                    locations: [],
+                })
+            }else{
+                this.setState({
+                    tags: tagsRes.data.tags,
+                    locations: locationsRes.data.locations,
+                    loading: false,
+                    queryError: false,
+                    queryErrorMessage: '',
+                    queryCalled: true,
+                })
+            }
         }
     }, 350);
 
@@ -107,7 +137,7 @@ class Search extends React.Component{
         resetIdCounter();
         return(
             <Downshift 
-                itemToString={item => item === null ? '' : `${item.name} (${item.__typename})`}
+                itemToString={item => item === null ? '' : `${item.name}`}
                 ref={downshift => (this.downshift = downshift)}
                 onChange={this.routeToTag}
             >
@@ -116,34 +146,46 @@ class Search extends React.Component{
                         <div className="search__container">
                             <ApolloConsumer>
                                 {(client) => (
-                                    <input 
-                                        {...getInputProps({
-                                            type: 'search',
-                                            placeholder: 'Search for a location or tag',
-                                            id: 'search',
-                                            className: this.state.loading ? 'search__input loading' : 'search__input',
-                                            onChange: (e) => {
-                                                e.persist()
-                                                this.onChange(e, client)
-                                            },
-                                        })}
-                                    />
+                                    <>
+                                        <input 
+                                            {...getInputProps({
+                                                type: 'search',
+                                                placeholder: 'Search for a location or tag',
+                                                id: 'search',
+                                                className: 'search__input',
+                                                onChange: (e) => {
+                                                    e.persist()
+                                                    this.onChange(e, client)
+                                                },
+                                            })}
+                                        />
+                                        {this.state.loading && <Loader containerClass="search-loader" />}
+                                    </>
                                 )}
                             </ApolloConsumer>
-                            {isOpen && (
+                            {isOpen && inputValue.length >= 3 && (
                                 <div className="dropdown">
                                     {limited.map((item, index) => (
                                         <div 
                                             {...getItemProps({ item })}
                                             key={item.id}
                                             highlighted={ (index === highlightedIndex).toString() }
-                                            style={{ backgroundColor: "#eee", paddingLeft: (index === highlightedIndex) ? "1em": "0", }}
+                                            className="dropdown__result"
+                                            style={{ 
+                                                paddingLeft: (index === highlightedIndex) ? ".85em": ".5em", 
+                                                backgroundColor: (index === highlightedIndex) ? "#eee": "#fff", 
+                                            }}
                                         >
-                                            {item.name} {(item.__typename).toLowerCase()}
+                                            {item.name} <span className="dropdown__result-type">{(item.__typename).toLowerCase()}</span>
                                         </div>
                                     ))}
-                                    {!limited.length && !this.state.loading && inputValue.length >= 3 && (
-                                        <div>Nothing found for {inputValue}</div>
+                                    {
+                                        this.state.queryError && (
+                                            <div className="dropdown__result dropdown__result--error">!! {this.state.queryErrorMessage}</div>
+                                        )
+                                    }
+                                    {!limited.length && !this.state.loading && inputValue.length >= 3 && this.state.queryCalled && !this.state.queryError && (
+                                        <div className="dropdown__result">Nothing found for "{inputValue}"</div>
                                     )}
                                 </div>
                             )}

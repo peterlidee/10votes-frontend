@@ -1,0 +1,147 @@
+// basic simple titels
+.title{
+    text-align: center;
+    font-style: italic;
+    color: $darkfont;
+    margin: 1.5em 0;
+}
+@media screen and (min-width: 1100px){
+    .title{
+        margin: 2em 0;
+    }
+}
+
+// complex titles
+.title__container{
+    display: flex;
+    justify-content: center;
+    margin: 0 0 1em 0;
+}
+
+.items__title{
+    
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding-top: .6em;
+    margin-bottom: 0; // reset
+    color: $darkfont;
+    
+    &--single-location, 
+    &--single-country{
+        background: url('../public/bluepin.svg') no-repeat center top / 40px;
+    }
+    &--single-tag{
+        &:before{
+            content: "#";
+            display: block;
+            color: $blue;
+            text-align: center;
+            font-size: 70px;
+        }
+    }
+}
+
+@media screen and (min-width: 550px){
+
+    .items__title{
+        width: auto;
+        min-width: 500px;
+    }
+
+}
+
+// Brussels
+.title__name{
+    font-size: 35px;
+    line-height: 1em;
+    text-align: center;
+}
+
+// 6 pics
+.title__count{
+    align-self: flex-end; // right align inside items__title
+    display: flex; // center align items -> 6pics
+    min-height: .75em; // reserve space while the data loads
+    &-number{
+        font-size: 21px;
+    }
+    &-label{
+        font-size: 16px;
+        font-style: italic;
+        font-variant: small-caps;
+        color: $blue;
+        padding-left: .25em;
+    }
+}
+
+// = BELGIUM =
+
+.title__country-container{    
+    width: 100%;
+    max-width: 500px; // don't let 'wings' grow beyond that
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    padding: 0 1em; // keep wings visible
+
+    &:before{
+        box-sizing: border-box;
+        content: "";
+        display: block;
+        height: 4px;
+        width: 100%;
+        background: $blue;
+        position: absolute; left: 0; z-index: 1;
+        top: 6px;
+        .items__title--single-location &{
+            top: 16px; 
+        }
+    }
+}
+
+
+
+.title__country{
+    display: inline-block;
+    padding: 0 .5em;
+    position: relative; z-index: 10;
+    background: $whiteback;
+    color: $darkfont;
+    font-size: 18px;
+    line-height: 1em;
+    font-weight: 400;
+    text-transform: capitalize;
+    font-variant: small-caps;
+}
+
+@media screen and (min-width: 500px){
+    
+    .items__title{
+        &--single-location, 
+        &--single-country{
+            background-size: 50px;
+        }
+        
+    }
+    .title__name{
+        font-size: 50px;
+        margin: .2em 0 .15em 0;
+    }
+    .title__count{
+        &-number{ font-size: 24px; }
+    }
+    .title__country-container{    
+        &:before{
+            height: 6px;
+            top: 0;
+            .items__title--single-location &{
+                top: 14px; 
+            }
+        }
+    }
+    .title__country{
+        font-size: 22px;
+    }
+
+}

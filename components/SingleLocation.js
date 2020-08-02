@@ -7,8 +7,10 @@ import { perPage } from '../config';
 import Error from './Error';
 import OrderItems from './OrderItems';
 import DisplayItems from './DisplayItems';
-import ItemsCount from './items/ItemsCount';
-import Title from './Title';
+import MetaTitle from './snippets/MetaTitle';
+import Loader from './snippets/Loader';
+
+import FancyTitle from './snippets/FancyTitle';
 
 const LOCATION_EXISTS_QUERY = gql`
     query LOCATION_QUERY($slug: String!, $countryCode: String!){
@@ -77,17 +79,21 @@ const SingleLocation = props => {
     return(
         <Query query={LOCATION_EXISTS_QUERY} variables={ routerData.variables }>
             {({ error, data, loading }) => {
-                if(loading) return <p>...loading</p>
-                if(error) return <Error error={error} />
+
+                //if(loading) return <div className="no-result"><p>...loading</p></div>
+                if(loading) return <Loader containerClass="items-loader" />;
+                
+                if(error) return <div className="no-result"><Error error={error} /></div>
                 if(!data.locations[0]) return( 
-                    <p>Hmmm, there doesn't seem to be a place '{routerData.variables.slug} - {routerData.variables.countryCode}' :/.</p>
+                    <div className="no-result">
+                        <p>Hmmm, we don't have a place '{routerData.variables.slug} - {routerData.variables.countryCode}' in our database yet :/</p>
+                    </div>
                 )
                 const { name, country } = data.locations[0];
-                const description = `items in ${name} - ${country.name}`;
                 return(
-                    <div>
-                        <Title>{description}</Title>
-                        <h2><ItemsCount /> {description}</h2>
+                    <section>
+                        <MetaTitle>{`items in ${name} - ${country.name}`}</MetaTitle>
+                        <FancyTitle type="location" location={{ name }} country={{ name: country.name, countryCode: country.countryCode }} />
                         <OrderItems />
                         <Query query={ITEMS_IN_LOCATION_QUERY} variables={{ 
                             slug: routerData.variables.slug, 
@@ -97,7 +103,7 @@ const SingleLocation = props => {
                         }}>
                             {payload => <DisplayItems payload={payload} page={routerData.page} taxonomy="place" />}
                         </Query>
-                    </div>
+                    </section>
                 )
             }}
         </Query>

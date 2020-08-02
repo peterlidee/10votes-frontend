@@ -1,33 +1,50 @@
 import Link from 'next/link';
 import User from '../account/User';
 import Logout from '../account/Logout';
+import MenuContext from './MenuContext';
+
 import IconUpload from './IconUpload';
 
 const Nav = () => (
-    <User>
-        {({ loading, error, data }) => {
-            
-            if(loading) return <p>...loading</p>
-            
-            // not logged in then?
-            if(!loading && !data) return null;
-            
-            const { me } = data;
-            //console.log('me', me);
+    <MenuContext.Consumer>
+        {({menuOpen, toggleMenu}) => (
+            <>
+                <button className={menuOpen ? "menu-toggle__button menu-toggle__button--open" : "menu-toggle__button menu-toggle__button--close"} onClick={toggleMenu}>
+                    <div className="ham ham--1"></div>
+                    <div className="ham ham--2"></div>
+                    <div className="ham ham--3"></div>
+                </button>
 
-            return(
-                <nav className="site__menu">
-  
-                    {(me) && (
-                        <>
-                            <Link href="/myvotes">
-                                <a className="myvotes">my votes: {me.votes.length}</a>
-                            </Link>
-                            <Link href="/myitems">
-                                <a className="myitems">my pics: {me.items.length}</a>
-                            </Link>
-                        </>
-                    )}
+                <nav className={menuOpen ? "site__menu site__menu--open" : "site__menu site__menu--closed"}>
+
+                    <User>
+                        {({ loading, error, data }) => {
+                            
+                            if(loading || (!loading && !data) || error) return null;
+                            const { me } = data;
+
+                            return(
+                                <>
+                                    {(me) && (
+                                        <>
+                                            <Link href="/myvotes">
+                                                <a className="mymenu myvotes">
+                                                    <span className="mymenu__label">my votes</span>
+                                                    <span className="mymenu__number">{me.votes.length}</span>
+                                                </a>
+                                            </Link>
+                                            <Link href="/myitems">
+                                                <a className="mymenu myitems">
+                                                    <span className="mymenu__label">my pics</span>
+                                                    <span className="mymenu__number">{me.items.length}</span>
+                                                </a>
+                                            </Link>
+                                        </>
+                                    )}
+                                </>
+                            )
+                        }}
+                    </User>
 
                     <Link href="/addapicture">
                         <a className="upload">
@@ -36,20 +53,32 @@ const Nav = () => (
                         </a>
                     </Link>
 
-                    {(me) && (
-                        <Logout />
-                    )}
+                    <User>
+                        {({ loading, error, data }) => {
+                            
+                            if(loading || (!loading && !data) || error) return null;
+                            const { me } = data;
 
-                    {(!me) && (
-                        <Link href="/login">
-                            <a>log in</a>
-                        </Link>
-                    )}
+                            return(
+                                <>
+                                    {(me) && (
+                                        <Logout />
+                                    )}
+                                    {(!me) && (
+                                        <Link href="/login">
+                                            <a className="login__button">log in</a>
+                                        </Link>
+                                    )}
+                                </>
+                            )
+                        }}
+                    </User>
 
                 </nav>
+            </>
             )
-        }}
-    </User>
-);
+        }
+    </MenuContext.Consumer>
+)
 
 export default Nav;

@@ -9,7 +9,7 @@ import ManageTags from './ManageTags';
 import ManageLocation from './ManageLocation';
 import { CURRENT_USER_QUERY } from '../account/User';
 import Error from '../Error';
-import Title from '../Title';
+import MetaTitle from '../snippets/MetaTitle';
 
 const CREATE_ITEM_MUTATION = gql`
     mutation CREATE_ITEM_MUTATION(
@@ -192,7 +192,7 @@ class CreateItem extends Component{
     render(){
         return(
             <>
-            <Title>Add an item</Title>
+            <MetaTitle>Add an item</MetaTitle>
             <h2>Add an item</h2>
             <Query query={CURRENT_USER_QUERY}>
                 {({ error, data, loading }) => {

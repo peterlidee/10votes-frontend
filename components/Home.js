@@ -2,7 +2,7 @@ import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import Error from './Error';
 import Item from './Item';
-import Title from './Title';
+import MetaTitle from './snippets/MetaTitle';
 
 const RECENT_ITEMS_QUERY = gql`
     query RECENT_ITEMS_QUERY($orderBy: ItemOrderByInput = createdAt_DESC, $first: Int = 10){
@@ -74,7 +74,7 @@ const DisplayHomeItems = props => {
                 //console.log('data', data)
                 return(
                     <div>
-                        <h2>{props.title}</h2>
+                        <h1 className="title">{props.title}</h1>
                         <div className="grid-items">
                             {data.items.map(item => <Item key={item.id} item={item} />)}
                         </div>
@@ -87,7 +87,7 @@ const DisplayHomeItems = props => {
 
 const Home = props => (
     <div>
-        <Title>Home</Title>
+        <MetaTitle>Home</MetaTitle>
         <DisplayHomeItems query={RECENT_ITEMS_QUERY} title="Recent Items" />
         <DisplayHomeItems query={MOST_VOTED_ITEMS_QUERY} title="Popular items" />
     </div>

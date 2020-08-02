@@ -1,10 +1,10 @@
 import Head from 'next/head'
-import { projectName } from '../projectData'
+import { projectName } from '../../projectData'
 
-const Title = props => (
+const MetaTitle = props => (
     <Head>
         <title>{projectName} | {props.children}</title>
     </Head>
 )
 
-export default Title;
+export default MetaTitle;

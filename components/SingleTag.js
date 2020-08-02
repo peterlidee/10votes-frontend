@@ -6,9 +6,9 @@ import getRouterData from '../lib/getRouterData';
 import { perPage } from '../config';
 import Error from './Error';
 import OrderItems from './OrderItems';
-import ItemsCount from './items/ItemsCount';
 import DisplayItems from './DisplayItems';
-import Title from './Title';
+import MetaTitle from './snippets/MetaTitle';
+import FancyTitle from './snippets/FancyTitle';
 
 const TAG_EXISTS_QUERY = gql`
     query TAG_EXISTS_QUERY($slug: String!){
@@ -64,11 +64,10 @@ const Tag = props => {
                     if(loading) return <p>...loading</p>
                     if(error) return <Error error={error} />
                     if(!data.tag) return <p>Hmmm, there doesn't seem to be a tag '{routerData.variables.slug}' :/.</p>
-                    const description = `items with tag #${data.tag.name}`;
                     return(
                         <div>
-                            <Title>{description}</Title>
-                            <h2><ItemsCount /> {description}</h2>
+                            <MetaTitle>{`items with tag #${data.tag.name}`}</MetaTitle>
+                            <FancyTitle type="tag" tag={{ name: data.tag.name }} />
                             <OrderItems />
                             <Query query={ITEMS_WITH_TAG_QUERY} variables={{
                                 slug: routerData.variables.slug,

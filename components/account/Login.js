@@ -2,7 +2,7 @@ import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import Error from '../Error';
 import User, { CURRENT_USER_QUERY } from './User';
-import Title from '../Title';
+import MetaTitle from '../snippets/MetaTitle';
 import Link from 'next/link';
 
 const LOGIN_MUTATION = gql`
@@ -36,7 +36,7 @@ class Login extends React.Component{
                     const { me } = data;
                     return(
                         <>
-                            <Title>Log in</Title>
+                            <MetaTitle>Log in</MetaTitle>
                             {me && <p>You are logged in.</p>}
                             {!me && (
                                 <Mutation 

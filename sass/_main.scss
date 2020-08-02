@@ -1,0 +1,25 @@
+body{
+    padding: 1em;
+    background: $whiteback;
+}
+
+@media screen and (min-width: 1100px){
+    body{
+        padding: 2em;
+    }
+}
+
+.site__main{
+    min-height: 30em;
+    min-height: 40vh;
+    margin-bottom: 3em;
+}
+
+
+
+.no-result{
+    margin-bottom: 10em;
+    p{
+        text-align: center;
+    }
+}

@@ -6,7 +6,7 @@ import { CURRENT_USER_QUERY } from '../account/User';
 import ManageLocation from './ManageLocation';
 import ManageTags from './ManageTags';
 import Error from '../Error';
-import Title from '../Title';
+import MetaTitle from '../snippets/MetaTitle';
 import Link from 'next/link';
 
 const UPDATE_ITEM_MUTATION = gql`
@@ -213,7 +213,7 @@ class UpdateItem extends React.Component{
         return(
             <>
             <h2>Edit item</h2>
-            <Title>Edit item</Title>
+            <MetaTitle>Edit item</MetaTitle>
             <Query query={ SINGLE_ITEM_QUERY } variables={{id: this.props.id}}>
                 {({ data, loading, error }) => {
                     if(loading) return <p>loading ...</p>

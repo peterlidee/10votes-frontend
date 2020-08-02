@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 import Link from 'next/link';
 
 import Error from './Error';
-import Title from './Title';
+import MetaTitle from './snippets/MetaTitle';
 import Voting from './voting/Voting';
 
 const SINGLE_ITEM_QUERY = gql`
@@ -47,7 +47,7 @@ class SingleItem extends React.Component{
 
                     return(
                         <div>
-                            <Title>{description}</Title>
+                            <MetaTitle>{description}</MetaTitle>
                             <img src={item.largeImage} alt={description} width="150" />
                             <div>
                                 location: 

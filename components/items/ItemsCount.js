@@ -6,10 +6,14 @@ const ItemsCount = props => {
     return(
         <Query query={routerData.query} variables={routerData.variables}>
             {({ loading, error, data }) => {
-                if(loading) return <span>..</span>;
-                if(error || !data.itemsConnection) return null;
+                if(loading || error || !data.itemsConnection) return null;
                 const count = data.itemsConnection.aggregate.count;
-                return <span>{count}</span>;
+                return(
+                    <>
+                        <span className="title__count-number">{count}</span>
+                        <span className="title__count-label">{count === 1 ? 'pic' : "pics"}</span>
+                    </>
+                )
             }}
         </Query>
     );

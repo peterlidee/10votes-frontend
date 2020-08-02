@@ -4,11 +4,13 @@ import Meta from './header/Meta';
 class Page extends React.Component{
     render(){
         return(
-            <div>
+            <>
                 <Meta />
                 <Header />
-                {this.props.children}
-            </div>
+                <main className="site__main">
+                    {this.props.children}
+                </main>
+            </>
         )
     }
 }

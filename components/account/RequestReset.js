@@ -1,7 +1,7 @@
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import Error from '../Error';
-import Title from '../Title';
+import MetaTitle from '../snippets/MetaTitle';
 
 const REQUEST_RESET_MUTATION = gql`
     mutation REQUEST_RESET_MUTATION($email: String!){
@@ -32,7 +32,7 @@ class RequestReset extends React.Component{
                         this.setState({ email: '' });
                     }}>
                         <fieldset disabled={loading} aria-busy={loading}>
-                            <Title>Request a password reset</Title>
+                            <MetaTitle>Request a password reset</MetaTitle>
                             <h2>Request a password reset</h2>
                             <Error error={error} />
                             {!error && !loading && called && <p>Check your email for a reset link.</p>}

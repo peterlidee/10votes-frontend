@@ -2,12 +2,12 @@
 import Link from 'next/link';
 import User from './account/User';
 import Item from './Item';
-import Title from './Title';
+import MetaTitle from './snippets/MetaTitle';
 import Error from './Error';
 
 const MyItems = props => (
     <>
-        <Title>My pics</Title>
+        <MetaTitle>My pics</MetaTitle>
         <User>
             {({ loading, error, data }) => {
                 

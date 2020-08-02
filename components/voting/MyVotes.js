@@ -1,11 +1,11 @@
 import User from '../account/User';
 import Item from '../Item';
 import Error from '../Error';
-import Title from '../Title';
+import MetaTitle from '../snippets/MetaTitle';
 
 const MyVotes = props => (
     <>
-        <Title>My votes</Title>
+        <MetaTitle>My votes</MetaTitle>
         <User>
             {({ data, loading, error }) => {
 
