@@ -26,7 +26,7 @@ const NewError = ({ error, animate }) => {
     return(
       <div class="error">
         <div class="error__icon error__icon--left">!</div>
-        <div class="error__inner">No Node for the model Item with value 123 for id found.</div>
+        <div class="error__inner">{errorMessage}</div>
         <div class="error__icon error__icon--right">!</div>
       </div>
     )
