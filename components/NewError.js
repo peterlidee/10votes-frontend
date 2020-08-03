@@ -24,10 +24,10 @@ const NewError = ({ error, animate }) => {
   // used on page reload mainly
   if(!animate){
     return(
-      <div class="error">
-        <div class="error__icon error__icon--left">!</div>
-        <div class="error__inner">{errorMessage}</div>
-        <div class="error__icon error__icon--right">!</div>
+      <div className="error">
+        <div className="error__icon error__icon--left">!</div>
+        <div className="error__inner">{errorMessage}</div>
+        <div className="error__icon error__icon--right">!</div>
       </div>
     )
   }

@@ -4,15 +4,14 @@ import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import getRouterData from '../lib/getRouterData';
 import { perPage } from '../config';
-import OrderItems from './OrderItems';
+
 import DisplayItems from './DisplayItems';
-import MetaTitle from './snippets/MetaTitle';
 import Loader from './snippets/Loader';
-
+import MetaTitle from './snippets/MetaTitle';
 import FancyTitle from './snippets/FancyTitle';
-
-import Error from './Error';
 import NewError from './NewError';
+import OrderItems from './OrderItems';
+import Pagination from './Pagination';
 
 const LOCATION_EXISTS_QUERY = gql`
     query LOCATION_QUERY($slug: String!, $countryCode: String!){
@@ -81,9 +80,7 @@ const SingleLocation = props => {
     return(
         <Query query={LOCATION_EXISTS_QUERY} variables={ routerData.variables }>
             {({ error, data, loading }) => {
-
                 if(loading) return <Loader containerClass="items-loader" />;                
-                //if(error) return <Error error={error} />
                 if(error) return <NewError error={error} />
                 if(!data.locations[0]) return( 
                     <p className="no-data">Hmmm, we don't have a place '{routerData.variables.slug} - {routerData.variables.countryCode}' in our database yet :/</p>
@@ -102,6 +99,7 @@ const SingleLocation = props => {
                         }}>
                             {payload => <DisplayItems payload={payload} page={routerData.page} taxonomy="place" />}
                         </Query>
+                        <Pagination />
                     </section>
                 )
             }}
