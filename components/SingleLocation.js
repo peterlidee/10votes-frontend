@@ -4,13 +4,15 @@ import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import getRouterData from '../lib/getRouterData';
 import { perPage } from '../config';
-import Error from './Error';
 import OrderItems from './OrderItems';
 import DisplayItems from './DisplayItems';
 import MetaTitle from './snippets/MetaTitle';
 import Loader from './snippets/Loader';
 
 import FancyTitle from './snippets/FancyTitle';
+
+import Error from './Error';
+import NewError from './NewError';
 
 const LOCATION_EXISTS_QUERY = gql`
     query LOCATION_QUERY($slug: String!, $countryCode: String!){
@@ -80,14 +82,11 @@ const SingleLocation = props => {
         <Query query={LOCATION_EXISTS_QUERY} variables={ routerData.variables }>
             {({ error, data, loading }) => {
 
-                //if(loading) return <div className="no-result"><p>...loading</p></div>
-                if(loading) return <Loader containerClass="items-loader" />;
-                
-                if(error) return <div className="no-result"><Error error={error} /></div>
+                if(loading) return <Loader containerClass="items-loader" />;                
+                //if(error) return <Error error={error} />
+                if(error) return <NewError error={error} />
                 if(!data.locations[0]) return( 
-                    <div className="no-result">
-                        <p>Hmmm, we don't have a place '{routerData.variables.slug} - {routerData.variables.countryCode}' in our database yet :/</p>
-                    </div>
+                    <p className="no-data">Hmmm, we don't have a place '{routerData.variables.slug} - {routerData.variables.countryCode}' in our database yet :/</p>
                 )
                 const { name, country } = data.locations[0];
                 return(

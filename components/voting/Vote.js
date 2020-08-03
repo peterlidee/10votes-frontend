@@ -29,7 +29,7 @@ const Vote = props => (
                         // we need to catch and handle a possible error, not sure how else to catch this
                         () => castVote().catch(error => console.error(error.message))
                     } disabled={loading} className="item__vote-button">vote {String.fromCharCode(43)}</button>
-                    <NewError error={error} />
+                    <NewError error={error} animate={true} />
                 </>
             )}
     </Mutation>

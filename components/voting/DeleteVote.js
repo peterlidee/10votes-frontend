@@ -38,7 +38,7 @@ const DeleteVote = props => (
                         // we need to catch and handle a possible error, not sure how else to catch this
                         () => deleteVote().catch(error => console.error(error))
                     } disabled={loading} className="item__vote-button">undo vote {String.fromCharCode(45)}</button>
-                    <NewError error={error} />
+                    <NewError error={error} animate={true} />
                 </>
             )}
     </Mutation>

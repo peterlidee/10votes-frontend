@@ -27,7 +27,7 @@ const DeleteMyItem = (props) => (
                     }}>
                         {props.children}
                     </button>
-                    <NewError error={error} />
+                    <NewError error={error} animate={true} />
                 </>
             )}
     </Mutation>
