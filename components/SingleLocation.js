@@ -5,12 +5,12 @@ import gql from 'graphql-tag';
 import getRouterData from '../lib/getRouterData';
 import { perPage } from '../config';
 
-import DisplayItems from './DisplayItems';
 import Loader from './snippets/Loader';
+import NewError from './NewError';
 import MetaTitle from './snippets/MetaTitle';
 import FancyTitle from './snippets/FancyTitle';
-import NewError from './NewError';
 import OrderItems from './OrderItems';
+import DisplayItems from './DisplayItems';
 import Pagination from './Pagination';
 
 const LOCATION_EXISTS_QUERY = gql`
@@ -88,7 +88,7 @@ const SingleLocation = props => {
                 const { name, country } = data.locations[0];
                 return(
                     <section>
-                        <MetaTitle>{`items in ${name} - ${country.name}`}</MetaTitle>
+                        <MetaTitle>{`Pics in ${name} - ${country.name}`}</MetaTitle>
                         <FancyTitle type="location" location={{ name }} country={{ name: country.name, countryCode: country.countryCode }} />
                         <OrderItems />
                         <Query query={ITEMS_IN_LOCATION_QUERY} variables={{ 

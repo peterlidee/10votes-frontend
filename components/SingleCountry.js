@@ -4,11 +4,14 @@ import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import { perPage } from '../config';
 import getRouterData from '../lib/getRouterData';
-import Error from './Error';
-import OrderItems from './OrderItems';
-import DisplayItems from './DisplayItems';
+
+import Loader from './snippets/Loader';
+import NewError from './NewError';
 import MetaTitle from './snippets/MetaTitle';
 import FancyTitle from './snippets/FancyTitle';
+import OrderItems from './OrderItems';
+import DisplayItems from './DisplayItems';
+import Pagination from './Pagination';
 
 const COUNTRY_QUERY = gql`
     query COUNTRY_QUERY($countryCode: String!){
@@ -63,11 +66,11 @@ const SingleCountry = props => {
     return(
         <Query query={COUNTRY_QUERY} variables={ routerData.variables }>
             {({loading, error, data}) => {
-                if(loading) return <p>...loading</p>
-                if(error) return <Error error={error} />
-                if(!data.country) return <p>Hmmm, there doesn't seem to be a country '{routerData.variables.countryCode}' :/.</p>
+                if(loading) return <Loader containerClass="items-loader" />;                
+                if(error) return <NewError error={error} />
+                if(!data.country) return <p className="no-data">Hmmm, we don't have a country '{routerData.variables.countryCode}' in our database yet :/</p>
                 return(
-                    <div>
+                    <section>
                         <MetaTitle>{`Pics in ${data.country.name}`}</MetaTitle>
                         <FancyTitle type="country" country={{ name: data.country.name }} />
                         <OrderItems />
@@ -78,7 +81,8 @@ const SingleCountry = props => {
                         }}>
                             {payload => <DisplayItems payload={payload} page={routerData.page} taxonomy="country" />}
                         </Query>
-                    </div>
+                        <Pagination />
+                    </section>
                 );
             }}
         </Query>

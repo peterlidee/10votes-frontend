@@ -4,11 +4,14 @@ import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import getRouterData from '../lib/getRouterData';
 import { perPage } from '../config';
-import Error from './Error';
-import OrderItems from './OrderItems';
-import DisplayItems from './DisplayItems';
+
+import Loader from './snippets/Loader';
+import NewError from './NewError';
 import MetaTitle from './snippets/MetaTitle';
 import FancyTitle from './snippets/FancyTitle';
+import OrderItems from './OrderItems';
+import DisplayItems from './DisplayItems';
+import Pagination from './Pagination';
 
 const TAG_EXISTS_QUERY = gql`
     query TAG_EXISTS_QUERY($slug: String!){
@@ -58,29 +61,28 @@ const Tag = props => {
     // then call all
     const routerData = getRouterData(true);
     return (
-        <div>
-            <Query query={TAG_EXISTS_QUERY} variables={ routerData.variables }>
-                {({data, loading, error}) => {
-                    if(loading) return <p>...loading</p>
-                    if(error) return <Error error={error} />
-                    if(!data.tag) return <p>Hmmm, there doesn't seem to be a tag '{routerData.variables.slug}' :/.</p>
-                    return(
-                        <div>
-                            <MetaTitle>{`items with tag #${data.tag.name}`}</MetaTitle>
-                            <FancyTitle type="tag" tag={{ name: data.tag.name }} />
-                            <OrderItems />
-                            <Query query={ITEMS_WITH_TAG_QUERY} variables={{
-                                slug: routerData.variables.slug,
-                                orderBy: routerData.orderBy,
-                                skip: routerData.page * perPage - perPage || 0,
-                            }}>
-                                {payload => <DisplayItems payload={payload} page={routerData.page} taxonomy="tag" />}
-                            </Query>
-                        </div>
-                    )
-                }}
-            </Query>
-        </div>
+        <Query query={TAG_EXISTS_QUERY} variables={ routerData.variables }>
+            {({data, loading, error}) => {
+                if(loading) return <Loader containerClass="items-loader" />;                
+                if(error) return <NewError error={error} />
+                if(!data.tag) return <p className="no-data">Hmmm, there doesn't seem to be a tag '{routerData.variables.slug}' :/.</p>
+                return(
+                    <section>
+                        <MetaTitle>{`Pics with tag #${data.tag.name}`}</MetaTitle>
+                        <FancyTitle type="tag" tag={{ name: data.tag.name }} />
+                        <OrderItems />
+                        <Query query={ITEMS_WITH_TAG_QUERY} variables={{
+                            slug: routerData.variables.slug,
+                            orderBy: routerData.orderBy,
+                            skip: routerData.page * perPage - perPage || 0,
+                        }}>
+                            {payload => <DisplayItems payload={payload} page={routerData.page} taxonomy="tag" />}
+                        </Query>
+                        <Pagination />
+                    </section>
+                )
+            }}
+        </Query>
     );
 }
 

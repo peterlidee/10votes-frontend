@@ -15,7 +15,7 @@ const DisplayItems = props => {
     if(data.items.length == 0 && props.page && props.page > 1){
         return <p className="no-data">No more pictures to display.</p>
     }
-    if(data.items.length == 0) return <p className="no-data">No items yet for this {props.taxonomy}. Maybe you would like to <Link href="/addapicture"><a>add one</a></Link>?</p>
+    if(data.items.length == 0) return <p className="no-data">No pictures yet for this {props.taxonomy}. Maybe you would like to <Link href="/addapicture"><a>add one</a></Link>?</p>
     
     return(
         <div className="grid-items">
