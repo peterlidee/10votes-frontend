@@ -1,0 +1,54 @@
+.items__order{
+    display: flex;
+    justify-content: center;
+    margin: 2em 0;
+}
+.order__label{
+    order: 2; // put label in center
+    font-variant: small-caps;
+    margin: 0 1em;
+    opacity: .55;
+}
+.order__option{
+    flex: 0 0 55px; // make both equal with
+    position: relative;
+    color: $darkfont;
+
+    &:before, 
+    &:after{ // prepare triangles
+        position: absolute; top: 7px;
+        content: "";
+        width: 0;
+        height: 0;
+        border-style: solid;
+        opacity: .3;
+    }
+    &:before{ // set dimmed triangles
+        border-width: 8px 6px 0 6px;
+        border-color: $darkfont transparent transparent transparent;
+        right: 0; top: 15px;
+    }
+    &:after{ // set dimmed triangles
+        border-width: 0 6px 8px 6px;
+        border-color: transparent transparent $darkfont transparent;
+        right: 0; top: 5px;
+    }
+    &--0{  // align everyting right
+        order: 1;
+        text-align: right;
+        padding-right: 1.15em;
+        &:before, &:after{ right: 0; }
+    }
+    &--1{ // align everything left
+        order: 3; 
+        text-align: left;
+        padding-left: 1.15em;
+        &:before, &:after{ left: 0; }
+    }
+    &--desc:before{ // when this sort order is active, hightlight triangle color
+        opacity: 1;
+    }
+    &--asc:after{ // when this sort order is active, hightlight triangle color
+        opacity: 1;
+    }
+}

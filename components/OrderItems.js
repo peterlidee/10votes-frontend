@@ -15,18 +15,11 @@ const OrderItems = props => {
     const orderBy = routerData.orderBy;
     const activeOrder = orderBy.includes('created') ? 'date' : 'votes';
     const sortOrder = orderBy.includes('ASC') ? 'asc': 'desc';
-    
-    // temp arrows //TODO
-    const arrows = {
-        up: String.fromCharCode(9650),
-        down : String.fromCharCode(9660),
-        both: String.fromCharCode(9650) + String.fromCharCode(9660),
-    }
 
     return(
-        <div>
-            sort by: 
-            {["date", "votes"].map(option => (
+        <div className="items__order">
+            <span className={`order__label order__label--${activeOrder}`}>sort</span>
+            {["date", "votes"].map((option, i) => (
                 <Link
                     key={option}
                     href={{
@@ -44,20 +37,12 @@ const OrderItems = props => {
                         }
                     }}
                 >
-                    <a>
-                        {option === activeOrder && 
-                            <strong>
-                                {option}
-                                {sortOrder === 'asc' && <>{arrows.up}</>}
-                                {sortOrder === 'desc' && <>{arrows.down}</>}
-                            </strong>
-                        }
-                        {option != activeOrder && 
-                            <>
-                                {option}
-                                {arrows.both}
-                            </>
-                        }
+                    <a className={
+                        option === activeOrder ? 
+                            `order__option order__option--${i} order__option--${sortOrder}` : 
+                            `order__option order__option--${i}`
+                    }>
+                        {option}
                     </a>
                 </Link>
             ))}
