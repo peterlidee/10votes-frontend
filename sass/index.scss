@@ -7,14 +7,13 @@
 @import 'variables.scss';
 @import 'typography.scss';
 @import 'mixins';
-@import 'titles';
-@import 'order';
 
-
-
-@import 'main';
-@import 'grids.scss';
 @import 'header';
 @import 'loader';
+@import 'grids.scss';
+@import 'main';
+@import 'titles';
+@import 'order';
 @import 'item.scss';
 @import 'errors';
+@import 'pagination';

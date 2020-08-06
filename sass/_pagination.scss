@@ -1,0 +1,44 @@
+.items__pagination{
+    margin: 2em 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap; // ugly shortcut for long pagination
+    position: relative;
+    padding-top: 1em;
+    &:before{
+        content: "";
+        position: absolute; top: 0;
+        width: 100%;
+        max-width: 300px;
+        border-top: 1px solid #ccc;
+    }
+}
+.pagination__link{
+    color: $darkfont;
+    padding: .1em .3em;
+    display: block;
+    opacity: .55;
+    transition: transform .025s ease-out, opacity .1s ease-out;
+    &:hover{
+        opacity: 1;
+        transform: scale(1.15);
+    }
+    &--prevnext{
+        margin: 0 .5em;
+    }
+    &--current{
+        font-size: 2.4em;
+        padding: 0 .1em;
+        opacity: 1;
+        &:hover{ 
+            opacity: 1;
+        }
+    }
+    &--prevnext, 
+    &--current{
+        transform: scale(1);
+        &:hover{ 
+            transform: scale(1);
+        }
+    }
+}

@@ -1,8 +1,14 @@
 .items__order{
     display: flex;
     justify-content: center;
-    margin: 2em 0;
+    margin: 1em 0;
 }
+@media screen and (min-width: 550px){
+    .items__order{
+        margin: 2em 0;
+    }
+}
+
 .order__label{
     order: 2; // put label in center
     font-variant: small-caps;
