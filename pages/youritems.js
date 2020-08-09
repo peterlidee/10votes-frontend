@@ -1,12 +1,10 @@
 import PleaseSignin from '../components/account/PleaseSignin';
-import MyItems from '../components/MyItems';
+import YourItems from '../components/YourItems';
 
-const myItemsPage = props => (
-    <div>
-        <PleaseSignin>
-            <MyItems />
-        </PleaseSignin>
-    </div>
+const yourItemsPage = props => (
+    <PleaseSignin>
+        <YourItems />
+    </PleaseSignin>
 )
 
-export default myItemsPage;
+export default yourItemsPage;

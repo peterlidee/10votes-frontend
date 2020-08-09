@@ -82,7 +82,7 @@ const SingleLocation = props => {
             {({ error, data, loading }) => {
                 if(loading) return <Loader containerClass="items-loader" />;                
                 if(error) return <NewError error={error} />
-                if(!data.locations[0]) return( 
+                if(!data || !data.locations[0]) return( 
                     <p className="no-data">Hmmm, we don't have a place '{routerData.variables.slug} - {routerData.variables.countryCode}' in our database yet :/</p>
                 )
                 const { name, country } = data.locations[0];

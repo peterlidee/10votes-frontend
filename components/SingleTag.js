@@ -65,7 +65,7 @@ const Tag = props => {
             {({data, loading, error}) => {
                 if(loading) return <Loader containerClass="items-loader" />;                
                 if(error) return <NewError error={error} />
-                if(!data.tag) return <p className="no-data">Hmmm, there doesn't seem to be a tag '{routerData.variables.slug}' :/.</p>
+                if(!data || !data.tag) return <p className="no-data">Hmmm, there doesn't seem to be a tag '{routerData.variables.slug}' :/.</p>
                 return(
                     <section>
                         <MetaTitle>{`Pics with tag #${data.tag.name}`}</MetaTitle>

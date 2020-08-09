@@ -11,7 +11,7 @@ const DisplayItems = props => {
     const { error, data, loading } = props.payload;
     if(loading) return <Loader containerClass="items-loader" />;
     if(error) return <NewError error={error} />
-    if(!data.items) return <p className="no-data">No pictures to display.</p>
+    if(!data || !data.items) return <p className="no-data">No pictures to display.</p>
     if(data.items.length == 0 && props.page && props.page > 1){
         return <p className="no-data">No more pictures to display.</p>
     }

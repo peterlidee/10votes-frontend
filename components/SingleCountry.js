@@ -68,7 +68,7 @@ const SingleCountry = props => {
             {({loading, error, data}) => {
                 if(loading) return <Loader containerClass="items-loader" />;                
                 if(error) return <NewError error={error} />
-                if(!data.country) return <p className="no-data">Hmmm, we don't have a country '{routerData.variables.countryCode}' in our database yet :/</p>
+                if(!data || !data.country) return <p className="no-data">Hmmm, we don't have a country '{routerData.variables.countryCode}' in our database yet :/</p>
                 return(
                     <section>
                         <MetaTitle>{`Pics in ${data.country.name}`}</MetaTitle>

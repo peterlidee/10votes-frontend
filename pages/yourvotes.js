@@ -1,12 +1,10 @@
-import MyVotes from '../components/voting/MyVotes';
+import YourVotes from '../components/voting/YourVotes';
 import PleaseSignin from '../components/account/PleaseSignin';
 
-const myVotesPage = props => (
-    <div>
-        <PleaseSignin>
-            <MyVotes />
-        </PleaseSignin>
-    </div>
+const yourVotesPage = props => (
+    <PleaseSignin>
+        <YourVotes />
+    </PleaseSignin>
 )
 
-export default myVotesPage;
+export default yourVotesPage;

@@ -1,50 +1,55 @@
 //import { Query } from 'react-apollo';
 import Link from 'next/link';
+
 import User from './account/User';
+
 import Item from './Item';
 import MetaTitle from './snippets/MetaTitle';
-import Error from './Error';
+import Loader from './snippets/Loader';
+import NewError from './NewError';
+import UploadButton from './snippets/UploadButton';
 
 const MyItems = props => (
-    <>
-        <MetaTitle>My pics</MetaTitle>
+    <section>
+        <MetaTitle>Your pics</MetaTitle>
+        <h1 className="title">Your pics</h1>
         <User>
             {({ loading, error, data }) => {
-                
-                if(loading) return <p>...loading</p>
-                if(error) return <Error error={error} />
-                if(!data.me) return <p>Uhm, something went wrong. Try again?</p>
+                if(loading) return <Loader containerClass="items-loader" />;                
+                if(error) return <NewError error={error} />
+                if(!data.me) return <p className="no-data">Uhm, something went wrong :/. Try reloading the page.</p>;
                 const { me } = data;
-                
+
+                if(!me.items.length){
+                    return <p className="no-data">Looks like you haven't uploaded any pics yet. Maybe <Link href="/addapicture"><a>upload your first pic</a></Link>?</p>
+                }
+
+                const message = "You can edit or delete your uploaded pics here."
+
                 return(
-                    <div>
-                        {me.items.length === 0 &&
-                            <>
-                                <p>Looks like you haven't uploaded any pics yet.</p>
-                                <Link href="/addapicture">
-                                    <a>Upload your first pic</a>
-                                </Link>
-                            </>
-                        }
+                    <>
+                        {me.items.length == 10 && 
+                            <p className="items__message">{message} You used all your uploads. We like that.</p>}
+                        {me.items.length < 10 &&
+                            <p className="items__message">{message} You have {10 - me.items.length} uploads left.</p>}
+
                         {me.items.length > 0 &&
-                            <div className="grid-items">
+                            <section className="grid-items">
                                 {me.items.map(item => <Item key={item.id} item={item} showEdit={true} hideVote={true} /> )}
-                            </div>
+                            </section>
                         }
-                        {me.items.length < 10 && me.items.length > 0 &&
-                            <>
-                                <Link href="/addapicture">
-                                    <a>Upload another pic</a>
-                                </Link>
-                                ({10-me.items.length} uploads left)
-                            </>
+                        {me.items.length < 10 &&
+                            <p className="no-data extra-margin">
+                                You have {10 - me.items.length} uploads left. 
+                                <UploadButton />
+                            </p>
                         }
-                    </div>
+                    </>
                 )
 
             }}
         </User>
-    </>
+    </section>
 )
 
 export default MyItems;

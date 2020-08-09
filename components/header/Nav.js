@@ -2,8 +2,7 @@ import Link from 'next/link';
 import User from '../account/User';
 import Logout from '../account/Logout';
 import MenuContext from './MenuContext';
-
-import IconUpload from './IconUpload';
+import UploadButton from '../snippets/UploadButton';
 
 const Nav = () => (
     <MenuContext.Consumer>
@@ -27,15 +26,15 @@ const Nav = () => (
                                 <>
                                     {(me) && (
                                         <>
-                                            <Link href="/myvotes">
+                                            <Link href="/yourvotes">
                                                 <a className="mymenu myvotes">
-                                                    <span className="mymenu__label">my votes</span>
+                                                    <span className="mymenu__label">your votes</span>
                                                     <span className="mymenu__number">{me.votes.length}</span>
                                                 </a>
                                             </Link>
-                                            <Link href="/myitems">
+                                            <Link href="/youritems">
                                                 <a className="mymenu myitems">
-                                                    <span className="mymenu__label">my pics</span>
+                                                    <span className="mymenu__label">your pics</span>
                                                     <span className="mymenu__number">{me.items.length}</span>
                                                 </a>
                                             </Link>
@@ -45,13 +44,8 @@ const Nav = () => (
                             )
                         }}
                     </User>
-
-                    <Link href="/addapicture">
-                        <a className="upload">
-                            <IconUpload />
-                            <span className="upload__label">upload</span>
-                        </a>
-                    </Link>
+                    
+                    <UploadButton />
 
                     <User>
                         {({ loading, error, data }) => {

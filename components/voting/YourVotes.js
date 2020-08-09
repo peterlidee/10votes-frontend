@@ -1,31 +1,39 @@
 import User from '../account/User';
+
 import Item from '../Item';
-import Error from '../Error';
+import Loader from '../snippets/Loader';
+import NewError from '../NewError';
 import MetaTitle from '../snippets/MetaTitle';
 
-const MyVotes = props => (
-    <>
-        <MetaTitle>My votes</MetaTitle>
+
+const YourVotes = props => (
+    <section>
+        <MetaTitle>Your votes</MetaTitle>
+        <h1 className="title">Your votes</h1>
         <User>
             {({ data, loading, error }) => {
-
-                if(loading) return <p>...loading</p>
-                if(error) return <Error error={error} />
-                if(!data.me) return <p>Uhm, something went wrong. Try again?</p>;
+                if(loading) return <Loader containerClass="items-loader" />;                
+                if(error) return <NewError error={error} />
+                if(!data.me) return <p className="no-data">Uhm, something went wrong :/. Try reloading the page.</p>;
                 const { me } = data;
 
                 if(!me.votes.length){
-                    return <p>Looks like you don't have any votes. Nothing to see here then. :/</p>
+                    return <p className="no-data">Looks like you don't have any votes yet. Nothing to see here then.</p>
                 }
                 return(
-                    <div>
-                        {me.votes.length === 10 && <p>All 10 votes cast.</p>}
-                        {me.votes.map(vote => <Item key={vote.id} item={vote.item} />) }
-                    </div>
+                    <>
+                        {me.votes.length == 10 && 
+                            <p className="items__message">You used up all your votes. Hope you chose wisely.</p>}
+                        {me.votes.length < 10 &&
+                            <p className="items__message">You have {10 - me.votes.length} votes left.</p>}
+                        <div className="grid-items">
+                            {me.votes.map(vote => <Item key={vote.id} item={vote.item} />) }
+                        </div>
+                    </>
                 )
             }}
         </User>
-    </>
+    </section>
 );
 
-export default MyVotes;
+export default YourVotes;
