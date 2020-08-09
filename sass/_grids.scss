@@ -17,3 +17,12 @@
     }
 
 }
+
+/* hold a single item view */
+.grid-single-item{
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-content: center;
+
+    margin: 5em 0;
+}

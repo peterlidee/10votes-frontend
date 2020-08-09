@@ -1,5 +1,5 @@
 /*
-    the styling of the Item component
+    the styling of the Item component and SingleItem component
 */
 
 // the item gets grid for gap and to allow the image link to center
@@ -21,6 +21,11 @@
     max-width: 100%;
     max-height: 650px; // should correspond with .grid gtc // todo check if this needs to be lower
     display: block; // no inline spaces!
+
+    &--large{ // for single item display
+        justify-self: center;
+        max-height: 90vh;
+    }
 }
 
 
