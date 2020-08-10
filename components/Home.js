@@ -1,6 +1,8 @@
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
-import Error from './Error';
+
+import Loader from './snippets/Loader';
+import NewError from './NewError';
 import Item from './Item';
 import MetaTitle from './snippets/MetaTitle';
 
@@ -62,35 +64,32 @@ const MOST_VOTED_ITEMS_QUERY = gql`
     }
 `;
 
-const DisplayHomeItems = props => {
-
-    return(
+const DisplayHomeItems = props => (
+    <section>
+        <h1 className="title">{props.title}</h1>
         <Query query={props.query}>
             {({loading, error, data}) => {
-                if(loading) return <p>...loading</p>
-                if(error) return <Error error={error} />
-                if(!data) return <p>Something went wrong</p>
-                if(!data.items.length) return <p>No items added yet.</p>
-                //console.log('data', data)
+                if(loading) return <Loader containerClass="items-loader" />;                
+                if(error) return <NewError error={error} />
+                if(!data) return <p className="no-data">Something went wrong</p>
+                if(!data.items.length) return <p className="no-data">No items added yet.</p>
+
                 return(
-                    <div>
-                        <h1 className="title">{props.title}</h1>
-                        <div className="grid-items">
-                            {data.items.map(item => <Item key={item.id} item={item} />)}
-                        </div>
+                    <div className="grid-items">
+                        {data.items.map(item => <Item key={item.id} item={item} />)}
                     </div>
                 )
             }}
         </Query>
-    )
-};
+    </section>
+);
 
 const Home = props => (
-    <div>
+    <>
         <MetaTitle>Home</MetaTitle>
         <DisplayHomeItems query={RECENT_ITEMS_QUERY} title="Recent Items" />
         <DisplayHomeItems query={MOST_VOTED_ITEMS_QUERY} title="Popular items" />
-    </div>
+    </>
 )
 
 export default Home;

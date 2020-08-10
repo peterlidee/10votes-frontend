@@ -23,7 +23,7 @@
     line-height: 1.618em;
     position: relative; top: 2px; // slightly adjust for better positioning
 
-    &:active{
+    &:focus{
         outline: none;
     }
     
@@ -225,6 +225,8 @@
     }
     &:active, &:visited{
         color: $darkfont;
+    }
+    &:focus{
         outline: none;
     }
 }
@@ -238,7 +240,7 @@
     display: inline-block;
     min-height: 1.625em;
     
-    &:active{
+    &:focus{
         outline: none;
     }
 
@@ -257,13 +259,13 @@
 .logout__button{
     @include button-as-link;
     color: $darkfont;
-    &:active{
+    &:focus{
         outline: none;
     }
 }
 .login__button{
     color: $darkfont;
-    &:active{
+    &:focus{
         outline: none;
     }
 }
