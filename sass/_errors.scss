@@ -6,7 +6,7 @@
 
 .error{
     display: grid;
-    grid-template-columns: 1em auto 1em;
+    grid-template-columns: 20px auto 20px;
     justify-content: center;
     text-align: center;
     
@@ -17,6 +17,7 @@
         height: 20px;
         font-size: 14px;
         line-height: 1.4285em; // = 20px;
+        line-height: 24px; // = 24px;
         color: #fff;
         
         &:before{
@@ -106,5 +107,16 @@
             height: 0;
         } 
 
+    }
+}
+
+.form{
+    .error{
+        margin: 0 0 1.5em 0;
+        padding: 1em .15em;
+        background: darken($blue, 10%);
+        &__inner{
+            color: #fff;
+        }
     }
 }

@@ -6,3 +6,7 @@
     text-decoration: underline;
     cursor: pointer;
 }
+
+@mixin border-radius{
+    border-radius: $borderRadius;
+}

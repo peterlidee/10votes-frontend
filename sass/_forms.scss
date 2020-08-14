@@ -1,0 +1,93 @@
+.form{
+    &--login{
+
+    }
+    background: $blue;
+    padding: 3.5em 2em 3em 2em;
+    border-radius: 5px;
+
+    &__fieldset{
+        border: none; padding: 0; margin: 0; // reset
+    }
+    &__title{
+        text-align: center;
+        margin: 0 0 1em 0;
+        color: #fff;
+        font-style: italic;
+    }
+
+    &__input, &__label{
+        text-align: center;
+        width: 100%;
+    }
+    
+    &__label{
+        display: inline-block;
+        color: #fff;
+        text-shadow: 0 0 3px darken($blue, 15%);
+        font-variant: small-caps;
+        transform: translateY(1.8em);
+        transition: transform .1s ease-out;
+        &--offset{
+            transform: translateY(0);
+        }
+    }
+    
+    &__input{
+        display: block;
+        margin: 0 auto .5em auto;
+        padding: 0 .5em;
+        border: none;
+        @include border-radius;
+        background: $whiteback;
+        color: $darkfont;
+        line-height: 2em;
+        opacity: .25;
+        transition: opacity .1s ease-out;
+        &--active{
+            opacity: 1;
+        }
+        &:focus{
+            outline: none;
+        }
+    }
+
+    &__submit{
+        display: block;
+        border: none;
+        background: $yellow;
+        margin: 2em auto 1em auto;
+        @include border-radius;
+        padding: .25em 1em;
+        width: 100%;
+        max-width: 150px;
+        cursor: pointer;
+        position: relative;
+        color: $darkfont;
+        
+        .form__fieldset[disabled] &{
+            opacity: .5;
+            cursor: wait;
+        }
+    }
+
+    &__placeholder{
+        position: relative;
+        min-height: 1.625em;
+        margin: .5em 0 .5em 0;
+    }
+    &__links{
+        //margin-top: 1em;
+    }
+    &__link{
+        color: #fff;
+        display: block;
+        text-align: center;
+        opacity: .75;
+        transition: opacity .065s ease-in;
+        &:hover{
+            opacity: 1;
+        }
+    }
+    
+}

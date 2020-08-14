@@ -42,10 +42,19 @@
   top: 10px;
   right: 8px;
 }
+
 .items-loader{
   display: flex;
   justify-content: center;
   height: 42px; padding-top: 24px; margin-bottom: 1.625em; // this will align the loader with possible <p>text</p>
+}
+
+.form-loader{
+  height: 1.625em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .loader:after{ background: darken($blue, 15%); }
 }
 
 

@@ -7,7 +7,6 @@ const CURRENT_USER_QUERY = gql`
         me {
             id
             email
-            name
             permissions
             items{
                 id

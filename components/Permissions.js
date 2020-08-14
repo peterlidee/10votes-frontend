@@ -7,7 +7,6 @@ const ALL_USERS_QUERY = gql`
     query ALL_USERS_QUERY{
         users{
             id
-            name
             email
             permissions
         }
@@ -65,7 +64,7 @@ const Permissions = props => (
 class Userpermissions extends React.Component{
     static propTypes = {
         user: PropTypes.shape({
-            name: PropTypes.string,
+            //name: PropTypes.string,
             email: PropTypes.string,
             id: PropTypes.string,
             permissions: PropTypes.array,
@@ -100,7 +99,7 @@ class Userpermissions extends React.Component{
                         <>
                             {error && <tr><td colSpan="8"><Error error={error} /></td></tr>}
                             <tr>
-                                <td>{user.name}</td>
+                                {/*<td>{user.name}</td>*/}
                                 <td>{user.email}</td>
                                 {possiblePermissions.map(permission => (
                                     <td key={permission}>

@@ -26,3 +26,9 @@
 
     margin: 5em 0;
 }
+
+.form-grid{ // for user forms
+    display: grid;
+    justify-content: center;
+    grid-template-columns: minmax(200px, 350px);
+}
