@@ -56,7 +56,7 @@ class Signup extends React.Component{
                     if(called && !error && !loading && data && data.signup){
                         return <p className="no-data">You are logged into your new account: {data.signup.email}.</p>
                     }
-                    if(error){ // overwrite the non UX graphQl error
+                    if(error){ // overwrite the bad UX graphQl error
                         if (error.message == "GraphQL error: A unique constraint would be violated on User. Details: Field name = email"){
                             console.log('state', this.state.email)
                             const calledEmail = this.state.email ? `The email: ${this.state.email}` : "This email";

@@ -26,8 +26,10 @@
         color: #fff;
         text-shadow: 0 0 3px darken($blue, 15%);
         font-variant: small-caps;
-        transform: translateY(1.8em);
         transition: transform .1s ease-out;
+        &--placeholder{
+            transform: translateY(1.8em);
+        }
         &--offset{
             transform: translateY(0);
         }
@@ -59,8 +61,8 @@
         margin: 2em auto 1em auto;
         @include border-radius;
         padding: .25em 1em;
-        width: 100%;
-        max-width: 150px;
+        //width: 100%;
+        min-width: 120px;
         cursor: pointer;
         position: relative;
         color: $darkfont;

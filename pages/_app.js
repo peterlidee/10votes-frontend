@@ -42,7 +42,7 @@ class MyApp extends App{
         }
 
         // add router event,
-        // everytime a linik is clicked, close the menu (MenuContext) if it was open
+        // everytime a link is clicked, close the menu (MenuContext) if it was open
         Router.events.on('routeChangeStart', this.resetMenu)
         // and handle possible error
         Router.events.on('routeChangeError', (err, url) => {
