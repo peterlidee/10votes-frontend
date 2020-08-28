@@ -231,7 +231,7 @@
     }
 }
 
-.upload{
+.menu-upload{
     background: $green;
     padding: .1em 1em .1em 2.4em;
     border-radius: 2px;
@@ -244,7 +244,7 @@
         outline: none;
     }
 
-    &__icon{
+    .upload__icon{
         fill: #fff;
         width: 15px;
         height: 18px;

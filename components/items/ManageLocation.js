@@ -60,7 +60,7 @@ class ManageLocation extends React.Component{
 
     render(){
         return(
-            <div>
+            <div className="crud-item crud__location-container">
 
                 { // if there's a locationId, it means an existing location was selected
                 this.props.locationId &&
@@ -78,7 +78,7 @@ class ManageLocation extends React.Component{
                             {(client) => (
                                 <>
                                     <label htmlFor="locationName">
-                                        Add a place or city 
+                                        Add a place 
                                     </label>
                                     <input 
                                         type="text" 

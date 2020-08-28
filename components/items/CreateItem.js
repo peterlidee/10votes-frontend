@@ -1,4 +1,3 @@
-import React, { Component } from 'react';
 import { Query, Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import Router from 'next/router';
@@ -10,6 +9,7 @@ import ManageLocation from './ManageLocation';
 import { CURRENT_USER_QUERY } from '../account/User';
 import Error from '../Error';
 import MetaTitle from '../snippets/MetaTitle';
+import ManageUpload from './ManageUpload';
 
 const CREATE_ITEM_MUTATION = gql`
     mutation CREATE_ITEM_MUTATION(
@@ -39,10 +39,10 @@ const CREATE_ITEM_MUTATION = gql`
     }
 `;
 
-class CreateItem extends Component{
+class CreateItem extends React.Component{
     state = {
-        image: '',
-        largeImage: '',
+        image: "https://res.cloudinary.com/diidd5fve/image/upload/v1598625542/10votes/fldeyu2ufrdtswkziqby.jpg",
+        largeImage: "https://res.cloudinary.com/diidd5fve/image/upload/c_limit,h_1500,q_auto,w_1500/v1598625542/10votes/fldeyu2ufrdtswkziqby.jpg",
         loading: false,
         locationName: '',
         locationId: '',
@@ -54,42 +54,9 @@ class CreateItem extends Component{
         ],
     }
 
-    uploadFile = async (e) => {
-        this.handleLoading(true);
-        const files = e.target.files;
-
-        // validate the file, we only accept .jpeg, .jpg or .png
-        if(!validateFile(files[0])){ // not valid, handle
-            this.handleCancelAll('You can only upload .jpg, .jpeg or .png files.');
-            // reset the form
-            document.getElementById('createItemForm').reset()
-            return null;
-        }
-
-        const data = new FormData();
-        data.append('file', files[0]);
-        data.append('upload_preset', '10votes');
-        const res = await fetch('https://api.cloudinary.com/v1_1/diidd5fve/image/upload', {
-            method: 'POST',
-            body: data
-        });
-        const file = await res.json();
-        //console.log('file res', file)
-
-        // this is validation of the server response
-        if(file.error){
-            // something went wrong
-            // we cancel all cause input file is the only one shown
-            this.handleCancelAll(`Something went wrong (${file.error.message}), please try again`);
-            // reset the form
-            document.getElementById('createItemForm').reset()
-            return null;
-        }
+    handleSetState = (newState) => {
         this.setState({
-            image: file.secure_url,
-            largeImage: file.eager[0].secure_url,
-            errorMessage: "",
-            loading: false,
+            ...newState
         });
     }
 
@@ -191,65 +158,60 @@ class CreateItem extends Component{
 
     render(){
         return(
-            <>
-            <MetaTitle>Add an item</MetaTitle>
-            <h2>Add an item</h2>
             <Query query={CURRENT_USER_QUERY}>
-                {({ error, data, loading }) => {
-                    if(loading) return <p>Loading</p>;
-                    if(error) return <Error error={error} />;
-                    if(!loading && data.me && data.me.items.length >= 10){
+                {({ data }) => {
+                    // since this component if guarded by the please signin component, we don't need to worry about loading or error
+                    if( data.me.items.length >= 10 ){
                         return <p>You used up all your uploads. Manage them here: <Link href="/myitems"><a>my pics</a></Link></p>
                     }
                     return(
                         <Mutation mutation={ CREATE_ITEM_MUTATION } refetchQueries={[{ query: CURRENT_USER_QUERY }]}>
                             {(createItem, {loading, error}) => (
-                                <form onSubmit={ e => this.handleCreateItem(e, createItem) } id="createItemForm">
-                                    {this.state.errorMessage && 
-                                        <p>{this.state.errorMessage}</p>
-                                    }
-                                    <Error error={error} />
-                                    <fieldset disabled={loading}>
-                                        {this.state.image == '' &&
-                                            <label htmlFor="file">
-                                                Image
-                                                <input type="file" id="file" name="file" placeholder="upload an image" onChange={this.uploadFile} required accept=".jpg, .jpeg, .png" />    
-                                                {this.state.loading && <p>...loading image</p>}
-                                            </label>
-                                        }
+                                <div className="item-crud-grid">
+                                    <form onSubmit={ e => this.handleCreateItem(e, createItem) } id="createItemForm">
+                                        <MetaTitle>Add an picture</MetaTitle>
+                                        <h2 className="item-crud__title title">Add a Picture</h2>
 
-                                        {this.state.image && 
-                                            <>
-                                                <button type="button" onClick={() => this.handleCancelAll('')}>&times; cancel</button>
-                                                
-                                                <img src={this.state.image} alt="upload preview" width="300" />
-                    
-                                                <ManageLocation 
-                                                    handleLocationSelection={this.handleLocationSelection}
-                                                    handleLocationChange={this.handleLocationChange}
-                                                    locationName={this.state.locationName}
-                                                    locationId={this.state.locationId}
-                                                    />
+                                        <Error error={error} />
+                                        <fieldset disabled={loading}>
+                                        
+                                            <button type="button" onClick={() => this.handleCancelAll()}>&times; cancel all</button>
 
-                                                <ManageTags 
-                                                    tags={this.state.tags}
-                                                    handleTagChange={this.handleTagChange}
-                                                    handleTagSelection={this.handleTagSelection}
-                                                    />
+                                            <ManageUpload 
+                                                image={this.state.image}
+                                                handleSetState={this.handleSetState}
+                                                handleCancelAll={this.handleCancelAll}
+                                            />
 
-                                                <button disabled={this.state.loading}>submit</button>
+                                            {this.state.image && 
+                                                <>
+                        
+                                                    <ManageLocation 
+                                                        handleLocationSelection={this.handleLocationSelection}
+                                                        handleLocationChange={this.handleLocationChange}
+                                                        locationName={this.state.locationName}
+                                                        locationId={this.state.locationId}
+                                                        />
 
-                                            </>
-                                        }
+                                                    <ManageTags 
+                                                        tags={this.state.tags}
+                                                        handleTagChange={this.handleTagChange}
+                                                        handleTagSelection={this.handleTagSelection}
+                                                        />
 
-                                    </fieldset>
-                                </form>
+                                                    <button disabled={this.state.loading}>submit</button>
+
+                                                </>
+                                            }
+
+                                        </fieldset>
+                                    </form>
+                                </div>
                             )}
                         </Mutation>
                     )
                 }}
             </Query>
-        </>
         )
     }
 }

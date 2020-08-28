@@ -2,7 +2,6 @@ import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 
 import { CURRENT_USER_QUERY } from '../account/User';
-import Error from '../Error';
 import NewError from '../NewError';
 
 const DELETE_ITEM_MUTATION = gql`

@@ -1,11 +1,11 @@
 import Link from 'next/link';
-import IconUpload from '../header/IconUpload';
+import IconUpload from './IconUpload';
 
 const UploadButton = () => (
     <Link href="/addapicture">
-        <a className="upload">
+        <a className="menu-upload">
             <IconUpload />
-            <span className="upload__label">upload</span>
+            <span className="menu-upload__label">upload</span>
         </a>
     </Link>
 );

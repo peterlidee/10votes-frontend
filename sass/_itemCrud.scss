@@ -1,0 +1,44 @@
+// these styles controle the item creating and editing
+
+// upload button
+// we visually hide the actual input and use the label as button
+// +/- https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/
+.crud-upload__input{
+    width: 0.1px;
+    height: .1px;
+    opacity: 0;
+	overflow: hidden;
+	position: absolute;
+    z-index: -1;
+    &:focus + label{
+        outline: 1px dotted #000;
+    }
+    &[disabled] + label{
+        opacity: .5;
+        cursor: wait;
+    }
+}
+.crud-upload__label{
+    background: $green;
+    padding: .1em 1em .1em 2.4em;
+    border-radius: $borderRadius;
+    text-decoration: none;  
+    color: #fff;
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    
+    .upload__icon{
+        fill: #fff;
+        width: 15px;
+        height: 18px;
+        position: absolute;
+        left: 12px; top: 6px; 
+    }
+}
+
+.upload-loader{
+    width: 24px;
+    display: inline-block;
+    margin-left: 1em;
+}
