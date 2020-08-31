@@ -138,7 +138,7 @@ class Search extends React.Component{
         return(
             <Downshift 
                 itemToString={item => item === null ? '' : `${item.name}`}
-                ref={downshift => (this.downshift = downshift)}
+                //ref={downshift => (this.downshift = downshift)}
                 onChange={this.routeToTag}
             >
                 {({ getInputProps, getItemProps, isOpen, inputValue, highlightedIndex }) => {

@@ -64,6 +64,7 @@
     flex: 0 0 100%;
     margin: 1em 0 0 0;
     position: relative;  // for dropdown
+    z-index: 10000;
 }
 
 @media screen and (min-width: 800px){

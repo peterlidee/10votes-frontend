@@ -2,7 +2,6 @@ import { Query, Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import Router from 'next/router';
 import Link from 'next/link';
-import validateFile from '../../lib/validateFile';
 
 import ManageTags from './ManageTags';
 import ManageLocation from './ManageLocation';
@@ -10,6 +9,7 @@ import { CURRENT_USER_QUERY } from '../account/User';
 import Error from '../Error';
 import MetaTitle from '../snippets/MetaTitle';
 import ManageUpload from './ManageUpload';
+import InputSuggestion from './InputSuggestion';
 
 const CREATE_ITEM_MUTATION = gql`
     mutation CREATE_ITEM_MUTATION(
@@ -41,10 +41,13 @@ const CREATE_ITEM_MUTATION = gql`
 
 class CreateItem extends React.Component{
     state = {
-        image: "https://res.cloudinary.com/diidd5fve/image/upload/v1598625542/10votes/fldeyu2ufrdtswkziqby.jpg",
-        largeImage: "https://res.cloudinary.com/diidd5fve/image/upload/c_limit,h_1500,q_auto,w_1500/v1598625542/10votes/fldeyu2ufrdtswkziqby.jpg",
+        //image: "https://res.cloudinary.com/diidd5fve/image/upload/v1598625542/10votes/fldeyu2ufrdtswkziqby.jpg",
+        //largeImage: "https://res.cloudinary.com/diidd5fve/image/upload/c_limit,h_1500,q_auto,w_1500/v1598625542/10votes/fldeyu2ufrdtswkziqby.jpg",
+        image: "",
+        largeImage: "",
         loading: false,
         locationName: '',
+        location: '',
         locationId: '',
         errorMessage: "",
         tags: [
@@ -52,7 +55,10 @@ class CreateItem extends React.Component{
             {name: "", id: ""},
             {name: "", id: ""},
         ],
+        focus: false,
     }
+
+    handleTest = () => console.log('testing from createItem')
 
     handleSetState = (newState) => {
         this.setState({
@@ -177,32 +183,37 @@ class CreateItem extends React.Component{
                                         
                                             <button type="button" onClick={() => this.handleCancelAll()}>&times; cancel all</button>
 
+
                                             <ManageUpload 
                                                 image={this.state.image}
                                                 handleSetState={this.handleSetState}
                                                 handleCancelAll={this.handleCancelAll}
-                                            />
+                                                />
+                                            
+                                            <InputSuggestion 
+                                                handleSetState={this.handleSetState} 
+                                                location={this.state.location}
+                                                handleTest={this.handleTest}
+                                                />
 
-                                            {this.state.image && 
-                                                <>
-                        
-                                                    <ManageLocation 
-                                                        handleLocationSelection={this.handleLocationSelection}
-                                                        handleLocationChange={this.handleLocationChange}
-                                                        locationName={this.state.locationName}
-                                                        locationId={this.state.locationId}
-                                                        />
+                                            <ManageLocation 
+                                                handleLocationSelection={this.handleLocationSelection}
+                                                handleLocationChange={this.handleLocationChange}
+                                                locationName={this.state.locationName}
+                                                locationId={this.state.locationId}
+                                                handleSetState={this.handleSetState}
+                                                focus={this.state.focus}
+                                                />
 
-                                                    <ManageTags 
-                                                        tags={this.state.tags}
-                                                        handleTagChange={this.handleTagChange}
-                                                        handleTagSelection={this.handleTagSelection}
-                                                        />
+                                            <ManageTags 
+                                                tags={this.state.tags}
+                                                handleTagChange={this.handleTagChange}
+                                                handleTagSelection={this.handleTagSelection}
+                                                handleSetState={this.handleSetState}
+                                                focus={this.state.focus}
+                                                />
 
-                                                    <button disabled={this.state.loading}>submit</button>
-
-                                                </>
-                                            }
+                                            <button disabled={this.state.loading}>submit</button>
 
                                         </fieldset>
                                     </form>

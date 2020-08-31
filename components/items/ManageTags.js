@@ -70,15 +70,19 @@ class ManageTags extends React.Component{
 
     render(){
         return(
-            <fieldset>
-                <legend>add tag(s)</legend>
+            <div className="crud__section crud__tags-container">
+                <div>Add tag(s)</div>
                 <ApolloConsumer>
                     {(client) => (
                         this.props.tags.map((tag, i) => (
                             <div key={`tag-${i}`}>
                                 <input  
                                     type="text" placeholder="enter a tag" minLength="3" maxLength="25"
-                                    value={tag.name} 
+                                    value={tag.name}
+                                    onFocus={() => {
+                                        this.props.handleSetState({focus: `tag-${i}`})
+                                        console.log('tag focussed' ,`tag-${i}`)
+                                    }}
                                     onChange={e => {
                                         // handle change
                                         this.props.handleTagChange(e.target.value, i);
@@ -110,7 +114,7 @@ class ManageTags extends React.Component{
                         ))
                     )}
                 </ApolloConsumer>
-            </fieldset>
+            </div>
         )
     }
 }

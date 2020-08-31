@@ -67,14 +67,16 @@ class ManageUpload extends React.Component{
         return(
             <>
                 {!this.props.image &&
-                    <div className="crud-item crud-upload__container">
+                    <div className="crud__section crud-upload__container">
                         <input 
                             type="file" id="file" name="file" 
                             placeholder="upload an image" 
                             onChange={this.uploadFile} 
                             required 
                             accept=".jpg, .jpeg, .png" 
-                            className="crud-upload__input" disabled={this.state.loading} />
+                            className="crud-upload__input" disabled={this.state.loading}
+                            onFocus={() => this.props.handleSetState({focus: 'upload'})}
+                            />
                         <label htmlFor="file" className="crud-upload__label">
                             <IconUpload />
                             <span className="crud-upload__label__text">Select your image</span>

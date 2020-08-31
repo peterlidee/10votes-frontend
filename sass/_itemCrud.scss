@@ -1,5 +1,13 @@
 // these styles controle the item creating and editing
 
+.crud__section{
+    background: #eee;
+    margin-bottom: 2em;
+}
+.crud__label{
+    display: block;
+}
+
 // upload button
 // we visually hide the actual input and use the label as button
 // +/- https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/

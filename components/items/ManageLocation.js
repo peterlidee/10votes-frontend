@@ -41,7 +41,7 @@ class ManageLocation extends React.Component{
                 fetchPolicy: "network-only"
             });
             this.setState({
-                locationQuery: res.data.locations,
+                locationQuery: res.data.locations.slice(0,10),
             });
         }else{
             this.setState({
@@ -49,7 +49,6 @@ class ManageLocation extends React.Component{
             })
         }
     }, 350);
-
 
     handleSelect = (location) => {
         this.props.handleLocationSelection(location);
@@ -60,54 +59,61 @@ class ManageLocation extends React.Component{
 
     render(){
         return(
-            <div className="crud-item crud__location-container">
+            <div className="crud__section crud__location-container">
 
-                { // if there's a locationId, it means an existing location was selected
-                this.props.locationId &&
+                {
+                // if there's a locationId, it means an existing location was selected
+                // no locationId means there's a new location or no location
+                }
+
+                <>
+                    <ApolloConsumer>
+                        {(client) => (
+                            <>
+                                <label htmlFor="locationName" className="crud__label">
+                                    Add a place (Belgium only for now)
+                                </label>
+                                <input 
+                                    type="text" 
+                                    value={this.props.locationName} 
+                                    id="locationName" 
+                                    name="locationName"
+                                    className="crud__input"
+                                    readOnly={Boolean(this.props.locationId)}
+                                    onFocus={() => {
+                                        this.props.handleSetState({focus: 'location'});
+                                        console.log('hey, I\'m focussed');
+                                    }}
+                                    onChange={(e) => {
+                                        e.persist();
+                                        this.props.handleLocationChange(e);
+                                        this.handleSearch(e, client);
+                                    }}/>
+                                {this.props.locationName.length > 0 &&
+                                    <button 
+                                        type="button" 
+                                        onClick={() => this.handleSelect({ name: "", id: "" })}>
+                                            &times;
+                                    </button>
+                                }
+                            </>
+                        )}
+                    </ApolloConsumer>
+
                     <div>
-                        location: 
-                        {this.props.locationName} - {this.country.name} 
-                        <button type="button" onClick={() => this.handleSelect({ name: "", id: "" })}>&times;</button>
+                        { 
+                        this.props.focus == 'location' &&
+                        // if the Query returned results, display them here
+                        this.state.locationQuery.map(location => (
+                            <ItemSelect 
+                                key={location.id}
+                                name={location.name} 
+                                id={location.id} 
+                                handleSelect={e => this.handleSelect(location)} 
+                                checked={false} />
+                        ))}
                     </div>
-                }
-
-                { // no locationId means there's a new location or no location
-                !this.props.locationId &&
-                    <>
-                        <ApolloConsumer>
-                            {(client) => (
-                                <>
-                                    <label htmlFor="locationName">
-                                        Add a place 
-                                    </label>
-                                    <input 
-                                        type="text" 
-                                        value={this.props.locationName} 
-                                        id="locationName" 
-                                        name="locationName" 
-                                        onChange={(e) => {
-                                            e.persist();
-                                            this.props.handleLocationChange(e);
-                                            this.handleSearch(e, client);
-                                        }}/>
-                                    <input type="text" readOnly value={this.country.name} />
-                                </>
-                            )}
-                        </ApolloConsumer>
-
-                        <div>
-                            { // if the Query returned results, display them here
-                            this.state.locationQuery.map(location => (
-                                <ItemSelect 
-                                    key={location.id}
-                                    name={location.name} 
-                                    id={location.id} 
-                                    handleSelect={e => this.handleSelect(location)} 
-                                    checked={false} />
-                            ))}
-                        </div>
-                    </>
-                }
+                </>
             </div>
         )
     }
