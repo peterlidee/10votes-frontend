@@ -80,10 +80,6 @@ class ManageLocation extends React.Component{
                                     name="locationName"
                                     className="crud__input"
                                     readOnly={Boolean(this.props.locationId)}
-                                    onFocus={() => {
-                                        this.props.handleSetState({focus: 'location'});
-                                        console.log('hey, I\'m focussed');
-                                    }}
                                     onChange={(e) => {
                                         e.persist();
                                         this.props.handleLocationChange(e);

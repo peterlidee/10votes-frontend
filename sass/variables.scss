@@ -3,9 +3,11 @@ $blue: #6b9ac4;
 $red: #cc444b;
 $green: #308048;
 $darkfont: #403738;
-$lightfont: rgba($darkfont, .55);
+$lightfont: rgba($darkfont, .55); // ? used?
 $whiteback: #f6f6f6;
 $yellow: #F8F272;
+$orange: #e26000; // #ff6c00; // warning, error
+$lightgrey: #ccc;
 
 // border-radius
 $borderRadius: 2px;

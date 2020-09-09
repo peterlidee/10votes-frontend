@@ -1,0 +1,95 @@
+// styles form__number, form__section, form__label and form__input and button
+
+.form-part{
+
+    max-width: 500px;
+    margin: 0 auto 2em auto;
+
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    grid-gap: 1em 1em;
+
+    //reset fieldset
+    //border: none; padding: 0;
+
+    &__number{
+        position: relative;
+        &:after{ // the line that connects the numbers
+            content: "";
+            display: block;
+            width: 2px;
+            background: #ccc;
+            transition: background-color .075s ease-in;
+            height: calc(100% + 1em);
+            position: absolute;
+            top: 0;
+            left: 13px;
+        }
+        &.validForm:after   { background: $blue; }
+        &.last:after        { content: none; }
+
+        &__inner{
+            width: 28px;
+            height: 28px;
+            color: #fff;
+            border-radius: 50%;
+            // center align
+            display: flex; justify-content: center; align-items: center;
+            // get content before the line
+            position: relative; z-index: 10; 
+            // dynamic
+            background: #ccc;
+            transition: background-color .075s ease-in;
+            .validField &{ background: $blue; }
+            .errorField &{ background: $orange; }
+        }
+    }
+
+    // &__section{}
+
+    &__labelish{
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end; // keep the __optional close to input
+        color: $darkfont;
+        // &__text{}
+        &__optional{
+            font-variant: small-caps;
+            opacity: .55;
+        }
+    }
+
+    &__input{
+        @include base-input;
+    }
+
+    &__button{
+        background: $green;
+        border: none;
+        color: #fff;
+        padding: .25em 1em;
+        @include border-radius;
+        min-width: 7.5em;
+        cursor: pointer;
+        &[disabled]{
+            opacity: .5;
+            cursor: not-allowed;
+        }
+    }
+}
+
+@media screen and (min-width: 350px){
+    .form-part{
+        &__labelish{
+            &__optional{
+                margin-right: 30px;
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 500px){
+    .form-part{
+        grid-gap: 1em 2em;
+    }
+}

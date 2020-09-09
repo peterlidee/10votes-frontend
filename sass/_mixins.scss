@@ -10,3 +10,11 @@
 @mixin border-radius{
     border-radius: $borderRadius;
 }
+
+@mixin base-input{
+    width: 100%;
+    @include border-radius;
+    border: 1px solid $lightgrey;
+    padding: .25em 2em .25em .5em;
+    color: $darkfont;
+}

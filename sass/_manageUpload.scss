@@ -1,0 +1,80 @@
+// styling of the manageUpload component
+// carefull, lot's of styling controled by formParts
+
+.manage-upload{
+    // not an element
+
+    // upload button
+    // we visually hide the actual input and use the label as button
+    // +/- https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/
+    &__input{
+        width: 0.1px;
+        height: .1px;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
+
+        &:focus + label{
+            outline: 1px dotted #000;
+        }
+        &[disabled] + label{
+            opacity: .5;
+            cursor: wait;
+        }
+    }
+
+    &__label{
+        position: relative;
+        display: inline-block;
+        margin: .25em 0 .5em 0;
+        padding: .1em 1em .1em 2.4em;
+        background: $green;
+        @include border-radius;
+        color: #fff;
+        text-decoration: none;  
+        cursor: pointer;
+
+        .upload__icon{
+            fill: #fff;
+            width: 15px;
+            height: 18px;
+            position: absolute; left: 12px; top: 6px; 
+        }
+    }
+
+    &__loader{
+        width: 24px;
+        display: inline-block;
+        margin-left: 1em;
+    }
+
+    &__error{
+        .error__icon{
+            display: inline-block;
+            text-align: center;
+            margin-right: .5em;
+        }
+        &-message{
+            color: $orange;
+            display: inline;
+        }
+    }
+
+    &__image-container{
+        display: grid;
+        grid-template-columns: 1fr 30px;
+        align-items: start;
+        margin-top: .25em;
+    }
+    
+    &__image-preview{
+        width: 100%; 
+        height: auto;
+        @include border-radius;
+    }
+
+}
+
+
+

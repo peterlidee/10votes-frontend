@@ -1,0 +1,59 @@
+// styling for input-suggestion and it's dropdown
+
+.input-suggestion{
+    &__container{
+        position: relative;
+    }
+    &__input-container{ // the input and a clear button
+        display: grid;
+        grid-template-columns: 1fr 30px;
+    }
+    &__input{
+        // fix it to first row and col so it can be layed over with loader
+        grid-column: 1;
+        grid-row: 1;
+        transition: border-color .1s ease-in;
+        margin-bottom: 3px;
+        &:focus{
+            border-color: $darkfont;
+        }
+    }
+    &__loader{ // stack the loader on top of the input in the same grid cell
+        grid-column: 1;
+        grid-row: 1;
+        align-self: center;
+        justify-self: end;
+        width: 24px;
+        height: 10px;
+        margin-right: 4px;
+    }
+
+    &__dropdown{
+        background: #fff;
+        box-sizing: border-box;
+        border-left: 1px solid $darkfont;
+        border-right: 1px solid $darkfont;
+        width: 100%;
+        position: absolute; z-index: 1000;
+        left: 0; top: 2em;
+        @include border-radius;
+    }
+    &__result{
+        padding: .15em .5em;
+        transition: padding-left .1s ease-in, background-color .075s ease-in, color .075s ease-in;
+        &:hover{ cursor: pointer; }
+        &:first-child{ border-top: 1px solid $darkfont; }
+        &:last-child{ border-bottom: 1px solid $darkfont; }
+        
+        &__countryCode{
+            font-variant: small-caps;
+            background: $blue;
+            color: #fff;
+            padding: 0 .25em;
+            float:right;
+            font-size: 14px;
+            line-height: 1.4em;
+            margin-top: 3px;
+        }
+    }
+}

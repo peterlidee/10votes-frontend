@@ -40,7 +40,7 @@ const MyItems = props => (
                         }
                         {me.items.length < 10 &&
                             <p className="no-data extra-margin">
-                                You have {10 - me.items.length} uploads left. 
+                                <span style={{"paddingRight": ".5em"}}>You have {10 - me.items.length} uploads left.</span>
                                 <UploadButton />
                             </p>
                         }

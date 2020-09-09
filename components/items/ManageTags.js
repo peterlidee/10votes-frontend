@@ -79,10 +79,6 @@ class ManageTags extends React.Component{
                                 <input  
                                     type="text" placeholder="enter a tag" minLength="3" maxLength="25"
                                     value={tag.name}
-                                    onFocus={() => {
-                                        this.props.handleSetState({focus: `tag-${i}`})
-                                        console.log('tag focussed' ,`tag-${i}`)
-                                    }}
                                     onChange={e => {
                                         // handle change
                                         this.props.handleTagChange(e.target.value, i);

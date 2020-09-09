@@ -198,3 +198,4 @@ class Search extends React.Component{
 }
 
 export default Search;
+export { SEARCH_LOCATIONS_QUERY, SEARCH_TAGS_QUERY };
