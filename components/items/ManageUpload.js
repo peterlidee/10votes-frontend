@@ -3,8 +3,6 @@ import validateFile from '../../lib/validateFile';
 
 import IconUpload from '../snippets/IconUpload';
 import Loader from '../snippets/Loader';
-
-// import CrudNumber from '../formParts/CrudNumber';
 import FormRow from '../formParts/FormRow';
 
 
@@ -87,6 +85,7 @@ class ManageUpload extends React.Component{
                             placeholder="upload an image" 
                             onChange={this.uploadFile} 
                             required 
+                            disabled={this.state.loading}
                             accept=".jpg, .jpeg, .png" 
                             className="manage-upload__input" />
                         <label htmlFor="file" className="manage-upload__label">

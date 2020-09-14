@@ -1,37 +1,37 @@
-import { Mutation, Query, ApolloConsumer } from 'react-apollo';
+import { Mutation, Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import Router from 'next/router';
 import { CURRENT_USER_QUERY } from '../account/User';
 
-import ManageLocation from './ManageLocation';
-import ManageTags from './ManageTags';
-import Error from '../Error';
 import MetaTitle from '../snippets/MetaTitle';
-import Link from 'next/link';
+import Loader from '../snippets/Loader';
+import NewError from '../NewError';
+import FormRow from '../formParts/FormRow';
+import InputSuggestion from './InputSuggestion';
+import ErrorMessage from '../ErrorMessage';
+import { inputToString } from '../../lib/functions';
 
 const UPDATE_ITEM_MUTATION = gql`
     mutation UPDATE_ITEM_MUTATION(
         $id: ID!
-        $locationName: String
-        $locationId: ID
-        $oldLocationId: ID
-        $tagNames: [String]
-        $tagIds: [ID]
-        $oldTagIds: [ID]
+        $location: String
+        $newTagNames: [String]
+        $oldTagNames: [String]
+        $oldTagIds: [ID!]
     ){
         updateItem(
             id: $id
-            locationName: $locationName
-            locationId: $locationId
-            oldLocationId: $oldLocationId
-            tagNames: $tagNames
-            tagIds: $tagIds
+            location: $location
+            newTagNames: $newTagNames
+            oldTagNames: $oldTagNames
             oldTagIds: $oldTagIds
         ){
             id
         }
     }
 `;
+
+//TODO refetch queries on update??? me query?
 
 const SINGLE_ITEM_QUERY = gql`
     query SINGLE_ITEM_QUERY($id: ID!){
@@ -59,244 +59,228 @@ const SINGLE_ITEM_QUERY = gql`
 
 class UpdateItem extends React.Component{
     state = {
-        errorMessage: '',
+        location: '',
         locationEdit: false,
-        locationName: '',
-        locationId: '',
-        tagsEdit: false,
-        tags: [ 
-            {name: "", id: ""}, {name: "", id: ""}, {name: "", id: ""} 
-        ],
+        tags: [null, null, null],
+        tagsEdit: [false, false, false],
     }
 
-    handleLocationChange = (e) => {
+    handleSetState = (newState, index = null) => {
+        if(index){
+            // if there's an index, then the passed value is tags
+            const tagsCopy = [...this.state.tags];
+            const tagsEditCopy = [...this.state.tagsEdit];
+            // put the new value into a copy of this.state.tags[i]
+            tagsCopy[index] = newState.tag;
+            // if there's also a tagsEdit value, update that one too
+            if(newState.tagEdit) tagsEditCopy[index] = newState.tagEdit;
+            this.setState({
+                tags: tagsCopy,
+                tagsEdit: tagsEditCopy,
+            });
+            return null;
+        }
         this.setState({
-            [e.target.name]: e.target.value
-        })
-    }
-    handleLocationSelection = (location) => {
-        this.setState({
-            errorMessage: "",
-            locationName: location.name,
-            locationId: location.id,
-        })
-    }
-
-    handleEdit = (field, data) => { 
-        this.setState({
-            [`${field}Edit`]: true
+            ...newState
         });
-        if(field === "tags"){
-            // for tags we need to deal with tags that already exist, so we pass them
-            if(data[0]){ // if there are fields, set them to state
-                // copy the tags from data into state to save them
-                // once we call updateItem mutation, we need to pass the tags that need to be deleted, we need them for that
-                const dataBackup = [...data];
-                // construct the three items in state
-                const tagsToAdd = 3 - data.length;
-                for(var i = 0; i < tagsToAdd; i++){
-                    data.push({ name: "", id: "" });
-                }
-                this.setState({ 
-                    tags: data, 
-                    oldTags: dataBackup 
-                });
-            }
-        }
-    }
-
-    //(copied from createItem)
-    handleTagChange = (value, i) => { 
-        const tags = [...this.state.tags];
-        tags[i] = {name: value, id: ""};
-        this.setState({
-            tags
-        })
-    }
-
-    //(copied from createItem)
-    handleTagSelection = (tagQuery, i) => {
-        const tags = [...this.state.tags];
-        // first, check if the tag isn't already selected
-        if(tags.findIndex(tag => tag.id === tagQuery.id) >= 0){
-            // tag is already selected!
-            tags[i] = {name: "", id: ""}
-        }else{
-            // new tag
-            tags[i] = { name: tagQuery.name, id: tagQuery.id }
-        }
-        this.setState({ tags });
     }
 
     handleCancelEdit = () => {
         this.setState({
-            errorMessage: '',
+            location: '',
             locationEdit: false,
-            locationName: '',
-            locationId: '',
-            tagsEdit: false,
-            tags: [
-                {name: "", id: ""}, {name: "", id: ""}, {name: "", id: ""}
-            ],
+            tags: [null, null, null],
+            tagsEdit: [false,false,false],
         })
     }
 
     handleUpdateItem = async(e, updateItemMutation, oldLocation, oldTags) => {
         e.preventDefault();
-        // check if location isn't empty
-        if(this.state.locationEdit && !this.state.locationName){
-            this.setState({
-                errorMessage: "Please add a location!"
-            });
-        }else{
-            // construct the variables
-            let variables = {
-                id: this.props.id,
-            };
 
-            // 1. check if a location was selected
-            if(this.state.locationEdit){
-                // and the location changed
-                if(oldLocation.name !== this.state.locationName){
-                    variables.locationName = this.state.locationName;
-                    variables.oldLocationId = oldLocation.id;
-                    // if there's a locationId, an existing location was selected, so pass it aswell
-                    if(this.state.locationId) variables.locationId = this.state.locationId;
-                }
-            } // else the location did not change, don't pass location
+        // construct the variables
+        let variables = {
+            id: this.props.id,
+        };
 
-            // 2. handle tag changes
-            if(this.state.tagsEdit){
-
-                const newTagNames = [];
-                const newTagIds = [];
-
-                // construct arrays of the new tag names and ids to pass as variables
-                this.state.tags.map(tag => {
-                    if(tag.name){ // filter out the empty ones
-                        newTagNames.push(tag.name.trim());
-                        newTagIds.push(tag.id);
-                    }
-                });
-
-                // if there are old tags, add them to variables, we may have to delete them
-                if(this.state.oldTags){
-                    variables.tagNames = newTagNames;
-                    variables.tagIds = newTagIds;
-                    variables.oldTagIds = this.state.oldTags.map(oldTag => oldTag.id);
-                }else{ // else only send the new names and ids
-                    variables.tagNames = newTagNames;
-                    variables.tagIds = newTagIds;
-                }
-
-            } // end 2. handle tag changes
-
-            // only call mutations when changes are in variables
-            if(variables.locationName || variables.tagNames){
-                const res = await updateItemMutation({
-                    variables
-                });
-                // console.log('item updated', res);
-                if(res.data){
-                    // route the user to the single item page, just edited
-                    Router.push({
-                        pathname: '/item',
-                        query: { id: res.data.updateItem.id },
-                    });
+        // handle the location
+        const location = inputToString(this.state.location);
+        // if location was edited, and it's not empty, and it's not the same as the old location pass it as variable
+        if(this.state.locationEdit && location && location.toLowerCase !== oldLocation.name.toLowerCase){
+            variables.location = location;
+        }
+        
+        // handle the tags
+        // if there were old tags, pass the names and the ids of the old tags
+        if(oldTags.length > 0){
+            variables.oldTagNames = oldTags.map(oldTag => oldTag.name);
+            variables.oldTagIds = oldTags.map(oldTag => oldTag.id);
+        }
+        const newTagNames = [];
+        // check if there were changes in tagsEdit
+        this.state.tagsEdit.map((tagEdit, i) => {
+            if(tagEdit){
+                // there were changes to this tag
+                // the field may be null cause a tag is to be removed
+                newTagNames.push(inputToString(this.state.tags[i]))
+            } else { 
+                // else, no changes in tags[i]
+                // if there's an oldTagName, push that (so we know it's unchanged), else do nothing
+                if(oldTags[i]){
+                    newTagNames.push(oldTags[i].name)
                 }
             }
+        });
+        if(newTagNames.length > 0) variables.newTagNames = newTagNames;
+
+        // only call mutations when changes are in variables
+        if(variables.location || this.state.tagsEdit.includes(true)){
+            console.log('calling mutation with vars', variables);
+            const res = await updateItemMutation({
+                variables
+            }).catch(error => {
+                console.log(error.message);
+            });
+            // route the user to the single item page, just edited
+            if(res.data){
+                console.log('update res', res.data);
+                Router.push({
+                    pathname: '/youritems',
+                });
+            }// else, don't route, there was an error, stay on page
+        }else{ // no changes made, route them back to youritems page
+            Router.push({
+                pathname: '/youritems',
+            });
         }
     } // close handleUpdateItem
 
     render(){
-        if(!this.props.id)return <p>No item found.</p>;
+        if(!this.props.id)return <p className="no-data">Invalid request.</p>;
         return(
             <>
-            <h2>Edit item</h2>
             <MetaTitle>Edit item</MetaTitle>
+            <h2 className="item-crud__title title">Edit your picture</h2>
             <Query query={ SINGLE_ITEM_QUERY } variables={{id: this.props.id}}>
                 {({ data, loading, error }) => {
-                    if(loading) return <p>loading ...</p>
-                    if(error)return <Error error={error} />
-                    if(!data.item) return <p>No data found for id {this.props.id}</p>
+                    if(loading) return <Loader containerClass="items-loader" />
+                    if(error) return <NewError error={error} animate={false} />
+                    if(!data.item) return <p className="no-data">No picture found.</p>
                     
                     return (
-                        <Query query={CURRENT_USER_QUERY}>
+                        <Query query={ CURRENT_USER_QUERY }>
                             {({data: userData, loading: userLoading, error: userError}) => {
-
+                                // as this component is inside a gated component, we don't need to worry about errors on the user query
                                 // check if logged in user owns this item
-                                if(userError) return <Error error={userError} />;
-                                if(!loading && !userData.me) return <p>something went wrong, please log in.</p>;
-                                if(userData.me.id !== data.item.user.id)return <p>You can only edit your own items!</p>
+                                if(userData.me.id !== data.item.user.id) return <p className="no-data">You can only edit your own items!</p>
 
-                                //console.log('data from query', data.item.tags);
                                 return(
                                     <Mutation 
                                         mutation={ UPDATE_ITEM_MUTATION }
-                                        refetchQueries={[ { query: SINGLE_ITEM_QUERY, variables: {id: this.props.id} } ]}
+                                        refetchQueries={[
+                                             { query: SINGLE_ITEM_QUERY, variables: {id: this.props.id} },
+                                             { query: CURRENT_USER_QUERY },
+                                        ]}
                                     >
-                                        {(updateItem, { error, loading }) => (
-                                            <form onSubmit={e => this.handleUpdateItem(e, updateItem, data.item.location, data.item.tags)}>
-                                                <Error error={error} />
-                                                {this.state.errorMessage && 
-                                                    <p>{this.state.errorMessage}</p>
-                                                }
-                                                <fieldset disabled={loading}>
+                                        {(updateItem, { error, loading }) => {
+                                            // check if form is valid to pass to formRow
+                                            // in this case if there's a location cause tags are optional and image is non editable
+                                            const formValid = this.state.locationEdit ? this.state.location && this.state.location.length >= 2 ? true : false: true;
+                                            
+                                            return(
+                                                <form 
+                                                    onSubmit={e => this.handleUpdateItem(e, updateItem, data.item.location, data.item.tags)} 
+                                                    id="updateItemForm" 
+                                                    className="form-part form-part--update-item">
 
-                                                    <button type="button" onClick={this.handleCancelEdit}>cancel edit</button>
+                                                    <FormRow 
+                                                        number={{ number: 1 }}
+                                                        valid={{ 
+                                                            field: true, 
+                                                            form: true,
+                                                        }}
+                                                    >
+                                                        <img src={data.item.image} alt="upload preview" className="manage-upload__image-preview" />
+                                                        <div className="crud-message">You cannot edit the image.</div>
+                                                        
+                                                    </FormRow>
 
-                                                    <img src={data.item.image} alt="upload preview" width="300" />
+                                                    <FormRow 
+                                                        number={{ number: 2 }}
+                                                        label={{ 
+                                                            text: "Location (BE only for now)", 
+                                                            required: true,
+                                                            html: true,
+                                                            for: "input-suggestion__location",
+                                                        }}
+                                                        valid={{
+                                                            // if the location was edited, then validate this.state.location, else it's from DB and valid by default
+                                                            field: formValid, 
+                                                            form: formValid,
+                                                        }}
+                                                    >
+                                                        <InputSuggestion 
+                                                            handleSetState={this.handleSetState}
+                                                            // use the DB version, edited version
+                                                            value={this.state.locationEdit ? this.state.location : data.item.location.name}
+                                                            type="locations" 
+                                                            id="location" />
+                                                    </FormRow>
 
-                                                    { // if locationEdit is false, no changes were made to location, so use query data just to display
-                                                        !this.state.locationEdit &&
-                                                            <div>
-                                                                location: 
-                                                                {data.item.location.name} - {data.item.location.country.name} 
-                                                                <button type="button" onClick={() => this.handleEdit('location', [])}>&times;</button>
-                                                            </div>
+                                                    <FormRow 
+                                                        number={{ number: 3 }}
+                                                        label={{ 
+                                                            text: "Tag(s)", 
+                                                            required: false,
+                                                        }}
+                                                        valid={{ 
+                                                            field: true, 
+                                                            form: formValid,
+                                                        }}
+                                                    >
+                                                        {this.state.tags.map((tag, i) => (
+                                                            <InputSuggestion 
+                                                                key={i}
+                                                                handleSetState={this.handleSetState} 
+                                                                // if the current tags[i] was edited, pass it, if not, see if there was an item from DB data.items.tag[i] and use that or null if there was no tag in db
+                                                                value={this.state.tagsEdit[i] ? this.state.tags[i] : data.item.tags[i] ? data.item.tags[i].name : null}
+                                                                type="tags" 
+                                                                id={`tag-${i}`} />
+                                                        ))}
+                                                    </FormRow>
+
+                                                    {error && 
+                                                        <FormRow valid={{ error: true, form: formValid }}>
+                                                            <ErrorMessage error={error} />
+                                                        </FormRow>
                                                     }
 
-                                                    {
-                                                        // the location 
-                                                        this.state.locationEdit &&
-                                                            <ManageLocation 
-                                                                handleLocationSelection={this.handleLocationSelection}
-                                                                handleLocationChange={this.handleLocationChange}
-                                                                locationName={this.state.locationName}
-                                                                locationId={this.state.locationId} />
-                                                    }
+                                                    <FormRow 
+                                                        number={{ 
+                                                            number: 4, 
+                                                            extraClass: "last" 
+                                                        }}
+                                                        valid={{ 
+                                                            field: formValid, 
+                                                            form: formValid,
+                                                        }}
+                                                    >
+                                                        <button 
+                                                            className="form-part__button"
+                                                            disabled={!formValid || loading} /* or loading, TODO */
+                                                        >save changes</button>
 
-                                                    { // if tagsEdit is false, no changes were made to tags, so use query data just to display
-                                                        !this.state.tagsEdit &&
-                                                            <div>
-                                                                {!data.item.tags[0] && <span>No tags entered</span>}
-                                                                {data.item.tags[0] &&
-                                                                    <>
-                                                                        tags: 
-                                                                        {data.item.tags.map(tag => <span key={tag.id}>{tag.name}</span>)}
-                                                                    </>
-                                                                }
-                                                                <button type="button" onClick={() => this.handleEdit('tags', [...data.item.tags])}>
-                                                                    {data.item.tags[0] && <>edit tags</>}
-                                                                    {!data.item.tags[0] && <>add tags</>}
-                                                                </button>
-                                                            </div>
-                                                    }
+                                                        {loading && <Loader containerClass="form-part__loader" />}
 
-                                                    {
-                                                        // if tagsEdit = true, show manageTags component!
-                                                        this.state.tagsEdit &&
-                                                            <ManageTags 
-                                                                tags={this.state.tags}
-                                                                handleTagChange={this.handleTagChange}
-                                                                handleTagSelection={this.handleTagSelection} />
-                                                    }
-
-                                                    <button>save changes</button>
-
-                                                </fieldset>
-                                            </form>
-                                        )}
+                                                        {
+                                                        // only show cancel button when changes were made
+                                                        (this.state.locationEdit || this.state.tagsEdit.find(item => item)) &&
+                                                            <>
+                                                                or <button type="button" onClick={this.handleCancelEdit} className="crud__cancel-button" disabled={loading}>cancel all changes</button>
+                                                            </>
+                                                        }
+                                                    </FormRow>  
+                                                </form>
+                                        )}}
                                     </Mutation>
                                 )
                             }}

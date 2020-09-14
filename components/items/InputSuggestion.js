@@ -26,25 +26,31 @@ class InputSuggestion extends React.Component{
         results: [],
     }
 		
-    handleOnStateChange = ({ inputValue, type }) => {
+    handleOnStateChange = ({ inputValue, type }) => { // controlled inputs
         if(type == '__autocomplete_change_input__'){
-            this.props.handleSetState({
-                [this.props.type.slice(0,-1)]: inputValue}, 
+            this.props.handleSetState(
+                {
+                    [this.props.type.slice(0,-1)]: inputValue,
+                    [`${this.props.type.slice(0,-1)}Edit`]: true,
+                }, 
                 this.props.type == 'locations' ? null : this.props.id.split('-')[1]
             )
         }
         return inputValue;
     }
 
-    handleInputSelect = (selection) => {
+    handleInputSelect = (selection) => { // called on selection
         // console.log('selection', selection)
-        this.props.handleSetState({
-            [this.props.type.slice(0,-1)]: selection},
-            this.props.type == 'locations' ? null : this.props.id.split('-')[1]
+        this.props.handleSetState(
+            {
+                [this.props.type.slice(0,-1)]: selection,
+                [`${this.props.type.slice(0,-1)}Edit`]: true,
+            }, // tag or location
+            this.props.type == 'locations' ? null : this.props.id.split('-')[1] // index
         )
     }
 
-    handleInputChange = debounce(async (e, client) => {
+    handleInputChange = debounce(async (e, client) => { // called on inputChange, drives query, not state!
         // console.log('handleInputChange called', e.target.value, 'client', client);
         const value = e.target.value.trim();
         
@@ -131,7 +137,8 @@ class InputSuggestion extends React.Component{
                                         {this.state.loading && <Loader containerClass="input-suggestion__loader" />}
                                         <button type="button" className="clear-button" onClick={() => {
                                             this.props.handleSetState({
-                                                [this.props.type.slice(0,-1)]: '' },
+                                                    [this.props.type.slice(0,-1)]: '',
+                                                },
                                                 this.props.type == 'locations' ? null : this.props.id.split('-')[1]
                                             )
                                             clearSelection();

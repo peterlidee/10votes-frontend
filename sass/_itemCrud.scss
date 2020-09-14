@@ -23,3 +23,21 @@
         color: $orange;
     }
 }
+
+
+.crud-message{
+    color: $darkfont;
+    font-style: italic;
+}
+
+.form-part--update-item .form-part__button{
+    margin-right: .5em;
+}
+.crud__cancel-button{
+    @include button-as-link;
+    color: $green;
+    &[disabled]{
+        opacity: .55;
+    }
+}
+
