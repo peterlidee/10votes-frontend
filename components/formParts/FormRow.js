@@ -6,10 +6,11 @@
 //    2.1 <>, <label> or <div> (labelish)
 //    2.2 props.children (f.e. ManageUpload or InputSuggestion)
 
-// props is takes
-// 1. number: { number, extraClass }
+// props it takes
+// 1. number: the row number to display
 // 2. label:  { text, required, html (render <label> or <div>), for (attr to <label>) }
 // 3. valid:  { field, form, error (from props.children or direct) }
+// 4. extraClass: optional
 
 import FormNumber from './FormNumber';
 import LabelOrDiv from './LabelOrDiv';
@@ -17,7 +18,8 @@ import LabelOrDiv from './LabelOrDiv';
 const FormSection = props => (
     <>
         <FormNumber 
-            {...props.number}
+            number={props.number}
+            extraClass={props.extraClass}
             valid={props.valid}
         />
         <div className="form-part__section">

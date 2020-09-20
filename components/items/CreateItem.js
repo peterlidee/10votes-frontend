@@ -10,7 +10,8 @@ import FormRow from '../formParts/FormRow';
 import ManageUpload from './ManageUpload';
 import InputSuggestion from './InputSuggestion';
 import ErrorMessage from '../ErrorMessage';
-import Loader from '../snippets/Loader';
+// import Loader from '../snippets/Loader';
+import FormButton from '../formParts/FormButton';
 
 
 const CREATE_ITEM_MUTATION = gql`
@@ -115,7 +116,7 @@ class CreateItem extends React.Component{
                                     >
 
                                         <ManageUpload 
-                                            number={{ number: 1 }}
+                                            number={1}
                                             label={{ 
                                                 text: "Add an image", 
                                                 required: true,
@@ -128,7 +129,7 @@ class CreateItem extends React.Component{
                                             handleSetState={this.handleSetState} />
 
                                         <FormRow 
-                                            number={{ number: 2 }}
+                                            number={2}
                                             label={{ 
                                                 text: "Add a location (BE only for now)", 
                                                 required: true,
@@ -148,7 +149,7 @@ class CreateItem extends React.Component{
                                         </FormRow>
 
                                         <FormRow 
-                                            number={{ number: 3 }}
+                                            number={3}
                                             label={{ 
                                                 text: "Add tag(s)", 
                                                 required: false,
@@ -175,17 +176,14 @@ class CreateItem extends React.Component{
                                         }
 
                                         <FormRow 
-                                            number={{ 
-                                                number: 4, 
-                                                extraClass: "last" 
-                                            }}
+                                            number={4}
+                                            extraClass="last" 
                                             valid={{ 
                                                 field: formValid, 
                                                 form: formValid,
                                             }}
                                         >
-                                            <button disabled={!formValid || loading} className="form-part__button">save</button>
-                                            {loading && <Loader containerClass="form-part__loader" />}
+                                            <FormButton loading={loading} formValid={!formValid}>save</FormButton>
                                         </FormRow>                                  
 
                                     </form>

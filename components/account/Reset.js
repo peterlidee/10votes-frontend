@@ -4,10 +4,11 @@ import { CURRENT_USER_QUERY } from './User';
 import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
 
-import NewError from '../NewError';
 import MetaTitle from '../snippets/MetaTitle';
-import Loader from '../snippets/Loader';
-import LabelAndInput from './LabelAndInput';
+import FormRow from '../formParts/FormRow';
+import InputContainer from '../formParts/InputContainer';
+import FormButton from '../formParts/FormButton';
+import ErrorMessage from '../ErrorMessage';
 
 const RESET_MUTATION = gql`
     mutation RESET_MUTATION($password: String!, $confirmPassword: String!, $resetToken: String!){
@@ -24,31 +25,18 @@ class Reset extends React.Component{
     state = {
         password: "",
         confirmPassword: "",
-        focus: "",
     }
     saveToState = (e) => {
         this.setState({
             [e.target.name]: e.target.value
         })
     }
-    focusInput = (e) => {
-        this.setState({ 
-            focus: e.target.name 
-        })
-    }
-    blurInput = () => {
-        this.setState({ 
-            focus: "" 
-        })
+    clearField = (name) => {
+        this.setState({
+            [name]: ""
+        });
     }
     render(){
-        // we spread these into the LabelAndInput component so we don't have to type it everty time
-        const spread = { 
-            saveToState: this.saveToState,
-            focusInput: this.focusInput, 
-            blurInput: this.blurInput,
-            focus: this.state.focus,
-        }
         return(
             <Mutation 
                 mutation={RESET_MUTATION} 
@@ -62,27 +50,98 @@ class Reset extends React.Component{
                 {(reset, { loading, error, called }) => {
                     if(!error && !loading && called) return <p className="no-data">Your password was reset. You are now logged in with your new password.</p>
                     return(
-                        <div className="form-grid">
-                            <MetaTitle>Reset your password</MetaTitle>
-                            <form method="post" className="form form--reset" onSubmit={async e => {
+                        <>
+                            <MetaTitle>Choose a new password</MetaTitle>
+                            <h2 className="title">Choose a new password</h2>
+
+                            <form method="post" className="form-part form-part--account" onSubmit={async e => {
                                 e.preventDefault();
                                 // more form validation here
                                 // this.validateForm()
                                 const res = await reset().catch(error => console.log(error.message));
                                 this.setState({ password: '', confirmPassword: '' });
                             }}>
-                                <h2 className="form__title">Reset your password</h2>
-                                <fieldset disabled={loading} aria-busy={loading} className="form__fieldset">
-                                    <LabelAndInput name="password" value={this.state.password} type="password" {...spread} label="Enter a new password" />
-                                    <LabelAndInput name="confirmPassword" value={this.state.confirmPassword} type="password" {...spread} label="Confirm this password" />
-                                    <button type="submit" className="form__submit">change password</button>
-                                </fieldset>
-                                <div className="form__placeholder">
-                                    {loading && <Loader containerClass="form-loader" />}
-                                    {error && <NewError error={error} />}
-                                </div>
+
+                                <FormRow 
+                                    number={1}
+                                    label={{ 
+                                        text: "Enter a new password", 
+                                        required: true,
+                                        html: true,
+                                        for: "password",
+                                    }}
+                                    valid={{ 
+                                        field: this.state.password, 
+                                        form: this.state.password,
+                                    }}
+                                >
+                                    <InputContainer 
+                                        clearField={this.clearField} 
+                                        name="password" 
+                                        isEmpty={!this.state.password}
+                                    >
+                                        <input 
+                                            type="password" 
+                                            minLength="6" 
+                                            className="form-part__input"
+                                            name="password"
+                                            id="password"
+                                            value={this.state.password}
+                                            onChange={this.saveToState} 
+                                        />
+                                    </InputContainer>
+                                </FormRow>
+
+                                <FormRow 
+                                    number={2}
+                                    label={{ 
+                                        text: "Confirm this password", 
+                                        required: true,
+                                        html: true,
+                                        for: "confirmPassword",
+                                    }}
+                                    valid={{ 
+                                        field: this.state.password, 
+                                        form: this.state.password && this.state.confirmPassword,
+                                    }}
+                                >
+                                    <InputContainer 
+                                        clearField={this.clearField} 
+                                        name="confirmPassword" 
+                                        isEmpty={!this.state.confirmPassword}
+                                    >
+                                        <input 
+                                            type="password" 
+                                            minLength="6" 
+                                            className="form-part__input"
+                                            name="confirmPassword"
+                                            id="confirmPassword"
+                                            value={this.state.confirmPassword}
+                                            onChange={this.saveToState} 
+                                        />
+                                    </InputContainer>
+                                </FormRow>
+
+                                {error && 
+                                    <FormRow valid={{ error: true, form: this.state.confirmPassword && this.state.password }}>
+                                        <ErrorMessage error={error} />
+                                    </FormRow>
+                                }
+
+                                <FormRow 
+                                    number={3}
+                                    extraClass="last"
+                                    valid={{ 
+                                        field: this.state.confirmPassword && this.state.password, 
+                                        form: this.state.confirmPassword && this.state.password,
+                                    }}
+                                >
+                                    <FormButton loading={loading} formValid={!this.state.confirmPassword || !this.state.password}>
+                                        change password
+                                    </FormButton>
+                                </FormRow>  
                             </form>
-                        </div>
+                        </>
                     )
                 }}
             </Mutation>

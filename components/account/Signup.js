@@ -3,11 +3,11 @@ import gql from 'graphql-tag';
 import { CURRENT_USER_QUERY } from './User';
 import Link from 'next/link';
 
-import NewError from '../NewError';
 import MetaTitle from '../snippets/MetaTitle';
-import Loader from '../snippets/Loader';
-import LabelAndInput from './LabelAndInput';
-
+import ErrorMessage from '../ErrorMessage';
+import FormRow from '../formParts/FormRow';
+import InputContainer from '../formParts/InputContainer';
+import FormButton from '../formParts/FormButton';
 
 const SIGNUP_MUTATION = gql`
     mutation SIGNUP_MUTATION($email: String!, $password: String!){
@@ -22,37 +22,25 @@ class Signup extends React.Component{
     state = {
         password: "",
         email: "",
-        focus: "",
     }
     saveToState = (e) => {
         this.setState({
             [e.target.name]: e.target.value
         })
     }
-    focusInput = (e) => {
+    clearField = (name) => {
         this.setState({
-            focus: e.target.name
-        })
-    }
-    blurInput = () => {
-        this.setState({ focus: "" })
+            [name]: ""
+        });
     }
     render(){
-        // we spread these into the LabelAndInput component so we don't have to type it everty time
-        const spread = { 
-            saveToState: this.saveToState,
-            focusInput: this.focusInput, 
-            blurInput: this.blurInput,
-            focus: this.state.focus,
-        }
         return(
             <Mutation 
                 mutation={SIGNUP_MUTATION} 
                 variables={this.state}
                 refetchQueries={[{ query: CURRENT_USER_QUERY }]}
             >
-                {
-                (signup, { called, loading, error, data }) => {
+                {(signup, { called, loading, error, data }) => {
                     if(called && !error && !loading && data && data.signup){
                         return <p className="no-data">You are logged into your new account: {data.signup.email}.</p>
                     }
@@ -64,30 +52,101 @@ class Signup extends React.Component{
                         }
                     }
                     return(
-                        <div className="form-grid">
+                        <>
                             <MetaTitle>Sign up for an account</MetaTitle>
-                            <form method="post" className="form form--signup" onSubmit={async e => {
+                            <h2 className="title">Sign up for a new account</h2>
+
+                            <form method="post" className="form-part form-part--account" onSubmit={async e => {
                                 e.preventDefault();
                                 // more form validation here
                                 // this.validateForm()
                                 const res = await signup().catch(error => console.log(error.message));
                                 this.setState({ email: '', password: '' });
                             }}>
-                                <h2 className="form__title">Sign up for a new account</h2>
-                                <fieldset disabled={loading} aria-busy={loading} className="form__fieldset">
-                                    <LabelAndInput name="email" value={this.state.email} type="email" {...spread} />
-                                    <LabelAndInput name="password" value={this.state.password} type="password" {...spread} />
-                                    <button type="submit" className="form__submit">sign up</button>
-                                </fieldset>
-                                <div className="form__placeholder">
-                                    {loading && <Loader containerClass="form-loader" />}
-                                    {error && <NewError error={error} />}
-                                </div>
-                                <div className="form__links">
-                                    <Link href="/login"><a className="form__link">Log into your account.</a></Link>
+
+                                <FormRow 
+                                    number={1}
+                                    label={{ 
+                                        text: "Email", 
+                                        required: true,
+                                        html: true,
+                                        for: "email",
+                                    }}
+                                    valid={{ 
+                                        field: this.state.email, 
+                                        form: this.state.email,
+                                    }}
+                                >
+                                    <InputContainer 
+                                        clearField={this.clearField} 
+                                        name="email" 
+                                        isEmpty={!this.state.email}
+                                    >
+                                        <input 
+                                            type="email" 
+                                            className="form-part__input"
+                                            name="email"
+                                            id="email"
+                                            value={this.state.email}
+                                            onChange= {this.saveToState}
+                                        />
+                                    </InputContainer>
+                                </FormRow>
+
+                                <FormRow 
+                                    number={2}
+                                    label={{ 
+                                        text: "Password", 
+                                        required: true,
+                                        html: true,
+                                        for: "password",
+                                    }}
+                                    valid={{ 
+                                        field: this.state.password, 
+                                        form: this.state.email && this.state.password,
+                                    }}
+                                >
+                                    <InputContainer 
+                                        clearField={this.clearField} 
+                                        name="password" 
+                                        isEmpty={!this.state.password}
+                                    >
+                                        <input 
+                                            type="password" 
+                                            minLength="6" 
+                                            className="form-part__input"
+                                            name="password"
+                                            id="password"
+                                            value={this.state.password}
+                                            onChange={this.saveToState} 
+                                        />
+                                    </InputContainer>
+                                </FormRow>
+
+                                {error && 
+                                    <FormRow valid={{ error: true, form: this.state.email && this.state.password }}>
+                                        <ErrorMessage error={error} />
+                                    </FormRow>
+                                }
+
+                                <FormRow 
+                                    number={3}
+                                    extraClass="last"
+                                    valid={{ 
+                                        field: this.state.email && this.state.password, 
+                                        form: this.state.email && this.state.password,
+                                    }}
+                                >
+                                    <FormButton loading={loading} formValid={!this.state.email || !this.state.password}>
+                                        sign up
+                                    </FormButton>
+                                </FormRow>  
+                                
+                                <div className="form-part--account__links">
+                                    <Link href="/login"><a className="form__link">Do you already have an account? Log in.</a></Link>
                                 </div>
                             </form>
-                        </div>
+                        </>
                     )
                 }}
             </Mutation>

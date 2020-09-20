@@ -17,8 +17,8 @@
 @import 'item.scss';
 @import 'errors';
 @import 'pagination';
-@import 'forms';
 @import 'formParts';
+@import 'forms'; // add it below formParts!
 @import 'itemCrud';
 @import 'inputSuggestion';
 @import 'manageUpload';

@@ -4,7 +4,7 @@
 
 const CrudNumber = props => {
     // add extra class if present
-    let containerClass = `form-part__number ${props.extraClass}`;
+    let containerClass = `form-part__number form-part__number--${props.extraClass}`;
     // add classes if form and input are valid
     if(props.valid){
         if(props.valid.field)   containerClass += ` validField`;

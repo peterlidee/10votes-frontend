@@ -9,9 +9,6 @@
     grid-template-columns: 28px 1fr;
     grid-gap: 1em 1em;
 
-    //reset fieldset
-    //border: none; padding: 0;
-
     &__number{
         position: relative;
         &:after{ // the line that connects the numbers
@@ -26,7 +23,7 @@
             left: 13px;
         }
         &.validForm:after   { background: $blue; }
-        &.last:after        { content: none; }
+        &--last:after       { content: none; }
 
         &__inner{
             width: 28px;
@@ -61,6 +58,10 @@
 
     &__input{
         @include base-input;
+        transition: border-color .1s ease-in;
+        &:focus{
+            border-color: $darkfont;
+        }
     }
 
     &__button{

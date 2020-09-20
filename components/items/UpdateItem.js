@@ -10,6 +10,7 @@ import FormRow from '../formParts/FormRow';
 import InputSuggestion from './InputSuggestion';
 import ErrorMessage from '../ErrorMessage';
 import { inputToString } from '../../lib/functions';
+import FormButton from '../formParts/FormButton';
 
 const UPDATE_ITEM_MUTATION = gql`
     mutation UPDATE_ITEM_MUTATION(
@@ -193,7 +194,7 @@ class UpdateItem extends React.Component{
                                                     className="form-part form-part--update-item">
 
                                                     <FormRow 
-                                                        number={{ number: 1 }}
+                                                        number={1}
                                                         valid={{ 
                                                             field: true, 
                                                             form: true,
@@ -205,7 +206,7 @@ class UpdateItem extends React.Component{
                                                     </FormRow>
 
                                                     <FormRow 
-                                                        number={{ number: 2 }}
+                                                        number={2}
                                                         label={{ 
                                                             text: "Location (BE only for now)", 
                                                             required: true,
@@ -227,7 +228,7 @@ class UpdateItem extends React.Component{
                                                     </FormRow>
 
                                                     <FormRow 
-                                                        number={{ number: 3 }}
+                                                        number={3}
                                                         label={{ 
                                                             text: "Tag(s)", 
                                                             required: false,
@@ -255,24 +256,15 @@ class UpdateItem extends React.Component{
                                                     }
 
                                                     <FormRow 
-                                                        number={{ 
-                                                            number: 4, 
-                                                            extraClass: "last" 
-                                                        }}
+                                                        number={4}
+                                                        extraClass="last" 
                                                         valid={{ 
                                                             field: formValid, 
                                                             form: formValid,
                                                         }}
                                                     >
-                                                        <button 
-                                                            className="form-part__button"
-                                                            disabled={!formValid || loading} /* or loading, TODO */
-                                                        >save changes</button>
-
-                                                        {loading && <Loader containerClass="form-part__loader" />}
-
-                                                        {
-                                                        // only show cancel button when changes were made
+                                                        <FormButton loading={loading} formValid={!formValid}>save changes</FormButton>
+                                                        {// only show cancel button when changes were made
                                                         (this.state.locationEdit || this.state.tagsEdit.find(item => item)) &&
                                                             <>
                                                                 or <button type="button" onClick={this.handleCancelEdit} className="crud__cancel-button" disabled={loading}>cancel all changes</button>
