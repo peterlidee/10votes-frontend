@@ -64,7 +64,11 @@ const ITEMS_IN_COUNTRY_QUERY = gql`
 const SingleCountry = props => {
     const routerData = getRouterData(true);
     return(
-        <Query query={COUNTRY_QUERY} variables={ routerData.variables }>
+        <Query 
+            query={COUNTRY_QUERY} 
+            variables={ routerData.variables } 
+            // fetchPolicy="cache-and-network" // limited to BE so no need for now
+        >
             {({loading, error, data}) => {
                 if(loading) return <Loader containerClass="items-loader" />;                
                 if(error) return <NewError error={error} />
@@ -74,11 +78,14 @@ const SingleCountry = props => {
                         <MetaTitle>{`Pics in ${data.country.name}`}</MetaTitle>
                         <FancyTitle type="country" country={{ name: data.country.name }} />
                         <OrderItems />
-                        <Query query={ITEMS_IN_COUNTRY_QUERY} variables={{ 
-                            countryCode: routerData.variables.countryCode,
-                            orderBy: routerData.orderBy,
-                            skip: routerData.page * perPage - perPage || 0,
-                        }}>
+                        <Query 
+                            query={ITEMS_IN_COUNTRY_QUERY} variables={{ 
+                                countryCode: routerData.variables.countryCode,
+                                orderBy: routerData.orderBy,
+                                skip: routerData.page * perPage - perPage || 0,
+                            }} 
+                            fetchPolicy="cache-and-network"
+                        >
                             {payload => <DisplayItems payload={payload} page={routerData.page} taxonomy="country" />}
                         </Query>
                         <Pagination />

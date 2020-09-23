@@ -6,7 +6,7 @@ import Vote from './Vote';
 import DeleteVote from './DeleteVote';
 
 const Voting = (props) => (
-    <Query query={CURRENT_USER_QUERY}>
+    <Query query={CURRENT_USER_QUERY} fetchPolicy="cache-and-network">
         {({ loading, error, data }) => {
             
             // 1. only show VOTING if user is logged in

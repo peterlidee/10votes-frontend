@@ -73,7 +73,8 @@ class InputSuggestion extends React.Component{
             // search for tags
             const res = await client.query({
                 query: this.props.type == 'locations' ? SEARCH_LOCATIONS_QUERY : SEARCH_TAGS_QUERY,
-                variables: { search: value }
+                variables: { search: value },
+                fetchPolicy: 'network-only'
             }).catch(error => {
                 queryError = true;
                 console.log(error.message)

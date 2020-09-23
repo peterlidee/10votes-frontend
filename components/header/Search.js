@@ -72,7 +72,8 @@ class Search extends React.Component{
             // search for tags
             const tagsRes = await client.query({
                 query: SEARCH_TAGS_QUERY,
-                variables: { search: e.target.value }
+                variables: { search: e.target.value },
+                fetchPolicy: "network-only",
             }).catch(error => {
                 queryError = true;
                 queryErrorMessage = error.message;
@@ -82,6 +83,7 @@ class Search extends React.Component{
             const locationsRes = await client.query({
                 query: SEARCH_LOCATIONS_QUERY,
                 variables: { search: e.target.value },
+                fetchPolicy: "network-only",
             }).catch(error => {
                 queryError = true;
                 queryErrorMessage = error.message;

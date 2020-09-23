@@ -35,7 +35,7 @@ const SINGLE_ITEM_QUERY = gql`
 
 const SingleItem  = props => (
     <div className="grid-single-item">
-        <Query query={ SINGLE_ITEM_QUERY } variables={{ itemId: props.id }}>
+        <Query query={ SINGLE_ITEM_QUERY } variables={{ itemId: props.id }} fetchPolicy="cache-and-network">
             {( { error, loading, data } ) => {
 
                 if(loading) return <Loader containerClass="items-loader" />

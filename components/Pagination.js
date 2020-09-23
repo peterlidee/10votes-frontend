@@ -12,6 +12,7 @@ const Pagination = props => {
         <Query 
             query={ routerData.query } 
             variables={ routerData.variables }
+            fetchPolicy="cache-and-network"
         >
             {({ data, loading, error })=> {
                 if(loading || error || !data) return null;

@@ -1,8 +1,7 @@
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
-
-import Error from '../Error';
 import { CURRENT_USER_QUERY } from '../account/User';
+
 import NewError from '../NewError';
 
 const DELETE_VOTE_MUTATION = gql`

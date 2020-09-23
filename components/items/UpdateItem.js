@@ -161,14 +161,18 @@ class UpdateItem extends React.Component{
             <>
             <MetaTitle>Edit item</MetaTitle>
             <h2 className="item-crud__title title">Edit your picture</h2>
-            <Query query={ SINGLE_ITEM_QUERY } variables={{id: this.props.id}}>
+            <Query 
+                query={ SINGLE_ITEM_QUERY } 
+                variables={{id: this.props.id}}
+                fetchPolicy="cache-and-network"
+            >
                 {({ data, loading, error }) => {
                     if(loading) return <Loader containerClass="items-loader" />
                     if(error) return <NewError error={error} animate={false} />
                     if(!data.item) return <p className="no-data">No picture found.</p>
                     
                     return (
-                        <Query query={ CURRENT_USER_QUERY }>
+                        <Query query={ CURRENT_USER_QUERY } fetchPolicy="cache-and-network">
                             {({data: userData, loading: userLoading, error: userError}) => {
                                 // as this component is inside a gated component, we don't need to worry about errors on the user query
                                 // check if logged in user owns this item

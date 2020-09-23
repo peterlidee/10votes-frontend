@@ -67,7 +67,7 @@ const MOST_VOTED_ITEMS_QUERY = gql`
 const DisplayHomeItems = props => (
     <section>
         <h1 className="title">{props.title}</h1>
-        <Query query={props.query}>
+        <Query query={props.query} fetchPolicy="cache-and-network" >
             {({loading, error, data}) => {
                 if(loading) return <Loader containerClass="items-loader" />;                
                 if(error) return <NewError error={error} />

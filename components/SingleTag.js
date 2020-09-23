@@ -61,7 +61,7 @@ const Tag = props => {
     // then call all
     const routerData = getRouterData(true);
     return (
-        <Query query={TAG_EXISTS_QUERY} variables={ routerData.variables }>
+        <Query query={TAG_EXISTS_QUERY} variables={ routerData.variables } fetchPolicy="cache-and-network">
             {({data, loading, error}) => {
                 if(loading) return <Loader containerClass="items-loader" />;                
                 if(error) return <NewError error={error} />
@@ -71,11 +71,14 @@ const Tag = props => {
                         <MetaTitle>{`Pics with tag #${data.tag.name}`}</MetaTitle>
                         <FancyTitle type="tag" tag={{ name: data.tag.name }} />
                         <OrderItems />
-                        <Query query={ITEMS_WITH_TAG_QUERY} variables={{
-                            slug: routerData.variables.slug,
-                            orderBy: routerData.orderBy,
-                            skip: routerData.page * perPage - perPage || 0,
-                        }}>
+                        <Query 
+                            query={ITEMS_WITH_TAG_QUERY} variables={{
+                                slug: routerData.variables.slug,
+                                orderBy: routerData.orderBy,
+                                skip: routerData.page * perPage - perPage || 0,
+                            }} 
+                            fetchPolicy="cache-and-network"
+                        >
                             {payload => <DisplayItems payload={payload} page={routerData.page} taxonomy="tag" />}
                         </Query>
                         <Pagination />

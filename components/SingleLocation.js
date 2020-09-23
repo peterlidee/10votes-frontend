@@ -78,7 +78,11 @@ const SingleLocation = props => {
     const routerData = getRouterData(true);
     //console.log('routerdata singleLocation', routerData)
     return(
-        <Query query={LOCATION_EXISTS_QUERY} variables={ routerData.variables }>
+        <Query 
+            query={LOCATION_EXISTS_QUERY} 
+            variables={ routerData.variables } 
+            // fetchPolicy="cache-and-network" // limited to BE so ne need for now
+        >
             {({ error, data, loading }) => {
                 if(loading) return <Loader containerClass="items-loader" />;                
                 if(error) return <NewError error={error} />
@@ -91,12 +95,15 @@ const SingleLocation = props => {
                         <MetaTitle>{`Pics in ${name} - ${country.name}`}</MetaTitle>
                         <FancyTitle type="location" location={{ name }} country={{ name: country.name, countryCode: country.countryCode }} />
                         <OrderItems />
-                        <Query query={ITEMS_IN_LOCATION_QUERY} variables={{ 
-                            slug: routerData.variables.slug, 
-                            countryCode: routerData.variables.countryCode,
-                            orderBy: routerData.orderBy,
-                            skip: routerData.page * perPage - perPage || 0,
-                        }}>
+                        <Query 
+                            query={ITEMS_IN_LOCATION_QUERY} variables={{ 
+                                slug: routerData.variables.slug, 
+                                countryCode: routerData.variables.countryCode,
+                                orderBy: routerData.orderBy,
+                                skip: routerData.page * perPage - perPage || 0,
+                            }} 
+                            fetchPolicy="cache-and-network"
+                        >
                             {payload => <DisplayItems payload={payload} page={routerData.page} taxonomy="place" />}
                         </Query>
                         <Pagination />

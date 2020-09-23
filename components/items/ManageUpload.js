@@ -52,7 +52,7 @@ class ManageUpload extends React.Component{
                 body: data
             });
             const file = await res.json();
-            // console.log('file', file)
+            //console.log('file', file)
 
             // send data to createItem component
             this.props.handleSetState({
