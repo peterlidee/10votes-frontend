@@ -2,13 +2,13 @@ import { Query} from 'react-apollo';
 import { CURRENT_USER_QUERY } from './User';
 import Login from './Login';
 import Loader from '../snippets/Loader';
-import NewError from '../NewError';
+import Error from '../snippets/Error';
 
 const PleaseSignin = props => (
     <Query query={ CURRENT_USER_QUERY }>
         {({data, error, loading}) => {
             if(loading) return <Loader containerClass="items-loader" />;
-            if(error) return <NewError error={error} />
+            if(error) return <Error error={error} />
             if(!data || !data.me){
                 return(
                     <>

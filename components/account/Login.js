@@ -3,8 +3,7 @@ import gql from 'graphql-tag';
 import Link from 'next/link';
 
 import User, { CURRENT_USER_QUERY } from './User';
-import NewError from '../NewError';
-import ErrorMessage from '../ErrorMessage';
+import Error from '../snippets/Error';
 import MetaTitle from '../snippets/MetaTitle';
 import Loader from '../snippets/Loader';
 import FormRow from '../formParts/FormRow';
@@ -40,7 +39,7 @@ class Login extends React.Component{
             <User>
                 {({ loading, error, data }) => {
                     if(loading) return <Loader containerClass="items-loader" />
-                    if(error) return <NewError error={error} />
+                    if(error) return <Error error={error} />
                     if(!data) return <p className="no-data">Uhm, something went wrong. Try again?</p>
                     if(data.me) return <p className="no-data">You are logged in.</p>
 
@@ -123,7 +122,7 @@ class Login extends React.Component{
 
                                         {error && 
                                             <FormRow valid={{ error: true, form: this.state.email && this.state.password }}>
-                                                <ErrorMessage error={error} />
+                                                <Error error={error} plain={true} />
                                             </FormRow>
                                         }
 

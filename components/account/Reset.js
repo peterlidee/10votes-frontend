@@ -8,7 +8,7 @@ import MetaTitle from '../snippets/MetaTitle';
 import FormRow from '../formParts/FormRow';
 import InputContainer from '../formParts/InputContainer';
 import FormButton from '../formParts/FormButton';
-import ErrorMessage from '../ErrorMessage';
+import Error from '../snippets/Error';
 
 const RESET_MUTATION = gql`
     mutation RESET_MUTATION($password: String!, $confirmPassword: String!, $resetToken: String!){
@@ -124,7 +124,7 @@ class Reset extends React.Component{
 
                                 {error && 
                                     <FormRow valid={{ error: true, form: this.state.confirmPassword && this.state.password }}>
-                                        <ErrorMessage error={error} />
+                                        <Error error={error} plain={true} />
                                     </FormRow>
                                 }
 

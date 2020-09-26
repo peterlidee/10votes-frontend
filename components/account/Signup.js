@@ -4,7 +4,7 @@ import { CURRENT_USER_QUERY } from './User';
 import Link from 'next/link';
 
 import MetaTitle from '../snippets/MetaTitle';
-import ErrorMessage from '../ErrorMessage';
+import Error from '../snippets/Error';
 import FormRow from '../formParts/FormRow';
 import InputContainer from '../formParts/InputContainer';
 import FormButton from '../formParts/FormButton';
@@ -125,7 +125,7 @@ class Signup extends React.Component{
 
                                 {error && 
                                     <FormRow valid={{ error: true, form: this.state.email && this.state.password }}>
-                                        <ErrorMessage error={error} />
+                                        <Error error={error} plain={true} />
                                     </FormRow>
                                 }
 

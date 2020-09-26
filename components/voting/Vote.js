@@ -1,7 +1,7 @@
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 
-import NewError from '../NewError';
+import Error from '../snippets/Error';
 import { CURRENT_USER_QUERY } from '../account/User';
 
 const VOTE_MUTATION = gql`
@@ -29,7 +29,7 @@ const Vote = props => (
                         // we need to catch and handle a possible error, not sure how else to catch this
                         () => castVote().catch(error => console.error(error.message))
                     } disabled={loading} className="item__vote-button">vote {String.fromCharCode(43)}</button>
-                    <NewError error={error} animate={true} />
+                    {error && <Error error={error} />}
                 </>
             )}
     </Mutation>

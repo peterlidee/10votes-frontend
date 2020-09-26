@@ -1,3 +1,35 @@
+// this holds some extra styling not perse belonging to formParts , manageUpload or InputSuggestion
+
+// shows button as: x
+.clear-button{
+    border: none;
+    background: none;
+    color: $darkfont;
+    font-size: 1.5em;
+    line-height: 26px;
+    font-weight: 700;
+    opacity: 1;
+    transition: opacity .1s ease-in;
+    cursor: pointer;
+    &[disabled]{
+        opacity: 0;
+        cursor: default;
+    }
+}
+
+// createItem component
+.crud-message{
+    color: $darkfont;
+    font-style: italic;
+}
+.crud__cancel-button{
+    @include button-as-link;
+    color: $green;
+    &[disabled]{
+        opacity: .55;
+    }
+}
+
 // extra styling for the login form
 .form-part--account{
     margin-bottom: 4em;

@@ -6,7 +6,7 @@ import getRouterData from '../lib/getRouterData';
 import { perPage } from '../config';
 
 import Loader from './snippets/Loader';
-import NewError from './NewError';
+import Error from './snippets/Error';
 import MetaTitle from './snippets/MetaTitle';
 import FancyTitle from './snippets/FancyTitle';
 import OrderItems from './OrderItems';
@@ -85,7 +85,7 @@ const SingleLocation = props => {
         >
             {({ error, data, loading }) => {
                 if(loading) return <Loader containerClass="items-loader" />;                
-                if(error) return <NewError error={error} />
+                if(error) return <Error error={error} />
                 if(!data || !data.locations[0]) return( 
                     <p className="no-data">Hmmm, we don't have a place '{routerData.variables.slug} - {routerData.variables.countryCode}' in our database yet :/</p>
                 )

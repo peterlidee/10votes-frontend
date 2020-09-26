@@ -40,7 +40,7 @@ const SingleItem  = props => (
 
                 if(loading) return <Loader containerClass="items-loader" />
                 if(error) return <NewError error={error} />
-                if(!data || !data.item) return <p className="no-data">Uhm, something went wrong. Try again?</p>
+                if(!data || !data.item) return <p className="no-data">No such picture found.</p>
                 const {item} = data;
 
                 // construct a string we will use as title and alt: "Image in {location} {tags}"

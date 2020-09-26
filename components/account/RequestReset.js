@@ -5,7 +5,7 @@ import MetaTitle from '../snippets/MetaTitle';
 import FormRow from '../formParts/FormRow';
 import InputContainer from '../formParts/InputContainer';
 import FormButton from '../formParts/FormButton';
-import ErrorMessage from '../ErrorMessage';
+import Error from '../snippets/Error';
 
 const REQUEST_RESET_MUTATION = gql`
     mutation REQUEST_RESET_MUTATION($email: String!){
@@ -84,7 +84,7 @@ class RequestReset extends React.Component{
 
                                 {error && 
                                     <FormRow valid={{ error: true, form: this.state.email }}>
-                                        <ErrorMessage error={error} />
+                                        <Error error={error} plain={true} />
                                     </FormRow>
                                 }
 
