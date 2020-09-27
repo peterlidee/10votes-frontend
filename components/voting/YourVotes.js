@@ -2,7 +2,7 @@ import User from '../account/User';
 
 import Item from '../Item';
 import Loader from '../snippets/Loader';
-import NewError from '../NewError';
+import Error from '../snippets/Error';
 import MetaTitle from '../snippets/MetaTitle';
 
 
@@ -13,7 +13,7 @@ const YourVotes = props => (
         <User>
             {({ data, loading, error }) => {
                 if(loading) return <Loader containerClass="items-loader" />;                
-                if(error) return <NewError error={error} />
+                if(error) return <Error error={error} />
                 if(!data.me) return <p className="no-data">Uhm, something went wrong :/. Try reloading the page.</p>;
                 const { me } = data;
 

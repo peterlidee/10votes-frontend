@@ -4,7 +4,7 @@ import Link from 'next/link';
 import PropTypes from 'prop-types';
 
 import Loader from './snippets/Loader';
-import NewError from './NewError';
+import Error from './snippets/Error';
 import MetaTitle from './snippets/MetaTitle';
 import Voting from './voting/Voting';
 
@@ -39,7 +39,7 @@ const SingleItem  = props => (
             {( { error, loading, data } ) => {
 
                 if(loading) return <Loader containerClass="items-loader" />
-                if(error) return <NewError error={error} />
+                if(error) return <Error error={error} />
                 if(!data || !data.item) return <p className="no-data">No such picture found.</p>
                 const {item} = data;
 

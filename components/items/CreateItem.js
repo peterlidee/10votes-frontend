@@ -9,9 +9,8 @@ import MetaTitle from '../snippets/MetaTitle';
 import FormRow from '../formParts/FormRow';
 import ManageUpload from './ManageUpload';
 import InputSuggestion from './InputSuggestion';
-import ErrorMessage from '../ErrorMessage';
-// import Loader from '../snippets/Loader';
 import FormButton from '../formParts/FormButton';
+import Error from '../snippets/Error';
 
 
 const CREATE_ITEM_MUTATION = gql`
@@ -171,7 +170,7 @@ class CreateItem extends React.Component{
 
                                         {error && 
                                             <FormRow valid={{ error: true, form: formValid }}>
-                                                <ErrorMessage error={error} />
+                                                <Error error={error} plain={true} />
                                             </FormRow>
                                         }
 
@@ -198,4 +197,3 @@ class CreateItem extends React.Component{
 }
 
 export default CreateItem;
-// export { CREATE_ITEM_MUTATION };

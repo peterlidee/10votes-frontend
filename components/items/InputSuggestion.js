@@ -1,6 +1,6 @@
 // this component has 3 parts
 // 1. an input field
-// 2. an deletebutton
+// 2. an clearbutton
 // 3. a dropdown with suggestions
 
 import Downshift from 'downshift';

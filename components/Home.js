@@ -2,7 +2,7 @@ import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
 import Loader from './snippets/Loader';
-import NewError from './NewError';
+import Error from './snippets/Error';
 import Item from './Item';
 import MetaTitle from './snippets/MetaTitle';
 
@@ -70,7 +70,7 @@ const DisplayHomeItems = props => (
         <Query query={props.query} fetchPolicy="cache-and-network" >
             {({loading, error, data}) => {
                 if(loading) return <Loader containerClass="items-loader" />;                
-                if(error) return <NewError error={error} />
+                if(error) return <Error error={error} />
                 if(!data) return <p className="no-data">Something went wrong</p>
                 if(!data.items.length) return <p className="no-data">No items added yet.</p>
 

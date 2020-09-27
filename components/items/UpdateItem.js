@@ -5,12 +5,12 @@ import { CURRENT_USER_QUERY } from '../account/User';
 
 import MetaTitle from '../snippets/MetaTitle';
 import Loader from '../snippets/Loader';
-import NewError from '../NewError';
 import FormRow from '../formParts/FormRow';
 import InputSuggestion from './InputSuggestion';
-import ErrorMessage from '../ErrorMessage';
 import { inputToString } from '../../lib/functions';
 import FormButton from '../formParts/FormButton';
+import Error from '../snippets/Error';
+
 
 const UPDATE_ITEM_MUTATION = gql`
     mutation UPDATE_ITEM_MUTATION(
@@ -168,7 +168,7 @@ class UpdateItem extends React.Component{
             >
                 {({ data, loading, error }) => {
                     if(loading) return <Loader containerClass="items-loader" />
-                    if(error) return <NewError error={error} animate={false} />
+                    if(error) return <Error error={error} />
                     if(!data.item) return <p className="no-data">No picture found.</p>
                     
                     return (
@@ -255,7 +255,7 @@ class UpdateItem extends React.Component{
 
                                                     {error && 
                                                         <FormRow valid={{ error: true, form: formValid }}>
-                                                            <ErrorMessage error={error} />
+                                                            <Error error={error} plain={true} />
                                                         </FormRow>
                                                     }
 

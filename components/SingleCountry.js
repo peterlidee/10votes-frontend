@@ -6,7 +6,7 @@ import { perPage } from '../config';
 import getRouterData from '../lib/getRouterData';
 
 import Loader from './snippets/Loader';
-import NewError from './NewError';
+import Error from './snippets/Error';
 import MetaTitle from './snippets/MetaTitle';
 import FancyTitle from './snippets/FancyTitle';
 import OrderItems from './OrderItems';
@@ -71,7 +71,7 @@ const SingleCountry = props => {
         >
             {({loading, error, data}) => {
                 if(loading) return <Loader containerClass="items-loader" />;                
-                if(error) return <NewError error={error} />
+                if(error) return <Error error={error} />
                 if(!data || !data.country) return <p className="no-data">Hmmm, we don't have a country '{routerData.variables.countryCode}' in our database yet :/</p>
                 return(
                     <section>

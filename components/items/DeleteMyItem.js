@@ -2,7 +2,7 @@ import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 
 import { CURRENT_USER_QUERY } from '../account/User';
-import NewError from '../NewError';
+import Error from '../snippets/Error';
 
 const DELETE_ITEM_MUTATION = gql`
     mutation DELETE_ITEM_MUTATION($id: ID!){
@@ -26,7 +26,7 @@ const DeleteMyItem = (props) => (
                     }}>
                         {props.children}
                     </button>
-                    <NewError error={error} animate={true} />
+                    {error && <Error error={error} />}
                 </>
             )}
     </Mutation>

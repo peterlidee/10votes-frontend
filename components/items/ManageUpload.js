@@ -4,6 +4,7 @@ import validateFile from '../../lib/validateFile';
 import IconUpload from '../snippets/IconUpload';
 import Loader from '../snippets/Loader';
 import FormRow from '../formParts/FormRow';
+import Error from '../snippets/Error';
 
 
 class ManageUpload extends React.Component{
@@ -95,10 +96,9 @@ class ManageUpload extends React.Component{
                         {this.state.loading && <Loader containerClass="manage-upload__loader" />}
                     </> 
                 }
-                {this.state.errorMessage &&
+                {this.state.errorMessage && 
                     <div className="manage-upload__error">
-                        <div className="error__icon">!</div>
-                        <div className="manage-upload__error-message">{this.state.errorMessage}</div>
+                        <Error error={{message: this.state.errorMessage}} />
                     </div>
                 }
                 {this.props.image && 

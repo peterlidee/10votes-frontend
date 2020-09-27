@@ -6,7 +6,7 @@ import getRouterData from '../lib/getRouterData';
 import { perPage } from '../config';
 
 import Loader from './snippets/Loader';
-import NewError from './NewError';
+import Error from './snippets/Error';
 import MetaTitle from './snippets/MetaTitle';
 import FancyTitle from './snippets/FancyTitle';
 import OrderItems from './OrderItems';
@@ -64,7 +64,7 @@ const Tag = props => {
         <Query query={TAG_EXISTS_QUERY} variables={ routerData.variables } fetchPolicy="cache-and-network">
             {({data, loading, error}) => {
                 if(loading) return <Loader containerClass="items-loader" />;                
-                if(error) return <NewError error={error} />
+                if(error) return <Error error={error} />
                 if(!data || !data.tag) return <p className="no-data">Hmmm, there doesn't seem to be a tag '{routerData.variables.slug}' :/.</p>
                 return(
                     <section>

@@ -6,15 +6,6 @@ import PropTypes from 'prop-types';
 
 const InputContainer = props => (
     <div className="input-suggestion__input-container">
-        {/*<input 
-            type="password" 
-            minlength="6" 
-            className="form-part__input login-form__password"
-            name="password"
-            id="login-form__password"
-            value={this.state.password}
-            saveToState={this.saveToState}
-        />*/}
         {props.children}
         <button type="button" className="clear-button" onClick={() => {
             props.clearField(props.name)
