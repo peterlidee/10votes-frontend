@@ -1,5 +1,6 @@
-import Header from './header/Header';
 import Meta from './header/Meta';
+import Header from './header/Header';
+import Footer from './footer/Footer.js';
 
 class Page extends React.Component{
     render(){
@@ -10,6 +11,7 @@ class Page extends React.Component{
                 <main className="site__main">
                     {this.props.children}
                 </main>
+                <Footer className="site__footer" />
             </>
         )
     }

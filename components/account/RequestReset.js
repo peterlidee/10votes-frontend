@@ -99,7 +99,12 @@ class RequestReset extends React.Component{
                                     <FormButton loading={loading} formValid={!this.state.email}>
                                         request reset
                                     </FormButton>
-                                </FormRow>  
+                                </FormRow>
+
+                                <div className="form-part--account__links">
+                                    <p>This in configured with <a href="https://mailtrap.io/">mailtrap.io</a> as development environment. It works but won't actually send an email to you. So, don't try to reset your password.</p>
+                                </div>
+
                             </form>
                         </>
                     )

@@ -1,0 +1,97 @@
+// the placeholder gets tapped
+.icon__placeholder.icon__placeholder--tap{
+    animation: tap 4s infinite;
+}
+@keyframes tap{
+    20%     { fill: #bbb; }
+    30%,96% { fill: $blue;  }
+    99%     { fill: #bbb; }
+}
+
+// animate in the number
+.pic__number{
+    opacity: 0;
+    animation: pop 4s infinite;
+}
+@keyframes pop{
+    22%     { opacity: 0; }
+    32%, 96%{ opacity: 1; }
+    99%     { opacity: 0; }
+}
+
+// pics with votes
+.pic{
+    &--1 { animation: rearrange1 4s infinite; }
+    &--4 { animation: rearrange4 4s infinite; }
+    &--5 { animation: rearrange5 4s infinite; }
+    &--8 { animation: rearrange8 4s infinite; }
+    &--12{ animation: rearrange12 4s infinite; }
+    &--16{ animation: rearrange16 4s infinite; }
+    &--23{ animation: rearrange23 4s infinite; }
+}
+
+@keyframes rearrange1{
+    53%     {   transform: translate(0,0) }
+    64%, 95%{   transform: translate(150px,0) }
+    100%    {   transform: translate(0,0) }
+}
+@keyframes rearrange4{
+    53%     {   transform: translate(0,0) }
+    64%, 95%{   transform: translate(-150px,0) }
+    100%    {   transform: translate(0,0) }
+}
+@keyframes rearrange5{
+    53%     {   transform: translate(0,0) }
+    64%, 95%{   transform: translate(150px,-35px) }
+    100%    {   transform: translate(0,0) }
+}
+@keyframes rearrange8{
+    53%     {   transform: translate(0,0) }
+    64%, 95%{   transform: translate(-150px,0) }
+    100%    {   transform: translate(0,0) }
+}
+@keyframes rearrange12{
+    53%     {   transform: translate(0,0) }
+    64%, 95%{   transform: translate(-100px,-70px) }
+    100%    {   transform: translate(0,0) }
+}
+@keyframes rearrange16{
+    53%     {   transform: translate(0,0) }
+    64%, 95%{   transform: translate(50px,-105px) }
+    100%    {   transform: translate(0,0) }
+}
+@keyframes rearrange23{
+    53%     {   transform: translate(0,0) }
+    64%, 95%{   transform: translate(-100px,-105px) }
+    100%    {   transform: translate(0,0) }
+}
+
+// pics with no votes
+.pic{
+    &--0 { animation: rearrange0 4s infinite; }
+    &--2 { animation: rearrange2 4s infinite; }
+    &--3 { animation: rearrange3 4s infinite; }
+    &--6 { animation: rearrange6 4s infinite; }
+}
+
+// pics with no votes
+@keyframes rearrange0{
+    53%     {   transform: translate(0,0) }
+    64%, 95%{   transform: translate(150px,35px) }
+    100%    {   transform: translate(0,0) }
+}
+@keyframes rearrange2{
+    53%     {   transform: translate(0,0) }
+    64%, 95%{   transform: translate(0,70px) }
+    100%    {   transform: translate(0,0) }
+}
+@keyframes rearrange3{
+    53%     {   transform: translate(0,0) }
+    64%, 95%{   transform: translate(-100px,105px) }
+    100%    {   transform: translate(0,0) }
+}
+@keyframes rearrange6{
+    53%     {   transform: translate(0,0) }
+    64%, 95%{   transform: translate(100px,105px) }
+    100%    {   transform: translate(0,0) }
+}

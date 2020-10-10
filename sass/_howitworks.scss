@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Carter+One&display=swap');
+
+.howitworks{
+
+    // one column, centered
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 2em;
+
+    // base styling for most text
+    //font-family: 'Carter One', cursive;
+    text-align: center;
+    color: #333; 
+
+    &__block{        
+        &--animation{ // the animation needs extra top margin to make it like the others
+            margin: 1.5em 0 0 0;
+        }
+        &--rules{
+            align-self: stretch; //  make it full width
+        }
+        p{
+            font-size: 18px;
+            margin-bottom: 1em;
+            max-width: 700px;
+        }
+        &:after{ // the stripe
+            content: "";
+            display: block;
+            width: 10px;
+            height: 100px;
+            background: $blue;
+            margin: 1em auto 0 auto;
+        }
+        &:last-child{ // not on last child
+            &:after{
+                content: none;
+            }
+        }
+    }
+
+    &__title{
+        font-family: 'Carter One', cursive;
+        font-size: 30px;
+        line-height: 1.15em;
+        margin: 0;
+        max-width: 500px;
+    }
+
+    &__subtitle{
+        font-family: 'Carter One', cursive;
+        font-size: 25px;
+        color: $blue;
+    }
+
+    &__rules{
+        display: grid;
+        grid-gap: 2em;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 220px));
+        justify-content: center;
+        & svg{
+            width: 100%;
+            height: auto;
+        }
+    }
+
+    &__rule-text{
+        font-size: 18px;
+    }
+}
+
+// the animation of the pics
+.pic-animation{
+    width: 250px;
+    height: 175px;
+    margin-left: 5px;
+    position: relative;
+}
+.pic{
+    width: 45px;
+    height: 30px;
+    margin: 0 5px 5px 0;
+    float: left;
+    position: relative;
+    
+    &__number{
+        font-family: 'Roboto', sans-serif;
+        font-size: 11px;
+        position: absolute; top: -3px; right: -2px;
+        background: $blue;
+        color: #fff;
+        border-radius: 50%;
+        display: block; width: 16px; height: 16px; text-align: center; line-height: 16px;
+    }
+}
+// animations see howitworksAnimations.scss
+
+// placeholder icon
+.icon__placeholder{
+    fill: $lightgrey;
+}
+
+// rules icon
+.forbidden-spacing{
+    fill: $whiteback;
+}
+.forbidden{
+    fill: $red;
+}
+// embedded inside rules icon:
+// 1. duck icon
+.icon__duck{
+    &__head{ fill: $darkfont }
+    &__eyes, &__beak{ fill: $whiteback; }
+}
+
+// 1. thief icon
+.icon__thief{
+    &__head{ fill: $darkfont; }
+    &__stolen-pic,
+    &__eyes{ fill: $whiteback; }
+}
+
+// 3. no text icon
+.icon__noText{
+    &__sun, &__landscape{
+        fill: $darkfont;
+    }
+    &__text{
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: 700;
+        fill: $whiteback;
+        stroke: $darkfont;
+        font-size: 70px;
+    }
+}
+    
