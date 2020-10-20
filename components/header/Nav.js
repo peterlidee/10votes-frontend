@@ -40,6 +40,7 @@ const Nav = () => (
                                             </Link>
                                         </>
                                     )}
+                                    {(!me) && <Link href="/howitworks"><a className="menu__item">how it works</a></Link>}
                                 </>
                             )
                         }}
