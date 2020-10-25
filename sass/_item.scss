@@ -19,7 +19,7 @@
 }
 .item__image{
     max-width: 100%;
-    max-height: 650px; // should correspond with .grid gtc // todo check if this needs to be lower
+    max-height: 650px; // make portrait pics a bit smaller
     display: block; // no inline spaces!
 
     &--large{ // for single item display
@@ -38,8 +38,6 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: baseline;
-    //padding: .5em;
-    //background: $green;
 }
 .item__edit-link{
     color: $green;
@@ -47,14 +45,9 @@
     margin-bottom: .5em;
 }
 .item__delete-button{
-    border: none;
-    color: #fff;
-    background: $green;
+    @include button-reset($green);
     padding: .25em .5em;
-    margin-left: .35em;
-    margin-bottom: .5em;
-    cursor: pointer;
-    border-radius: 2px;
+    margin: 0 0 .5em .35em;
 }
 
 
@@ -64,31 +57,22 @@
 
 .item__meta{
     display: flex;
-    // flex-direction: row;
     align-items: baseline;
     justify-content: center; // horizontally center all meta
     flex-wrap: wrap;
-    //flex-wrap: wrap-reverse; // in case the tags or location name are long, place the tags above the button and votes
-    //margin-top: .5em;
 }
-
 
 //
 // button styles
 //
 
-.item__vote-button{
-    //flex: 0 0 65px;
+.item__vote-button{ // the hover is done with opacity on :before
+    @include button-reset($red);
+    font-size: 14px;
+    line-height: 20px;
     padding: 0 .75em;
-    border: none;
-    background: $red;
-    font: 14px/20px 'Roboto', sans-serif;
-    color: #fff;
-    border-radius: 4px;
-    cursor: pointer;
-    position: relative; z-index: 100;
-    transition: opacity .075s ease-out;
     margin-bottom: .5em;
+    position: relative; z-index: 100;
 
     &:before{
         box-sizing: border-box;
@@ -96,11 +80,11 @@
         width: 100%; height: 100%;
         position: absolute; left: 0; top: 0; 
         z-index: -10;
-        border-radius: 4px;
+        @include border-radius;
         border: 1px solid #fff;
         box-shadow: 0 0 0 1px $red;
         opacity: 0;
-        transition: opacity .1s ease-out;
+        @include baseTransition(opacity);
     }
     &:hover:before{
         opacity: 1;
@@ -122,7 +106,6 @@
 
     &__label{
         font-variant: small-caps;
-        color: $darkfont;
         margin-left: .15em;
     }
     &__number{
@@ -131,7 +114,7 @@
         position: relative; // to position :before
         z-index: 100;
     
-        &:before{
+        &:before{ // the skewed bg is done with before, cause we don't wanna skew the number
             content: "";
             display: block;
             position: absolute; left: 0; top: 0;
@@ -156,12 +139,12 @@
         flex-shrink: 0; /* don't let them break with the icon */
     }
 }
-/* these style location and tags #test #test 2 */
+/* these style location and tags #test #test 2, <a> */
 .item__tag{
     margin: 0 .25em 0 0; /* margin between tags */
-    color: $darkfont;
-    opacity: 0.55;
-    transition: opacity .1s ease-out;
+    color: $font;
+    opacity: $opacityDimmedFont;
+    @include baseTransition(opacity);
 
     &:hover{
         opacity: 1;

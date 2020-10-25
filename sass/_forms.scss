@@ -2,15 +2,14 @@
 
 // shows button as: x
 .clear-button{
-    border: none;
-    background: none;
-    color: $darkfont;
+    @include button-as-link;
+    text-decoration: none;
     font-size: 1.5em;
     line-height: 26px;
     font-weight: 700;
     opacity: 1;
-    transition: opacity .1s ease-in;
-    cursor: pointer;
+    @include baseTransition(opacity);
+
     &[disabled]{
         opacity: 0;
         cursor: default;
@@ -19,14 +18,13 @@
 
 // createItem component
 .crud-message{
-    color: $darkfont;
     font-style: italic;
 }
 .crud__cancel-button{
     @include button-as-link;
     color: $green;
     &[disabled]{
-        opacity: .55;
+        opacity: $opacityDimmedFont;
     }
 }
 
@@ -42,5 +40,5 @@
     }
 }
 .form__link{
-    color: $darkfont;
+    color: $font;
 }

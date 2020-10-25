@@ -1,38 +1,33 @@
 @import '../node_modules/html5-boilerplate/dist/css/normalize.css';
 
-*{
-    box-sizing: border-box;
-}
-
-.clearfix::before,
-.clearfix::after {
-  content: " ";
-  display: table;
-}
-
-.clearfix::after {
-  clear: both;
-}
-
-@import 'variables.scss';
-@import 'typography.scss';
+// general styles
+@import 'variables';
 @import 'mixins';
+@import 'typography';
+@import 'general';
 
+// header
 @import 'header';
-@import 'loader';
+
+// main
 @import 'grids';
-@import 'main';
-@import 'titles';
+@import 'loader';
+@import 'fancyTitles';
 @import 'order';
-@import 'item.scss';
-@import 'error';
+@import 'item';
 @import 'pagination';
+@import 'error';
+
+// forms
 @import 'formParts';
-@import 'forms'; // add it below formParts!
-@import 'itemCrud';
+@import 'forms'; // add forms below formParts!
 @import 'inputSuggestion';
 @import 'manageUpload';
+
+// static content
 @import 'howitworks';
 @import 'howitworksAnimations';
+
+// footer
 
 

@@ -1,7 +1,12 @@
 
 .loader__container{
+    // an unused container class
+    // depending on context, an extra containerclass can be added here to customize the element to a need
+    // f.e. search-loader, item-loader or form-loader
 }
 
+// the loader element is an empty container class,
+// it contains :after and :before that make up the loader animation
 .loader{
   width: 24px;
   height: 10px;
@@ -16,7 +21,7 @@
     position: absolute; top: 0; left: 0;
   }
   &:before{
-    background: $red;
+    background: $orange;
     animation: load-left .8s ease-in-out infinite;
   }
   &:after{
@@ -37,18 +42,26 @@
   100%{ transform: translateX(14px) }
 }
 
+// these are the extra classes that get added to the .loader__container
+// and customize the loader to its needs
+
+// a loader element to the right inside of a seach input
 .search-loader{
     position: absolute;
     top: 10px;
     right: 8px;
 }
 
+// on <query>
 .items-loader{
     display: flex;
     justify-content: center;
-    height: 42px; padding-top: 24px; margin-bottom: 1.625em; // this will align the loader with possible <p>text</p>
+    // this will align the loader with possible <p>text</p>
+    // meaning once the loader finishes and text appears, they will in the same position
+    height: 42px; padding-top: 24px; margin-bottom: 1.625em; 
 }
 
+// a loader element in the form, next to the submit button or image upload button
 .form-loader{
     height: 1.625em;
     display: flex;

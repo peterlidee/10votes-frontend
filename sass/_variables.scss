@@ -1,14 +1,28 @@
 // colors
-$blue: #6b9ac4;
-$red: #cc444b;
-$green: #308048;
-$darkfont: #403738;
-$lightfont: rgba($darkfont, .55); // ? used?
 $whiteback: #f6f6f6;
-$yellow: #F8F272;
-//$orange: #e26000; // #ff6c00; // warning, error
-$orange: #cc4d00;
-$lightgrey: #ccc;
+$font: #172a3b; // most text color
+
+$blue: #6b9ac4;
+$red:  #cc444b; // vote button and some icons
+$green: #308048;
+// $yellow: #F8F272; // usefull but not used
+$orange: #cc4d00; // warning, error
+
+// opacity
+// for some dimmed items, we don't use a dimmed color but the 'main' color with an opacity on it
+// because f.e. we animate these elements and it's better for performance
+
+// this = 'rgba($font, .3)' and is used on borders and graphic elements
+$opacityDimmedBorder: .3;
+// but if we need a real color, not just an element with an opacity, we use this
+$dimmedBorder: #b3b8bd; // = transparentize($font, 0.7); // 1 - .7 = .3
+
+// for text, we use .55 cause .3 is too weak
+$opacityDimmedFont: .55;
 
 // border-radius
 $borderRadius: 2px;
+
+// base transition time .1s
+$transitionDuration: .1s;
+$transitionFunction: ease-out;

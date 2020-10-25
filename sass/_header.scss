@@ -1,3 +1,4 @@
+// structures the header, laysout the logo, search bar and menu with even space between them
 .site__header{
     max-width: 1600px;
     display: flex;
@@ -19,16 +20,16 @@
     display: flex;
     flex-wrap: nowrap; // don't break label and number up
     text-decoration: none;
-    font-size: 26px;
-    line-height: 1.618em;
+    font-size: 1.625em; // 26px
+    line-height: 1.6158em; // 42px
     position: relative; top: 2px; // slightly adjust for better positioning
 
     &:focus{
-        outline: none;
+        outline: none; // cause single page app
     }
     
-    &__number{
-        color: #fff;
+    &__number{ // the syling of the logo number, the blue back is done with before
+        color: $whiteback;
         padding: 0 .2em 0 .1em;
         letter-spacing: -2px;
         position: relative; // to position :before
@@ -45,9 +46,9 @@
         }
     }
 
-    &__label{
-        font-variant: small-caps;
-        color: $darkfont;
+    &__label{ // logo text
+        font-family: 'Carter One', cursive;
+        color: $font;
         margin-left: .15em;
     }
 
@@ -69,7 +70,7 @@
 
 @media screen and (min-width: 800px){
     .search__container{
-        order: 0;
+        order: 0; //reset
         flex: 0 1 600px;
         margin: 0 1em 0 1em;
         position: relative;
@@ -77,7 +78,7 @@
 }
 
 .search__input{
-    @include base-input;
+    @include input-with-loader;
 }
 
 // loader see loader .scss
@@ -85,23 +86,23 @@
 .dropdown{
     background: #fff;
     box-sizing: border-box;
-    border-left: 1px solid $lightgrey;
-    border-right: 1px solid $lightgrey;
+    border-left: 1px solid $dimmedBorder;
+    border-right: 1px solid $dimmedBorder;
     width: 100%;
     position: absolute;
     left: 0; top: 2em;
 
     &__result{
         padding: .15em .5em;
-        transition: padding-left .1s ease-in, background-color .075s ease-in;
+        transition: padding-left $transitionDuration ease-in, background-color .075s ease-in;
         &:hover{
             cursor: pointer;
         }
         &--error{
             color: #ff6c00;
         }
-        &:first-child{ border-top: 1px solid $lightgrey; }
-        &:last-child{ border-bottom: 1px solid $lightgrey; }
+        &:first-child{ border-top: 1px solid $dimmedBorder; } // this forms the top border of the dropbox
+        &:last-child{ border-bottom: 1px solid $dimmedBorder; } // border-bottom of dropbox
     }
     &__result-type{
         font-variant: small-caps;
@@ -159,8 +160,8 @@
     }
 }
 .ham{
-    background: $darkfont;
-    transition: background-color .1s ease-in;
+    background: $font;
+    @include baseTransition(background-color);
     width: 100%;
     height: 4px;
     margin-top: 4px;
@@ -176,7 +177,7 @@
     }
 
     transform-origin: right;
-    transition: transform .075s ease-out, opacity .075s ease-out;
+    transition: transform .075s $transitionFunction, opacity .075s $transitionFunction;
     
     .menu-toggle__button--open &{
         &--1{ transform: translateY(-3px) translateX(-4px) rotate(-45deg); }
@@ -211,7 +212,7 @@
 .mymenu{
     text-decoration: none;
     &__label{
-        color: $darkfont;
+        color: $font;
         margin-right: .2em;
         text-decoration: underline;
     }
@@ -221,17 +222,21 @@
         padding: .05em .2em;
     }
     &:active, &:visited{
-        color: $darkfont;
+        color: $font;
     }
     &:focus{
         outline: none;
     }
 }
 
+.menu__item{
+    color: $font;
+}
+
 .menu-upload{
     background: $green;
     padding: .1em 1em .1em 2.4em;
-    border-radius: 2px;
+    @include border-radius;
     text-decoration: none;  
     position: relative;
     display: inline-block;
@@ -255,13 +260,12 @@
 
 .logout__button{
     @include button-as-link;
-    color: $darkfont;
     &:focus{
         outline: none;
     }
 }
 .login__button{
-    color: $darkfont;
+    color: $font;
     &:focus{
         outline: none;
     }

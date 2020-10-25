@@ -6,14 +6,13 @@
     }
     &__icon{
         display: inline-block;
-        margin-right: .5em;
-
-        position: relative; z-index: 10; // put ! in front
         width: 20px;
         height: 20px;
+        margin-right: .5em;
         font-size: 14px;
         line-height: 22px; // = 24px;
         color: #fff;
+        position: relative; z-index: 10; // put ! in front
         
         // this styles the orange triangle (in the background)
         &:before{
@@ -27,8 +26,6 @@
             border-width: 0 10px 18px 10px;
             border-color: transparent transparent $orange transparent;
         }
-
-
     }
     &__message{
         display: inline;

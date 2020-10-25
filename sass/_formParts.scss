@@ -15,12 +15,10 @@
             content: "";
             display: block;
             width: 2px;
-            background: #ccc;
-            transition: background-color .075s ease-in;
             height: calc(100% + 1em);
-            position: absolute;
-            top: 0;
-            left: 13px;
+            background: $dimmedBorder;
+            @include baseTransition(background-color);
+            position: absolute; top: 0; left: 13px;
         }
         &.validForm:after   { background: $blue; }
         &--last:after       { content: none; }
@@ -35,46 +33,41 @@
             // get content before the line
             position: relative; z-index: 10; 
             // dynamic
-            background: #ccc;
-            transition: background-color .075s ease-in;
-            .validField &{ background: $blue; }
-            .errorField &{ background: $orange; }
+            background: $dimmedBorder;
+            @include baseTransition(background-color);
+            .validField &{ background-color: $blue; }
+            .errorField &{ background-color: $orange; }
         }
     }
 
     // &__section{}
 
-    &__labelish{
+    &__labelish{ // a container element, left is the labelish element, the input title, right the optional or not
         display: flex;
         justify-content: space-between;
         align-items: flex-end; // keep the __optional close to input
-        color: $darkfont;
         // &__text{}
         &__optional{
             font-variant: small-caps;
-            opacity: .55;
+            opacity: $opacityDimmedFont;
         }
     }
 
     &__input{
-        @include base-input;
-        transition: border-color .1s ease-in;
+        @include input-with-loader;
+        @include baseTransition(border-color);
         &:focus{
-            border-color: $darkfont;
+            border-color: $font;
         }
     }
 
     &__button{
-        background: $green;
-        border: none;
-        color: #fff;
+        @include button-reset($green);
         padding: .25em 1em;
         margin-right: .5em;
-        @include border-radius;
         min-width: 7.5em;
-        cursor: pointer;
         &[disabled]{
-            opacity: .55;
+            opacity: $opacityDimmedFont;
             cursor: not-allowed;
         }
     }
@@ -82,10 +75,6 @@
         display: inline-block;
         margin: 0 .5em 0 0;
     }
-}
-
-.form-part--update-item .form-part__button{
-    margin-right: .5em;
 }
 
 @media screen and (min-width: 350px){

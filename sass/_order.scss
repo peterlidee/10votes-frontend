@@ -13,12 +13,12 @@
     order: 2; // put label in center
     font-variant: small-caps;
     margin: 0 1em;
-    opacity: .55;
+    opacity: $opacityDimmedFont;
 }
 .order__option{
-    flex: 0 0 55px; // make both equal with
+    flex: 0 0 55px; // make both equal width
     position: relative;
-    color: $darkfont;
+    color: $font;
 
     &:before, 
     &:after{ // prepare triangles
@@ -27,16 +27,16 @@
         width: 0;
         height: 0;
         border-style: solid;
-        opacity: .3;
+        opacity: $opacityDimmedBorder;
     }
     &:before{ // set dimmed triangles
         border-width: 8px 6px 0 6px;
-        border-color: $darkfont transparent transparent transparent;
+        border-color: $font transparent transparent transparent;
         right: 0; top: 15px;
     }
     &:after{ // set dimmed triangles
         border-width: 0 6px 8px 6px;
-        border-color: transparent transparent $darkfont transparent;
+        border-color: transparent transparent $font transparent;
         right: 0; top: 5px;
     }
     &--0{  // align everyting right

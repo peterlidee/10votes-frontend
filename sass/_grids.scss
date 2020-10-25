@@ -1,9 +1,10 @@
 
-/* holds the items, layout in 1 centralized column */
+// some grids
+
+/* this grid is used to display itemS in overview pages like, home, tag or location page, youritems and yourvotes */
 .grid-items{
     display: grid;
-    grid-template-columns: minmax(350px, 750px);
-    //grid-template-columns: minmax(300px, 500px);
+    grid-template-columns: minmax(250px, 750px);
     grid-gap: 2em;
     justify-content: center;
 }
@@ -13,7 +14,6 @@
     /* holds the items, layout in 2 symmetric columns */
     .grid-items{
         grid-template-columns: repeat(2, minmax(350px, 750px));
-        //grid-template-columns: repeat(2, minmax(300px, 500px));
     }
 
 }
@@ -23,7 +23,6 @@
     display: grid;
     grid-template-columns: 1fr;
     justify-content: center;
-
     margin: 5em 0;
 }
 
@@ -31,4 +30,11 @@
     display: grid;
     justify-content: center;
     grid-template-columns: minmax(200px, 350px);
+}
+
+// for pure text
+// not a grid but ...
+.flat-text{
+    max-width: 40em;
+    margin: 0 auto;
 }

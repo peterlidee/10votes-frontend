@@ -5,20 +5,20 @@
     flex-wrap: wrap; // ugly shortcut for long pagination
     position: relative;
     padding-top: 1em;
-    &:before{
+    &:before{ // creates HR above pagination
         content: "";
         position: absolute; top: 0;
         width: 100%;
         max-width: 300px;
-        border-top: 1px solid #ccc;
+        border-top: 1px solid $dimmedBorder;
     }
 }
 .pagination__link{
-    color: $darkfont;
+    color: $font;
     padding: .1em .3em;
     display: block;
-    opacity: .55;
-    transition: transform .025s ease-out, opacity .1s ease-out;
+    opacity: $opacityDimmedFont;
+    transition: transform .025s $transitionFunction, opacity $transitionDuration $transitionFunction;
     &:hover{
         opacity: 1;
         transform: scale(1.15);

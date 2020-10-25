@@ -1,15 +1,4 @@
-// basic simple titels
-.title{
-    text-align: center;
-    font-style: italic;
-    color: $darkfont;
-    margin: 1.5em 0;
-}
-@media screen and (min-width: 1100px){
-    .title{
-        margin: 2em 0;
-    }
-}
+// fancy titles, used on location and tag overview pages
 
 // complex titles
 .title__container{
@@ -18,19 +7,20 @@
     margin: 0 0 1em 0;
 }
 
-.items__title{
-    
+.items__title{ 
     display: flex;
     flex-direction: column;
     width: 100%;
     padding-top: .6em;
     margin: 0; // reset
-    color: $darkfont;
+    color: $font;
     
+    // add icon on location and country
     &--single-location, 
     &--single-country{
         background: url('../public/bluepin.svg') no-repeat center top / 40px;
     }
+    // add icon on tag
     &--single-tag{
         &:before{
             content: "#";
@@ -51,20 +41,21 @@
 
 }
 
-// Brussels
+// a location, f.e. Brussels
 .title__name{
-    font-size: 35px;
+    font-family: 'Carter One', cursive;
+    // inherits 2em from h1
     line-height: 1em;
     text-align: center;
 }
 
-// 6 pics
+// pic count -> f.e. 6 pics
 .title__count{
     align-self: flex-end; // right align inside items__title
     display: flex; // center align items -> 6pics
     min-height: .75em; // reserve space while the data loads
     &-number{
-        font-size: 21px;
+        font-size: 20px;
     }
     &-label{
         font-size: 16px;
@@ -75,8 +66,7 @@
     }
 }
 
-// = BELGIUM =
-
+// country name: f.e. = BELGIUM =
 .title__country-container{    
     width: 100%;
     max-width: 500px; // don't let 'wings' grow beyond that
@@ -100,14 +90,12 @@
     }
 }
 
-
-
 .title__country{
     display: inline-block;
     padding: 0 .5em;
     position: relative; z-index: 10;
     background: $whiteback;
-    color: $darkfont;
+    color: $font;
     font-size: 18px;
     line-height: 1em;
     font-weight: 400;
@@ -122,10 +110,9 @@
         &--single-country{
             background-size: 50px;
         }
-        
     }
     .title__name{
-        font-size: 50px;
+        font-size: 1.5em;
         margin: .2em 0 .15em 0;
     }
     .title__count{

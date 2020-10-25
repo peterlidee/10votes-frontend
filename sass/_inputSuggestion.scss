@@ -26,11 +26,10 @@
 
     &__dropdown{
         background: #fff;
-        box-sizing: border-box;
-        border-left: 1px solid $darkfont;
-        border-right: 1px solid $darkfont;
+        border-left: 1px solid $font;
+        border-right: 1px solid $font;
         width: 100%;
-        position: absolute; z-index: 1000;
+        position: absolute; z-index: 1000; // above content that sits below the dropdown
         left: 0; top: 2em;
         @include border-radius;
     }
@@ -38,15 +37,15 @@
         padding: .15em .5em;
         transition: padding-left .1s ease-in, background-color .075s ease-in, color .075s ease-in;
         &:hover{ cursor: pointer; }
-        &:first-child{ border-top: 1px solid $darkfont; }
-        &:last-child{ border-bottom: 1px solid $darkfont; }
+        &:first-child{ border-top: 1px solid $font; }
+        &:last-child{ border-bottom: 1px solid $font; }
         
         &__countryCode{
             font-variant: small-caps;
             background: $blue;
             color: #fff;
             padding: 0 .25em;
-            float:right;
+            float: right;
             font-size: 14px;
             line-height: 1.4em;
             margin-top: 3px;

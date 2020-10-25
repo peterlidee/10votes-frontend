@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Carter+One&display=swap');
 
 .howitworks{
 
@@ -7,11 +6,9 @@
     flex-direction: column;
     align-items: center;
     padding-top: 2em;
+    margin-bottom: 5em;
 
-    // base styling for most text
-    //font-family: 'Carter One', cursive;
     text-align: center;
-    color: #333; 
 
     &__block{        
         &--animation{ // the animation needs extra top margin to make it like the others
@@ -42,15 +39,13 @@
 
     &__title{
         font-family: 'Carter One', cursive;
-        font-size: 30px;
         line-height: 1.15em;
         margin: 0;
-        max-width: 500px;
+        max-width: 550px;
     }
 
     &__subtitle{
         font-family: 'Carter One', cursive;
-        font-size: 25px;
         color: $blue;
     }
 
@@ -64,9 +59,10 @@
             height: auto;
         }
     }
-
     &__rule-text{
         font-size: 18px;
+        font-variant: small-caps;
+        color: $red;
     }
 }
 
@@ -85,7 +81,7 @@
     position: relative;
     
     &__number{
-        font-family: 'Roboto', sans-serif;
+        //font-family: 'Roboto', sans-serif;
         font-size: 11px;
         position: absolute; top: -3px; right: -2px;
         background: $blue;
@@ -98,7 +94,7 @@
 
 // placeholder icon
 .icon__placeholder{
-    fill: $lightgrey;
+    fill: $dimmedBorder;
 }
 
 // rules icon
@@ -111,13 +107,13 @@
 // embedded inside rules icon:
 // 1. duck icon
 .icon__duck{
-    &__head{ fill: $darkfont }
+    &__head{ fill: $dimmedBorder }
     &__eyes, &__beak{ fill: $whiteback; }
 }
 
 // 1. thief icon
 .icon__thief{
-    &__head{ fill: $darkfont; }
+    &__head{ fill: $dimmedBorder; }
     &__stolen-pic,
     &__eyes{ fill: $whiteback; }
 }
@@ -125,13 +121,13 @@
 // 3. no text icon
 .icon__noText{
     &__sun, &__landscape{
-        fill: $darkfont;
+        fill: $dimmedBorder;
     }
     &__text{
         font-family: Arial, Helvetica, sans-serif;
         font-weight: 700;
         fill: $whiteback;
-        stroke: $darkfont;
+        stroke: $font;
         font-size: 70px;
     }
 }

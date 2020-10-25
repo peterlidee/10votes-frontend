@@ -5,16 +5,29 @@
     padding: 0;
     text-decoration: underline;
     cursor: pointer;
+    color: $font;
 }
 
 @mixin border-radius{
     border-radius: $borderRadius;
 }
 
-@mixin base-input{
-    width: 100%;
+@mixin button-reset($background-color){
+    background: $background-color;
+    color: #fff;
+    border: none;
     @include border-radius;
-    border: 1px solid $lightgrey;
+    cursor: pointer;
+}
+
+@mixin input-with-loader{
+    width: 100%;
+    border: 1px solid $dimmedBorder;
+    @include border-radius;
     padding: .25em 2em .25em .5em;
-    color: $darkfont;
+    color: $font;
+}
+
+@mixin baseTransition($property){
+    transition: $property $transitionFunction $transitionDuration;
 }

@@ -3,9 +3,9 @@
     animation: tap 4s infinite;
 }
 @keyframes tap{
-    20%     { fill: #bbb; }
+    20%     { fill: $dimmedBorder; }
     30%,96% { fill: $blue;  }
-    99%     { fill: #bbb; }
+    99%     { fill: $dimmedBorder; }
 }
 
 // animate in the number

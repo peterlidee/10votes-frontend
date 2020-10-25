@@ -34,9 +34,9 @@ const MyItems = props => (
                             <p className="items__message">{message} You have {10 - me.items.length} uploads left.</p>}
 
                         {me.items.length > 0 &&
-                            <section className="grid-items">
+                            <div className="grid-items">
                                 {me.items.map(item => <Item key={item.id} item={item} showEdit={true} hideVote={true} /> )}
-                            </section>
+                            </div>
                         }
                         {me.items.length < 10 &&
                             <p className="no-data extra-margin">
