@@ -4,7 +4,7 @@ import Router from 'next/router';
 import Link from 'next/link';
 import { CURRENT_USER_QUERY } from '../account/User';
 
-import { inputToString } from '../../lib/functions';
+import { inputToString } from '../../lib/inputToString';
 import MetaTitle from '../snippets/MetaTitle';
 import FormRow from '../formParts/FormRow';
 import ManageUpload from './ManageUpload';

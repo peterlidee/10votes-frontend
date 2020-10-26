@@ -7,7 +7,7 @@ import MetaTitle from '../snippets/MetaTitle';
 import Loader from '../snippets/Loader';
 import FormRow from '../formParts/FormRow';
 import InputSuggestion from './InputSuggestion';
-import { inputToString } from '../../lib/functions';
+import { inputToString } from '../../lib/inputToString';
 import FormButton from '../formParts/FormButton';
 import Error from '../snippets/Error';
 
