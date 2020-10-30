@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import validateFile from '../../lib/validateFile';
 
-import IconUpload from '../snippets/IconUpload';
+import IconUpload from '../snippets/icons/IconUpload';
 import Loader from '../snippets/Loader';
 import FormRow from '../formParts/FormRow';
 import Error from '../snippets/Error';

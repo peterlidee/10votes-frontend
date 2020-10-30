@@ -1,5 +1,5 @@
-import IconPlaceHolder from '../snippets/IconplaceHolder';
-import IconRules from '../snippets/IconRules';
+import IconPlaceHolder from '../snippets/icons/IconplaceHolder';
+import IconRules from '../snippets/icons/IconRules';
 
 const picArray = [
     0,1,0,0,2,

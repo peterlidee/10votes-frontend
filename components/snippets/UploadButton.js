@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import IconUpload from './IconUpload';
+import IconUpload from './icons/IconUpload';
 
 const UploadButton = () => (
     <Link href="/addapicture">
