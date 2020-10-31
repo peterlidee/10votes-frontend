@@ -1,4 +1,4 @@
-import IconPlaceHolder from '../snippets/icons/IconplaceHolder';
+import IconPlaceHolder from '../snippets/icons/IconPlaceHolder';
 import IconRules from '../snippets/icons/IconRules';
 
 const picArray = [
