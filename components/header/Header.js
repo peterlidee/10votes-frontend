@@ -1,12 +1,25 @@
 import Link from 'next/link';
 
-import ProgressBar from './ProgressBar';
+//import ProgressBar from './ProgressBar';
 import Nav from './Nav';
 import Search from './Search';
 
+// progressbar config
+import Router from 'next/router';
+import NProgress from 'nprogress';
+
+Router.onRouteChangeStart = () => {
+    NProgress.start();
+}
+Router.onRouteChangeComplete = () => {
+    NProgress.done();
+}
+Router.onRouteChangeError = () => {
+    NProgress.done();
+}
+
 const Header = props => (
     <>
-        <ProgressBar />
         <header className="site__header">
             <Link href="/">
                 <a className="logo">
