@@ -19,18 +19,16 @@ Router.onRouteChangeError = () => {
 }
 
 const Header = props => (
-    <>
-        <header className="site__header">
-            <Link href="/">
-                <a className="logo">
-                    <span className="logo__number">10</span>
-                    <span className="logo__label">votes</span>
-                </a>
-            </Link>
-            <Search />
-            <Nav />
-        </header>
-    </>
+    <header className="site__header">
+        <Link href="/">
+            <a className="logo">
+                <span className="logo__number">10</span>
+                <span className="logo__label">votes</span>
+            </a>
+        </Link>
+        <Search />
+        <Nav />
+    </header>
 );
 
 export default Header;
