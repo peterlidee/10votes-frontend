@@ -82,7 +82,8 @@ class MyApp extends App{
             <ApolloProvider client={apollo}>
                 <MenuContext.Provider value={this.state}>
                     <Page>
-                        <Component {...pageProps} />
+                        {/*<Component {...pageProps} />*/}
+                        test 2
                     </Page>
                 </MenuContext.Provider>
             </ApolloProvider>
