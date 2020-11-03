@@ -77,7 +77,6 @@ class MyApp extends App{
 
     render(){
         const { Component, pageProps, apollo } = this.props
-
         return(
             <ApolloProvider client={apollo}>
                 <MenuContext.Provider value={this.state}>
