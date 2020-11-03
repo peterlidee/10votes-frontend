@@ -27,9 +27,9 @@ const Header = props => (
             </a>
         </Link>
         {/*
-            <Search />
-            <Nav />
+        <Search />
         */}
+        <Nav />
     </header>
 );
 

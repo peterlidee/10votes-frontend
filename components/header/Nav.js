@@ -16,7 +16,7 @@ const Nav = () => (
 
                 <nav className={menuOpen ? "site__menu site__menu--open" : "site__menu site__menu--closed"}>
 
-                    <User>
+                    {/*<User>
                         {({ loading, error, data }) => {
                             
                             if(loading || (!loading && !data) || error) return null;
@@ -44,11 +44,11 @@ const Nav = () => (
                                 </>
                             )
                         }}
-                    </User>
+                    </User>*/}
                     
                     <UploadButton />
 
-                    <User>
+                    {/*<User>
                         {({ loading, error, data }) => {
                             
                             if(loading || (!loading && !data) || error) return null;
@@ -67,7 +67,7 @@ const Nav = () => (
                                 </>
                             )
                         }}
-                    </User>
+                    </User>*/}
 
                 </nav>
             </>
