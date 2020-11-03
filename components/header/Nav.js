@@ -16,6 +16,17 @@ const Nav = () => (
 
                 <nav className={menuOpen ? "site__menu site__menu--open" : "site__menu site__menu--closed"}>
 
+                    <User>
+                        {({ loading, error, data }) => {    
+                            if(loading || (!loading && !data) || error) return null;
+                            const { me } = data;
+                            console.log('me', me)
+                            return(
+                                <p>Hello from inside user.</p>
+                            )
+                        }}
+                    </User>
+
                     {/*<User>
                         {({ loading, error, data }) => {
                             
