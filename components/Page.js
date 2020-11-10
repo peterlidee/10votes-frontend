@@ -9,8 +9,8 @@ class Page extends React.Component{
                 {/*<Meta />*/}
                 <Header />
                 <main className="site__main">
-                    hello
                     {/*this.props.children*/}
+                    hello
                 </main>
                 {/*<Footer className="site__footer" />*/}
             </>
