@@ -2,14 +2,15 @@ import Link from 'next/link';
 
 const Footer = () => (
     <footer className="site__footer">
-        
+        I shall be your footer
+        {/*
         <div className="footer__section">
             <h3>10 votes</h3>
             <Link href="/howitworks"><a>how it works</a></Link>
             <Link href="/about"><a>about, a portfolio project</a></Link>
         </div>
 
-        {/*<div className="footer__section">
+        <div className="footer__section">
             <h3>stack</h3>
             <a href="https://nextjs.org/" className="footerlink">next.js</a>
             <a href="https://www.apollographql.com/" className="footerlink">Apollo GraphQL</a>

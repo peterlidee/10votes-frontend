@@ -1,5 +1,5 @@
 import HowItWorks from "../components/static/HowItWorks";
 
-const howItWorks = () => <HowItWorks />;
+const howItWorksPage = () => <HowItWorks />;
 
-export default howItWorks;
+export default howItWorksPage;
