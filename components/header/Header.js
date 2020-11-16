@@ -24,7 +24,7 @@ const Header = props => (
                 <span className="logo__label">votes</span>
             </a>
         </Link>
-        <Search />
+        {/*<Search />*/}
         <Nav />
     </header>
 );
