@@ -2,7 +2,7 @@ import Meta from './header/Meta';
 import Header from './header/Header';
 import Footer from './footer/Footer.js';
 
-import User from '../account/User';
+import User from './account/User';
 
 class Page extends React.Component{
     render(){
