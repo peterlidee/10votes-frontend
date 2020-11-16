@@ -22,7 +22,6 @@ class Page extends React.Component{
                         }}
                     </User>
                     {/* test */}
-                    hello
                     {/*this.props.children*/}
                 </main>
                 {/*<Footer />*/}
