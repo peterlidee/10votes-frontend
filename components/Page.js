@@ -16,7 +16,7 @@ class Page extends React.Component{
                         {({ loading, error, data }) => {
                             if(error) return <p>Error</p>
                             if(loading) return <p>loading</p>
-                            if(!data) return <p>no data</p>
+                            if(!data || !data.me) return <p>no data</p>
                             console.log('data', data)
                             return <p>Hello from inside user data.</p>
                         }}
