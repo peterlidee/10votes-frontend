@@ -6,13 +6,12 @@ class Page extends React.Component{
     render(){
         return(
             <>
-                {/*<Meta />*/}
+                <Meta />
                 <Header />
                 <main className="site__main">
-                    {/*this.props.children*/}
-                    hello
+                    {this.props.children}
                 </main>
-                {/*<Footer className="site__footer" />*/}
+                <Footer className="site__footer" />
             </>
         )
     }
