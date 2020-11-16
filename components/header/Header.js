@@ -1,6 +1,4 @@
 import Link from 'next/link';
-
-//import ProgressBar from './ProgressBar';
 import Nav from './Nav';
 import Search from './Search';
 
