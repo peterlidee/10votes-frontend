@@ -6,7 +6,7 @@ class Page extends React.Component{
     render(){
         return(
             <>
-                {/*<Meta />*/}
+                <Meta />
                 <Header />
                 <main className="site__main">
                     {this.props.children}
