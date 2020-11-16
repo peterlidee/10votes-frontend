@@ -7,7 +7,7 @@ class Page extends React.Component{
         return(
             <>
                 {/*<Meta />*/}
-                <Header />
+                {/*<Header />*/}
                 <main className="site__main">
                     hello
                     {/*this.props.children*/}
