@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 const Footer = () => (
-    <footer>
+    <footer className="site__footer">
         
         <div className="footer__section">
             <h3>10 votes</h3>
@@ -9,7 +9,7 @@ const Footer = () => (
             <Link href="/about"><a>about, a portfolio project</a></Link>
         </div>
 
-        <div className="footer__section">
+        {/*<div className="footer__section">
             <h3>stack</h3>
             <a href="https://nextjs.org/" className="footerlink">next.js</a>
             <a href="https://www.apollographql.com/" className="footerlink">Apollo GraphQL</a>
@@ -29,7 +29,7 @@ const Footer = () => (
             <h3>contact</h3>
             <a href="mailto:peter@lidee.be">peter@lidee.be</a>
             <a href="https://www.twitter.com/lideebe">twitter @lideebe</a>
-        </div>
+        </div>*/}
 
     </footer>
 );

@@ -11,7 +11,7 @@ class Page extends React.Component{
                 <main className="site__main">
                     {this.props.children}
                 </main>
-                {/*<Footer className="site__footer" />*/}
+                <Footer />
             </>
         )
     }
