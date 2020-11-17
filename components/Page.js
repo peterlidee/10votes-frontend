@@ -14,7 +14,7 @@ class Page extends React.Component{
                 <main className="site__main">
                     {/* test */}
                     
-                    <User2 />
+                    <User2 test="boo" />
 
                     {/* test */}
                     {/*this.props.children*/}
