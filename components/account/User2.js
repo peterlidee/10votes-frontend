@@ -32,6 +32,7 @@ const SEARCH_TAGS_QUERY = gql`
 
 const User = props => (
     <Query 
+        {...props} 
         query={CURRENT_USER_QUERY} 
         variables={{ name: "test" }}
     >
@@ -41,14 +42,13 @@ const User = props => (
             if(!data) return <p>no data</p>
             if(!data.me) return <p>no data</p>
             console.log('data', data)
-            return <p>Hello from inside user data. Prop test: {props.test}</p>
+            return <p>Hello from inside user data.</p>
         }}
     </Query>
 );
 
 const User2 = props => (
     <Query 
-        {...props} 
         query={GET_TAG} 
         variables={{ name: "test" }}
     >
@@ -58,7 +58,7 @@ const User2 = props => (
             if(!data) return <p>no data</p>
             if(!data.tag) return <p>no data</p>
             console.log('data', data)
-            return <p>Hello from inside gettag.</p>
+            return <p>Hello from inside user data. Prop test: {props.test}</p>
         }}
     </Query>
 );
