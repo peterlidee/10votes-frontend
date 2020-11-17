@@ -20,16 +20,6 @@ const GET_TAG = gql`
     }
 `;
 
-const SEARCH_TAGS_QUERY = gql`
-    query SEARCH_TAGS_QUERY($search: String!){
-        tags(where: { name_contains: $search }){
-            id
-            name
-            slug
-        }
-    }
-`;
-
 const User = props => (
     <Query 
         {...props} 

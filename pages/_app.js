@@ -10,47 +10,27 @@ import '../sass/index.scss';
 import Router from 'next/router'
 
 import MenuContext from '../components/header/MenuContext';
-  
-  
-
-
-
-// const handleRouteChange = (url) => {
-//     console.log('App is changing to: ', url)
-// }
-
-// Router.events.on('routeChangeComplete', handleRouteChange)
-
-// Router.events.on('routeChangeError', (err, url) => {
-//     if (err.cancelled) {
-//         console.log(`Route to ${url} was cancelled!`)
-//     }
-// })
-
-
-
-
 
 
 class MyApp extends App{
 
     constructor(props){
         super(props)
-        this.state = { // we use state to feed MenuContext
-            menuOpen: false,
-            toggleMenu: this.toggleMenu,
-        }
+        // this.state = { // we use state to feed MenuContext
+        //     menuOpen: false,
+        //     toggleMenu: this.toggleMenu,
+        // }
 
         // add router event,
         // everytime a link is clicked, close the menu (MenuContext) if it was open
-        Router.events.on('routeChangeStart', this.resetMenu)
-        // and handle possible error
-        Router.events.on('routeChangeError', (err, url) => {
-            if (err.cancelled) {
-                // console.log(`Route to ${url} was cancelled!`)
-                this.resetMenu()
-            }
-        })
+        // Router.events.on('routeChangeStart', this.resetMenu)
+        // // and handle possible error
+        // Router.events.on('routeChangeError', (err, url) => {
+        //     if (err.cancelled) {
+        //         // console.log(`Route to ${url} was cancelled!`)
+        //         this.resetMenu()
+        //     }
+        // })
 
     }
 
@@ -64,26 +44,26 @@ class MyApp extends App{
         return { pageProps };
     }
 
-    toggleMenu = () => { // gets called by menu button, changes MenuContext via state
-        this.setState({
-            menuOpen: !this.state.menuOpen
-        });
-    }
-    resetMenu = () => { // gets called on routerchange, changes MenuContext via state
-        if(this.state.menuOpen){
-            this.setState({ menuOpen: false })
-        }
-    }
+    // toggleMenu = () => { // gets called by menu button, changes MenuContext via state
+    //     this.setState({
+    //         menuOpen: !this.state.menuOpen
+    //     });
+    // }
+    // resetMenu = () => { // gets called on routerchange, changes MenuContext via state
+    //     if(this.state.menuOpen){
+    //         this.setState({ menuOpen: false })
+    //     }
+    // }
 
     render(){
         const { Component, pageProps, apollo } = this.props
         return(
             <ApolloProvider client={apollo}>
-                <MenuContext.Provider value={this.state}>
+                {/*<MenuContext.Provider value={this.state}>*/}
                     <Page>
                         <Component {...pageProps} />
                     </Page>
-                </MenuContext.Provider>
+                {/*</MenuContext.Provider>*/}
             </ApolloProvider>
         );
     }
