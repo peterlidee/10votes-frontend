@@ -17,7 +17,14 @@ const User = props => (
         query={CURRENT_USER_QUERY} 
         //fetchPolicy="cache-and-network"
     >
-        {payload => props.children(payload)}
+        {({ loading, error, data }) => {
+            if(error) return <p>Error</p>
+            if(loading) return <p>loading</p>
+            if(!data) return <p>no data</p>
+            if(!data.me) return <p>no data</p>
+            console.log('data', data)
+            return <p>Hello from inside user data.</p>
+        }}
     </Query>
 );
 
