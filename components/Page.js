@@ -3,6 +3,7 @@ import Header from './header/Header';
 import Footer from './footer/Footer.js';
 
 import User from './account/User';
+import User2 from './account/User2'
 
 class Page extends React.Component{
     render(){
@@ -12,7 +13,7 @@ class Page extends React.Component{
                 {/*<Header />*/}
                 <main className="site__main">
                     {/* test */}
-                    <User>
+                    <User2>
                         {({ loading, error, data }) => {
                             if(error) return <p>Error</p>
                             if(loading) return <p>loading</p>
@@ -21,7 +22,7 @@ class Page extends React.Component{
                             console.log('data', data)
                             return <p>Hello from inside user data.</p>
                         }}
-                    </User>
+                    </User2>
                     {/* test */}
                     {/*this.props.children*/}
                 </main>
