@@ -48,15 +48,15 @@ const User2 = props => (
             if(!data) return <p>no data</p>
             if(!data.tag) return <p>no data</p>
             console.log('data', data)
-            return <p>Hello from inside user data. Prop test: {props.test}</p>
+            return <p>Hello from inside user data.</p>
         }}
     </Query>
 );
 
 
-User.propTypes = {
-    children: PropTypes.func.isRequired
-};
+// User.propTypes = {
+//     children: PropTypes.func.isRequired
+// };
 
 export default User2;
 export { CURRENT_USER_QUERY };
