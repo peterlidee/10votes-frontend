@@ -43,14 +43,14 @@ class MyApp extends App{
 
         // add router event,
         // everytime a link is clicked, close the menu (MenuContext) if it was open
-        // Router.events.on('routeChangeStart', this.resetMenu)
-        // // and handle possible error
-        // Router.events.on('routeChangeError', (err, url) => {
-        //     if (err.cancelled) {
-        //         // console.log(`Route to ${url} was cancelled!`)
-        //         this.resetMenu()
-        //     }
-        // })
+        Router.events.on('routeChangeStart', this.resetMenu)
+        // and handle possible error
+        Router.events.on('routeChangeError', (err, url) => {
+            if (err.cancelled) {
+                // console.log(`Route to ${url} was cancelled!`)
+                this.resetMenu()
+            }
+        })
 
     }
 
