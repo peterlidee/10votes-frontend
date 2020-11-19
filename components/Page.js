@@ -1,4 +1,4 @@
-// import Meta from './header/Meta';
+import Meta from './header/Meta';
 // import Header from './header/Header';
 // import Footer from './footer/Footer.js';
 
@@ -48,6 +48,7 @@ const GET_TAG_QUERY = gql`
 
 const Page = props => (
     <div>
+        <Meta />
         <Query query={GET_TAG_QUERY} variables={{ name: "test" }}>
             {({loading, error, data}) => {
                 if(loading) return <p>loading</p>
