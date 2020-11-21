@@ -35,9 +35,18 @@ class PageX extends React.Component{
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
-const GET_TAG_QUERY = gql`
+const GET_TAG_QUERY2 = gql`
     query GET_TAG_QUERY($name: String!){
         tag(where: {name: $name}){
+            id
+            name
+        }
+    }
+`;
+
+const GET_TAG_QUERY = gql`
+    query GET_TAG_QUERY($name: String!){
+        tag(name: $name){
             id
             name
         }
