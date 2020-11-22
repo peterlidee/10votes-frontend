@@ -14,7 +14,7 @@ import MenuContext from '../components/header/MenuContext';
 
 class MyApp extends App{
 
-    constructor(props){
+    /*constructor(props){
         super(props)
         // this.state = { // we use state to feed MenuContext
         //     menuOpen: false,
@@ -32,7 +32,7 @@ class MyApp extends App{
         //     }
         // })
 
-    }
+    }*/
 
     static async getInitialProps({Component, ctx}){
         let pageProps = {};

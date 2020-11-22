@@ -62,9 +62,9 @@ const Page = props => (
             {({loading, error, data}) => {
                 if(loading) return <p>loading</p>
                 if(error) return <p>{error.message}</p>
-                // if(!data){
-                //     console.log('no data found', data)
-                // }
+                if(!data || !data.tag){
+                    console.log('no data found', data)
+                }
                 console.log('there was data', data)
                 return <p>Hello</p>
             }}
