@@ -11,19 +11,18 @@ const GET_TAG_QUERY = gql`
 
 import Link from 'next/link';
 
-
-function Index(props) {
-    const { loading, error, data } = useQuery(GET_TAG_QUERY, { variables: { name: "test" } });
+function Hello(props) {
+    const { loading, error, data } = useQuery(GET_TAG_QUERY, { variables: { name: "test2" } });
   
     if (loading) return 'Loading...';
     if (error) return `Error! ${error.message}`;
   
     return (
         <div>
-            <p>Home: this is the tag: {data.tag.name}</p>
-            <Link href="/hello"><a>to hello page</a></Link>
+            <p>HELLO PAGE: this is the tag: {data.tag.name}</p>
+            <Link href="/"><a>home</a></Link>
         </div>
     );
 }
 
-export default Index;
+export default Hello;

@@ -32,8 +32,7 @@ class PageX extends React.Component{
 
 
 
-import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
+import { gql, useQuery } from '@apollo/client';
 
 const GET_TAG_QUERY2 = gql`
     query GET_TAG_QUERY($name: String!){
@@ -55,8 +54,11 @@ const GET_TAG_QUERY = gql`
 
 
 
-const Page = props => (
-    <div>
+const Page2 = props => {
+    console.log('hello, I am page');
+    return(
+
+        <div>
         <Meta />
         <Query query={GET_TAG_QUERY} variables={{ name: "test" }}>
             {({loading, error, data}) => {
@@ -69,13 +71,25 @@ const Page = props => (
                 return <p>Hello</p>
             }}
         </Query>
+        hello
     </div>
-);
+    )
+};
 
-
-
-
-
-
+function Page(props) {
+    // const { loading, error, data } = useQuery(GET_TAG_QUERY, { variables: { name: "test" } });
+    // console.log('hello, I am page', loading, error, data)
+    // console.log('these are the props', props)
+  
+    // if (loading) return 'Loading...';
+    // if (error) return `Error! ${error.message}`;
+  
+    return (
+        <div>
+            <p>PAGE HEADER</p>
+            {props.children}
+        </div>
+    );
+}
 
 export default Page;

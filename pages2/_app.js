@@ -4,7 +4,7 @@ import Page from '../components/Page';
 // import { ApolloProvider } from 'react-apollo';
 import { ApolloProvider } from '@apollo/client';
 
-//import withApollo from '../lib/withData';
+import withData from '../lib/withData';
 
 import '../sass/index.scss';
 
@@ -16,7 +16,7 @@ import Router from 'next/router'
 import MenuContext from '../components/header/MenuContext';
 
 
-class MyApp2 extends App{
+class MyApp extends App{
 
     /*constructor(props){
         super(props)
@@ -38,9 +38,7 @@ class MyApp2 extends App{
 
     }*/
 
-    /*
     static async getInitialProps({Component, ctx}){
-        console.log('running getInitialProps')
         let pageProps = {};
         if(Component.getInitialProps){
             pageProps = await Component.getInitialProps(ctx);
@@ -49,8 +47,6 @@ class MyApp2 extends App{
         pageProps.query = ctx.query;
         return { pageProps };
     }
-    */
-    
 
     // toggleMenu = () => { // gets called by menu button, changes MenuContext via state
     //     this.setState({
@@ -64,54 +60,17 @@ class MyApp2 extends App{
     // }
 
     render(){
-        console.log('hello from _app')
         const { Component, pageProps, apollo } = this.props
         return(
             <ApolloProvider client={apollo}>
                 {/*<MenuContext.Provider value={this.state}>*/}
-                    hello?
-                    {/*<Page>
+                    <Page>
                         <Component {...pageProps} />
-                    </Page>*/}
+                    </Page>
                 {/*</MenuContext.Provider>*/}
             </ApolloProvider>
         );
     }
 }
 
-class MyApp extends App{
-
-    static async getInitialProps({Component, ctx}){
-        // console.log('running getInitialProps')
-        let pageProps = {};
-        if(Component.getInitialProps){
-            pageProps = await Component.getInitialProps(ctx);
-        }
-        // this exposes the query to the user
-        pageProps.query = ctx.query;
-        return { pageProps };
-    }
-
-    render(){
-        // console.log('hello, I am app', this.props)
-        const { Component, pageProps, apolloClient } = this.props;
-
-        return(
-            <ApolloProvider client={apolloClient}>
-                <Page>
-                    <Component {...pageProps} />
-                </Page>
-            </ApolloProvider>
-        )
-    }
-}
-
-//export default MyApp
-
-//export default withData(MyApp);
-
-import withApollo from "../lib/withData";
-//import withApollo from '../lib/withData';
- 
-// Default export is required for Fast Refresh
-export default withApollo({ ssr: true })(MyApp);
+export default withData(MyApp);

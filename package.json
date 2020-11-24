@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/peterlidee/10votes-frontend#readme",
   "dependencies": {
-    "apollo-boost": "^0.4.9",
+    "@apollo/client": "^3.2.7",
     "apollo-client": "^2.6.10",
     "babel-core": "^6.26.3",
     "date-fns": "^2.16.1",
@@ -31,12 +31,11 @@
     "graphql-tag": "^2.11.0",
     "lodash.debounce": "^4.0.8",
     "next": "^9.5.5",
-    "next-with-apollo": "^5.1.0",
+    "next-apollo": "^5.0.4",
     "nprogress": "^0.2.0",
     "prop-types": "^15.7.2",
     "react": "^16.14.0",
     "react-adopt": "^0.6.0",
-    "react-apollo": "^3.1.5",
     "react-dom": "^16.14.0",
     "react-transition-group": "^4.4.1",
     "sass": "^1.28.0",
@@ -50,7 +49,6 @@
     "jest": "^25.5.4",
     "jest-transform-graphql": "^2.1.0"
   },
-
   "//": "This is our babel config, I prefer this over a .babelrc file",
   "babel": {
     "env": {
