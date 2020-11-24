@@ -12,7 +12,7 @@ const GET_TAG_QUERY = gql`
 import Link from 'next/link';
 
 function Hello(props) {
-    const { loading, error, data } = useQuery(GET_TAG_QUERY, { variables: { name: "test3" } });
+    const { loading, error, data } = useQuery(GET_TAG_QUERY, { variables: { name: "test2" } });
   
     if (loading) return 'Loading...';
     if (error) return `Error! ${error.message}`;
