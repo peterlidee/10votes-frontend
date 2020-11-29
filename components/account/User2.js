@@ -1,6 +1,7 @@
 //import { Query } from 'react-apollo';
-import { Query } from '@apollo/client';
-import gql from 'graphql-tag';
+import { gql } from '@apollo/client';
+import { Query } from '@apollo/client/react/components';
+// import gql from 'graphql-tag';
 import PropTypes from 'prop-types';
 
 const CURRENT_USER_QUERY = gql`
@@ -14,7 +15,7 @@ const CURRENT_USER_QUERY = gql`
 
 const GET_TAG = gql`
     query GET_TAG($name: String!){
-        tag(where: { name: $name }){
+        tag( name: $name ){
             id
             name
         }
@@ -39,18 +40,13 @@ const User = props => (
 );
 
 const User2 = props => (
-    <Query 
+    <Query
+        {...props}
         query={GET_TAG} 
         variables={{ name: "test" }}
+        fetchPolicy="cache-and-network"
     >
-        {({ loading, error, data }) => {
-            if(error) return <p>Error</p>
-            if(loading) return <p>loading</p>
-            if(!data) return <p>no data</p>
-            if(!data.tag) return <p>no data</p>
-            console.log('data', data)
-            return <p>Hello from inside user data.</p>
-        }}
+        {payload => props.children(payload)}
     </Query>
 );
 
