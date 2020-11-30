@@ -57,9 +57,11 @@ const Nav = () => (
 
                             return(
                                 <>
-                                    {(me) && (
-                                        {/*<Logout />*/}
-                                    )}
+                                    {/*(me) && (
+                                        {
+                                            //<Logout />
+                                        }
+                                    )*/}
                                     {(!me) && (
                                         <Link href="/login">
                                             <a className="login__button">log in</a>
