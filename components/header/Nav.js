@@ -1,7 +1,8 @@
 import Link from 'next/link';
+
 import User from '../account/User';
-import Logout from '../account/Logout';
-import MenuContext from './MenuContext';
+//import Logout from '../account/Logout';
+import { MenuContext } from './MenuContext';
 import UploadButton from '../snippets/UploadButton';
 
 const Nav = () => (
@@ -20,6 +21,7 @@ const Nav = () => (
                             
                             if(loading || (!loading && !data) || error) return null;
                             const { me } = data;
+                            console.log('me from nav', me)
 
                             return(
                                 <>
@@ -56,7 +58,7 @@ const Nav = () => (
                             return(
                                 <>
                                     {(me) && (
-                                        <Logout />
+                                        {/*<Logout />*/}
                                     )}
                                     {(!me) && (
                                         <Link href="/login">

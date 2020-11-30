@@ -1,6 +1,7 @@
 import Link from 'next/link';
+
 import Nav from './Nav';
-import Search from './Search';
+//import Search from './Search';
 
 // progressbar config
 import Router from 'next/router';
@@ -24,7 +25,9 @@ const Header = props => (
                 <span className="logo__label">votes</span>
             </a>
         </Link>
-        {/*<Search />*/}
+        {/*
+        <Search />
+        */}
         <Nav />
     </header>
 );
