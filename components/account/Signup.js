@@ -46,7 +46,7 @@ function Signup(){
                 // more form validation here
                 const res = await signup({ 
                     variables: { email, password },
-                    //refetchQueries: [{ query: CURRENT_USER_QUERY }], // TODO? not needed?
+                    refetchQueries: [{ query: CURRENT_USER_QUERY }], // TODO? not needed?
                 }).catch(error => console.log(error.message));
                 // reset the form fields to empty
                 setEmail('');
