@@ -22,9 +22,7 @@ import { gql, useMutation } from '@apollo/client';
 
 const TEST_MUTATION = gql`
     mutation TEST_MUTATION{
-        testCookie{
-            message
-        }
+        testCookie
     }
 `;
 
