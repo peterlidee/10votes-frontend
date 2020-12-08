@@ -5,7 +5,7 @@ import withApollo from "../lib/withData";
 import MenuContextComponent from '../components/header/MenuContext';
 import Page from '../components/Page';
 
-import '../sass/index.scss';
+//import '../sass/index.scss';
 
 class MyApp extends App{
 
@@ -21,7 +21,8 @@ class MyApp extends App{
     // }
 
     render(){
-        const { Component, pageProps, apolloClient } = this.props;
+        //const { Component, pageProps, apolloClient } = this.props;
+        const { Component, apolloClient } = this.props;
 
         return(
             <ApolloProvider client={apolloClient}>
