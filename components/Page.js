@@ -40,8 +40,8 @@ function Page(){
                 const res = testCookie().catch(error => console.log(error.message));
                 //console.log('res', res)
             }}>set cookie</button>
-            {!called && <p>Cookie not set yet</p>}
-            {called && <p>Cookie value: {random}</p>}
+            {!error && !loading && !data && <p>Cookie not set yet</p>}
+            {!error && !loading && data && <p>Cookie value: {data.testCookie}</p>}
         </>
     )
 }
