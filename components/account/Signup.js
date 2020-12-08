@@ -18,7 +18,31 @@ const SIGNUP_MUTATION = gql`
     }
 `;
 
+const TEST_MUTATION = gql`
+    mutation TEST_MUTATION{
+        testCookie{
+            message
+        }
+    }
+`;
+
 function Signup(){
+    // apollo mutation hook
+    const [testCookie, { error, data, loading, called }] = useMutation(TEST_MUTATION);
+    console.log('data', data)
+    if(error) return 'error'
+    if(loading) return 'loading'
+    return(
+        <button onClick={async e => {
+            e.preventDefault();
+            // more form validation here
+            const res = await testCookie().catch(error => console.log(error.message));
+            console.log('res', res)
+        }}>boo{loading ? '...' : '!' }</button>
+    )
+}
+
+function Signup2(){
     // react state hooks
     const [ email, setEmail ] = useState("");
     const [ password, setPassword ] = useState("");
