@@ -33,12 +33,16 @@ function Page(){
     if(loading) return 'loading'
     console.log('data', data)
     return(
-        <button onClick={e => {
-            e.preventDefault();
-            // more form validation here
-            const res = testCookie().catch(error => console.log(error.message));
-            //console.log('res', res)
-        }}>set{loading ? 'ting' : '' } cookie</button>
+        <>
+            <button onClick={e => {
+                e.preventDefault();
+                // more form validation here
+                const res = testCookie().catch(error => console.log(error.message));
+                //console.log('res', res)
+            }}>set cookie</button>
+            {!called && <p>Cookie not set yet</p>}
+            {called && <p>Cookie value: {random}</p>}
+        </>
     )
 }
 
