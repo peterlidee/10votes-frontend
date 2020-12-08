@@ -25,11 +25,12 @@ class MyApp extends App{
 
         return(
             <ApolloProvider client={apolloClient}>
-                <MenuContextComponent>
+                {/*<MenuContextComponent>
                     <Page>
                         <Component {...pageProps} />
                     </Page>
-                </MenuContextComponent>
+                </MenuContextComponent>*/}
+                <Page />
             </ApolloProvider>
         )
     }
