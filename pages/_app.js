@@ -1,3 +1,4 @@
+/*
 import App from 'next/app';
 import { ApolloProvider } from '@apollo/client';
 
@@ -30,7 +31,7 @@ class MyApp extends App{
                     <Page>
                         <Component {...pageProps} />
                     </Page>
-                </MenuContextComponent>*/}
+                </MenuContextComponent>/}
                 <Page />
             </ApolloProvider>
         )
@@ -39,3 +40,6 @@ class MyApp extends App{
 
 //export default withApollo({ ssr: true })(MyApp);
 export default withApollo()(MyApp);
+
+*/
+
