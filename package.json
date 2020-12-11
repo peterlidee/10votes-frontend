@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/peterlidee/10votes-frontend#readme",
   "dependencies": {
-    "@apollo/client": "^3.2.7",
+    "@apollo/client": "^3.3.5",
     "apollo-client": "^2.6.10",
     "babel-core": "^6.26.3",
     "date-fns": "^2.16.1",
@@ -41,7 +41,7 @@
     "react-apollo": "^3.1.5",
     "react-dom": "^16.14.0",
     "react-transition-group": "^4.4.1",
-    "sass": "^1.28.0",
+    "sass": "^1.30.0",
     "waait": "^1.0.5"
   },
   "devDependencies": {
