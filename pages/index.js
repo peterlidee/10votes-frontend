@@ -1,4 +1,5 @@
 import { gql, useQuery } from '@apollo/client';
+import Link from 'next/link';
 
 const GET_TAG_QUERY = gql`
     query GET_TAG_QUERY($name: String!){
@@ -8,9 +9,6 @@ const GET_TAG_QUERY = gql`
         }
     }
 `;
-
-import Link from 'next/link';
-
 
 function Index(props) {
     const { loading, error, data } = useQuery(GET_TAG_QUERY, { variables: { name: "test" } });
