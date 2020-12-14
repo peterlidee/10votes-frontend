@@ -1,5 +1,5 @@
-import { Mutation } from 'react-apollo';
-import gql from 'graphql-tag';
+//import { Mutation } from 'react-apollo';
+//import gql from 'graphql-tag';
 import { CURRENT_USER_QUERY } from '../account/User';
 
 import Error from '../snippets/Error';

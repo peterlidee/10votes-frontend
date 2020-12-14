@@ -1,7 +1,7 @@
-import gql from 'graphql-tag';
+//import gql from 'graphql-tag';
 import Downshift, { resetIdCounter } from 'downshift';
 import Router from 'next/router';
-import { ApolloConsumer } from 'react-apollo';
+//import { ApolloConsumer } from 'react-apollo';
 import debounce from 'lodash.debounce';
 import Loader from '../snippets/Loader';
 

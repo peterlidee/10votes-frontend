@@ -1,4 +1,4 @@
-import { Query } from 'react-apollo';
+//import { Query } from 'react-apollo';
 import getRouterData from '../../lib/getRouterData';
 
 const ItemsCount = props => {

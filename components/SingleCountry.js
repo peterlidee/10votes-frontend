@@ -1,7 +1,7 @@
 // this component displays single countries, fe /location/be
 
-import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
+//import { Query } from 'react-apollo';
+//import gql from 'graphql-tag';
 import { perPage } from '../config';
 import getRouterData from '../lib/getRouterData';
 

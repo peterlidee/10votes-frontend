@@ -1,7 +1,7 @@
 // this component displays single tags, fe /tags/test
 
-import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
+//import { Query } from 'react-apollo';
+//import gql from 'graphql-tag';
 import getRouterData from '../lib/getRouterData';
 import { perPage } from '../config';
 

@@ -4,7 +4,7 @@
 // 3. a dropdown with suggestions
 
 import Downshift from 'downshift';
-import { ApolloConsumer } from 'react-apollo';
+//import { ApolloConsumer } from 'react-apollo';
 import { SEARCH_LOCATIONS_QUERY, SEARCH_TAGS_QUERY } from '../header/Search';
 import debounce from 'lodash.debounce';
 import PropTypes from 'prop-types';

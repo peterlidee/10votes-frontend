@@ -1,5 +1,5 @@
-import { Query, Mutation } from 'react-apollo';
-import gql from 'graphql-tag';
+//import { Query, Mutation } from 'react-apollo';
+//import gql from 'graphql-tag';
 import Error from './snippets/Error';
 import PropTypes from 'prop-types';
 

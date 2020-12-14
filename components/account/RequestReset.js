@@ -1,5 +1,5 @@
-import { Mutation } from 'react-apollo';
-import gql from 'graphql-tag';
+//import { Mutation } from 'react-apollo';
+//import gql from 'graphql-tag';
 
 import MetaTitle from '../snippets/MetaTitle';
 import FormRow from '../formParts/FormRow';

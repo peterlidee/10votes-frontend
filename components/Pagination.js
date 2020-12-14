@@ -1,4 +1,4 @@
-import { Query } from 'react-apollo';
+//import { Query } from 'react-apollo';
 import Link from 'next/link';
 import { perPage } from '../config';
 import getRouterData from '../lib/getRouterData';

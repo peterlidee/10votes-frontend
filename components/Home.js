@@ -1,6 +1,6 @@
 //import { Query } from 'react-apollo';
 import { Query } from '@apollo/client';
-import gql from 'graphql-tag';
+//import gql from 'graphql-tag';
 
 import Loader from './snippets/Loader';
 import Error from './snippets/Error';

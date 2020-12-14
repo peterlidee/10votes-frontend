@@ -1,5 +1,5 @@
-import { Mutation, Query } from 'react-apollo';
-import gql from 'graphql-tag';
+//import { Mutation, Query } from 'react-apollo';
+//import gql from 'graphql-tag';
 import Router from 'next/router';
 import { CURRENT_USER_QUERY } from '../account/User';
 
