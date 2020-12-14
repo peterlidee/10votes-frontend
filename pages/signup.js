@@ -1,7 +1,10 @@
-import Signup from '../components/account/Signup';
+//import Signup from '../components/account/Signup';
 
 const signupPage = props => (
-    <Signup />
+    <>
+        {/*<Signup />*/}
+        hello
+    </>
 )
 
 export default signupPage;

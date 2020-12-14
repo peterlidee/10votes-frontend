@@ -1,5 +1,5 @@
-import Meta from './header/Meta';
-import Header from './header/Header';
+//import Meta from './header/Meta';
+//import Header from './header/Header';
 //import Footer from './footer/Footer.js';
 
 
