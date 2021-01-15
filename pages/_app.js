@@ -43,9 +43,16 @@ export default withApollo()(MyApp);
 
 */
 
+// remove next-with-apollo TODO ?
+
+// expose query to user
+// use menuContext
+
 import { ApolloProvider } from '@apollo/client'
 import { useApollo } from '../lib/withApollo'
 import Page from '../components/Page';
+
+import '../sass/index.scss';
 
 export default function App({ Component, pageProps }) {
     const apolloClient = useApollo(pageProps)
