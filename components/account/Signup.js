@@ -18,6 +18,7 @@ const SIGNUP_MUTATION = gql`
     }
 `;
 
+/*
 const TEST_MUTATION = gql`
     mutation TEST_MUTATION{
         testCookie{
@@ -41,8 +42,9 @@ function Signup(){
         }}>boo{loading ? '...' : '!' }</button>
     )
 }
+*/
 
-function Signup2(){
+function Signup(){
     // react state hooks
     const [ email, setEmail ] = useState("");
     const [ password, setPassword ] = useState("");

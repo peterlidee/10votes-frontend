@@ -2,8 +2,6 @@ import Link from 'next/link';
 
 const Footer = () => (
     <footer className="site__footer">
-        I shall be your footer
-        {/*
         <div className="footer__section">
             <h3>10 votes</h3>
             <Link href="/howitworks"><a>how it works</a></Link>
@@ -30,8 +28,7 @@ const Footer = () => (
             <h3>contact</h3>
             <a href="mailto:peter@lidee.be">peter@lidee.be</a>
             <a href="https://www.twitter.com/lideebe">twitter @lideebe</a>
-        </div>*/}
-
+        </div>
     </footer>
 );
 

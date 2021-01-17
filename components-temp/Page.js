@@ -1,19 +1,17 @@
-//import Meta from './header/Meta';
+import Meta from './header/Meta';
 //import Header from './header/Header';
-//import Footer from './footer/Footer.js';
-
-import Link from 'next/link'
-
+import Footer from './footer/Footer.js';
 
 function Page(props) {  
     return (
         <>
-            {/*<Meta />
+            <Meta />
+            {/*
             <Header />*/}
             <main className="site__main">
                 {props.children}
             </main>
-            {/*<Footer />*/}
+            <Footer />
         </>
     );
 }
