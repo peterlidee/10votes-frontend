@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 import User from '../account/User';
-//import Logout from '../account/Logout';
+import Logout from '../account/Logout';
 import { MenuContext } from './MenuContext';
 import UploadButton from '../snippets/UploadButton';
 
@@ -61,11 +61,7 @@ const Nav = () => (
 
                             return(
                                 <>
-                                    {/*(me) && (
-                                        {
-                                            //<Logout />
-                                        }
-                                    )*/}
+                                    {(me) && <Logout />}
                                     {(!me) && (
                                         <Link href="/login">
                                             <a className="login__button">log in</a>

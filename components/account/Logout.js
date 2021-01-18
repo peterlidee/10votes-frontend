@@ -1,27 +1,21 @@
 //import gql from 'graphql-tag';
+// TODO remove graphql tag?
 
-//import { Mutation } from 'react-apollo';
-import { Mutation } from '@apollo/client/react/components';
-
+import { gql, useMutation } from '@apollo/client';
 import { CURRENT_USER_QUERY } from './User';
 
 const LOGOUT_MUTATION = gql`
-    mutation SIGN_OUT_MUTATION{
+    mutation LOGOUT_MUTATION{
         logout{
             message
         }
     }
 `;
 
-const Logout = props => (
-    <Mutation 
-        mutation={ LOGOUT_MUTATION }
-        refetchQueries={[{ query: CURRENT_USER_QUERY }]}
-    >
-        {(logout) => {
-            return <button onClick={logout} className="logout__button">log out</button>
-        }}
-    </Mutation>
-);
+function Logout(){
+    const [logout] = useMutation(LOGOUT_MUTATION, { refetchQueries: [{ query: CURRENT_USER_QUERY }]});
+    return <button onClick={logout} className="logout__button">log out</button>
+}
+// on logout, redirect? TODO?
 
 export default Logout;
