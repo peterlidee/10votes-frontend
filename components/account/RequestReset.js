@@ -1,6 +1,9 @@
 //import { Mutation } from 'react-apollo';
 //import gql from 'graphql-tag';
 
+import { useState } from 'react';
+import { gql, useMutation } from '@apollo/client';
+
 import MetaTitle from '../snippets/MetaTitle';
 import FormRow from '../formParts/FormRow';
 import InputContainer from '../formParts/InputContainer';
@@ -15,103 +18,85 @@ const REQUEST_RESET_MUTATION = gql`
     }
 `;
 
-class RequestReset extends React.Component{
-    state = {
-        email: "",
-    }
-    saveToState = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value
-        })
-    }
-    clearField = (name) => {
-        this.setState({
-            [name]: ""
-        });
-    }
-    render(){
-        return(
-            <Mutation 
-                mutation={REQUEST_RESET_MUTATION} 
-                variables={this.state}>
-                {(requestReset, { loading, error, called }) => {
-                    if(!error && !loading && called) return <p className="no-data">We sent an email with reset instructions to {this.state.email}.</p>
-                    return(
-                        <>
-                            <MetaTitle>Request a password reset</MetaTitle>
-                            <h2 className="title">Reset your password</h2>
+function RequestReset(){
+    //react hooks
+    const [email, setEmail] = useState('');
+    // apollo mutation hook
+    const [ requestReset, {error, loading, called} ] = useMutation(REQUEST_RESET_MUTATION, { variables: { email }});
 
-                            <form method="post" className="form-part form-part--account" onSubmit={async e => {
-                                    e.preventDefault();
-                                    // more form validation here
-                                    // this.validateForm()
-                                    const res = await requestReset().catch(error => console.log(error.message));
-                                    // reset to empty if pass was wrong
-                                    if(!res){
-                                        this.setState({ email: '' });
-                                    }
-                                    // don't reset if succes so we can use email in succes message
-                            }}>
+    if(!error && !loading && called) return <p className="no-data">We sent an email with reset instructions to {email}.</p>
+    return(
+        <>
+            <MetaTitle>Request a password reset</MetaTitle>
+            <h2 className="title">Request a password reset.</h2>
 
-                                <FormRow 
-                                    number={1}
-                                    label={{ 
-                                        text: "What email did you sign up with?", 
-                                        required: true,
-                                        html: true,
-                                        for: "email",
-                                    }}
-                                    valid={{ 
-                                        field: this.state.email, 
-                                        form: this.state.email,
-                                    }}
-                                >
-                                    <InputContainer 
-                                        clearField={this.clearField} 
-                                        name="email" 
-                                        isEmpty={!this.state.email}
-                                    >
-                                        <input 
-                                            type="email" 
-                                            className="form-part__input"
-                                            name="email"
-                                            id="email"
-                                            value={this.state.email}
-                                            onChange={this.saveToState}
-                                        />
-                                    </InputContainer>
-                                </FormRow>
+            <form method="post" className="form-part form-part--account" onSubmit={async e => {
+                    e.preventDefault();
+                    // more form validation here
+                    // validateForm()?
+                    const res = await requestReset().catch(error => console.log(error.message));
+                    // reset to empty if pass was wrong
+                    if(!res){
+                        setEmail('');
+                    }
+                    // don't reset if success so we can use email in succes message
+            }}>
 
-                                {error && 
-                                    <FormRow valid={{ error: true, form: this.state.email }}>
-                                        <Error error={error} plain={true} />
-                                    </FormRow>
-                                }
+                <FormRow 
+                    number={1}
+                    label={{ 
+                        text: "What email did you sign up with?", 
+                        required: true,
+                        html: true,
+                        for: "email",
+                    }}
+                    valid={{ 
+                        field: email, 
+                        form: email,
+                    }}
+                >
+                    <InputContainer 
+                        clearField={() => setEmail('')} 
+                        name="email" 
+                        isEmpty={!email}
+                    >
+                        <input 
+                            type="email" 
+                            className="form-part__input"
+                            name="email"
+                            id="email"
+                            value={email}
+                            onChange={e => setEmail(e.target.value)}
+                        />
+                    </InputContainer>
+                </FormRow>
 
-                                <FormRow 
-                                    number={2}
-                                    extraClass="last"
-                                    valid={{ 
-                                        field: this.state.email, 
-                                        form: this.state.email,
-                                    }}
-                                >
-                                    <FormButton loading={loading} formValid={!this.state.email}>
-                                        request reset
-                                    </FormButton>
-                                </FormRow>
+                {error && 
+                    <FormRow valid={{ error: true, form: email }}>
+                        <Error error={error} plain={true} />
+                    </FormRow>
+                }
 
-                                <div className="form-part--account__links">
-                                    <p>This in configured with <a href="https://mailtrap.io/">mailtrap.io</a> as development environment. It works but won't actually send an email to you. So, don't try to reset your password.</p>
-                                </div>
+                <FormRow 
+                    number={2}
+                    extraClass="last"
+                    valid={{ 
+                        field: email, 
+                        form: email,
+                    }}
+                >
+                    <FormButton loading={loading} formValid={!email}>
+                        request reset
+                    </FormButton>
+                </FormRow>
 
-                            </form>
-                        </>
-                    )
-                }}
-            </Mutation>
-        )
-    }
+                <div className="form-part--account__links">
+                    <p>This is configured with <a href="https://mailtrap.io/">mailtrap.io</a> as development environment. It works but won't actually send an email to you. So, don't try to reset your password yet. (it's on my todo list)</p>
+                </div>
+
+            </form>
+        </>
+    )
 }
 
 export default RequestReset;
