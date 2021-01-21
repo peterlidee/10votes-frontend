@@ -49,7 +49,10 @@ function Signup(){
     const [ email, setEmail ] = useState("");
     const [ password, setPassword ] = useState("");
     // apollo mutation hook
-    const [signup, { error, data, loading, called }] = useMutation(SIGNUP_MUTATION);
+    const [signup, { error, data, loading, called }] = useMutation(SIGNUP_MUTATION, {
+        variables: { email, password },
+        refetchQueries: [{ query: CURRENT_USER_QUERY }], // TODO? not needed?
+    });
 
     if(called && !error && !loading && data && data.signup){
         return <p className="no-data">You are logged into your new account: {data.signup.email}.</p>
@@ -70,10 +73,7 @@ function Signup(){
             <form method="post" className="form-part form-part--account" onSubmit={async e => {
                 e.preventDefault();
                 // more form validation here
-                const res = await signup({ 
-                    variables: { email, password },
-                    refetchQueries: [{ query: CURRENT_USER_QUERY }], // TODO? not needed?
-                }).catch(error => console.log(error.message));
+                const res = await signup().catch(error => console.log(error.message));
                 // reset the form fields to empty
                 setEmail('');
                 setPassword('');
