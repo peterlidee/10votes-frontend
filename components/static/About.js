@@ -1,4 +1,4 @@
-const About = props => (
+const About = () => (
     <>
     <h1 className="title title--large">About</h1>
     <div className="flat-text">
