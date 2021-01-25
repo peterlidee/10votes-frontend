@@ -1,5 +1,5 @@
 //import { Query } from 'react-apollo';
-import { Query } from '@apollo/client';
+import { Query, gql } from '@apollo/client';
 //import gql from 'graphql-tag';
 
 import Loader from './snippets/Loader';

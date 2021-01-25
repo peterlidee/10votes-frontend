@@ -57,7 +57,6 @@ import '../sass/index.scss';
 
 export default function App({ Component, pageProps }) {
     const apolloClient = useApollo(pageProps)
-
     return (
         <ApolloProvider client={apolloClient}>
             <MenuContextComponent>

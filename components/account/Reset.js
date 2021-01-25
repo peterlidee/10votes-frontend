@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
-//import { Mutation } from 'react-apollo';
-import { CURRENT_USER_QUERY } from './User';
-//import gql from 'graphql-tag';
-import PropTypes from 'prop-types';
+import { useState } from 'react';
+import { gql, useMutation } from '@apollo/client';
+import { useRouter } from 'next/router';
 
+import { CURRENT_USER_QUERY } from './User';
 import MetaTitle from '../snippets/MetaTitle';
 import FormRow from '../formParts/FormRow';
 import InputContainer from '../formParts/InputContainer';
@@ -18,135 +17,115 @@ const RESET_MUTATION = gql`
     }
 `;
 
-class Reset extends React.Component{
-    static propTypes = {
-        resetToken: PropTypes.string.isRequired,
-    }
-    state = {
-        password: "",
-        confirmPassword: "",
-    }
-    saveToState = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value
-        })
-    }
-    clearField = (name) => {
-        this.setState({
-            [name]: ""
-        });
-    }
-    render(){
-        return(
-            <Mutation 
-                mutation={RESET_MUTATION} 
-                variables={{
-                    resetToken: this.props.resetToken,
-                    password: this.state.password,
-                    confirmPassword: this.state.confirmPassword,
-                }}
-                refetchQueries={[{ query: CURRENT_USER_QUERY }]}
-            >
-                {(reset, { loading, error, called }) => {
-                    if(!error && !loading && called) return <p className="no-data">Your password was reset. You are now logged in with your new password.</p>
-                    return(
-                        <>
-                            <MetaTitle>Choose a new password</MetaTitle>
-                            <h2 className="title">Choose a new password</h2>
+function Reset(){
+    // get the url query
+    const router =  useRouter();
+    const resetToken = router.query.resetToken || '';
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [ reset, {data, loading, error, called} ] = useMutation(RESET_MUTATION, {
+        variables: {
+            password,
+            confirmPassword,
+            resetToken,
+        },
+        refetchQueries: [{ query: CURRENT_USER_QUERY }]
+    })
+    if(!error && !loading && called) return <p className="no-data">Your password was reset. You are now logged in with your new password.</p>
+    return(
+        <>
+            <MetaTitle>Choose a new password</MetaTitle>
+            <h2 className="title">Choose a new password</h2>
 
-                            <form method="post" className="form-part form-part--account" onSubmit={async e => {
-                                e.preventDefault();
-                                // more form validation here
-                                // this.validateForm()
-                                const res = await reset().catch(error => console.log(error.message));
-                                this.setState({ password: '', confirmPassword: '' });
-                            }}>
+            <form method="post" className="form-part form-part--account" onSubmit={async e => {
+                e.preventDefault();
+                // more form validation here
+                const res = await reset().catch(error => console.log(error.message));
+                setPassword('');
+                setConfirmPassword('');
+            }}>
 
-                                <FormRow 
-                                    number={1}
-                                    label={{ 
-                                        text: "Enter a new password", 
-                                        required: true,
-                                        html: true,
-                                        for: "password",
-                                    }}
-                                    valid={{ 
-                                        field: this.state.password, 
-                                        form: this.state.password,
-                                    }}
-                                >
-                                    <InputContainer 
-                                        clearField={this.clearField} 
-                                        name="password" 
-                                        isEmpty={!this.state.password}
-                                    >
-                                        <input 
-                                            type="password" 
-                                            minLength="6" 
-                                            className="form-part__input"
-                                            name="password"
-                                            id="password"
-                                            value={this.state.password}
-                                            onChange={this.saveToState} 
-                                        />
-                                    </InputContainer>
-                                </FormRow>
+                <FormRow 
+                    number={1}
+                    label={{ 
+                        text: "Enter a new password", 
+                        required: true,
+                        html: true,
+                        for: "password",
+                    }}
+                    valid={{ 
+                        field: password, 
+                        form: password,
+                    }}
+                >
+                    <InputContainer 
+                        clearField={() => setPassword('')} 
+                        name="password" 
+                        isEmpty={!password}
+                    >
+                        <input 
+                            type="password" 
+                            minLength="6" 
+                            className="form-part__input"
+                            name="password"
+                            id="password"
+                            value={password}
+                            onChange={e => setPassword(e.target.value)} 
+                        />
+                    </InputContainer>
+                </FormRow>
 
-                                <FormRow 
-                                    number={2}
-                                    label={{ 
-                                        text: "Confirm this password", 
-                                        required: true,
-                                        html: true,
-                                        for: "confirmPassword",
-                                    }}
-                                    valid={{ 
-                                        field: this.state.password, 
-                                        form: this.state.password && this.state.confirmPassword,
-                                    }}
-                                >
-                                    <InputContainer 
-                                        clearField={this.clearField} 
-                                        name="confirmPassword" 
-                                        isEmpty={!this.state.confirmPassword}
-                                    >
-                                        <input 
-                                            type="password" 
-                                            minLength="6" 
-                                            className="form-part__input"
-                                            name="confirmPassword"
-                                            id="confirmPassword"
-                                            value={this.state.confirmPassword}
-                                            onChange={this.saveToState} 
-                                        />
-                                    </InputContainer>
-                                </FormRow>
+                <FormRow 
+                    number={2}
+                    label={{ 
+                        text: "Confirm this password", 
+                        required: true,
+                        html: true,
+                        for: "confirmPassword",
+                    }}
+                    valid={{ 
+                        field: password, // TODO confirmPassword?
+                        form: password && confirmPassword,
+                    }}
+                >
+                    <InputContainer 
+                        clearField={() => setConfirmPassword('')} 
+                        name="confirmPassword" 
+                        isEmpty={!confirmPassword}
+                    >
+                        <input 
+                            type="password" 
+                            minLength="6" 
+                            className="form-part__input"
+                            name="confirmPassword"
+                            id="confirmPassword"
+                            value={confirmPassword}
+                            onChange={e => setConfirmPassword(e.target.value)} 
+                        />
+                    </InputContainer>
+                </FormRow>
 
-                                {error && 
-                                    <FormRow valid={{ error: true, form: this.state.confirmPassword && this.state.password }}>
-                                        <Error error={error} plain={true} />
-                                    </FormRow>
-                                }
+                {error && 
+                    <FormRow valid={{ error: true, form: confirmPassword && password }}>
+                        <Error error={error} plain={true} />
+                    </FormRow>
+                }
 
-                                <FormRow 
-                                    number={3}
-                                    extraClass="last"
-                                    valid={{ 
-                                        field: this.state.confirmPassword && this.state.password, 
-                                        form: this.state.confirmPassword && this.state.password,
-                                    }}
-                                >
-                                    <FormButton loading={loading} formValid={!this.state.confirmPassword || !this.state.password}>
-                                        change password
-                                    </FormButton>
-                                </FormRow>  
-                            </form>
-                        </>
-                    )
-                }}
-            </Mutation>
-        )
-    }
+                <FormRow 
+                    number={3}
+                    extraClass="last"
+                    valid={{ 
+                        field: confirmPassword && password, 
+                        form: confirmPassword && password,
+                    }}
+                >
+                    <FormButton loading={loading} formValid={!confirmPassword || !password}>
+                        change password
+                    </FormButton>
+                </FormRow>  
+            </form>
+        </>
+    )
 }
 
 export default Reset;

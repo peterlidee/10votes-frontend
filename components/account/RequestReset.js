@@ -1,6 +1,3 @@
-//import { Mutation } from 'react-apollo';
-//import gql from 'graphql-tag';
-
 import { useState } from 'react';
 import { gql, useMutation } from '@apollo/client';
 
