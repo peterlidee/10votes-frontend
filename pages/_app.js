@@ -51,7 +51,8 @@ export default withApollo()(MyApp);
 import { ApolloProvider } from '@apollo/client'
 import { useApollo } from '../lib/withApollo'
 import Page from '../components/Page';
-import MenuContextComponent from '../components/header/MenuContext';
+import { MenuContextProvider } from '../components/context/MenuContext';
+import { UserContextProvider } from '../components/context/UserContext';
 
 import '../sass/index.scss';
 
@@ -59,11 +60,13 @@ export default function App({ Component, pageProps }) {
     const apolloClient = useApollo(pageProps)
     return (
         <ApolloProvider client={apolloClient}>
-            <MenuContextComponent>
-                <Page>
-                    <Component {...pageProps} />
-                </Page>
-            </MenuContextComponent>
+            <UserContextProvider>
+                <MenuContextProvider>
+                    <Page>
+                        <Component {...pageProps} />
+                    </Page>
+                </MenuContextProvider>
+            </UserContextProvider>
         </ApolloProvider>
     )
 }
