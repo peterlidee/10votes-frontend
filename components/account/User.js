@@ -1,5 +1,5 @@
 //import { Query } from 'react-apollo';
-import { gql } from '@apollo/client';
+import { gql, useQuery } from '@apollo/client';
 import { Query } from '@apollo/client/react/components';
 //import gql from 'graphql-tag';
 // todo remove graphql tag?
