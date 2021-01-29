@@ -73,4 +73,4 @@ const UserContextProvider = props => {
 }
 
 export default UserContext;
-export { UserContextProvider };
+export { UserContextProvider, CURRENT_USER_QUERY };

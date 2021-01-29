@@ -49,10 +49,10 @@ export default withApollo()(MyApp);
 // use menuContext
 
 import { ApolloProvider } from '@apollo/client'
-import { useApollo } from '../lib/withApollo'
-import Page from '../components/Page';
+import { useApollo } from '../lib/apollo'
 import { MenuContextProvider } from '../components/context/MenuContext';
 import { UserContextProvider } from '../components/context/UserContext';
+import Page from '../components/Page';
 
 import '../sass/index.scss';
 
