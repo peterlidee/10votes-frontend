@@ -28,8 +28,9 @@
 
 
 
+// import { initializeApollo, addApolloState } from '../lib/apollo';
+// import { CURRENT_USER_QUERY } from '../components/context/UserContext';
 //import Home from '../components/Home';
-
 
 const Index = props => (
     <>
@@ -37,5 +38,25 @@ const Index = props => (
         home page
     </>
 )
+
+// export async function getStaticProps() {
+
+//     console.log('hello from inside index page')
+
+//     const apolloClient = initializeApollo()
+  
+//     await apolloClient.query({
+//         query: CURRENT_USER_QUERY,
+//         //variables: allPostsQueryVars,
+//     })
+  
+//     return addApolloState(apolloClient, {
+//         props: {
+//             //initialApolloState: apolloClient.cache.extract(),
+//             test: [],
+//         },
+//         revalidate: 1,
+//     })
+// }
 
 export default Index;

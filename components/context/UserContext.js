@@ -72,5 +72,8 @@ const UserContextProvider = props => {
     )
 }
 
+// we are not gonna do SSR for CURRENT_USER_QUERY cause it doesn't get cookie in middleware (backend)
+// look into this, TODO
+
 export default UserContext;
 export { UserContextProvider, CURRENT_USER_QUERY };
