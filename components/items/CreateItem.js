@@ -1,5 +1,10 @@
 //import { Query, Mutation } from 'react-apollo';
 //import gql from 'graphql-tag';
+
+// import { gql } from '@apollo/client';
+import { gql, useMutation } from '@apollo/client';
+import { Query, Mutation } from '@apollo/client/react/components';
+
 import Router from 'next/router';
 import Link from 'next/link';
 import { CURRENT_USER_QUERY } from '../account/User';
@@ -11,6 +16,7 @@ import ManageUpload from './ManageUpload';
 import InputSuggestion from './InputSuggestion';
 import FormButton from '../formParts/FormButton';
 import Error from '../snippets/Error';
+import { render } from 'nprogress';
 
 
 const CREATE_ITEM_MUTATION = gql`
@@ -94,6 +100,8 @@ class CreateItem extends React.Component{
     render(){
         // make a const to check if the form is all valid, used in CrudNumber
         const formValid = this.state.image && this.state.location && this.state.location.length >= 2;
+
+        return(<>hello</>)
 
         return(
             <Query query={CURRENT_USER_QUERY}>

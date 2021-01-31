@@ -1,4 +1,5 @@
 //import gql from 'graphql-tag';
+import { gql } from '@apollo/client';
 import Downshift, { resetIdCounter } from 'downshift';
 import Router from 'next/router';
 //import { ApolloConsumer } from 'react-apollo';
