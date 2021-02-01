@@ -1,13 +1,10 @@
-//import { Query, Mutation } from 'react-apollo';
-//import gql from 'graphql-tag';
-
-// import { gql } from '@apollo/client';
-import { gql, useMutation } from '@apollo/client';
-import { Query, Mutation } from '@apollo/client/react/components';
-
+import { useState, useContext } from 'react';
 import Router from 'next/router';
 import Link from 'next/link';
-import { CURRENT_USER_QUERY } from '../account/User';
+
+import { gql, useMutation, useQuery } from '@apollo/client';
+import { Query, Mutation } from '@apollo/client/react/components';
+import UserContext, { CURRENT_USER_QUERY, UserContextProvider } from '../context/UserContext';
 
 import { inputToString } from '../../lib/inputToString';
 import MetaTitle from '../snippets/MetaTitle';
@@ -43,7 +40,147 @@ const CREATE_ITEM_MUTATION = gql`
     }
 `;
 
-class CreateItem extends React.Component{
+function CreateItem(){
+    // state hooks
+    const [image, setImage] = useState('');
+    const [largeImage, setLargeImage] = useState('');
+    const handleImageSelection = (images) => {
+        setImage(images.small);
+        setLargeImage(images.large);
+    };
+    const [location, setLocation] = useState('');
+    const [tags, setTags] = useState([null, null, null]);
+    // get user
+    // since this component is guarded by the please signin component, we don't need to worry about loading or error
+    const { data: userData } = useContext(UserContext);
+    // setup createItem mutation
+    const [createItem, { loading: createItemLoading, error: createItemError }] = useMutation(CREATE_ITEM_MUTATION, {
+        variables: {
+            image, 
+            largeImage,
+            location: inputToString(location),
+            // filter out the empty ones
+            tags: tags.map(tag => inputToString(tag)).filter(tag => tag), //TODO
+        },
+        refetchQueries: [{ query: CURRENT_USER_QUERY }],
+    });
+
+    // make a const to check if the form is all valid, used in CrudNumber
+    const formValid = image && location && location.length >= 2;
+
+    return(
+        <>
+            <MetaTitle>Upload a picture</MetaTitle>
+            <h2 className="item-crud__title title">Upload a Picture</h2>
+            {userData.me.items.length >= 10 && <p className="no-data">You used up all your uploads. Manage them here: <Link href="/youritems"><a>my pics</a></Link></p>}
+
+            {userData.me.items.length < 10 &&
+
+                <form 
+                    onSubmit={ async(e) => { // TODO put in func?
+                        e.preventDefault();
+                        // form validation: are the required fields filled in? TODO?
+
+                        // call the mutation
+                        const res = await createItem().catch(error => console.log(error.message));
+                        
+                        // there was an error
+                        if(!res) return null; 
+                        
+                        //redirect to the created item
+                        Router.push({
+                            pathname: '/item',
+                            query: { id: res.data.createItem.id },
+                        });
+                    }} 
+                    id="createItemForm" 
+                    className="form-part form-part--createItem"
+                >
+
+                    <ManageUpload 
+                        number={1}
+                        label={{ 
+                            text: "Add an image", 
+                            required: true,
+                        }}
+                        valid={{ 
+                            field: image, 
+                            form: image 
+                        }}
+                        image={image}
+                        handleImageSelection={handleImageSelection}
+                        //handleSetState={this.handleSetState} 
+                        />
+                    {/*
+                    
+
+                    <FormRow 
+                        number={2}
+                        label={{ 
+                            text: "Add a location (BE only for now)", 
+                            required: true,
+                            html: true,
+                            for: "input-suggestion__location",
+                        }}
+                        valid={{ 
+                            field: this.state.location && this.state.location.length >= 2, 
+                            form: formValid,
+                        }}
+                    >
+                        <InputSuggestion 
+                            handleSetState={this.handleSetState} 
+                            value={this.state.location}
+                            type="locations" 
+                            id="location" />
+                    </FormRow>
+
+                    <FormRow 
+                        number={3}
+                        label={{ 
+                            text: "Add tag(s)", 
+                            required: false,
+                        }}
+                        valid={{ 
+                            field: true, 
+                            form: formValid,
+                        }}
+                    >
+                        {this.state.tags.map((tag, i) => (
+                            <InputSuggestion 
+                                key={i}
+                                handleSetState={this.handleSetState} 
+                                value={tag}
+                                type="tags" 
+                                id={`tag-${i}`} />
+                        ))}
+                    </FormRow>
+
+                    */}
+
+                    {createItemError && 
+                        <FormRow valid={{ error: true, form: formValid }}>
+                            <Error error={createItemError} plain={true} />
+                        </FormRow>
+                    }
+
+                    <FormRow 
+                        number={4}
+                        extraClass="last" 
+                        valid={{ 
+                            field: formValid, 
+                            form: formValid,
+                        }}
+                    >
+                        <FormButton loading={createItemLoading} formValid={!formValid}>save</FormButton>
+                    </FormRow>                                  
+
+                </form>
+            }
+        </>
+    )
+}
+
+class CreateItem2 extends React.Component{
     state = {
         //image: "https://res.cloudinary.com/diidd5fve/image/upload/v1598625542/10votes/fldeyu2ufrdtswkziqby.jpg",
         //largeImage: "https://res.cloudinary.com/diidd5fve/image/upload/c_limit,h_1500,q_auto,w_1500/v1598625542/10votes/fldeyu2ufrdtswkziqby.jpg",
@@ -106,7 +243,7 @@ class CreateItem extends React.Component{
         return(
             <Query query={CURRENT_USER_QUERY}>
                 {({ data }) => (
-                    // since this component if guarded by the please signin component, we don't need to worry about loading or error
+                    // since this component is guarded by the please signin component, we don't need to worry about loading or error
                     <Mutation mutation={ CREATE_ITEM_MUTATION } refetchQueries={[{ query: CURRENT_USER_QUERY }]}>
                         {(createItem, {loading, error}) => (
                             <>
