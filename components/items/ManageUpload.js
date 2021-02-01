@@ -9,10 +9,11 @@ import Error from '../snippets/Error';
 
 class ManageUpload extends React.Component{
 
-    static propTypes = {
+    // TODO new handler
+    /*static propTypes = { 
         handleSetState: PropTypes.func.isRequired,
         image: PropTypes.string.isRequired,
-    }
+    }*/
 
     state = {
         errorMessage: "",
@@ -31,7 +32,7 @@ class ManageUpload extends React.Component{
         document.getElementById('file').value = '';
     }
 
-    uploadFile = async (e) => {
+    uploadFile = async(e) => {
         this.setState({
             loading: true
         });
@@ -53,13 +54,17 @@ class ManageUpload extends React.Component{
                 body: data
             });
             const file = await res.json();
-            //console.log('file', file)
+            console.log('file after upload?', file)
 
             // send data to createItem component
-            this.props.handleSetState({
+            /*this.props.handleSetState({
                 image: file.secure_url,
                 largeImage: file.eager[0].secure_url,
-            });
+            });*/
+            this.props.handleImageSelection({
+                small: file.secure_url,
+                large: file.eager[0].secure_url,
+            })
             // reset error to ""
             this.setState({
                 errorMessage: "",
@@ -106,8 +111,7 @@ class ManageUpload extends React.Component{
                         <img src={this.props.image} alt="upload preview" className="manage-upload__image-preview" />
                         <button 
                             type="button" className="clear-button"
-                            onClick={() => this.props.handleSetState({ image: "", largeImage: "" })}
-                            >
+                            onClick={() => this.props.handleImageSelection({ small: '', large: ''})}>
                             &times;
                         </button>
                     </div>
