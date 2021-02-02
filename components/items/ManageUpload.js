@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import validateFile from '../../lib/validateFile';
 
@@ -6,38 +7,14 @@ import Loader from '../snippets/Loader';
 import FormRow from '../formParts/FormRow';
 import Error from '../snippets/Error';
 
+function ManageUpload(props){
+    const [errorMessage, setErrorMessage] = useState('');
+    const [loading, setLoading] = useState(false);
 
-class ManageUpload extends React.Component{
-
-    // TODO new handler
-    /*static propTypes = { 
-        handleSetState: PropTypes.func.isRequired,
-        image: PropTypes.string.isRequired,
-    }*/
-
-    state = {
-        errorMessage: "",
-        loading: false,
-    }
-
-    cancelUpload = (errorMessage) => {
-        // 1. set error to this components state
-        // 2. reset the entire state to blank
-        // 3. reset the form to blank
-        this.setState({
-            errorMessage,
-            loading: false,
-        });
-        // remove the error file from input
-        document.getElementById('file').value = '';
-    }
-
-    uploadFile = async(e) => {
-        this.setState({
-            loading: true
-        });
+    // handle the upload to and res from cloudinary
+    const uploadFile = async(e) => {
+        setLoading(true);
         const files = e.target.files;
-        // console.log('files', files)
 
         // validate the file, we only accept .jpeg, .jpg or .png
         if(!validateFile(files[0])){ // not valid, handle
@@ -54,71 +31,81 @@ class ManageUpload extends React.Component{
                 body: data
             });
             const file = await res.json();
-            console.log('file after upload?', file)
+            //console.log('file after upload?', file)
 
             // send data to createItem component
-            /*this.props.handleSetState({
-                image: file.secure_url,
-                largeImage: file.eager[0].secure_url,
-            });*/
-            this.props.handleImageSelection({
+            props.handleImageSelection({
                 small: file.secure_url,
                 large: file.eager[0].secure_url,
             })
             // reset error to ""
-            this.setState({
-                errorMessage: "",
-                loading: false,
-            });
+            setErrorMessage('');
+            setLoading(false);
 
         }catch(error){
             // console.log('error', error)
-            this.cancelUpload(`${error.message}, please try again`);
+            cancelUpload(`${error.message}, please try again`);
         }
+
+    }
+    const cancelUpload = error => {
+        // 1. set error to this components state
+        // 2. loading to false
+        setErrorMessage(error);
+        setLoading(false);
+        // remove the error file from input
+        document.getElementById('file').value = '';
     }
 
-    render(){
-        return(
-            <FormRow 
-                label={this.props.label} 
-                valid={{...this.props.valid, error: Boolean(this.state.errorMessage)}}
-                number={this.props.number}
-            >
-                {!this.props.image &&
-                    <>
-                        <input 
-                            type="file" id="file" name="file" 
-                            placeholder="upload an image" 
-                            onChange={this.uploadFile} 
-                            required 
-                            disabled={this.state.loading}
-                            accept=".jpg, .jpeg, .png" 
-                            className="manage-upload__input" />
-                        <label htmlFor="file" className="manage-upload__label">
-                            <IconUpload />
-                            <span className="manage-upload__label__text">Select your image</span>
-                        </label>
-                        {this.state.loading && <Loader containerClass="manage-upload__loader" />}
-                    </> 
-                }
-                {this.state.errorMessage && 
-                    <div className="manage-upload__error">
-                        <Error error={{message: this.state.errorMessage}} />
-                    </div>
-                }
-                {this.props.image && 
-                    <div className="manage-upload__image-container">
-                        <img src={this.props.image} alt="upload preview" className="manage-upload__image-preview" />
-                        <button 
-                            type="button" className="clear-button"
-                            onClick={() => this.props.handleImageSelection({ small: '', large: ''})}>
-                            &times;
-                        </button>
-                    </div>
-                }
-            </FormRow>
-        )
-    }
+    return(
+        <FormRow 
+            label={props.label} 
+            valid={{...props.valid, error: Boolean(errorMessage)}}
+            number={props.number}
+        >
+            {!props.image &&
+                <>
+                    <input 
+                        type="file" id="file" name="file" 
+                        placeholder="upload an image" 
+                        onChange={uploadFile} 
+                        required 
+                        disabled={loading}
+                        accept=".jpg, .jpeg, .png" 
+                        className="manage-upload__input" />
+                    <label htmlFor="file" className="manage-upload__label">
+                        <IconUpload />
+                        <span className="manage-upload__label__text">Select your image</span>
+                    </label>
+                    {loading && <Loader containerClass="manage-upload__loader" />}
+                </> 
+            }
+            {errorMessage && 
+                <div className="manage-upload__error">
+                    <Error error={{message: errorMessage}} />
+                </div>
+            }
+            {props.image && 
+                <div className="manage-upload__image-container">
+                    <img src={props.image} alt="upload preview" className="manage-upload__image-preview" />
+                    <button 
+                        type="button" className="clear-button"
+                        onClick={() => props.handleImageSelection({ small: '', large: ''})}
+                    >
+                        &times;
+                    </button>
+                </div>
+            }
+        </FormRow>
+    )
+}
+
+ManageUpload.propTypes = {
+    handleImageSelection: PropTypes.func.isRequired,
+    label: PropTypes.string.isRequired,
+    valid: PropTypes.object.isRequired,
+    number: PropTypes.number.isRequired,
+    image: PropTypes.string.isRequired,
 }
 
 export default ManageUpload;

@@ -77,7 +77,7 @@ function CreateItem(){
         
         // there was an error
         if(!res) return null; 
-        
+
         //redirect to the created item
         Router.push({
             pathname: '/item',
@@ -114,7 +114,6 @@ function CreateItem(){
                         }}
                         image={image}
                         handleImageSelection={handleImageSelection}
-                        //handleSetState={this.handleSetState} 
                         />
                     {/*
                     
