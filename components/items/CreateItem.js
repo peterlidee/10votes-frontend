@@ -44,10 +44,12 @@ function CreateItem(){
     // state hooks
     const [image, setImage] = useState('');
     const [largeImage, setLargeImage] = useState('');
+    // the function to handle image selection
     const handleImageSelection = (images) => {
         setImage(images.small);
         setLargeImage(images.large);
     };
+
     const [location, setLocation] = useState('');
     const [tags, setTags] = useState([null, null, null]);
     // get user
@@ -65,6 +67,24 @@ function CreateItem(){
         refetchQueries: [{ query: CURRENT_USER_QUERY }],
     });
 
+    // function to handle submit and call createItem mutation
+    const handleSubmit = async(e) => {
+        e.preventDefault();
+        // form validation: are the required fields filled in? TODO?
+
+        // call the mutation
+        const res = await createItem().catch(error => console.log(error.message));
+        
+        // there was an error
+        if(!res) return null; 
+        
+        //redirect to the created item
+        Router.push({
+            pathname: '/item',
+            query: { id: res.data.createItem.id },
+        });
+    }
+
     // make a const to check if the form is all valid, used in CrudNumber
     const formValid = image && location && location.length >= 2;
 
@@ -77,22 +97,7 @@ function CreateItem(){
             {userData.me.items.length < 10 &&
 
                 <form 
-                    onSubmit={ async(e) => { // TODO put in func?
-                        e.preventDefault();
-                        // form validation: are the required fields filled in? TODO?
-
-                        // call the mutation
-                        const res = await createItem().catch(error => console.log(error.message));
-                        
-                        // there was an error
-                        if(!res) return null; 
-                        
-                        //redirect to the created item
-                        Router.push({
-                            pathname: '/item',
-                            query: { id: res.data.createItem.id },
-                        });
-                    }} 
+                    onSubmit={handleSubmit} 
                     id="createItemForm" 
                     className="form-part form-part--createItem"
                 >
