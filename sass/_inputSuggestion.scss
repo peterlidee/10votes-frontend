@@ -1,9 +1,9 @@
 // styling for input-suggestion and it's dropdown
 
 .input-suggestion{
-    &__container{
-        position: relative;
-    }
+    // &__container{
+    //     position: relative;
+    // }
     &__input-container{ // the input and a clear button
         display: grid;
         grid-template-columns: 1fr 30px;
@@ -29,8 +29,10 @@
         border-left: 1px solid $font;
         border-right: 1px solid $font;
         width: 100%;
-        position: absolute; z-index: 1000; // above content that sits below the dropdown
-        left: 0; top: 2em;
+        position: absolute; // absolute to form-part__section
+        z-index: 1000; // above content that sits below the dropdown
+        left: 0; 
+        // top: 2em; // leave it in it's natural position
         @include border-radius;
     }
     &__result{

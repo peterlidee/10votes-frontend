@@ -18,7 +18,7 @@ const SEARCH_TAGS_QUERY = gql`
 
 const SEARCH_LOCATIONS_QUERY = gql`
     query SEARCH_LOCATIONS_QUERY($search: String!){
-        locations(where: { name_contains: $search }){
+        locations(nameContains: $search){
             id
             name
             slug

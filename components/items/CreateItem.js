@@ -3,8 +3,8 @@ import Router from 'next/router';
 import Link from 'next/link';
 
 import { gql, useMutation, useQuery } from '@apollo/client';
-import { Query, Mutation } from '@apollo/client/react/components';
-import UserContext, { CURRENT_USER_QUERY, UserContextProvider } from '../context/UserContext';
+import { Query, Mutation } from '@apollo/client/react/components'; // TODO remove
+import UserContext, { CURRENT_USER_QUERY } from '../context/UserContext';
 
 import { inputToString } from '../../lib/inputToString';
 import MetaTitle from '../snippets/MetaTitle';
@@ -13,7 +13,7 @@ import ManageUpload from './ManageUpload';
 import InputSuggestion from './InputSuggestion';
 import FormButton from '../formParts/FormButton';
 import Error from '../snippets/Error';
-import { render } from 'nprogress';
+// import { render } from 'nprogress'; // TODO remove
 
 
 const CREATE_ITEM_MUTATION = gql`
@@ -46,12 +46,36 @@ function CreateItem(){
     const [largeImage, setLargeImage] = useState('');
     // the function to handle image selection
     const handleImageSelection = (images) => {
+        console.log('images res', images)
         setImage(images.small);
         setLargeImage(images.large);
     };
 
     const [location, setLocation] = useState('');
+    // const handleLocationChange = (obj, index) => {
+    //     console.log('resp', obj, index)
+    // }
     const [tags, setTags] = useState([null, null, null]);
+    // const handleTagsChange = (tag, i) => {
+    //     const tagsCopy = [...tags]
+    //     tagsCopy[i] = tag
+    //     setTags(tagsCopy)
+    // }
+
+    const handleSetState = (newState, index = null) => {
+        //console.log('res from child comps', newState)
+        // the manageUpload component returns { small: url, large: url }
+        // so we know to set the image and largeImage when there's a small property
+        if(newState.small){
+            setImage(newState.small);
+            setLargeImage(newState.large);
+        }
+        if(newState.location || newState.location == ''){
+            setLocation(newState.location);
+        }
+
+    }
+
     // get user
     // since this component is guarded by the please signin component, we don't need to worry about loading or error
     const { data: userData } = useContext(UserContext);
@@ -62,7 +86,7 @@ function CreateItem(){
             largeImage,
             location: inputToString(location),
             // filter out the empty ones
-            tags: tags.map(tag => inputToString(tag)).filter(tag => tag), //TODO
+            tags: tags.map(tag => inputToString(tag)).filter(tag => tag),
         },
         refetchQueries: [{ query: CURRENT_USER_QUERY }],
     });
@@ -87,6 +111,9 @@ function CreateItem(){
 
     // make a const to check if the form is all valid, used in CrudNumber
     const formValid = image && location && location.length >= 2;
+
+    //console.log('location state in CreateItem',location)
+    //console.log('createItem rerender')
 
     return(
         <>
@@ -115,8 +142,6 @@ function CreateItem(){
                         image={image}
                         handleImageSelection={handleImageSelection}
                         />
-                    {/*
-                    
 
                     <FormRow 
                         number={2}
@@ -127,16 +152,18 @@ function CreateItem(){
                             for: "input-suggestion__location",
                         }}
                         valid={{ 
-                            field: this.state.location && this.state.location.length >= 2, 
+                            field: location && location.length >= 2, 
                             form: formValid,
                         }}
                     >
                         <InputSuggestion 
-                            handleSetState={this.handleSetState} 
-                            value={this.state.location}
+                            handleSetState={handleSetState} 
+                            value={location}
                             type="locations" 
                             id="location" />
                     </FormRow>
+
+                    {/*
 
                     <FormRow 
                         number={3}

@@ -40,7 +40,9 @@
         }
     }
 
-    // &__section{}
+    &__section{
+        position: relative;
+    }
 
     &__labelish{ // a container element, left is the labelish element, the input title, right the optional or not
         display: flex;

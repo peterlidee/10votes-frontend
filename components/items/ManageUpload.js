@@ -18,7 +18,7 @@ function ManageUpload(props){
 
         // validate the file, we only accept .jpeg, .jpg or .png
         if(!validateFile(files[0])){ // not valid, handle
-            this.cancelUpload('You can only upload .jpg, .jpeg or .png files.');
+            cancelUpload('You can only upload .jpg, .jpeg or .png files.');
             return null;
         }
 
@@ -102,7 +102,7 @@ function ManageUpload(props){
 
 ManageUpload.propTypes = {
     handleImageSelection: PropTypes.func.isRequired,
-    label: PropTypes.string.isRequired,
+    label: PropTypes.object.isRequired,
     valid: PropTypes.object.isRequired,
     number: PropTypes.number.isRequired,
     image: PropTypes.string.isRequired,

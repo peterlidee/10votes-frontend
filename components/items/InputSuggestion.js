@@ -3,190 +3,174 @@
 // 2. an clearbutton
 // 3. a dropdown with suggestions
 
-import Downshift from 'downshift';
-//import { ApolloConsumer } from 'react-apollo';
+import { useRef } from 'react';
+import { useCombobox } from 'downshift';
+import { useLazyQuery } from '@apollo/client';
 import { SEARCH_LOCATIONS_QUERY, SEARCH_TAGS_QUERY } from '../header/Search';
+
 import debounce from 'lodash.debounce';
 import PropTypes from 'prop-types';
 
 import Loader from '../snippets/Loader';
 
-class InputSuggestion extends React.Component{
 
-    static propTypes = {
-        handleSetState: PropTypes.func.isRequired,
-        type: PropTypes.string.isRequired,
-        id: PropTypes.string.isRequired,
-        //value: PropTypes.string.isRequired, // can be null!
-    }
-		
-    state = {
-        loading: false,
-        queryError: false,
-        results: [],
-    }
-		
-    handleOnStateChange = ({ inputValue, type }) => { // controlled inputs
-        if(type == '__autocomplete_change_input__'){
-            this.props.handleSetState(
-                {
-                    [this.props.type.slice(0,-1)]: inputValue,
-                    [`${this.props.type.slice(0,-1)}Edit`]: true,
-                }, 
-                this.props.type == 'locations' ? null : this.props.id.split('-')[1]
-            )
-        }
-        return inputValue;
-    }
+function InputSuggestion(props) {
+    // what query to make?
+    const query = props.type == 'locations' ? SEARCH_LOCATIONS_QUERY : SEARCH_TAGS_QUERY;
+    // apollo lazy query, this fetches either tags or locations depending on props.type
+    const [getData, { error, loading, data }] = useLazyQuery(query);
 
-    handleInputSelect = (selection) => { // called on selection
-        // console.log('selection', selection)
-        this.props.handleSetState(
-            {
-                [this.props.type.slice(0,-1)]: selection,
-                [`${this.props.type.slice(0,-1)}Edit`]: true,
-            }, // tag or location
-            this.props.type == 'locations' ? null : this.props.id.split('-')[1] // index
-        )
-    }
-
-    handleInputChange = debounce(async (e, client) => { // called on inputChange, drives query, not state!
-        // console.log('handleInputChange called', e.target.value, 'client', client);
-        const value = e.target.value.trim();
-        
-        // don't query empty fields!
-        if(value.length == 0){
-            this.setState({
-                results: [],
-                loading: false,
-            })
-        }else if(value.length >= 3){
-
-            // turn loading on
-            this.setState({
-                loading: true,
-                queryError: false,
-            })
-
-            let queryError = false;
-            // manually query apollo client
-            // search for tags
-            const res = await client.query({
-                query: this.props.type == 'locations' ? SEARCH_LOCATIONS_QUERY : SEARCH_TAGS_QUERY,
+    const getLazyData = (inputValue) => {
+        // clean up value
+        const value = inputValue.trim();
+        // don't query empty value or value shorter then 3
+        if(value.length > 2){
+            // make the query
+            getData({ 
                 variables: { search: value },
-                fetchPolicy: 'network-only'
-            }).catch(error => {
-                queryError = true;
-                console.log(error.message)
-            });
+                // fetchPolicy: 'network-only', // we should't have to do this, handy on f.e. on back // TODO
+            })
+        }   
+    };
 
-            //console.log('res', res)
-            
-            if(queryError){
-                this.setState({
-                    queryError,
-                    loading: false,
-                    results: [],
-                })
-            }else{ // no error
-                this.setState({
-                    results: res.data[this.props.type].map(item => item.name),
-                    loading: false,
-                    queryError: false,
-                })
-            }
-        }
-            
-    }, 350);
+    // in order for debouncing to work, we need an var that persists, so we use useRef
+    // https://github.com/downshift-js/downshift/issues/347#issuecomment-469531762
+    const debounceGetLazyData = useRef(null);
+    // if there's no .current, we add debounced getLazyData
+    if (!debounceGetLazyData.current) {
+        debounceGetLazyData.current = debounce(getLazyData, 400);
+    }
 
+    // this bit prevents the combobox from clearing it's value if esc is pushed
+    // cause it is possible that a user inputs a new value, that is one not in db
+    // https://github.com/downshift-js/downshift/tree/master/src/hooks/useCombobox#statereducer
     // https://stackoverflow.com/questions/58299322/react-downshift-how-to-prevent-clear-by-escape-key
-    stateReducer = (_, changes) => {
+    function stateReducer(state, actionAndChanges) {
+        const {type, changes} = actionAndChanges
         switch (changes.type) {
             // Preventing from clearing value once ESC is pressed
-            case Downshift.stateChangeTypes.keyDownEscape:
-                return { isOpen: false };
+            case useCombobox.stateChangeTypes.InputKeyDownEscape:
+                return {
+                    ...changes,
+                    isOpen: false,
+                }
             default:
                 return changes;
         }
     };
 
-    render(){
-        return(
-            <div className="input-suggestion__container">
-                <Downshift
-                    onStateChange={this.handleOnStateChange}
-                    selectedItem={this.props.value}
-                    onChange={this.handleInputSelect}
-                    stateReducer={this.stateReducer}
-                    >
-                    {({ getInputProps, getItemProps, isOpen, inputValue, highlightedIndex, selectedItem, clearSelection }) => (
-                        <div className="input-suggestion">
-                            <ApolloConsumer>
-                                {(client) => (
-                                    <div className="input-suggestion__input-container">
-                                        <input {...getInputProps({
-                                            placeholder: `Enter a ${this.props.type.slice(0,-1)}`,
-                                            id: `input-suggestion__${this.props.id}`,
-                                            className: "form-part__input input-suggestion__input",
-                                            onChange: (e) => {
-                                                e.persist();
-                                                this.handleInputChange(e, client)
-                                            },
-                                            minlenght: 2,
-                                            required: this.props.type == 'locations' ? true : false,
-                                        })} />
-                                        {this.state.loading && <Loader containerClass="input-suggestion__loader" />}
-                                        <button type="button" className="clear-button" onClick={() => {
-                                            this.props.handleSetState({
-                                                    [this.props.type.slice(0,-1)]: '',
-                                                },
-                                                this.props.type == 'locations' ? null : this.props.id.split('-')[1]
-                                            )
-                                            clearSelection();
-                                        }} disabled={!selectedItem}>
-                                            &times;
-                                        </button>
-                                        
-                                    </div>
-                                )}
-                            </ApolloConsumer>
+    const {
+        getComboboxProps,
+        getInputProps,
+        getMenuProps, // menu = dropdown
+        getItemProps,
+        isOpen,
+        highlightedIndex,
+        inputValue,
+    } = useCombobox({
+        items: data && data[props.type] ? data[props.type] :  [], // these are the results from the apollo query
+        inputValue: props.value, // this is the state it inherits from createItem
+        stateReducer, // see above, prevent esc
 
-                            {
-                                isOpen && 
-                                inputValue.length >= 3 && 
-                                !this.state.queryError && 
-                                this.state.results.length > 0 &&
-                                (
-                                    <div className="input-suggestion__dropdown">
-                                    {this.state.results
-                                        .slice(0, 10) // limit to 10 results
-                                        .map((item, index) => (
-                                            <div 
-                                            {...getItemProps({ 
-                                                item,
-                                                index,
-                                                key: item,
-                                                className: "input-suggestion__result",
-                                                style: {
-                                                    paddingLeft: (index === highlightedIndex) ? ".85em": ".5em", 
-                                                    backgroundColor: (index === highlightedIndex) ? "#6b9ac4": "#fff",
-                                                    color: (index === highlightedIndex) ? "#fff": "#403738",
-                                                }
-                                            })}
-                                            >
-                                                {item} 
-                                                {this.props.type == 'locations' && 
-                                                    <span className="input-suggestion__result__countryCode">be</span>}
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-                    )}
-                </Downshift>
+        // this function handles the apollo query that populates the dropdown
+        onInputValueChange: ({ inputValue }) => {
+            // call getLazyData with current inputValue
+            // goes through the debounceGetLazyData ref
+            debounceGetLazyData.current(inputValue)
+        },
+        // this makes dropdown a controlled input
+        // it inherits state (inputValue) and handleSetState from a parent (createItem)
+        onStateChange: (changes) => {
+            if(changes.type == useCombobox.stateChangeTypes.InputChange){
+                props.handleSetState(
+                    {
+                        [props.type.slice(0,-1)]: changes.inputValue,
+                        [`${props.type.slice(0,-1)}Edit`]: true,
+                    }, 
+                    props.type == 'locations' ? null : this.props.id.split('-')[1] // index
+                )
+            }
+        },
+        // this handles the selection of a dropdown item
+        onSelectedItemChange: (changes) => {
+            props.handleSetState(
+                {
+                    [props.type.slice(0,-1)]: changes.selectedItem && changes.selectedItem.name ? changes.selectedItem.name : "",
+                    [`${props.type.slice(0,-1)}Edit`]: true,
+                }, 
+                props.type == 'locations' ? null : this.props.id.split('-')[1] // index
+            )
+        },
+        // on select, what is the actual value if the item is an object
+        itemToString: (item) => item?.name || '',
+
+        // TODO: reset data when a new query is made ??
+    })
+
+    return (
+        <>
+            <div className="input-suggestion__input-container" {...getComboboxProps()}>
+                <input 
+                    {...getInputProps()}
+                    placeholder={`Enter a ${props.type.slice(0,-1)}`}
+                    id={`input-suggestion__${props.id}`}
+                    className="form-part__input input-suggestion__input"
+                    minlenght="2"
+                    required={props.type == 'locations' ? true : false}
+                />
+                {loading && <Loader containerClass="input-suggestion__loader" />}
+                <button type="button" className="clear-button" onClick={() => {
+                        props.handleSetState({
+                                [props.type.slice(0,-1)]: '',
+                            },
+                            props.type == 'locations' ? null : props.id.split('-')[1] // index for tag
+                        )
+                    }} 
+                    disabled={!inputValue}
+                >
+                    &times;
+                </button>
             </div>
-        );
-    }
+                                    
+            <div className="input-suggestion__dropdown" {...getMenuProps()}>
+                {
+                    isOpen && 
+                    inputValue.length > 2 && 
+                    !error && 
+                    data && 
+                    data[props.type].length > 0 &&
+                    (<>
+                        { data[props.type]
+                            .slice(0, 10) // limit to 10 results
+                            .map((item, index) => (
+                                <div 
+                                    key={item.slug}
+                                    className="input-suggestion__result"
+                                    style={{
+                                        paddingLeft: (index === highlightedIndex) ? ".85em": ".5em", 
+                                        backgroundColor: (index === highlightedIndex) ? "#6b9ac4": "#fff",
+                                        color: (index === highlightedIndex) ? "#fff": "#403738",
+                                    }}
+                                    {...getItemProps({ item, index })}
+                                >
+                                    {item.name} 
+                                    {props.type == 'locations' && 
+                                        <span className="input-suggestion__result__countryCode">be</span>}
+                                </div>
+                            )
+                        )}
+                    </>)
+                }
+            </div>
+        </>
+    )
+}
+
+InputSuggestion.propTypes = {
+    handleSetState: PropTypes.func.isRequired,
+    type: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    //value: PropTypes.string.isRequired, // can be null!
 }
 
 export default InputSuggestion;
