@@ -1,7 +1,11 @@
+import { useRouter } from 'next/router';
 import SingleItem from '../components/SingleItem';
 
-const Item = props => (
-    <SingleItem id={props.query.id}/>
-)
+const Item = () => {
+    // get the id from the url
+    const router =  useRouter();
+    const id = router.query.id;
+    return <SingleItem id={id} />
+}
 
 export default Item;
