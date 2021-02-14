@@ -87,7 +87,7 @@ function InputSuggestion(props) {
                         [props.type.slice(0,-1)]: changes.inputValue,
                         [`${props.type.slice(0,-1)}Edit`]: true,
                     }, 
-                    props.type == 'locations' ? null : this.props.id.split('-')[1] // index
+                    props.type == 'locations' ? null : props.id.split('-')[1] // index
                 )
             }
         },
@@ -98,7 +98,7 @@ function InputSuggestion(props) {
                     [props.type.slice(0,-1)]: changes.selectedItem && changes.selectedItem.name ? changes.selectedItem.name : "",
                     [`${props.type.slice(0,-1)}Edit`]: true,
                 }, 
-                props.type == 'locations' ? null : this.props.id.split('-')[1] // index
+                props.type == 'locations' ? null : props.id.split('-')[1] // index
             )
         },
         // on select, what is the actual value if the item is an object

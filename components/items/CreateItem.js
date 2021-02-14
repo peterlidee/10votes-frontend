@@ -44,36 +44,25 @@ function CreateItem(){
     // state hooks
     const [image, setImage] = useState('');
     const [largeImage, setLargeImage] = useState('');
-    // the function to handle image selection
-    const handleImageSelection = (images) => {
-        console.log('images res', images)
-        setImage(images.small);
-        setLargeImage(images.large);
-    };
-
     const [location, setLocation] = useState('');
-    // const handleLocationChange = (obj, index) => {
-    //     console.log('resp', obj, index)
-    // }
     const [tags, setTags] = useState([null, null, null]);
-    // const handleTagsChange = (tag, i) => {
-    //     const tagsCopy = [...tags]
-    //     tagsCopy[i] = tag
-    //     setTags(tagsCopy)
-    // }
 
     const handleSetState = (newState, index = null) => {
-        //console.log('res from child comps', newState)
+        // console.log('res from child comps', newState)
         // the manageUpload component returns { small: url, large: url }
         // so we know to set the image and largeImage when there's a small property
-        if(newState.small){
+        if(newState.small || newState.small == ''){
             setImage(newState.small);
             setLargeImage(newState.large);
         }
         if(newState.location || newState.location == ''){
             setLocation(newState.location);
         }
-
+        if(newState.tag || newState.tag == ''){
+            const tagsCopy = [...tags];
+            tagsCopy[index] = newState.tag;
+            setTags(tagsCopy);
+        }
     }
 
     // get user
@@ -95,13 +84,10 @@ function CreateItem(){
     const handleSubmit = async(e) => {
         e.preventDefault();
         // form validation: are the required fields filled in? TODO?
-
         // call the mutation
         const res = await createItem().catch(error => console.log(error.message));
-        
         // there was an error
         if(!res) return null; 
-
         //redirect to the created item
         Router.push({
             pathname: '/item',
@@ -111,9 +97,6 @@ function CreateItem(){
 
     // make a const to check if the form is all valid, used in CrudNumber
     const formValid = image && location && location.length >= 2;
-
-    //console.log('location state in CreateItem',location)
-    //console.log('createItem rerender')
 
     return(
         <>
@@ -140,8 +123,8 @@ function CreateItem(){
                             form: image 
                         }}
                         image={image}
-                        handleImageSelection={handleImageSelection}
-                        />
+                        handleImageSelection={handleSetState}
+                    />
 
                     <FormRow 
                         number={2}
@@ -163,8 +146,6 @@ function CreateItem(){
                             id="location" />
                     </FormRow>
 
-                    {/*
-
                     <FormRow 
                         number={3}
                         label={{ 
@@ -176,17 +157,15 @@ function CreateItem(){
                             form: formValid,
                         }}
                     >
-                        {this.state.tags.map((tag, i) => (
+                        {tags.map((tag, i) => (
                             <InputSuggestion 
                                 key={i}
-                                handleSetState={this.handleSetState} 
-                                value={tag}
+                                handleSetState={handleSetState} 
+                                value={tag || ""}
                                 type="tags" 
                                 id={`tag-${i}`} />
                         ))}
                     </FormRow>
-
-                    */}
 
                     {createItemError && 
                         <FormRow valid={{ error: true, form: formValid }}>
@@ -209,167 +188,6 @@ function CreateItem(){
             }
         </>
     )
-}
-
-class CreateItem2 extends React.Component{
-    state = {
-        //image: "https://res.cloudinary.com/diidd5fve/image/upload/v1598625542/10votes/fldeyu2ufrdtswkziqby.jpg",
-        //largeImage: "https://res.cloudinary.com/diidd5fve/image/upload/c_limit,h_1500,q_auto,w_1500/v1598625542/10votes/fldeyu2ufrdtswkziqby.jpg",
-        image: "",
-        largeImage: "",
-        location: '',
-        tags: [null, null, null],
-        // tagsEdit or locationEdit of no use here, doesn't get called so we don't bother
-    }
-
-    // get called from children to set this.state
-    // if there's an index, it means we're setting this.state.item[i]
-    handleSetState = (newState, index = null) => {
-        if(index){
-            const stateCopy = [...this.state.tags];
-            stateCopy[index] = newState.tag;
-            this.setState({
-                tags: stateCopy
-            });
-            return null;
-        }
-        this.setState({
-            ...newState
-        });
-    }
-
-    handleCreateItem = async (e, createItem) => {
-        e.preventDefault();
-        // form validation: are the required fields filled in? TODO?
-
-        // create the variables
-        const variables = {
-            image: this.state.image,
-            largeImage: this.state.largeImage,
-            location: inputToString(this.state.location),
-            tags: this.state.tags.map(tag => inputToString(tag)).filter(tag => tag), //TODO
-        }
-
-        // call the mutation
-        const res = await createItem({ variables })
-            .catch(error => {
-                console.log(error.message)
-            });
-        
-        // there was an error
-        if(!res) return null; 
-
-        Router.push({
-            pathname: '/item',
-            query: { id: res.data.createItem.id },
-        });
-    }
-
-    render(){
-        // make a const to check if the form is all valid, used in CrudNumber
-        const formValid = this.state.image && this.state.location && this.state.location.length >= 2;
-
-        return(<>hello</>)
-
-        return(
-            <Query query={CURRENT_USER_QUERY}>
-                {({ data }) => (
-                    // since this component is guarded by the please signin component, we don't need to worry about loading or error
-                    <Mutation mutation={ CREATE_ITEM_MUTATION } refetchQueries={[{ query: CURRENT_USER_QUERY }]}>
-                        {(createItem, {loading, error}) => (
-                            <>
-                                <MetaTitle>Upload a picture</MetaTitle>
-                                <h2 className="item-crud__title title">Upload a Picture</h2>
-                                {data.me.items.length >= 10 && <p className="no-data">You used up all your uploads. Manage them here: <Link href="/youritems"><a>my pics</a></Link></p>}
-
-                                {data.me.items.length < 10 &&
-
-                                    <form 
-                                        onSubmit={ e => this.handleCreateItem(e, createItem) } 
-                                        id="createItemForm" 
-                                        className="form-part form-part--createItem"
-                                    >
-
-                                        <ManageUpload 
-                                            number={1}
-                                            label={{ 
-                                                text: "Add an image", 
-                                                required: true,
-                                            }}
-                                            valid={{ 
-                                                field: this.state.image, 
-                                                form: this.state.image 
-                                            }}
-                                            image={this.state.image}
-                                            handleSetState={this.handleSetState} />
-
-                                        <FormRow 
-                                            number={2}
-                                            label={{ 
-                                                text: "Add a location (BE only for now)", 
-                                                required: true,
-                                                html: true,
-                                                for: "input-suggestion__location",
-                                            }}
-                                            valid={{ 
-                                                field: this.state.location && this.state.location.length >= 2, 
-                                                form: formValid,
-                                            }}
-                                        >
-                                            <InputSuggestion 
-                                                handleSetState={this.handleSetState} 
-                                                value={this.state.location}
-                                                type="locations" 
-                                                id="location" />
-                                        </FormRow>
-
-                                        <FormRow 
-                                            number={3}
-                                            label={{ 
-                                                text: "Add tag(s)", 
-                                                required: false,
-                                            }}
-                                            valid={{ 
-                                                field: true, 
-                                                form: formValid,
-                                            }}
-                                        >
-                                            {this.state.tags.map((tag, i) => (
-                                                <InputSuggestion 
-                                                    key={i}
-                                                    handleSetState={this.handleSetState} 
-                                                    value={tag}
-                                                    type="tags" 
-                                                    id={`tag-${i}`} />
-                                            ))}
-                                        </FormRow>
-
-                                        {error && 
-                                            <FormRow valid={{ error: true, form: formValid }}>
-                                                <Error error={error} plain={true} />
-                                            </FormRow>
-                                        }
-
-                                        <FormRow 
-                                            number={4}
-                                            extraClass="last" 
-                                            valid={{ 
-                                                field: formValid, 
-                                                form: formValid,
-                                            }}
-                                        >
-                                            <FormButton loading={loading} formValid={!formValid}>save</FormButton>
-                                        </FormRow>                                  
-
-                                    </form>
-                                }
-                            </>
-                        )}
-                    </Mutation>
-                )}
-            </Query>
-        )
-    }
 }
 
 export default CreateItem;

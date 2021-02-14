@@ -8,7 +8,7 @@ import Loader from '../snippets/Loader';
 
 const SEARCH_TAGS_QUERY = gql`
     query SEARCH_TAGS_QUERY($search: String!){
-        tags(where: { name_contains: $search }){
+        tags( nameContains: $search ){
             id
             name
             slug
@@ -18,7 +18,7 @@ const SEARCH_TAGS_QUERY = gql`
 
 const SEARCH_LOCATIONS_QUERY = gql`
     query SEARCH_LOCATIONS_QUERY($search: String!){
-        locations(nameContains: $search){
+        locations( nameContains: $search ){
             id
             name
             slug
