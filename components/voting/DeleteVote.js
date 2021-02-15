@@ -1,5 +1,9 @@
 //import { Mutation } from 'react-apollo';
 //import gql from 'graphql-tag';
+
+import { useQuery, gql } from '@apollo/client'
+import { Query, Mutation } from '@apollo/client/react/components'
+
 import { CURRENT_USER_QUERY } from '../account/User';
 
 import Error from '../snippets/Error';

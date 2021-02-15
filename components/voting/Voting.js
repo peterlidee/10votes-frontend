@@ -1,5 +1,9 @@
 //import { Query } from 'react-apollo';
-//import PropTypes from 'prop-types';
+
+import { useQuery, gql } from '@apollo/client'
+import { Query, Mutation } from '@apollo/client/react/components'
+
+import PropTypes from 'prop-types';
 
 import { CURRENT_USER_QUERY } from '../account/User';
 import Vote from './Vote';
