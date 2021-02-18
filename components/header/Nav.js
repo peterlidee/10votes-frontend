@@ -5,6 +5,7 @@ import MenuContext from '../context/MenuContext';
 
 import Logout from '../account/Logout';
 import UploadButton from '../snippets/UploadButton';
+import CurrentItemsAndVotes from './CurrentItemsAndVotes';
 
 
 const Nav = () => {
@@ -22,20 +23,7 @@ const Nav = () => {
 
             <nav className={menuToggle ? "site__menu site__menu--open" : "site__menu site__menu--closed"}>
                 {data && data.me && !error && !loading &&
-                    <>
-                        <Link href="/yourvotes">
-                            <a className="mymenu myvotes">
-                                <span className="mymenu__label">your votes</span>
-                                <span className="mymenu__number">{data.me.votes.length}</span>
-                            </a>
-                        </Link>
-                        <Link href="/youritems">
-                            <a className="mymenu myitems">
-                                <span className="mymenu__label">your pics</span>
-                                <span className="mymenu__number">{data.me.items.length}</span>
-                            </a>
-                        </Link>
-                    </>
+                    <CurrentItemsAndVotes />
                 }
                 {!error && !loading && !data.me && <Link href="/howitworks"><a className="menu__item">how it works</a></Link>}
                 <UploadButton />
