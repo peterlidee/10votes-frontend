@@ -14,6 +14,26 @@ const USER_VOTES_QUERY = gql`
             id
             item{
                 id
+                image
+                largeImage
+                location{
+                    id
+                    name
+                    slug
+                    country{
+                        id
+                        name
+                        countryCode
+                    }
+                }
+                tags{
+                    id
+                    name
+                    slug
+                }
+                votes{
+                    id
+                }
             }
         }
     }
