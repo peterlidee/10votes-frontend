@@ -1,19 +1,58 @@
 // this component get called when a user is logged in
-// it returns 2 menu items: my votes and my pics,
-// each with a number next to it
-// we put this into a seperate query because when an upload is made or a vote cast
-// we can refetch this query alone, not the main query which would trigger a rerender and 
-// a new loading state
+// it returns 2 menu items: my votes + count and my pics + count,
+// we put this into a seperate queries because when an upload is made or a vote cast
+// it doesn't trigger more rerenders
 
 import Link from 'next/link'
 import PropTypes from 'prop-types'
 import { useQuery, gql } from '@apollo/client'
 
+// query all votes from current user
+const USER_VOTES_QUERY = gql`
+    query{
+        userVotes{
+            id
+            item{
+                id
+            }
+        }
+    }
+`;
+
+// query all items from current user
+const USER_ITEMS_QUERY = gql`
+    query{
+        userItems{
+            id
+            image
+        }
+    }
+`;
+
 const CURRENT_ITEMS_AND_VOTES_QUERY = gql`
     query{
         me{
+            id
+            email
             items{
                 id
+                image
+                location{
+                    id
+                    name
+                    slug
+                    country{
+                        id
+                        name
+                        countryCode
+                    }
+                }
+                tags{
+                    id
+                    name
+                    slug
+                }
+                voteCount
             }
             votes{
                 id
@@ -21,6 +60,10 @@ const CURRENT_ITEMS_AND_VOTES_QUERY = gql`
         }
     }
 `;
+
+function capitalizeFirstLetter(string){
+    return string.charAt(0).toUpperCase() + string.slice(1)
+}
 
 // return menuItem for either votes or items
 function MenuItem(props){ 
@@ -40,10 +83,13 @@ MenuItem.propTypes = {
 
 // return the count of votes/items
 function Count(props){ // type is either votes or items
-    const { loading, error, data } = useQuery(CURRENT_ITEMS_AND_VOTES_QUERY);
-    console.log('data',props.type, data)
-    if(loading || error || !data || !data.me) return null;
-    return data.me[props.type].length;
+    const query = props.type == 'votes' ? USER_VOTES_QUERY : USER_ITEMS_QUERY;
+    const { loading, error, data } = useQuery(query);
+    // the query returns data.userVotes or data.userItems, 
+    // so we need to transform props.type into that
+    const queryProp = `user${capitalizeFirstLetter(props.type)}`;
+    if(loading || error || !data || !data[queryProp]) return null;
+    return data[queryProp].length;
 }
 
 Count.propTypes = {
@@ -61,3 +107,4 @@ function CurrentItemsAndVotes(){
 
 export default CurrentItemsAndVotes;
 export {CURRENT_ITEMS_AND_VOTES_QUERY};
+export {USER_VOTES_QUERY, USER_ITEMS_QUERY};
