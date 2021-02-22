@@ -28,7 +28,9 @@ const SINGLE_ITEM_QUERY = gql`
                 id
                 slug
             }
-            voteCount
+            votes{
+                id
+            }
         }
     }
 `;
@@ -38,7 +40,7 @@ function SingleItem(props){
     if(!props.id) return <p className="no-data">No such picture found.</p>
     const { error, loading, data } = useQuery(SINGLE_ITEM_QUERY, {
         variables: { itemId: props.id },
-        fetchPolicy: "cache-and-network",
+        //fetchPolicy: "cache-and-network",
     });
     if(loading) return <Loader containerClass="items-loader" />
     if(error) return <Error error={error} />
@@ -48,6 +50,8 @@ function SingleItem(props){
     // construct a string we will use as title and alt: "Image in {location} {tags}"
     const tagsString = item.tags ? item.tags.map(tag => `#${tag.name}`).join(" ") : '';
     const description = `Pic in ${item.location.name} ${tagsString}`;
+
+    console.log('SingleItem rerender', data )
 
     return(
         <article className="item item--single">
@@ -75,10 +79,10 @@ function SingleItem(props){
                     }
                 </div>
                 <div className="item__votes">
-                    <div className="item__votes__number">{item.voteCount}</div>
+                    <div className="item__votes__number">{item.votes.length}</div>
                     <div className="item__votes__label">votes</div>
                 </div>
-                <Voting currentItemId={item.id} />
+                <Voting currentItemId={item.id} currentItemVotes={item.votes} />
             </div>
         </article>
     )
