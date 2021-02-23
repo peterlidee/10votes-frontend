@@ -1,12 +1,11 @@
 import { useContext } from 'react';
-import UserContext, { UserContextProvider } from '../context/UserContext';
 import PropTypes from 'prop-types';
+import { useQuery } from '@apollo/client';
+import UserContext from '../context/UserContext';
 
 import Vote from './Vote';
 import DeleteVote from './DeleteVote';
-
-import { CURRENT_ITEMS_AND_VOTES_QUERY, USER_VOTES_QUERY } from '../header/CurrentItemsAndVotes';
-import { useQuery } from '@apollo/client';
+import { USER_VOTES_QUERY } from '../header/CurrentItemsAndVotes';
 
 // helper function
 // this function tests if the property of an object in an array
@@ -63,27 +62,6 @@ function Voting(props){
     // and the user hasn't voted for the item alreay
     // so, show vote button
     return <Vote id={props.currentItemId} />
-
-    // if(votes.length >= 10){
-    //     // vote limit reached, don't show VOTE
-    //     // has the item been voted for?
-    //     if(hasItemInVotes){ // yes
-    //         // show unvote, pass vote id
-    //         return <DeleteVote voteId={votes[indexItemInVotes].id} itemId={props.currentItemId} />
-    //     }
-    // }else{
-    //     // there are votes left to cast
-    //     // has the item been voted for?
-    //     if(hasItemInVotes){ // yes
-    //         // show unvote, pass vote id
-    //         return <DeleteVote voteId={votes[indexItemInVotes].id} itemId={props.currentItemId} />
-    //     }else{ // no
-    //         // show vote, pass item id
-    //         return <Vote id={props.currentItemId} />
-    //     }
-    // }
-    // // default fallback
-    // return null;
 }
 
 Voting.propTypes = {
