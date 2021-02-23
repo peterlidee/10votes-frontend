@@ -6,6 +6,7 @@
 import Link from 'next/link'
 import PropTypes from 'prop-types'
 import { useQuery, gql } from '@apollo/client'
+import { ITEM_FIELDS_FRAGMENT } from '../../gqlFragments/itemFragment'
 
 // query all votes from current user
 const USER_VOTES_QUERY = gql`
@@ -13,59 +14,21 @@ const USER_VOTES_QUERY = gql`
         userVotes{
             id
             item{
-                id
-                image
-                largeImage
-                location{
-                    id
-                    name
-                    slug
-                    country{
-                        id
-                        name
-                        countryCode
-                    }
-                }
-                tags{
-                    id
-                    name
-                    slug
-                }
-                votes{
-                    id
-                }
+                ...ItemFields
             }
         }
     }
+    ${ITEM_FIELDS_FRAGMENT}
 `;
 
 // query all items from current user
 const USER_ITEMS_QUERY = gql`
     query{
         userItems{
-            id
-            image
-            largeImage
-            location{
-                id
-                name
-                slug
-                country{
-                    id
-                    name
-                    countryCode
-                }
-            }
-            tags{
-                id
-                name
-                slug
-            }
-            votes{
-                id
-            }
+            ...ItemFields
         }
     }
+    ${ITEM_FIELDS_FRAGMENT}
 `;
 
 function capitalizeFirstLetter(string){

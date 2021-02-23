@@ -1,4 +1,5 @@
 import { useMutation, gql } from '@apollo/client'
+import { ITEM_FIELDS_FRAGMENT } from '../../gqlFragments/itemFragment'
 
 import Error from '../snippets/Error';
 import { USER_VOTES_QUERY } from '../header/CurrentItemsAndVotes';
@@ -8,30 +9,11 @@ const VOTE_MUTATION = gql`
         castVote(itemId: $itemId){
             id
             item{
-                id
-                image
-                largeImage
-                location{
-                    id
-                    name
-                    slug
-                    country{
-                        id
-                        name
-                        countryCode
-                    }
-                }
-                tags{
-                    name
-                    id
-                    slug
-                }
-                votes{
-                    id
-                }
+                ...ItemFields
             }
         }
     }
+    ${ITEM_FIELDS_FRAGMENT}
 `;
 
 function Vote(props){

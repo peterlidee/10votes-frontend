@@ -1,4 +1,5 @@
 import { useMutation, gql } from '@apollo/client'
+import { ITEM_FIELDS_FRAGMENT } from '../../gqlFragments/itemFragment'
 import { USER_VOTES_QUERY } from '../header/CurrentItemsAndVotes';
 import Error from '../snippets/Error';
 
@@ -13,30 +14,11 @@ const DELETE_VOTE_MUTATION = gql`
         ){
             id
             item{
-                id
-                image
-                largeImage
-                location{
-                    id
-                    name
-                    slug
-                    country{
-                        id
-                        name
-                        countryCode
-                    }
-                }
-                tags{
-                    name
-                    id
-                    slug
-                }
-                votes{
-                    id
-                }
+                ...ItemFields
             }
         }
     }
+    ${ITEM_FIELDS_FRAGMENT}
 `;
 
 function DeleteVote(props){

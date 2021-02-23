@@ -2,6 +2,7 @@ import Link from 'next/link';
 import PropTypes from 'prop-types';
 
 import { useQuery, gql } from '@apollo/client'
+import { ITEM_FIELDS_FRAGMENT } from '../gqlFragments/itemFragment';
 
 import Loader from './snippets/Loader';
 import Error from './snippets/Error';
@@ -11,29 +12,10 @@ import Voting from './voting/Voting';
 const SINGLE_ITEM_QUERY = gql`
     query SINGLE_ITEM_QUERY($itemId: ID!){
         item( itemId: $itemId ){
-            id
-            image
-            largeImage
-            location{
-                id
-                name
-                slug
-                country{
-                    id
-                    name
-                    countryCode
-                }
-            }
-            tags{
-                name
-                id
-                slug
-            }
-            votes{
-                id
-            }
+            ...ItemFields
         }
     }
+    ${ITEM_FIELDS_FRAGMENT}
 `;
 
 
@@ -51,8 +33,6 @@ function SingleItem(props){
     // construct a string we will use as title and alt: "Image in {location} {tags}"
     const tagsString = item.tags ? item.tags.map(tag => `#${tag.name}`).join(" ") : '';
     const description = `Pic in ${item.location.name} ${tagsString}`;
-
-    console.log('SingleItem rerender', error, loading, data )
 
     return(
         <article className="item item--single">
@@ -95,3 +75,4 @@ SingleItem.propTypes = {
 
 export default SingleItem;
 export { SINGLE_ITEM_QUERY };
+// TODO: updated nakijken, updateItem refetch??
