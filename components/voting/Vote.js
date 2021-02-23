@@ -22,8 +22,9 @@ const VOTE_MUTATION = gql`
                     }
                 }
                 tags{
-                    id
                     name
+                    id
+                    slug
                 }
                 votes{
                     id
