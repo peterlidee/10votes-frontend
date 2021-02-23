@@ -45,34 +45,21 @@ const USER_ITEMS_QUERY = gql`
         userItems{
             id
             image
-        }
-    }
-`;
-
-const CURRENT_ITEMS_AND_VOTES_QUERY = gql`
-    query{
-        me{
-            id
-            email
-            items{
+            largeImage
+            location{
                 id
-                image
-                location{
+                name
+                slug
+                country{
                     id
                     name
-                    slug
-                    country{
-                        id
-                        name
-                        countryCode
-                    }
+                    countryCode
                 }
-                tags{
-                    id
-                    name
-                    slug
-                }
-                voteCount
+            }
+            tags{
+                id
+                name
+                slug
             }
             votes{
                 id
@@ -126,5 +113,4 @@ function CurrentItemsAndVotes(){
 }
 
 export default CurrentItemsAndVotes;
-export {CURRENT_ITEMS_AND_VOTES_QUERY};
 export {USER_VOTES_QUERY, USER_ITEMS_QUERY};
