@@ -12,6 +12,7 @@ const SINGLE_ITEM_QUERY = gql`
     query SINGLE_ITEM_QUERY($itemId: ID!){
         item( itemId: $itemId ){
             id
+            image
             largeImage
             location{
                 id
@@ -51,7 +52,7 @@ function SingleItem(props){
     const tagsString = item.tags ? item.tags.map(tag => `#${tag.name}`).join(" ") : '';
     const description = `Pic in ${item.location.name} ${tagsString}`;
 
-    console.log('SingleItem rerender', data )
+    console.log('SingleItem rerender', error, loading, data )
 
     return(
         <article className="item item--single">
