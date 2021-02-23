@@ -6,50 +6,6 @@ const CURRENT_USER_QUERY = gql`
             id
             email
             permissions
-            items{
-                id
-                image
-                location{
-                    id
-                    name
-                    slug
-                    country{
-                        id
-                        name
-                        countryCode
-                    }
-                }
-                tags{
-                    id
-                    name
-                    slug
-                }
-                voteCount
-            }
-            votes{
-                id
-                item{
-                    id
-                    image
-                    largeImage
-                    location{
-                        id
-                        name
-                        slug
-                        country{
-                            id
-                            name
-                            countryCode
-                        }
-                    }
-                    tags{
-                        id
-                        name
-                        slug
-                    }
-                    voteCount
-                }
-            }
         }
     }
 `;
