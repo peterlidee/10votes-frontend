@@ -5,7 +5,7 @@ import UserContext from '../context/UserContext';
 
 import Vote from './Vote';
 import DeleteVote from './DeleteVote';
-import { USER_VOTES_QUERY } from '../header/CurrentItemsAndVotes';
+import { USER_VOTES_QUERY } from '../context/UserVotesContext';
 
 // helper function
 // this function tests if the property of an object in an array
