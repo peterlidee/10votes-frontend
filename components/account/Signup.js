@@ -1,7 +1,10 @@
 import {useState} from 'react';
 import { gql, useMutation } from '@apollo/client';
-import { CURRENT_USER_QUERY } from './User';
 import Link from 'next/link';
+
+import { CURRENT_USER_QUERY } from '../context/UserContext';
+import { USER_ITEMS_QUERY } from '../context/UserItemsContext';
+import { USER_VOTES_QUERY } from '../context/UserContext';
 
 import MetaTitle from '../snippets/MetaTitle';
 import Error from '../snippets/Error';
@@ -25,7 +28,7 @@ function Signup(){
     // apollo mutation hook
     const [signup, { error, data, loading, called }] = useMutation(SIGNUP_MUTATION, {
         variables: { email, password },
-        refetchQueries: [{ query: CURRENT_USER_QUERY }], // TODO? not needed?
+        refetchQueries: [{ query: CURRENT_USER_QUERY }, { query: USER_ITEMS_QUERY }, { query: USER_VOTES_QUERY }], // TODO? not needed?
     });
 
     if(called && !error && !loading && data && data.signup){

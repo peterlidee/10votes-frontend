@@ -3,11 +3,15 @@ import { gql, useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
 
 import { CURRENT_USER_QUERY } from './User';
+import { USER_ITEMS_QUERY } from '../context/UserItemsContext';
+import { USER_VOTES_QUERY } from '../context/UserContext';
+
 import MetaTitle from '../snippets/MetaTitle';
 import FormRow from '../formParts/FormRow';
 import InputContainer from '../formParts/InputContainer';
 import FormButton from '../formParts/FormButton';
 import Error from '../snippets/Error';
+
 
 const RESET_MUTATION = gql`
     mutation RESET_MUTATION($password: String!, $confirmPassword: String!, $resetToken: String!){
@@ -29,7 +33,7 @@ function Reset(){
             confirmPassword,
             resetToken,
         },
-        refetchQueries: [{ query: CURRENT_USER_QUERY }]
+        refetchQueries: [{ query: CURRENT_USER_QUERY }, { query: USER_VOTES_QUERY }, { query: USER_ITEMS_QUERY }]
     })
     if(!error && !loading && called) return <p className="no-data">Your password was reset. You are now logged in with your new password.</p>
     return(
