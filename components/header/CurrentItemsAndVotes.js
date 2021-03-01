@@ -1,38 +1,31 @@
 // this component get called when a user is logged in
 // it returns 2 menu items: my votes + count and my pics + count,
-// we put this into a seperate queries because when an upload is made or a vote cast
-// it doesn't trigger more rerenders
+// the function calls UserItemsContext and UserVotesContext for it's data
 
+import { useContext } from 'react';
 import Link from 'next/link'
 import PropTypes from 'prop-types'
-import { useQuery, gql } from '@apollo/client'
-import { ITEM_FIELDS_FRAGMENT } from '../../gqlFragments/itemFragment'
 
-// query all votes from current user
-const USER_VOTES_QUERY = gql`
-    query{
-        userVotes{
-            id
-            item{
-                ...ItemFields
-            }
-        }
-    }
-    ${ITEM_FIELDS_FRAGMENT}
-`;
-
-// query all items from current user
-const USER_ITEMS_QUERY = gql`
-    query{
-        userItems{
-            ...ItemFields
-        }
-    }
-    ${ITEM_FIELDS_FRAGMENT}
-`;
+import UserItemsContext from '../context/UserItemsContext';
+import UserVotesContext from '../context/UserVotesContext';
 
 function capitalizeFirstLetter(string){
     return string.charAt(0).toUpperCase() + string.slice(1)
+}
+
+// return the count of votes/items
+function Count(props){ // type is either votes or items
+    const context = props.type == 'votes' ? UserVotesContext : UserItemsContext;
+    const { loading, error, data } = useContext(context);
+    // the query returns data.userVotes or data.userItems, 
+    // so we need to transform props.type into that
+    const queryProp = `user${capitalizeFirstLetter(props.type)}`;
+    if(loading || error || !data || !data[queryProp]) return null;
+    return data[queryProp].length;
+}
+
+Count.propTypes = {
+    type: PropTypes.string.isRequired,
 }
 
 // return menuItem for either votes or items
@@ -51,21 +44,6 @@ MenuItem.propTypes = {
     type: PropTypes.string.isRequired,
 }
 
-// return the count of votes/items
-function Count(props){ // type is either votes or items
-    const query = props.type == 'votes' ? USER_VOTES_QUERY : USER_ITEMS_QUERY;
-    const { loading, error, data } = useQuery(query);
-    // the query returns data.userVotes or data.userItems, 
-    // so we need to transform props.type into that
-    const queryProp = `user${capitalizeFirstLetter(props.type)}`;
-    if(loading || error || !data || !data[queryProp]) return null;
-    return data[queryProp].length;
-}
-
-Count.propTypes = {
-    type: PropTypes.string.isRequired,
-}
-
 function CurrentItemsAndVotes(){
     const items = ['votes', 'items'];
     return(
@@ -76,4 +54,3 @@ function CurrentItemsAndVotes(){
 }
 
 export default CurrentItemsAndVotes;
-export {USER_VOTES_QUERY, USER_ITEMS_QUERY};
