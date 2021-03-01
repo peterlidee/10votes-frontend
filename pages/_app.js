@@ -53,6 +53,7 @@ import { useApollo } from '../lib/apollo'
 import { MenuContextProvider } from '../components/context/MenuContext';
 import { UserContextProvider } from '../components/context/UserContext';
 import { UserItemsContextProvider } from '../components/context/UserItemsContext';
+import { UserVotesContextProvider } from '../components/context/UserVotesContext';
 import Page from '../components/Page';
 
 import '../sass/index.scss';
@@ -63,11 +64,13 @@ export default function App({ Component, pageProps }) {
         <ApolloProvider client={apolloClient}>
             <UserContextProvider>
                 <UserItemsContextProvider>
-                    <MenuContextProvider>
-                        <Page>
-                            <Component {...pageProps} />
-                        </Page>
-                    </MenuContextProvider>
+                    <UserVotesContextProvider>
+                        <MenuContextProvider>
+                            <Page>
+                                <Component {...pageProps} />
+                            </Page>
+                        </MenuContextProvider>
+                    </UserVotesContextProvider>
                 </UserItemsContextProvider>
             </UserContextProvider>
         </ApolloProvider>
