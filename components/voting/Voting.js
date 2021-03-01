@@ -1,11 +1,10 @@
 import { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { useQuery } from '@apollo/client';
-import UserContext from '../context/UserContext';
 
+import UserVotesContext from '../context/UserVotesContext';
+import UserContext from '../context/UserContext';
 import Vote from './Vote';
 import DeleteVote from './DeleteVote';
-import { USER_VOTES_QUERY } from '../context/UserVotesContext';
 
 // helper function
 // this function tests if the property of an object in an array
@@ -38,8 +37,8 @@ function Voting(props){
     // now we know the user is logged in
     // get the votes of this user
     // we use seperate query for this
-    const { error, data, loading } = useQuery(USER_VOTES_QUERY);
-    if(loading || error || !data|| !data.userVotes) return null;
+    const { loading, error, data } = useContext(UserVotesContext);
+    if(loading || error || !data || !data.userVotes) return null;
     const votes = data.userVotes;
 
     // has the user already voted for this item?
