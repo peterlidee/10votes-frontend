@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { gql, useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
 
-import { CURRENT_USER_QUERY } from './User';
+import { CURRENT_USER_QUERY } from '../context/UserContext';
 import { USER_ITEMS_QUERY } from '../context/UserItemsContext';
-import { USER_VOTES_QUERY } from '../context/UserContext';
+import { USER_VOTES_QUERY } from '../context/UserVotesContext';
 
 import MetaTitle from '../snippets/MetaTitle';
 import FormRow from '../formParts/FormRow';
