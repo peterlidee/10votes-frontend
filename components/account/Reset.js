@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { gql, useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
 
-import { CURRENT_USER_QUERY } from '../context/UserContext';
+import { USER_LOGGED_IN_QUERY } from '../context/UserContext';
 import { USER_ITEMS_QUERY } from '../context/UserItemsContext';
 import { USER_VOTES_QUERY } from '../context/UserVotesContext';
 
@@ -33,7 +33,7 @@ function Reset(){
             confirmPassword,
             resetToken,
         },
-        refetchQueries: [{ query: CURRENT_USER_QUERY }, { query: USER_VOTES_QUERY }, { query: USER_ITEMS_QUERY }]
+        refetchQueries: [{ query: USER_LOGGED_IN_QUERY }, { query: USER_VOTES_QUERY }, { query: USER_ITEMS_QUERY }]
     })
     if(!error && !loading && called) return <p className="no-data">Your password was reset. You are now logged in with your new password.</p>
     return(

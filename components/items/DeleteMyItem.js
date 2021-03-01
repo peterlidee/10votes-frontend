@@ -1,7 +1,7 @@
 //import { Mutation } from 'react-apollo';
 //import gql from 'graphql-tag';
 
-import { CURRENT_USER_QUERY } from '../account/User';
+import { USER_LOGGED_IN_QUERY } from '../account/User';
 import Error from '../snippets/Error';
 
 const DELETE_ITEM_MUTATION = gql`
@@ -16,7 +16,7 @@ const DeleteMyItem = (props) => (
     <Mutation 
         mutation={DELETE_ITEM_MUTATION} 
         variables={{ id: props.id }} 
-        refetchQueries={[{ query: CURRENT_USER_QUERY }]}>
+        refetchQueries={[{ query: USER_LOGGED_IN_QUERY }]}>
             {(deleteItem, { error }) => (
                 <>
                     <button className="item__delete-button" onClick={() => {

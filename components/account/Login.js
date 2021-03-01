@@ -2,7 +2,7 @@ import { useState, useContext } from 'react';
 import { gql, useMutation } from '@apollo/client';
 import Link from 'next/link';
 
-import UserContext, { CURRENT_USER_QUERY } from '../context/UserContext';
+import UserContext, { USER_LOGGED_IN_QUERY } from '../context/UserContext';
 import { USER_ITEMS_QUERY } from '../context/UserItemsContext';
 import { USER_VOTES_QUERY } from '../context/UserVotesContext';
 
@@ -30,7 +30,7 @@ function Login(){
     // login mutation
     const [login, { error: loginError, loading: loginLoading }] = useMutation(LOGIN_MUTATION, {
         variables: { email, password },
-        refetchQueries: [{ query: CURRENT_USER_QUERY }, { query: USER_VOTES_QUERY }, { query: USER_ITEMS_QUERY }],
+        refetchQueries: [{ query: USER_LOGGED_IN_QUERY }, { query: USER_VOTES_QUERY }, { query: USER_ITEMS_QUERY }],
     });
     // user context
     const { error: userError, data: userData, loading: userLoading } = useContext(UserContext);

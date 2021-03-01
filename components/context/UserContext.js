@@ -1,6 +1,6 @@
 import { gql, useQuery } from '@apollo/client';
 
-const CURRENT_USER_QUERY = gql`
+const USER_LOGGED_IN_QUERY = gql`
     query {
         me {
             id
@@ -18,7 +18,7 @@ const UserContext = React.createContext({
 })
 
 const UserContextProvider = props => {
-    const { error, data, loading } = useQuery( CURRENT_USER_QUERY, {
+    const { error, data, loading } = useQuery( USER_LOGGED_IN_QUERY, {
         fetchPolicy: "cache-and-network"
     });
     return(
@@ -28,8 +28,8 @@ const UserContextProvider = props => {
     )
 }
 
-// we are not gonna do SSR for CURRENT_USER_QUERY cause it doesn't get cookie in middleware (backend)
+// we are not gonna do SSR for USER_LOGGED_IN_QUERY cause it doesn't get cookie in middleware (backend)
 // look into this, TODO
 
 export default UserContext;
-export { UserContextProvider, CURRENT_USER_QUERY };
+export { UserContextProvider, USER_LOGGED_IN_QUERY };
