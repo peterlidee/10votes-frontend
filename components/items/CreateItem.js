@@ -1,11 +1,9 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import Router from 'next/router';
 import Link from 'next/link';
+import { gql, useMutation } from '@apollo/client';
 
-import { gql, useMutation, useQuery } from '@apollo/client';
-import { Query, Mutation } from '@apollo/client/react/components'; // TODO remove
-import UserContext, { CURRENT_USER_QUERY } from '../context/UserContext';
-
+import { USER_ITEMS_QUERY } from '../context/UserItemsContext';
 import { inputToString } from '../../lib/inputToString';
 import MetaTitle from '../snippets/MetaTitle';
 import FormRow from '../formParts/FormRow';
@@ -13,8 +11,6 @@ import ManageUpload from './ManageUpload';
 import InputSuggestion from './InputSuggestion';
 import FormButton from '../formParts/FormButton';
 import Error from '../snippets/Error';
-// import { render } from 'nprogress'; // TODO remove
-
 
 const CREATE_ITEM_MUTATION = gql`
     mutation CREATE_ITEM_MUTATION(
@@ -40,7 +36,9 @@ const CREATE_ITEM_MUTATION = gql`
     }
 `;
 
-function CreateItem(){
+// TODO: why are we asking for location?
+
+function CreateItem(props){
     // state hooks
     const [image, setImage] = useState('');
     const [largeImage, setLargeImage] = useState('');
@@ -65,11 +63,8 @@ function CreateItem(){
         }
     }
 
-    // get user
-    // since this component is guarded by the please signin component, we don't need to worry about loading or error
-    const { data: userData } = useContext(UserContext);
     // setup createItem mutation
-    const [createItem, { loading: createItemLoading, error: createItemError }] = useMutation(CREATE_ITEM_MUTATION, {
+    const [createItem, { loading, error }] = useMutation(CREATE_ITEM_MUTATION, {
         variables: {
             image, 
             largeImage,
@@ -77,7 +72,7 @@ function CreateItem(){
             // filter out the empty ones
             tags: tags.map(tag => inputToString(tag)).filter(tag => tag),
         },
-        refetchQueries: [{ query: CURRENT_USER_QUERY }],
+        refetchQueries: [{ query: USER_ITEMS_QUERY }],
     });
 
     // function to handle submit and call createItem mutation
@@ -102,9 +97,9 @@ function CreateItem(){
         <>
             <MetaTitle>Upload a picture</MetaTitle>
             <h2 className="item-crud__title title">Upload a Picture</h2>
-            {userData.me.items.length >= 10 && <p className="no-data">You used up all your uploads. Manage them here: <Link href="/youritems"><a>my pics</a></Link></p>}
+            {props.userItems.length >= 10 && <p className="no-data">You used up all your uploads. Manage them here: <Link href="/youritems"><a>my pics</a></Link></p>}
 
-            {userData.me.items.length < 10 &&
+            {props.userItems.length < 10 &&
 
                 <form 
                     onSubmit={handleSubmit} 
@@ -167,9 +162,9 @@ function CreateItem(){
                         ))}
                     </FormRow>
 
-                    {createItemError && 
+                    {error && 
                         <FormRow valid={{ error: true, form: formValid }}>
-                            <Error error={createItemError} plain={true} />
+                            <Error error={error} plain={true} />
                         </FormRow>
                     }
 
@@ -181,7 +176,7 @@ function CreateItem(){
                             form: formValid,
                         }}
                     >
-                        <FormButton loading={createItemLoading} formValid={!formValid}>save</FormButton>
+                        <FormButton loading={loading} formValid={!formValid}>save</FormButton>
                     </FormRow>                                  
 
                 </form>
