@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 // use these for SSR of the item
 import { SINGLE_ITEM_QUERY } from '../components/SingleItem';
 import { initializeApollo, addApolloState } from '../lib/apollo';
+import CurrentUserItems from '../components/items/CurrentUserItems';
 
 const Update = props => {
     // get the id from the url
@@ -14,7 +15,9 @@ const Update = props => {
     const id = router.query.id || "";
     return(
         <PleaseSignin>
-            <UpdateItem id={id} />
+            <CurrentUserItems>
+                <UpdateItem id={id} />
+            </CurrentUserItems>
         </PleaseSignin>
     )
 };
