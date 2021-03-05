@@ -15,12 +15,17 @@ const LOGOUT_MUTATION = gql`
 `;
 
 function Logout(){
-    const [logout] = useMutation(LOGOUT_MUTATION, 
+    const [ logout ] = useMutation(LOGOUT_MUTATION, 
         { refetchQueries: 
             [{ query: USER_LOGGED_IN_QUERY }, { query: USER_ITEMS_QUERY }, { query: USER_VOTES_QUERY }]
-        });
-    return <button onClick={() => logout()} className="logout__button">log out</button>
+        }
+    );
+    return <button type="button" onClick={() => { 
+        console.log('logging out')
+        logout();
+    }} className="logout__button2">log out</button>
 }
 // on logout, redirect? TODO?
+// TODO: check if this works in chrome
 
 export default Logout;

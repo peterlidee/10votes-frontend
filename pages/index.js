@@ -32,6 +32,7 @@
 // import { CURRENT_USER_QUERY } from '../components/context/UserContext';
 //import Home from '../components/Home';
 
+
 const Index = props => (
     <>
         {/*<Home />*/}

@@ -10,6 +10,8 @@ const USER_LOGGED_IN_QUERY = gql`
     }
 `;
 
+// TODO: remove email
+
 // create context with default value
 const UserContext = React.createContext({
     loading: false,
