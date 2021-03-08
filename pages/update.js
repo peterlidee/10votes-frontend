@@ -23,5 +23,21 @@ const Update = props => {
 };
 
 // TODO: add SSR from item.js
+export async function getServerSideProps(context) {
+    const apolloClient = initializeApollo()
+
+    const id = context.query.id || "";
+
+    if(id){
+        await apolloClient.query({
+            query: SINGLE_ITEM_QUERY,
+            variables: { itemId: id },
+        })
+    }
+  
+    return addApolloState(apolloClient, {
+        props: {},
+    })
+}
 
 export default Update;
