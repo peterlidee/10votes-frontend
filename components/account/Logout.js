@@ -23,7 +23,7 @@ function Logout(){
     return <button type="button" onClick={() => { 
         console.log('logging out')
         logout();
-    }} className="logout__button2">log out</button>
+    }} className="logout__button">log out</button>
 }
 // on logout, redirect? TODO?
 // TODO: check if this works in chrome
