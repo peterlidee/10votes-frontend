@@ -83,10 +83,7 @@ function InputSuggestion(props) {
         onStateChange: (changes) => {
             if(changes.type == useCombobox.stateChangeTypes.InputChange){
                 props.handleSetState(
-                    {
-                        [props.type.slice(0,-1)]: changes.inputValue,
-                        [`${props.type.slice(0,-1)}Edit`]: true,
-                    }, 
+                    { [props.type.slice(0,-1)]: changes.inputValue, }, 
                     props.type == 'locations' ? null : props.id.split('-')[1] // index
                 )
             }
@@ -94,10 +91,7 @@ function InputSuggestion(props) {
         // this handles the selection of a dropdown item
         onSelectedItemChange: (changes) => {
             props.handleSetState(
-                {
-                    [props.type.slice(0,-1)]: changes.selectedItem && changes.selectedItem.name ? changes.selectedItem.name : "",
-                    [`${props.type.slice(0,-1)}Edit`]: true,
-                }, 
+                { [props.type.slice(0,-1)]: changes.selectedItem && changes.selectedItem.name ? changes.selectedItem.name : "", }, 
                 props.type == 'locations' ? null : props.id.split('-')[1] // index
             )
         },
