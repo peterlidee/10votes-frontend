@@ -20,10 +20,9 @@ const SINGLE_ITEM_QUERY = gql`
 
 
 function SingleItem(props){
-    if(!props.id) return <p className="no-data">No such picture found.</p>
+    if(!props.itemId) return <p className="no-data">No such picture found.</p>
     const { error, loading, data } = useQuery(SINGLE_ITEM_QUERY, {
-        variables: { itemId: props.id },
-        //fetchPolicy: "cache-and-network",
+        variables: { itemId: props.itemId },
     });
     if(loading) return <Loader containerClass="items-loader" />
     if(error) return <Error error={error} />
@@ -70,9 +69,8 @@ function SingleItem(props){
 }
 
 SingleItem.propTypes = {
-    id: PropTypes.string.isRequired,
+    itemId: PropTypes.string.isRequired,
 };
 
 export default SingleItem;
 export { SINGLE_ITEM_QUERY };
-// TODO: updated nakijken, updateItem refetch??

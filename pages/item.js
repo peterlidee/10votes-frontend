@@ -1,17 +1,13 @@
-import { useRouter } from 'next/router';
 import SingleItem from '../components/SingleItem';
 import { initializeApollo, addApolloState } from '../lib/apollo';
 import { SINGLE_ITEM_QUERY } from '../components/SingleItem';
 
-const Item = () => {
-    // get the id from the url
-    const router =  useRouter();
-    const id = router.query.id || "";
-    return <SingleItem id={id} />
+const Item = (props) => {
+    return <SingleItem itemId={props.itemId} />
 }
 
 // https://github.com/vercel/next.js/blob/canary/examples/with-apollo/pages/index.js
-// this will make a server-side request but since the fetch-policy is cache and network it will make another request once rendered
+// this will make a server-side request 
 export async function getServerSideProps(context) {
     const apolloClient = initializeApollo()
 
@@ -25,7 +21,7 @@ export async function getServerSideProps(context) {
     }
   
     return addApolloState(apolloClient, {
-        props: {},
+        props: { itemId: id },
     })
 }
 
