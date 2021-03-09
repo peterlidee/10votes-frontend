@@ -38,12 +38,12 @@ const UPDATE_ITEM_MUTATION = gql`
 // what we need to do first, in a seperate component, is:
 // 1. check if there's an ID
 // 2. check if the ID is an actual image
-// 3. check if the user owns this image (userItems contains props.id)
+// 3. check if the user owns this image (userItems contains props.itemId)
 function UpdateItemGate(props){
     // gate the component if no id was given
-    if(!props.id) return <p className="no-data">You need to query a picture.</p>;
+    if(!props.itemId) return <p className="no-data">You need to query a picture.</p>;
     const { loading, error, data } = useQuery(SINGLE_ITEM_QUERY, {
-        variables: { itemId: props.id }
+        variables: { itemId: props.itemId }
     });
     if(loading) return <Loader containerClass="items-loader" />
     if(error)   return <Error error={error} />
@@ -51,7 +51,7 @@ function UpdateItemGate(props){
     if(!data || !data.item) return <p className="no-data">No picture found.</p>
 
     // check if the user owns this item
-    const isItemInUsersItems = props.userItems.find(userItem => userItem.id == props.id);
+    const isItemInUsersItems = props.userItems.find(userItem => userItem.id == props.itemId);
     if(!isItemInUsersItems) return <p className="no-data">You can only edit your own items!</p> 
 
     return(
@@ -63,7 +63,7 @@ function UpdateItemGate(props){
     )
 }
 UpdateItemGate.propTypes = {
-    id: PropTypes.string.isRequired,
+    itemId: PropTypes.string.isRequired,
 }
 
 function UpdateItemComponent(props){
