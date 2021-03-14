@@ -1,6 +1,6 @@
 import PleaseSignin from '../components/account/PleaseSignin';
-import CreateItem from '../components/items/CreateItem';
-import CurrentUserItems from '../components/items/CurrentUserItems';
+import CreateItem from '../components/item/CreateItem';
+import CurrentUserItems from '../components/item/CurrentUserItems';
 
 const AddAPicture = props => (
     <PleaseSignin>

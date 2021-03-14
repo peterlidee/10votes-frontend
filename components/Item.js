@@ -1,7 +1,7 @@
 import PropTypes, { string } from 'prop-types';
 import Link from 'next/link';
 
-import DeleteMyItem from './items/DeleteMyItem';
+import DeleteMyItem from './item/DeleteMyItem';
 import Voting from './voting/Voting';
 
 
