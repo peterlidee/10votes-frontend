@@ -15,12 +15,12 @@ import MetaTitle from './snippets/MetaTitle';
 import FancyTitle from './snippets/FancyTitle';
 // import OrderItems from './OrderItems';
 import DisplayItems from './DisplayItems';
-import GetItemsCount from './items/getItemsCount';
+import GetItemsCount from './item/getItemsCount';
 // import Pagination from './Pagination';
 
 const TAG_EXISTS_QUERY = gql`
-    query TAG_EXISTS_QUERY($slug: String!){
-        tag( slug: $slug ){
+    query TAG_EXISTS_QUERY($tagSlug: String!){
+        tag( tagSlug: $tagSlug ){
             id
             name
             slug
@@ -47,7 +47,7 @@ const ITEMS_WITH_TAG_QUERY = gql`
 function SingleTagGate(props){
     // make tag query
     const { loading, error, data } = useQuery(TAG_EXISTS_QUERY, {
-         variables: { slug: props.tagSlug }
+         variables: { tagSlug: props.tagSlug }
     })
     if(loading) return <Loader containerClass="items-loader" />;                
     if(error) return <Error error={error} />

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import ItemsCount from '../items/ItemsCount';
-import GetItemsCount from '../items/getItemsCount';
+import ItemsCount from '../item/ItemsCount';
+import GetItemsCount from '../item/getItemsCount';
 
 const FancyTitle = props => (
     <header className="title__container">
