@@ -56,6 +56,8 @@ import { UserItemsContextProvider } from '../components/context/UserItemsContext
 import { UserVotesContextProvider } from '../components/context/UserVotesContext';
 import Page from '../components/Page';
 
+// TODO: better providers? no nested clutter?
+
 import '../sass/index.scss';
 
 export default function App({ Component, pageProps }) {

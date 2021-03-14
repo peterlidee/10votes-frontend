@@ -29,6 +29,9 @@ const Header = props => (
         <Search />
         */}
         <Nav />
+        <Link href="/tags/[tagslug]" as={`/tags/test`}><a>test tag</a></Link>
+        <Link href="/tags/[tagslug]" as={`/tags/test-1`}><a>test 1 tag</a></Link>
+        <Link href="/tags/[tagslug]" as={`/tags/test-2`}><a>test 2 tag</a></Link>
     </header>
 );
 

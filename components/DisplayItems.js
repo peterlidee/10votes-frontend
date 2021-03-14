@@ -1,11 +1,13 @@
-// this component removes code duplication
+// this component get items
 // used in SingleTag, SingleLocation and SingleCountry
+// it handles loading, error and then displays the items as <Item>
 
-import PropTypes from 'prop-types';
-import Error from './snippets/Error';
 import Link from 'next/link';
-import Item from './Item';
+import PropTypes from 'prop-types';
+
+import Error from './snippets/Error';
 import Loader from './snippets/Loader';
+// import Item from './Item';
 
 const DisplayItems = props => {
     const { error, data, loading } = props.payload;
@@ -19,7 +21,10 @@ const DisplayItems = props => {
     
     return(
         <div className="grid-items">
-            {data.items.map(item => <Item key={item.id} item={item} />)}
+            {data.items.map(item => {
+                {/*<Item key={item.id} item={item} />*/}
+                return item.id
+            })}
         </div>
     )
 };
