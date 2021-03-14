@@ -30,4 +30,13 @@ const ITEMS_WITH_TAG_QUERY = gql`
     ${ITEM_FIELDS_FRAGMENT}
 `;
 
-export { TAG_EXISTS_QUERY, ITEMS_WITH_TAG_QUERY };
+const COUNTRY_EXISTS_QUERY = gql`
+    query COUNTRY_EXISTS_QUERY($countryCode: String!){
+        country( countryCode: $countryCode ){
+            id
+            name
+        }
+    }
+`
+
+export { TAG_EXISTS_QUERY, ITEMS_WITH_TAG_QUERY, COUNTRY_EXISTS_QUERY };

@@ -21,4 +21,6 @@ export const getServerSideProps = async ({params, query}) => {
 }
 
 export default Tagpage;
+
+// TODO: add query serverside??
  

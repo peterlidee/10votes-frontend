@@ -2,7 +2,7 @@
 // it checks if the given slug for the given taxonomy exists and handles errors and loading
 // it then calls a new component that gets all the items for this taxonomy[slug]
 
-import { TAG_EXISTS_QUERY } from './SingleTaxonomyQueries';
+import { TAG_EXISTS_QUERY, COUNTRY_EXISTS_QUERY } from './SingleTaxonomyQueries';
 import { useQuery } from '@apollo/client';
 
 import Loader from '../snippets/Loader';
@@ -20,7 +20,11 @@ function SingleTaxonomyExists(props){
     if(props.type == 'tag'){
         query = TAG_EXISTS_QUERY;
         variables.tagSlug = props.tagSlug;
-    } 
+    }
+    if(props.type == 'country'){
+        query = COUNTRY_EXISTS_QUERY;
+        variables.countryCode = props.countryCode;
+    }
     const { loading, error, data } = useQuery(query, { variables });
 
     if(loading) return <Loader containerClass="items-loader" />;                
