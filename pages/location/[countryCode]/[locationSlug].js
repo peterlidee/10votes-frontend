@@ -15,15 +15,15 @@ const LocationPage = props => (
 export async function getServerSideProps({params, query}){
     const apolloClient = initializeApollo()
 
-    const locationSlug = params.place;
+    const locationSlug = params.locationSlug;
     const countryCode = params.countryCode;
     const orderBy = verifyOrderParam(query.orderBy);
     const page = query.page || 1;
     
     if(countryCode && locationSlug){
         await apolloClient.query({
-            query: COUNTRY_EXISTS_QUERY,
-            variables: { countryCode: countryCode },
+            query: LOCATION_EXISTS_QUERY,
+            variables: { locationSlug: locationSlug, countryCode: countryCode },
         })
     }
 
