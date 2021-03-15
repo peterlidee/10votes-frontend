@@ -30,13 +30,32 @@ const ITEMS_WITH_TAG_QUERY = gql`
     ${ITEM_FIELDS_FRAGMENT}
 `;
 
+// for finding a location we use locationS query, 
+// cause that is the only way we can also give it a countrycode as param
+// we then call it locations[0]
+const LOCATION_EXISTS_QUERY = gql`
+    query LOCATION_EXISTS_QUERY($locationSlug: String!, $countryCode: String!){
+        locations( locationSlug: $locationSlug, countryCode: $countryCode ){
+            id
+            name
+            slug
+            country{
+                id
+                name
+                countryCode
+            }
+        }
+    }
+`;
+
 const COUNTRY_EXISTS_QUERY = gql`
     query COUNTRY_EXISTS_QUERY($countryCode: String!){
         country( countryCode: $countryCode ){
             id
             name
+            countryCode
         }
     }
-`
+`;
 
-export { TAG_EXISTS_QUERY, ITEMS_WITH_TAG_QUERY, COUNTRY_EXISTS_QUERY };
+export { TAG_EXISTS_QUERY, ITEMS_WITH_TAG_QUERY, LOCATION_EXISTS_QUERY, COUNTRY_EXISTS_QUERY };
