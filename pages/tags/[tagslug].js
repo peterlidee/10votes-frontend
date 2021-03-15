@@ -1,6 +1,7 @@
 import { initializeApollo, addApolloState } from '../../lib/apollo';
 import verifyOrderParam from '../../lib/verifyOrderParam'
-import SingleTaxonomyExists, { TAG_EXISTS_QUERY }  from '../../components/items/SingleTaxonomyExists';
+import SingleTaxonomyExists  from '../../components/items/SingleTaxonomyExists';
+import { TAG_EXISTS_QUERY } from '../../components/items/SingleTaxonomyQueries';
 
 const Tagpage = props => (
     <SingleTaxonomyExists type="tag" {...props} />
