@@ -3,54 +3,25 @@
 // it requires a tagSlug or a locationSlug and or a countryCode
 
 import PropTypes from 'prop-types';
-import { useQuery, gql } from '@apollo/client';
-
-const TAGS_PAGINATION_QUERY = gql`
-    query TAGS_PAGINATION_QUERY($tagSlug: String!){
-        itemsConnection( tagSlug: $tagSlug ){
-            aggregate{
-                count
-            }
-        }
-    }
-`;
-
-const LOCATION_PAGINATION_QUERY = gql`
-    query LOCATION_PAGINATION_QUERY($countryCode: String!, $locationSlug: String!){
-        itemsConnection( locationSlug: $locationSlug, countryCode: $countryCode ){
-            aggregate{
-                count
-            }
-        }
-    }
-`;
-
-const COUNTRY_PAGINATION_QUERY = gql`
-    query COUNTRY_PAGINATION_QUERY($countryCode: String!){
-        itemsConnection( countryCode: $countryCode ){
-            aggregate{
-                count
-            }
-        }
-    }
-`;
+import { useQuery } from '@apollo/client';
+import { TAG_COUNT_QUERY, LOCATION_COUNT_QUERY, COUNTRY_COUNT_QUERY } from './SingleTaxonomyQueries';
 
 const GetItemsCount = (props) => { // props: data and type
     const variables = {}
     let query;
     if(props.type == 'tag'){
         variables.tagSlug = props.data.tag.slug;
-        query = TAGS_PAGINATION_QUERY;
+        query = TAG_COUNT_QUERY;
     }
     if(props.type == 'location'){
         variables.locationSlug = props.data.locations[0].slug;
         variables.countryCode = props.data.locations[0].country.countryCode;
-        query = LOCATION_PAGINATION_QUERY;
+        query = LOCATION_COUNT_QUERY;
 
     }
     if(props.type == 'country'){
         variables.countryCode = props.data.country.countryCode;
-        query = COUNTRY_PAGINATION_QUERY;
+        query = COUNTRY_COUNT_QUERY;
 
     }
     const { loading, error, data } = useQuery(query, { variables })

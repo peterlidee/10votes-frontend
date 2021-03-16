@@ -30,6 +30,16 @@ const ITEMS_WITH_TAG_QUERY = gql`
     ${ITEM_FIELDS_FRAGMENT}
 `;
 
+const TAG_COUNT_QUERY = gql`
+    query TAG_COUNT_QUERY($tagSlug: String!){
+        itemsConnection( tagSlug: $tagSlug ){
+            aggregate{
+                count
+            }
+        }
+    }
+`;
+
 // for finding a location we use locationS query, 
 // cause that is the only way we can also give it a countrycode as param
 // we then call it locations[0]
@@ -48,6 +58,17 @@ const LOCATION_EXISTS_QUERY = gql`
     }
 `;
 
+const LOCATION_COUNT_QUERY = gql`
+    query LOCATION_COUNT_QUERY($countryCode: String!, $locationSlug: String!){
+        itemsConnection( locationSlug: $locationSlug, countryCode: $countryCode ){
+            aggregate{
+                count
+            }
+        }
+    }
+`;
+
+
 const COUNTRY_EXISTS_QUERY = gql`
     query COUNTRY_EXISTS_QUERY($countryCode: String!){
         country( countryCode: $countryCode ){
@@ -58,4 +79,18 @@ const COUNTRY_EXISTS_QUERY = gql`
     }
 `;
 
-export { TAG_EXISTS_QUERY, ITEMS_WITH_TAG_QUERY, LOCATION_EXISTS_QUERY, COUNTRY_EXISTS_QUERY };
+const COUNTRY_COUNT_QUERY = gql`
+    query COUNTRY_COUNT_QUERY($countryCode: String!){
+        itemsConnection( countryCode: $countryCode ){
+            aggregate{
+                count
+            }
+        }
+    }
+`;
+
+export { 
+    TAG_EXISTS_QUERY, ITEMS_WITH_TAG_QUERY, TAG_COUNT_QUERY, 
+    LOCATION_EXISTS_QUERY, LOCATION_COUNT_QUERY, 
+    COUNTRY_EXISTS_QUERY, COUNTRY_COUNT_QUERY
+};
