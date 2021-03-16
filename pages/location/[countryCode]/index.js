@@ -1,3 +1,5 @@
+// displays country, fe .../location/be
+
 import { initializeApollo, addApolloState } from '../../../lib/apollo';
 import verifyOrderParam from '../../../lib/verifyOrderParam'
 import SingleTaxonomyExists from '../../../components/items/SingleTaxonomyExists';

@@ -8,11 +8,13 @@ import { useQuery } from '@apollo/client';
 import Loader from '../snippets/Loader';
 import Error from '../snippets/Error';
 
+import MetaTitle from '../snippets/MetaTitle';
+
 function NoTaxonomyMessage(props){
     return <p className="no-data">Hmmm, we don't have a {props.type} '<em>{props.children}</em>' in our database. Try another {props.type} :/</p>
 }
 
-// props: type! (tag, location, country), tagSlug, 
+// props: type! (tag, location, country), tagSlug, locationSlug, countryCode
 function SingleTaxonomyExists(props){
     // select query and contruct variables for each type
     let query;
@@ -44,9 +46,18 @@ function SingleTaxonomyExists(props){
     // fall through option
     if(!data) return <p className="no-data">No data found</p>
 
-    // at this point, we have data for this slug, so start loading components
+    // at this point, we have a valid slug for the taxonomy, so start loading components
     console.log('data',data)
-    return 'data found, yay'
+    return( 
+        <section>
+            {props.type == "tag"      && <MetaTitle>{`Pics with tag #${data.tag.name}`}</MetaTitle>}
+            {props.type == "location" && <MetaTitle>{`Pics in ${data.locations[0].name} - ${data.locations[0].country.name}`}</MetaTitle>}
+            {props.type == "country"  && <MetaTitle>{`Pics in ${data.country.name}`}</MetaTitle>}
+
+        
+
+        </section>
+    )
 }
 
 export default SingleTaxonomyExists;
