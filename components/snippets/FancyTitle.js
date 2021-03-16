@@ -1,15 +1,14 @@
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import ItemsCount from '../item/ItemsCount';
-import GetItemsCount from '../item/getItemsCount';
+import GetItemsCount from '../items/GetItemsCount';
 
-const FancyTitle = props => (
+const FancyTitle = ({ type, data }) => (
     <header className="title__container">
-        <h1 className={`items__title items__title--single-${props.type}`}>
+        <h1 className={`items__title items__title--single-${type}`}>
             <div className="title__count">
-                <GetItemsCount {...props}>
-                    {({ data }) => {
-                        const count = data.itemsConnection.aggregate.count;
+                <GetItemsCount type={type} data={data}>
+                    {({ data: countData }) => {
+                        const count = countData.itemsConnection.aggregate.count;
                         return(
                             <>
                                 <span className="title__count-number">{count}</span>
@@ -19,16 +18,16 @@ const FancyTitle = props => (
                     }}
                 </GetItemsCount>
             </div>
-            {props.type == "location" && props.location.name &&  <div className="title__name">{props.location.name}</div>}
-            {props.type == "country" && props.country.name &&    <div className="title__name">{props.country.name}</div>}
-            {props.type == "tag" && props.tagName &&             <div className="title__name">{props.tagName}</div>}
+            {type == "location" &&  <div className="title__name">{data.locations[0].name}</div>}
+            {type == "country" &&   <div className="title__name">{data.country.name}</div>}
+            {type == "tag" &&       <div className="title__name">{data.tag.name}</div>}
             <div className="title__country-container">
-                {props.type == "location" && props.country.countryCode && props.country.name && (
+                {type == "location" && (
                     <Link 
                         href="/location/[countryCode]" 
-                        as={`/location/${props.country.countryCode}`}
+                        as={`/location/${data.locations[0].country.countryCode}`}
                     >
-                        <a className="title__country">{props.country.name}</a>
+                        <a className="title__country">{data.locations[0].country.name}</a>
                     </Link>
                 )}
             </div>
@@ -38,12 +37,7 @@ const FancyTitle = props => (
 
 FancyTitle.propTypes = {
     type: PropTypes.string.isRequired, // location, country or tag
+    data: PropTypes.object.isRequired
 }
-// TODO  remove dfaultProps?
-FancyTitle.defaultProps = {
-    country: {},
-    location: {},
-    tag: {},
-};
 
 export default FancyTitle;

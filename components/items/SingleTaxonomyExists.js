@@ -1,6 +1,6 @@
 // this component is used to display all items for a single tag, location or country
 // it checks if the given slug for the given taxonomy exists and handles errors and loading
-// it then calls a new component that gets all the items for this taxonomy[slug]
+// it then calls a series of new components for this taxonomy[slug]
 
 import { TAG_EXISTS_QUERY, COUNTRY_EXISTS_QUERY, LOCATION_EXISTS_QUERY } from './SingleTaxonomyQueries';
 import { useQuery } from '@apollo/client';
@@ -9,6 +9,7 @@ import Loader from '../snippets/Loader';
 import Error from '../snippets/Error';
 
 import MetaTitle from '../snippets/MetaTitle';
+import FancyTitle from '../snippets/FancyTitle';
 
 function NoTaxonomyMessage(props){
     return <p className="no-data">Hmmm, we don't have a {props.type} '<em>{props.children}</em>' in our database. Try another {props.type} :/</p>
@@ -48,13 +49,20 @@ function SingleTaxonomyExists(props){
 
     // at this point, we have a valid slug for the taxonomy, so start loading components
     console.log('data',data)
+    const fancyTitleProps = { type: props.type, data: data }
     return( 
         <section>
             {props.type == "tag"      && <MetaTitle>{`Pics with tag #${data.tag.name}`}</MetaTitle>}
             {props.type == "location" && <MetaTitle>{`Pics in ${data.locations[0].name} - ${data.locations[0].country.name}`}</MetaTitle>}
             {props.type == "country"  && <MetaTitle>{`Pics in ${data.country.name}`}</MetaTitle>}
 
-        
+            <FancyTitle type={props.type} data={data} />
+            
+            {/*
+            <FancyTitle type="tag" tagName={data.tag.name} tagSlug={data.tag.slug} />
+            <FancyTitle type="location" location={{ name }} country={{ name: country.name, countryCode: country.countryCode }} />
+            <FancyTitle type="country" country={{ name: data.country.name }} />
+            */}
 
         </section>
     )
