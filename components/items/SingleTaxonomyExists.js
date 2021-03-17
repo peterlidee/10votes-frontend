@@ -10,12 +10,13 @@ import Error from '../snippets/Error';
 
 import MetaTitle from '../snippets/MetaTitle';
 import FancyTitle from '../snippets/FancyTitle';
+import SingleTaxonomyItems from './SingleTaxonomyItems';
 
 function NoTaxonomyMessage(props){
     return <p className="no-data">Hmmm, we don't have a {props.type} '<em>{props.children}</em>' in our database. Try another {props.type} :/</p>
 }
 
-// props: type! (tag, location, country), tagSlug, locationSlug, countryCode
+// props: type! (tag, location, country), tagSlug, locationSlug, countryCode, page!, skip!
 function SingleTaxonomyExists(props){
     // select query and contruct variables for each type
     let query;
@@ -49,23 +50,26 @@ function SingleTaxonomyExists(props){
 
     // at this point, we have a valid slug for the taxonomy, so start loading components
     console.log('data',data)
-    const fancyTitleProps = { type: props.type, data: data }
+
+    const propsToPass = { 
+        type: props.type,
+        page: props.page,
+        orderBy: props.orderBy,
+        data: data,
+    }
+
     return( 
         <section>
             {props.type == "tag"      && <MetaTitle>{`Pics with tag #${data.tag.name}`}</MetaTitle>}
             {props.type == "location" && <MetaTitle>{`Pics in ${data.locations[0].name} - ${data.locations[0].country.name}`}</MetaTitle>}
             {props.type == "country"  && <MetaTitle>{`Pics in ${data.country.name}`}</MetaTitle>}
-
-            <FancyTitle type={props.type} data={data} />
-            
-            {/*
-            <FancyTitle type="tag" tagName={data.tag.name} tagSlug={data.tag.slug} />
-            <FancyTitle type="location" location={{ name }} country={{ name: country.name, countryCode: country.countryCode }} />
-            <FancyTitle type="country" country={{ name: data.country.name }} />
-            */}
+            <FancyTitle {...propsToPass} />
+            <SingleTaxonomyItems {...propsToPass} />
 
         </section>
     )
 }
+
+// TODO: add propTypes
 
 export default SingleTaxonomyExists;

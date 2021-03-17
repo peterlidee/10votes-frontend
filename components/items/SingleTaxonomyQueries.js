@@ -16,8 +16,23 @@ const TAG_EXISTS_QUERY = gql`
     }
 `;
 
-const ITEMS_WITH_TAG_QUERY = gql`
-    query ITEMS_WITH_TAG_QUERY($tagSlug: String!, $orderBy: ItemOrderByInput, $skip: Int = 0, $first: Int = ${perPage}){
+const TAG_COUNT_QUERY = gql`
+    query TAG_COUNT_QUERY($tagSlug: String!){
+        itemsConnection( tagSlug: $tagSlug ){
+            aggregate{
+                count
+            }
+        }
+    }
+`;
+
+const TAG_ITEMS_QUERY = gql`
+    query TAG_ITEMS_QUERY(
+            $tagSlug: String!, 
+            $orderBy: ItemOrderByInput, 
+            $skip: Int = 0, 
+            $first: Int = ${perPage}
+        ){
         items(
             tagSlug: $tagSlug,
             orderBy: $orderBy,
@@ -28,16 +43,6 @@ const ITEMS_WITH_TAG_QUERY = gql`
         }
     }
     ${ITEM_FIELDS_FRAGMENT}
-`;
-
-const TAG_COUNT_QUERY = gql`
-    query TAG_COUNT_QUERY($tagSlug: String!){
-        itemsConnection( tagSlug: $tagSlug ){
-            aggregate{
-                count
-            }
-        }
-    }
 `;
 
 // for finding a location we use locationS query, 
@@ -68,6 +73,46 @@ const LOCATION_COUNT_QUERY = gql`
     }
 `;
 
+const LOCATION_ITEMS_QUERY = gql`
+    query LOCATION_ITEMS_QUERY(
+        $locationSlug: String!, 
+        $countryCode: String!, 
+        $orderBy: ItemOrderByInput, 
+        $skip: Int = 0, 
+        $first: Int = ${perPage}
+    ){
+        items(
+            locationSlug:$locationSlug,
+            countryCode: $countryCode,
+            orderBy: $orderBy,
+            skip: $skip,
+            first: $first,
+        ){
+            id
+            image
+            largeImage
+            votes{
+                id
+            }
+            voteCount
+            tags{
+                id
+                name
+                slug
+            }
+            location{
+                id
+                name
+                slug
+                country{
+                    id
+                    name
+                    countryCode
+                }
+            }
+        }
+    }
+`;
 
 const COUNTRY_EXISTS_QUERY = gql`
     query COUNTRY_EXISTS_QUERY($countryCode: String!){
@@ -89,8 +134,33 @@ const COUNTRY_COUNT_QUERY = gql`
     }
 `;
 
+const COUNTRY_ITEMS_QUERY = gql`
+    query COUNTRY_ITEMS_QUERY(
+            $countryCode: String!, 
+            $orderBy: ItemOrderByInput, 
+            $skip: Int = 0, 
+            $first: Int = ${perPage}
+        ){
+        items(
+            countryCode: $countryCode,
+            orderBy: $orderBy,
+            skip: $skip,
+            first: $first,
+        ){
+            ...ItemFields
+        }
+    }
+    ${ITEM_FIELDS_FRAGMENT}
+`;
+
 export { 
-    TAG_EXISTS_QUERY, ITEMS_WITH_TAG_QUERY, TAG_COUNT_QUERY, 
-    LOCATION_EXISTS_QUERY, LOCATION_COUNT_QUERY, 
-    COUNTRY_EXISTS_QUERY, COUNTRY_COUNT_QUERY
+    TAG_EXISTS_QUERY,
+    TAG_COUNT_QUERY,
+    TAG_ITEMS_QUERY,
+    LOCATION_EXISTS_QUERY,
+    LOCATION_COUNT_QUERY,
+    LOCATION_ITEMS_QUERY,
+    COUNTRY_EXISTS_QUERY,
+    COUNTRY_COUNT_QUERY,
+    COUNTRY_ITEMS_QUERY
 };
