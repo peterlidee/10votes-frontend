@@ -5,6 +5,13 @@
     display: flex;
     justify-content: center;
     margin: 0 0 1em 0;
+    & + .no-data,
+    & + .error__container{
+        margin-top: 3em;
+    }
+    & + .loader__container{
+        margin-top: 1em;
+    }
 }
 
 .items__title{ 

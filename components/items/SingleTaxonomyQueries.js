@@ -88,30 +88,10 @@ const LOCATION_ITEMS_QUERY = gql`
             skip: $skip,
             first: $first,
         ){
-            id
-            image
-            largeImage
-            votes{
-                id
-            }
-            voteCount
-            tags{
-                id
-                name
-                slug
-            }
-            location{
-                id
-                name
-                slug
-                country{
-                    id
-                    name
-                    countryCode
-                }
-            }
+            ...ItemFields
         }
     }
+    ${ITEM_FIELDS_FRAGMENT}
 `;
 
 const COUNTRY_EXISTS_QUERY = gql`

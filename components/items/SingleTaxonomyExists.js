@@ -2,6 +2,8 @@
 // it checks if the given slug for the given taxonomy exists and handles errors and loading
 // it then calls a series of new components for this taxonomy[slug]
 
+import PropTypes from 'prop-types';
+
 import { TAG_EXISTS_QUERY, COUNTRY_EXISTS_QUERY, LOCATION_EXISTS_QUERY } from './SingleTaxonomyQueries';
 import { useQuery } from '@apollo/client';
 
@@ -49,15 +51,13 @@ function SingleTaxonomyExists(props){
     if(!data) return <p className="no-data">No data found</p>
 
     // at this point, we have a valid slug for the taxonomy, so start loading components
-    console.log('data',data)
-
+    // construct props for child components
     const propsToPass = { 
         type: props.type,
         page: props.page,
         orderBy: props.orderBy,
         data: data,
     }
-
     return( 
         <section>
             {props.type == "tag"      && <MetaTitle>{`Pics with tag #${data.tag.name}`}</MetaTitle>}
@@ -70,6 +70,10 @@ function SingleTaxonomyExists(props){
     )
 }
 
-// TODO: add propTypes
+SingleTaxonomyExists.propTypes = {
+    type: PropTypes.string.isRequired,
+    page: PropTypes.number.isRequired,
+    orderBy: PropTypes.string.isRequired,
+};
 
 export default SingleTaxonomyExists;
