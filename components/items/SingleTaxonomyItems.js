@@ -9,8 +9,9 @@ import { perPage } from '../../config';
 import PropTypes from 'prop-types';
 
 import Loader from "../snippets/Loader";
-import NoData from "../snippets/NoData";
 import Error from "../snippets/Error";
+import NoData from "../snippets/NoData";
+import Item from "../item/Item";
 
 function SingleTaxonomyItems(props){ // props: type
     // set up the correct query and variables
@@ -42,8 +43,13 @@ function SingleTaxonomyItems(props){ // props: type
     if(data.items.length == 0 && props.page > 1) return <NoData>No more pictures to display.</NoData>
     if(data.items.length == 0) return <NoData>No pictures yet for this {props.type}. Maybe you would like to <Link href="/addapicture"><a>add one</a></Link>?</NoData>
 
-
-    return 'hello'
+    return(
+        <div className="grid-items">
+            {data.items.map(item => 
+                <Item key={item.id} item={item} />
+            )}
+        </div>
+    )
 }
 
 SingleTaxonomyItems.propTypes = {
