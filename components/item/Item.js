@@ -61,7 +61,7 @@ function Item(props){
 }
 
 Item.propTypes = {
-    data: PropTypes.object.isRequired,
+    item: PropTypes.object.isRequired,
 };
 
 export default Item;
