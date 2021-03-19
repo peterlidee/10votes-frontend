@@ -15,7 +15,7 @@ const Tagpage = props => (
 export async function getServerSideProps({params, query}){
     const apolloClient = initializeApollo()
 
-    const tagSlug = params.tagslug;
+    const tagSlug = params.tagSlug;
     const orderBy = verifyOrderParam(query.orderBy);
     const page = query.page || 1;
 
