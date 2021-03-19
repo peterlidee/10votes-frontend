@@ -13,6 +13,7 @@ import Error from '../snippets/Error';
 import MetaTitle from '../snippets/MetaTitle';
 import FancyTitle from '../snippets/FancyTitle';
 import SingleTaxonomyItems from './SingleTaxonomyItems';
+import OrderItems from './OrderItems';
 
 function NoTaxonomyMessage(props){
     return <p className="no-data">Hmmm, we don't have a {props.type} '<em>{props.children}</em>' in our database. Try another {props.type} :/</p>
@@ -64,6 +65,7 @@ function SingleTaxonomyExists(props){
             {props.type == "location" && <MetaTitle>{`Pics in ${data.locations[0].name} - ${data.locations[0].country.name}`}</MetaTitle>}
             {props.type == "country"  && <MetaTitle>{`Pics in ${data.country.name}`}</MetaTitle>}
             <FancyTitle {...propsToPass} />
+            <OrderItems {...propsToPass} />
             <SingleTaxonomyItems {...propsToPass} />
 
         </section>
