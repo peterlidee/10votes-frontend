@@ -27,8 +27,8 @@ const OrderItems = props => { // props: type, orderBy, data
                 const query = {};
 
                 if(props.type == "tag"){
-                    hrefPath = "/tags/[tagslug]";
-                    query.tagslug = props.data.tag.slug;
+                    hrefPath = "/tags/[tagSlug]";
+                    query.tagSlug = props.data.tag.slug;
                 }
                 if(props.type == "location"){
                     hrefPath = "/location/[countryCode]/[locationSlug]";

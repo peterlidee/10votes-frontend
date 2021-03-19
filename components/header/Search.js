@@ -119,7 +119,7 @@ class Search extends React.Component{
         }
         let hrefPath, asPath;
         if(item.__typename === "Tag"){
-            hrefPath = '/tags/[tagslug]';
+            hrefPath = '/tags/[tagSlug]';
             asPath = `/tags/${item.slug}`;
         }else if(item.__typename === "Location"){
             hrefPath = '/location/[countryCode]/[place]';

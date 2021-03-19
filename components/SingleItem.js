@@ -51,7 +51,7 @@ function SingleItem(props){
                     {item.tags.length > 0 &&
                         <>
                             {item.tags.map(tag => (
-                                <Link key={tag.id} href="/tags/[tagslug]" as={`/tags/${tag.slug}`}>
+                                <Link key={tag.id} href="/tags/[tagSlug]" as={`/tags/${tag.slug}`}>
                                     <a className="item__tag item__tag--tag">{tag.name}</a>
                                 </Link>
                             ))}
