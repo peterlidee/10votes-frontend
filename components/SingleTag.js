@@ -16,7 +16,7 @@ import FancyTitle from './snippets/FancyTitle';
 // import OrderItems from './OrderItems';
 import DisplayItems from './DisplayItems';
 import GetItemsCount from './item/getItemsCount';
-// import Pagination from './Pagination';
+// import Pagination from './items/Pagination';
 
 const TAG_EXISTS_QUERY = gql`
     query TAG_EXISTS_QUERY($tagSlug: String!){

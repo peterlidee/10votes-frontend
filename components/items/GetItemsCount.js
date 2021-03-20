@@ -4,26 +4,13 @@
 
 import PropTypes from 'prop-types';
 import { useQuery } from '@apollo/client';
-import { TAG_COUNT_QUERY, LOCATION_COUNT_QUERY, COUNTRY_COUNT_QUERY } from './SingleTaxonomyQueries';
+import getQueriesVariablesPathsFromType from '../../lib/getQueriesVariablesPathsFromType';
 
 const GetItemsCount = (props) => { // props: data and type
-    const variables = {}
-    let query;
-    if(props.type == 'tag'){
-        variables.tagSlug = props.data.tag.slug;
-        query = TAG_COUNT_QUERY;
-    }
-    if(props.type == 'location'){
-        variables.locationSlug = props.data.locations[0].slug;
-        variables.countryCode = props.data.locations[0].country.countryCode;
-        query = LOCATION_COUNT_QUERY;
-
-    }
-    if(props.type == 'country'){
-        variables.countryCode = props.data.country.countryCode;
-        query = COUNTRY_COUNT_QUERY;
-
-    }
+    // get query and variables to feed to useQuery
+    const { query, variables } = getQueriesVariablesPathsFromType(
+        { queryType: 'queryRequest', taxonomyType: props.type, gqlType: 'count' }, props.data
+    );
     const { loading, error, data } = useQuery(query, { variables })
     if(loading || error || !data || !data.itemsConnection) return null;  
     return props.children({data})

@@ -4,7 +4,7 @@
 
 import PropTypes from 'prop-types';
 
-import { TAG_EXISTS_QUERY, COUNTRY_EXISTS_QUERY, LOCATION_EXISTS_QUERY } from './SingleTaxonomyQueries';
+import getQueriesVariablesPathsFromType from '../../lib/getQueriesVariablesPathsFromType';
 import { useQuery } from '@apollo/client';
 
 import Loader from '../snippets/Loader';
@@ -14,6 +14,7 @@ import MetaTitle from '../snippets/MetaTitle';
 import FancyTitle from '../snippets/FancyTitle';
 import SingleTaxonomyItems from './SingleTaxonomyItems';
 import OrderItems from './OrderItems';
+import Pagination from './Pagination';
 
 function NoTaxonomyMessage(props){
     return <p className="no-data">Hmmm, we don't have a {props.type} '<em>{props.children}</em>' in our database. Try another {props.type} :/</p>
@@ -21,22 +22,13 @@ function NoTaxonomyMessage(props){
 
 // props: type! (tag, location, country), tagSlug, locationSlug, countryCode, page!, skip!
 function SingleTaxonomyExists(props){
-    // select query and contruct variables for each type
-    let query;
-    const variables = {};
-    if(props.type == 'tag'){
-        query = TAG_EXISTS_QUERY;
-        variables.tagSlug = props.tagSlug;
-    }
-    if(props.type == 'location'){
-        query = LOCATION_EXISTS_QUERY;
-        variables.locationSlug = props.locationSlug;
-        variables.countryCode = props.countryCode;
-    }
-    if(props.type == 'country'){
-        query = COUNTRY_EXISTS_QUERY;
-        variables.countryCode = props.countryCode;
-    }
+    // get query and variables to feed to useQuery
+    const { query, variables } = getQueriesVariablesPathsFromType(
+        { queryType: 'queryRequest', taxonomyType: props.type, gqlType: 'exists' }, 
+        { tagSlug: props.tagSlug, locationSlug: props.locationSlug, countryCode: props.countryCode }
+        // if no f.e. props.tagSlug, it will have undefined as value
+    );
+
     const { loading, error, data } = useQuery(query, { variables });
 
     if(loading) return <Loader containerClass="items-loader" />;                
@@ -67,7 +59,7 @@ function SingleTaxonomyExists(props){
             <FancyTitle {...propsToPass} />
             <OrderItems {...propsToPass} />
             <SingleTaxonomyItems {...propsToPass} />
-
+            <Pagination {...propsToPass} />
         </section>
     )
 }
