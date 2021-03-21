@@ -1,8 +1,8 @@
-//import { Query } from 'react-apollo';
 import Link from 'next/link';
+import PropTypes from 'prop-types';
 import { perPage } from '../../config';
 import GetItemsCount from './GetItemsCount';
-// import getRouterData from '../lib/getRouterData';
+import getQueriesVariablesPathsFromType from '../../lib/getQueriesVariablesPathsFromType';
 
 const Pagination = (props) => { // props: type, data, page
     return(
@@ -25,38 +25,53 @@ const Pagination = (props) => { // props: type, data, page
                     pageLinks.push(i)
                 }
 
-                // build the hrefPath
-                let hrefPath = "";
+                // get query and path to feed to Link
+                // the link query will need an extra prop orderBy which we add later inside the loop
+                const { pathname, query } = getQueriesVariablesPathsFromType({
+                    taxonomyType: props.type,
+                    queryType: "linkQuery",
+                }, props.data);
+
+                // add orderBy to query, is constant
+                query.orderBy = props.orderBy;
 
                 return(
                     <div className="items__pagination">
                         {props.page > 1 && // the prev link
                             <>
-                                {/*<Link href={{
-                                    pathname:,
-                                    query: {},
-                                }}>
-                                    <a className="pagination__link pagination__link--prevnext">prev</a>
-                                </Link>*/}
-                                <Link
-                                    href={{
-                                        pathname: routerData.hrefPath,
-                                        query: {
-                                            orderBy: routerData.orderBy,
-                                            page: routerData.page - 1,
-                                        }
-                                    }}
-                                    as={{
-                                        pathname: routerData.asPath,
-                                        query: {
-                                            orderBy: routerData.orderBy,
-                                            page: routerData.page - 1,
-                                        }
+                                <Link href={{
+                                        pathname: pathname,
+                                        query: { ...query, page: props.page - 1, }
                                     }}
                                 >
                                     <a className="pagination__link pagination__link--prevnext">prev</a>
                                 </Link>
                             </>
+                        }
+                        {pageLinks.map((pageLink) => ( // the links to each page: 1 2 3 4 ...
+                            <span key={`pagelink-${pageLink}`}>
+                                {pageLink == props.page && 
+                                    <span className="pagination__link pagination__link--current">{pageLink}</span>}
+                                {pageLink != props.page && 
+                                    <Link
+                                        href={{ 
+                                            pathname:pathname,
+                                            query: { ...query, page: pageLink, }
+                                        }}
+                                    >
+                                        <a className="pagination__link">{pageLink}</a>
+                                    </Link>
+                                }
+                            </span>
+                        ))}
+                        {(props.page < totalPages) && // the next link
+                            <Link href={{
+                                    pathname: pathname,
+                                    query: { ...query, page: +props.page + 1, }
+                                }}
+                            >
+                                <a className="pagination__link pagination__link--prevnext">next</a>
+                            </Link>
                         }
                     </div>
                 ) 
@@ -65,107 +80,11 @@ const Pagination = (props) => { // props: type, data, page
     )
 }
 
-const Pagination2 = props => {
-    
-    const routerData = getRouterData(true);
-    //console.log('routerdata', routerData)
-
-    return(
-        <Query 
-            query={ routerData.query } 
-            variables={ routerData.variables }
-            fetchPolicy="cache-and-network"
-        >
-            {({ data, loading, error })=> {
-                if(loading || error || !data) return null;
-                const itemsCount = data.itemsConnection.aggregate.count;
-                const totalPages = Math.ceil(itemsCount / perPage);
-                
-                // no pagination when only one page
-                if(itemsCount - perPage <= 0) return null; 
-                
-                // TODO build long pagination
-                if(totalPages > 10) return <p>Long pagination</p>; 
-
-                // construct the pagination
-                let pageLinks = [];
-                for(let i = 1; i <= totalPages; i++){
-                    pageLinks.push(i)
-                }
-
-                return(
-                    <div className="items__pagination">
-                        {routerData.page > 1 &&
-                            <Link
-                                href={{
-                                    pathname: routerData.hrefPath,
-                                    query: {
-                                        orderBy: routerData.orderBy,
-                                        page: routerData.page - 1,
-                                    }
-                                }}
-                                as={{
-                                    pathname: routerData.asPath,
-                                    query: {
-                                        orderBy: routerData.orderBy,
-                                        page: routerData.page - 1,
-                                    }
-                                }}
-                            >
-                                <a className="pagination__link pagination__link--prevnext">prev</a>
-                            </Link>
-                        }
-                        {pageLinks.map((pageLink) => (
-                            <span key={`pagelink-${pageLink}`}>
-                                {pageLink === routerData.page && 
-                                    <span className="pagination__link pagination__link--current">{pageLink}</span>}
-                                {pageLink !== routerData.page && 
-                                    <Link
-                                        href={{
-                                            pathname: routerData.hrefPath,
-                                            query: {
-                                                orderBy: routerData.orderBy,
-                                                page: pageLink,
-                                            }
-                                        }}
-                                        as={{
-                                            pathname: routerData.asPath,
-                                            query: {
-                                                orderBy: routerData.orderBy,
-                                                page: pageLink,
-                                            }
-                                        }}
-                                    >
-                                        <a className="pagination__link">{pageLink}</a>
-                                    </Link>
-                                }
-                            </span>
-                        ))}
-                        {(routerData.page < totalPages) &&
-                            <Link
-                                href={{
-                                    pathname: routerData.hrefPath,
-                                    query: {
-                                        orderBy: routerData.orderBy,
-                                        page: routerData.page + 1,
-                                    }
-                                }}
-                                as={{
-                                    pathname: routerData.asPath,
-                                    query: {
-                                        orderBy: routerData.orderBy,
-                                        page: routerData.page + 1,
-                                    }
-                                }}
-                            >
-                                <a className="pagination__link pagination__link--prevnext">next</a>
-                            </Link>
-                        }
-                    </div>
-                )
-            }}
-        </Query>
-    )
-}
+Pagination.propTypes = {
+    orderBy: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    data: PropTypes.object.isRequired,
+    page: PropTypes.string.isRequired,
+};
 
 export default Pagination;

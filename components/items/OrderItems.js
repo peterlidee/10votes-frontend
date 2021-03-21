@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import PropTypes from 'prop-types';
+import getQueriesVariablesPathsFromType from '../../lib/getQueriesVariablesPathsFromType';
 
 // takes orderParam and returns inverse sort
 // f.e. createdAt_DESC -> createdAt_ASC
@@ -17,39 +18,27 @@ const OrderItems = props => { // props: type, orderBy, data
     const activeOrder = orderBy.includes('created') ? 'date' : 'votes';
     const sortOrder = orderBy.includes('ASC') ? 'asc': 'desc';
 
+    // get query and path to feed to Link
+    // the link query will need an extra prop orderBy which we add later inside the loop
+    const { pathname, query } = getQueriesVariablesPathsFromType({
+        taxonomyType: props.type,
+        queryType: "linkQuery",
+    }, props.data);
+
     return (
         <div className="items__order">
             <span className={`order__label order__label--${activeOrder}`}>sort</span>
             {["date", "votes"].map((option, i) => {
-                // init the hrefPath
-                let hrefPath = "";
-                // init the query param
-                const query = {};
-
-                if(props.type == "tag"){
-                    hrefPath = "/tags/[tagSlug]";
-                    query.tagSlug = props.data.tag.slug;
-                }
-                if(props.type == "location"){
-                    hrefPath = "/location/[countryCode]/[locationSlug]";
-                    query.locationSlug = props.data.locations[0].slug;
-                    query.countryCode = props.data.locations[0].country.countryCode;
-                }
-                if(props.type == "country"){
-                    hrefPath = "/location/[countryCode]";
-                    query.countryCode = props.data.country.countryCode;
-                }
 
                 // figure out what orderParam needs to be attached to the link
                 const orderByParam = option == activeOrder ? reverseOrderBy(orderBy) : option === 'date' ? 'createdAt_DESC' : 'voteCount_DESC';
-                query.orderBy = orderByParam;
                     
                 return(
                     <Link
                         key={option}
                         href={{
-                            pathname: hrefPath,
-                            query: query,
+                            pathname: pathname,
+                            query: {...query, orderBy: orderByParam },
                         }}
                     >
                         <a className={
