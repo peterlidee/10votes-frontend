@@ -17,7 +17,7 @@ export async function getServerSideProps({params, query}){
     
     const countryCode = params.countryCode;
     const orderBy = verifyOrderParam(query.orderBy);
-    const page = query.page || 1;
+    const page = +query.page || 1;
     
     if(countryCode){
         await apolloClient.query({

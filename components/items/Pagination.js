@@ -55,7 +55,7 @@ const Pagination = (props) => { // props: type, data, page
                                 {pageLink != props.page && 
                                     <Link
                                         href={{ 
-                                            pathname:pathname,
+                                            pathname: pathname,
                                             query: { ...query, page: pageLink, }
                                         }}
                                     >
@@ -84,7 +84,7 @@ Pagination.propTypes = {
     orderBy: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
     data: PropTypes.object.isRequired,
-    page: PropTypes.string.isRequired,
+    page: PropTypes.number.isRequired,
 };
 
 export default Pagination;

@@ -65,7 +65,7 @@ function SingleTaxonomyExists(props){
 
 SingleTaxonomyExists.propTypes = {
     type: PropTypes.string.isRequired,
-    page: PropTypes.string.isRequired,
+    page: PropTypes.number.isRequired,
     orderBy: PropTypes.string.isRequired,
 };
 

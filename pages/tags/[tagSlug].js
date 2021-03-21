@@ -17,7 +17,7 @@ export async function getServerSideProps({params, query}){
 
     const tagSlug = params.tagSlug;
     const orderBy = verifyOrderParam(query.orderBy);
-    const page = query.page || 1;
+    const page = +query.page || 1;
 
     if(tagSlug){
         await apolloClient.query({
