@@ -9,7 +9,6 @@ import { useQuery } from '@apollo/client';
 
 import Loader from '../snippets/Loader';
 import Error from '../snippets/Error';
-
 import MetaTitle from '../snippets/MetaTitle';
 import FancyTitle from '../snippets/FancyTitle';
 import SingleTaxonomyItems from './SingleTaxonomyItems';
@@ -66,7 +65,7 @@ function SingleTaxonomyExists(props){
 
 SingleTaxonomyExists.propTypes = {
     type: PropTypes.string.isRequired,
-    page: PropTypes.number.isRequired,
+    page: PropTypes.string.isRequired,
     orderBy: PropTypes.string.isRequired,
 };
 

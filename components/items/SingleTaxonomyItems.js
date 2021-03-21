@@ -43,7 +43,7 @@ function SingleTaxonomyItems(props){ // props: type
 
 SingleTaxonomyItems.propTypes = {
     type: PropTypes.string.isRequired,
-    page: PropTypes.number.isRequired,
+    page: PropTypes.string.isRequired,
     orderBy: PropTypes.string.isRequired,
     data: PropTypes.object.isRequired,
 };
