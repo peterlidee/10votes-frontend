@@ -18,6 +18,7 @@ const SINGLE_ITEM_QUERY = gql`
     ${ITEM_FIELDS_FRAGMENT}
 `;
 
+// TODO: merge with item?
 
 function SingleItem(props){
     if(!props.itemId) return <p className="no-data">No such picture found.</p>
