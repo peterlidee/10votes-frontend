@@ -1,5 +1,5 @@
 import PleaseSignin from '../components/account/PleaseSignin';
-import YourItems from '../components/YourItems';
+import YourItems from '../components/items/YourItems';
 
 const yourItemsPage = props => (
     <PleaseSignin>

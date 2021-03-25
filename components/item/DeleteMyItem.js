@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 //import { USER_LOGGED_IN_QUERY } from '../account/User';
 import Error from '../snippets/Error';
 
+// TODO: complete and test this element
+
 const DELETE_ITEM_MUTATION = gql`
     mutation DELETE_ITEM_MUTATION($id: ID!){
         deleteItem(id: $id){
