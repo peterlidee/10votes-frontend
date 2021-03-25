@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 
-//import DeleteMyItem from './DeleteMyItem';
-//import Voting from '../voting/Voting';
+import DeleteMyItem from './DeleteMyItem';
+import Voting from '../voting/Voting';
 
-function Item(props){
+function Item(props){ // props: item, showEdit, hideVote
     const { item } = props;
     return(
         <article className="item">
@@ -27,7 +27,7 @@ function Item(props){
                         }}>
                         <a className="item__edit-link">edit item</a>
                     </Link>
-                    {/*<DeleteMyItem id={item.id}>&times; delete item</DeleteMyItem>*/}
+                    <DeleteMyItem id={item.id}>&times; delete item</DeleteMyItem>
                 </div>
             }
             <div className="item__meta">
@@ -51,10 +51,10 @@ function Item(props){
                     }
                 </div>
                 <div className="item__votes">
-                    <div className="item__votes__number">{item.voteCount}</div>
+                    <div className="item__votes__number">{item.votes.length}</div>
                     <div className="item__votes__label">votes</div>
                 </div>
-                {/*!this.props.hideVote && <Voting currentItemId={item.id} />*/}
+                {!props.hideVote && <Voting currentItemId={item.id} currentItemVotes={item.votes} />}
             </div>
         </article>
     )
@@ -63,5 +63,10 @@ function Item(props){
 Item.propTypes = {
     item: PropTypes.object.isRequired,
 };
+
+Item.defaultProps = {
+    showEdit: false,
+    hideVote: false,
+}
 
 export default Item;

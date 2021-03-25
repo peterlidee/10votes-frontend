@@ -37,7 +37,7 @@ function Vote(props){
             if(data.castVote && userVotesCache){
                 // we update the cache but adding the data (a vote) returned from castvote to 
                 // the cache of USER_VOTES_QUERY
-                // connstruct the new cache array
+                // construct the new cache array
                 const newUserVotes = [...userVotesCache.userVotes, data.castVote];
                 // and write it
                 cache.writeQuery({

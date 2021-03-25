@@ -24,7 +24,6 @@ function SingleTaxonomyItems(props){ // props: type
 
     // make query
     const { loading, error, data } = useQuery(query, { variables });
-    console.log('data',loading, error, data)
 
     if(loading) return <Loader containerClass="items-loader" />
     if(error)   return <Error error={error} />

@@ -30,7 +30,6 @@ const Header = props => (
         */}
         <Nav />
         <Link href="/tags/[tagSlug]" as={`/tags/test`}><a>test tag</a></Link>
-        <Link href="/tags/[tagSlug]" as={`/tags/test-1`}><a>test 1 tag</a></Link>
         <Link href="/tags/[tagSlug]" as={`/tags/test-2`}><a>test 2 tag</a></Link>
     </header>
 );
