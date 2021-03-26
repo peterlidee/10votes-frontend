@@ -2,6 +2,8 @@ import { useMutation, gql } from '@apollo/client';
 import PropTypes from 'prop-types';
 
 //import { USER_LOGGED_IN_QUERY } from '../account/User';
+
+import { USER_ITEMS_QUERY } from '../context/UserItemsContext';
 import Error from '../snippets/Error';
 
 // TODO: complete and test this element
@@ -15,7 +17,33 @@ const DELETE_ITEM_MUTATION = gql`
 `;
 
 function DeleteMyItem(props){
-    const [deleteItem, { error }] = useMutation(DELETE_ITEM_MUTATION, { variables: { id: props.id }})
+    const [deleteItem, { error }] = useMutation(DELETE_ITEM_MUTATION, { 
+        variables: { id: props.id },
+        update (cache, { data }) {
+            // the user just deleted one of his own items, and the useMutation returned the id of that item
+            // let's update the user items query in the cache
+
+            // get the cache of USER_ITEMS_QUERY
+            const userItemsCache = cache.readQuery({
+                query: USER_ITEMS_QUERY
+            });
+
+            // check if data was returned
+            // and check if there is data in cache
+            if(data.deleteItem && userItemsCache){
+                // we update the cache by removing the item from the array
+                // construct the new cache array
+                const newUserItems = userItemsCache.userItems.filter(userItem => userItem.id !== data.deleteItem.id)
+                // and write it
+                cache.writeQuery({
+                    query: USER_ITEMS_QUERY,
+                    data: {
+                        userItems: newUserItems
+                    },
+                });
+            }
+        }
+    })
     return(
         <>
             <button className="item__delete-button" onClick={() => {
@@ -29,26 +57,6 @@ function DeleteMyItem(props){
         </>
     );
 }
-
-const DeleteMyItem2 = (props) => (
-    <Mutation 
-        mutation={DELETE_ITEM_MUTATION} 
-        variables={{ id: props.id }} 
-        refetchQueries={[{ query: USER_LOGGED_IN_QUERY }]}>
-            {(deleteItem, { error }) => (
-                <>
-                    <button className="item__delete-button" onClick={() => {
-                        if(confirm('Are you sure you want to delete this item?')){
-                            deleteItem().catch(error => console.error(error.message));
-                        }
-                    }}>
-                        {props.children}
-                    </button>
-                    {error && <Error error={error} />}
-                </>
-            )}
-    </Mutation>
-);
 
 DeleteMyItem.propTypes = {
     id: PropTypes.string.isRequired,

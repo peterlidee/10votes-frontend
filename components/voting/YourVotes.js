@@ -12,11 +12,11 @@ import Item from '../item/Item';
 
 function YourVotesWrap(){
     return(
-    <section>
-        <MetaTitle>Your votes</MetaTitle>
-        <h1 className="title">Your votes</h1>
-        <YourVotes />
-    </section>
+        <section>
+            <MetaTitle>Your votes</MetaTitle>
+            <h1 className="title">Your votes</h1>
+            <YourVotes />
+        </section>
     ) 
 }
 
