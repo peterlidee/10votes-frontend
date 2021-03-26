@@ -1,95 +1,59 @@
-//import { Query } from 'react-apollo';
-import { Query, gql } from '@apollo/client';
-//import gql from 'graphql-tag';
+import { useQuery, gql } from '@apollo/client';
+import { ITEM_FIELDS_FRAGMENT } from '../gqlFragments/itemFragment';
+import { perPage } from '../config';
 
+import MetaTitle from './snippets/MetaTitle';
 import Loader from './snippets/Loader';
 import Error from './snippets/Error';
-import Item from './Item';
-import MetaTitle from './snippets/MetaTitle';
+import NoData from './snippets/NoData';
+import Item from './item/Item';
 
+// we do add first param here cause we may want a different number then perPage
 const RECENT_ITEMS_QUERY = gql`
-    query RECENT_ITEMS_QUERY($orderBy: ItemOrderByInput = createdAt_DESC, $first: Int = 10){
+    query RECENT_ITEMS_QUERY($orderBy: ItemOrderByInput = createdAt_DESC, $first: Int = ${perPage}){
         items(orderBy: $orderBy, first: $first){
-            id
-            image
-            largeImage
-            tags{
-                id
-                name
-                slug
-            }
-            location{
-                id
-                name
-                slug
-                country{
-                    id
-                    name
-                    countryCode
-                }
-            }
-            votes{
-                id
-            }
-            voteCount
+            ...ItemFields
         }
     }
+    ${ITEM_FIELDS_FRAGMENT}
 `;
 
 const MOST_VOTED_ITEMS_QUERY = gql`
-    query MOST_VOTED_ITEMS_QUERY($orderBy: ItemOrderByInput = voteCount_DESC, $first: Int = 10){
+    query MOST_VOTED_ITEMS_QUERY($orderBy: ItemOrderByInput = voteCount_DESC, $first: Int = ${perPage}){
         items(orderBy: $orderBy, first: $first){
-            id
-            image
-            largeImage
-            tags{
-                id
-                name
-                slug
-            }
-            location{
-                id
-                name
-                slug
-                country{
-                    id
-                    name
-                    countryCode
-                }
-            }
-            votes{
-                id
-            }
-            voteCount
+            ...ItemFields
         }
     }
+    ${ITEM_FIELDS_FRAGMENT}
 `;
 
-const DisplayHomeItems = props => (
-    <section>
-        <h1 className="title title--large">{props.title}</h1>
-        <Query query={props.query} fetchPolicy="cache-and-network" >
-            {({loading, error, data}) => {
-                if(loading) return <Loader containerClass="items-loader" />;                
-                if(error) return <Error error={error} />
-                if(!data) return <p className="no-data">Something went wrong</p>
-                if(!data.items.length) return <p className="no-data">No items added yet.</p>
+function DisplayHomeItemsWrap(props){
+    return(
+        <section>
+            <h1 className="title title--large">{props.title}</h1>
+            <DisplayHomeItems query={props.query} />
+        </section>
+    );
+}
 
-                return(
-                    <div className="grid-items">
-                        {data.items.map(item => <Item key={item.id} item={item} />)}
-                    </div>
-                )
-            }}
-        </Query>
-    </section>
-);
+function DisplayHomeItems(props){
+    const { loading, error, data } = useQuery(props.query);
+    if(loading) return <Loader containerClass="items-loader" />;                
+    if(error) return <Error error={error} />
+    if(!data) return <NoData>Something went wrong</NoData>
+    if(!data.items.length) return <NoData>No items yet.</NoData>
+    return(
+        <div className="grid-items">
+            {data.items.map(item => <Item key={item.id} item={item} />)}
+        </div>
+    )
+}
 
 const Home = props => (
     <>
         <MetaTitle>Home</MetaTitle>
-        <DisplayHomeItems query={RECENT_ITEMS_QUERY} title="Recent Items" />
-        <DisplayHomeItems query={MOST_VOTED_ITEMS_QUERY} title="Popular items" />
+        <DisplayHomeItemsWrap query={RECENT_ITEMS_QUERY} title="Recent Items" />
+        <DisplayHomeItemsWrap query={MOST_VOTED_ITEMS_QUERY} title="Popular items" />
     </>
 )
 

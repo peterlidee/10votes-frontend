@@ -30,13 +30,12 @@
 
 // import { initializeApollo, addApolloState } from '../lib/apollo';
 // import { CURRENT_USER_QUERY } from '../components/context/UserContext';
-//import Home from '../components/Home';
+import Home from '../components/Home';
 
 
 const Index = props => (
     <>
-        {/*<Home />*/}
-        home page
+        <Home />
     </>
 )
 
