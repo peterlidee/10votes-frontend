@@ -1,12 +1,8 @@
 import { useMutation, gql } from '@apollo/client';
 import PropTypes from 'prop-types';
 
-//import { USER_LOGGED_IN_QUERY } from '../account/User';
-
 import { USER_ITEMS_QUERY } from '../context/UserItemsContext';
 import Error from '../snippets/Error';
-
-// TODO: complete and test this element
 
 const DELETE_ITEM_MUTATION = gql`
     mutation DELETE_ITEM_MUTATION($id: ID!){
