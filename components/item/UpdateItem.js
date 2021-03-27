@@ -4,7 +4,7 @@ import Router from 'next/router';
 
 import { useQuery, useMutation, gql } from '@apollo/client';
 import { USER_ITEMS_QUERY } from '../context/UserItemsContext';
-import { SINGLE_ITEM_QUERY } from '../SingleItem';
+import { SINGLE_ITEM_QUERY } from '../item/SingleItem';
 
 import MetaTitle from '../snippets/MetaTitle';
 import Loader from '../snippets/Loader';

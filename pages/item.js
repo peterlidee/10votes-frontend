@@ -1,8 +1,7 @@
-import SingleItem from '../components/SingleItem';
+import SingleItem, { SINGLE_ITEM_QUERY } from '../components/item/SingleItem';
 import { initializeApollo, addApolloState } from '../lib/apollo';
-import { SINGLE_ITEM_QUERY } from '../components/SingleItem';
 
-const Item = (props) => {
+const ItemPage = (props) => {
     return <SingleItem itemId={props.itemId} />
 }
 
@@ -25,4 +24,4 @@ export async function getServerSideProps(context) {
     })
 }
 
-export default Item;
+export default ItemPage;
