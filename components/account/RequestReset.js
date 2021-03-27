@@ -6,6 +6,7 @@ import FormRow from '../formParts/FormRow';
 import InputContainer from '../formParts/InputContainer';
 import FormButton from '../formParts/FormButton';
 import Error from '../snippets/Error';
+import NoData from './snippets/NoData';
 
 const REQUEST_RESET_MUTATION = gql`
     mutation REQUEST_RESET_MUTATION($email: String!){
@@ -21,7 +22,7 @@ function RequestReset(){
     // apollo mutation hook
     const [ requestReset, {error, loading, called} ] = useMutation(REQUEST_RESET_MUTATION, { variables: { email }});
 
-    if(!error && !loading && called) return <p className="no-data">We sent an email with reset instructions to {email}.</p>
+    if(!error && !loading && called) return <NoData>We sent an email with reset instructions to {email}.</NoData>
     return(
         <>
             <MetaTitle>Request a password reset</MetaTitle>

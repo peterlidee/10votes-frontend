@@ -9,6 +9,7 @@ import { USER_VOTES_QUERY } from '../context/UserVotesContext';
 import Error from '../snippets/Error';
 import MetaTitle from '../snippets/MetaTitle';
 import Loader from '../snippets/Loader';
+import NoData from '../snippets/NoData';
 import FormRow from '../formParts/FormRow';
 import InputContainer from '../formParts/InputContainer';
 import FormButton from '../formParts/FormButton';
@@ -38,8 +39,8 @@ function Login(){
     // handle user first
     if(userLoading) return <Loader containerClass="items-loader" />
     if(userError) return <Error error={userError} />
-    if(!userData) return <p className="no-data">Uhm, something went wrong. Try again?</p>
-    if(userData.me) return <p className="no-data">You are logged in.</p>
+    if(!userData) return <NoData>Uhm, something went wrong. Try again?</NoData>
+    if(userData.me) return <NoData>You are logged in.</NoData>
 
     return(
         <>

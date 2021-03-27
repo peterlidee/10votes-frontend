@@ -11,6 +11,7 @@ import FormRow from '../formParts/FormRow';
 import InputContainer from '../formParts/InputContainer';
 import FormButton from '../formParts/FormButton';
 import Error from '../snippets/Error';
+import NoData from '../snippets/NoData';
 
 
 const RESET_MUTATION = gql`
@@ -35,7 +36,7 @@ function Reset(){
         },
         refetchQueries: [{ query: USER_LOGGED_IN_QUERY }, { query: USER_VOTES_QUERY }, { query: USER_ITEMS_QUERY }]
     })
-    if(!error && !loading && called) return <p className="no-data">Your password was reset. You are now logged in with your new password.</p>
+    if(!error && !loading && called) return <NoData>Your password was reset. You are now logged in with your new password.</NoData>
     return(
         <>
             <MetaTitle>Choose a new password</MetaTitle>

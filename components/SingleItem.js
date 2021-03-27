@@ -8,6 +8,7 @@ import Loader from './snippets/Loader';
 import Error from './snippets/Error';
 import MetaTitle from './snippets/MetaTitle';
 import Voting from './voting/Voting';
+import NoData from './snippets/NoData';
 
 const SINGLE_ITEM_QUERY = gql`
     query SINGLE_ITEM_QUERY($itemId: ID!){
@@ -21,13 +22,13 @@ const SINGLE_ITEM_QUERY = gql`
 // TODO: merge with item?
 
 function SingleItem(props){
-    if(!props.itemId) return <p className="no-data">No such picture found.</p>
+    if(!props.itemId) return <NoData>No such picture found.</NoData>
     const { error, loading, data } = useQuery(SINGLE_ITEM_QUERY, {
         variables: { itemId: props.itemId },
     });
     if(loading) return <Loader containerClass="items-loader" />
     if(error) return <Error error={error} />
-    if(!data || !data.item) return <p className="no-data">No such picture found.</p>
+    if(!data || !data.item) return <NoData>No such picture found.</NoData>
     const {item} = data;
 
     // construct a string we will use as title and alt: "Image in {location} {tags}"

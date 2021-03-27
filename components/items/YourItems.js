@@ -44,10 +44,10 @@ function YourItems(){
                 </div>
             }
             {data.userItems.length < 10 &&
-                <p className="no-data extra-margin">
+                <NoData>
                     <span style={{"paddingRight": ".5em"}}>You have {10 - data.userItems.length} uploads left.</span>
                     <UploadButton />
-                </p>
+                </NoData>
             }
         </>
     )

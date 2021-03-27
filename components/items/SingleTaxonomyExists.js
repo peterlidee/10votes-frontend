@@ -9,6 +9,7 @@ import { useQuery } from '@apollo/client';
 
 import Loader from '../snippets/Loader';
 import Error from '../snippets/Error';
+import NoData from '../snippets/NoData';
 import MetaTitle from '../snippets/MetaTitle';
 import FancyTitle from '../snippets/FancyTitle';
 import SingleTaxonomyItems from './SingleTaxonomyItems';
@@ -16,7 +17,7 @@ import OrderItems from './OrderItems';
 import Pagination from './Pagination';
 
 function NoTaxonomyMessage(props){
-    return <p className="no-data">Hmmm, we don't have a {props.type} '<em>{props.children}</em>' in our database. Try another {props.type} :/</p>
+    return <NoData>Hmmm, we don't have a {props.type} '<em>{props.children}</em>' in our database. Try another {props.type} :/</NoData>
 }
 
 // props: type! (tag, location, country), tagSlug, locationSlug, countryCode, page!, skip!
@@ -40,7 +41,7 @@ function SingleTaxonomyExists(props){
     if(props.type == 'country' && (!data || !data.country)) 
         return <NoTaxonomyMessage type={props.type}>{props.countryCode}</NoTaxonomyMessage>;
     // fall through option
-    if(!data) return <p className="no-data">No data found</p>
+    if(!data) return <NoData>No data found</NoData>
 
     // at this point, we have a valid slug for the taxonomy, so start loading components
     // construct props for child components

@@ -9,6 +9,7 @@ import { SINGLE_ITEM_QUERY } from '../SingleItem';
 import MetaTitle from '../snippets/MetaTitle';
 import Loader from '../snippets/Loader';
 import Error from '../snippets/Error';
+import NoData from './snippets/NoData';
 import FormRow from '../formParts/FormRow';
 import InputSuggestion from './InputSuggestion';
 import FormButton from '../formParts/FormButton';
@@ -41,18 +42,18 @@ const UPDATE_ITEM_MUTATION = gql`
 // 3. check if the user owns this image (userItems contains props.itemId)
 function UpdateItemGate(props){
     // gate the component if no id was given
-    if(!props.itemId) return <p className="no-data">You need to query a picture.</p>;
+    if(!props.itemId) return <NoData>You need to query a picture.</NoData>;
     const { loading, error, data } = useQuery(SINGLE_ITEM_QUERY, {
         variables: { itemId: props.itemId }
     });
     if(loading) return <Loader containerClass="items-loader" />
     if(error)   return <Error error={error} />
     // check if there is an item ( data: { item: null } )
-    if(!data || !data.item) return <p className="no-data">No picture found.</p>
+    if(!data || !data.item) return <NoData>No picture found.</NoData>
 
     // check if the user owns this item
     const isItemInUsersItems = props.userItems.find(userItem => userItem.id == props.itemId);
-    if(!isItemInUsersItems) return <p className="no-data">You can only edit your own items!</p> 
+    if(!isItemInUsersItems) return <NoData>You can only edit your own items!</NoData> 
 
     return(
         <>

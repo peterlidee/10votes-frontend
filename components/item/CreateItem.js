@@ -11,6 +11,7 @@ import ManageUpload from './ManageUpload';
 import InputSuggestion from './InputSuggestion';
 import FormButton from '../formParts/FormButton';
 import Error from '../snippets/Error';
+import NoData from '../snippets/NoData';
 
 const CREATE_ITEM_MUTATION = gql`
     mutation CREATE_ITEM_MUTATION(
@@ -97,7 +98,7 @@ function CreateItem(props){
         <>
             <MetaTitle>Upload a picture</MetaTitle>
             <h2 className="item-crud__title title">Upload a Picture</h2>
-            {props.userItems.length >= 10 && <p className="no-data">You used up all your uploads. Manage them here: <Link href="/youritems"><a>my pics</a></Link></p>}
+            {props.userItems.length >= 10 && <NoData>You used up all your uploads. Manage them here: <Link href="/youritems"><a>my pics</a></Link></NoData>}
 
             {props.userItems.length < 10 &&
 

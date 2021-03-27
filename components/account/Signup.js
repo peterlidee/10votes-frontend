@@ -8,6 +8,7 @@ import { USER_VOTES_QUERY } from '../context/UserVotesContext';
 
 import MetaTitle from '../snippets/MetaTitle';
 import Error from '../snippets/Error';
+import NoData from '../snippets/NoData';
 import FormRow from '../formParts/FormRow';
 import InputContainer from '../formParts/InputContainer';
 import FormButton from '../formParts/FormButton';
@@ -28,11 +29,11 @@ function Signup(){
     // apollo mutation hook
     const [signup, { error, data, loading, called }] = useMutation(SIGNUP_MUTATION, {
         variables: { email, password },
-        refetchQueries: [{ query: USER_LOGGED_IN_QUERY }, { query: USER_ITEMS_QUERY }, { query: USER_VOTES_QUERY }], // TODO? not needed?
+        refetchQueries: [{ query: USER_LOGGED_IN_QUERY }, { query: USER_ITEMS_QUERY }, { query: USER_VOTES_QUERY }],
     });
 
     if(called && !error && !loading && data && data.signup){
-        return <p className="no-data">You are logged into your new account: {data.signup.email}.</p>
+        return <NoData>You are logged into your new account: {data.signup.email}.</NoData>
     }
 
     if(error){ // overwrite the bad UX graphQl error

@@ -3,6 +3,7 @@ import UserContext from '../context/UserContext';
 
 import Loader from '../snippets/Loader';
 import Error from '../snippets/Error';
+import NoData from '../snippets/NoData';
 import Login from './Login';
 
 function PleaseSignin(props){
@@ -12,7 +13,7 @@ function PleaseSignin(props){
     if(!data || !data.me){
         return(
             <>
-                <p className="no-data">You need to be logged in.</p>
+                <NoData>You need to be logged in.</NoData>
                 <Login />
             </>
         )
