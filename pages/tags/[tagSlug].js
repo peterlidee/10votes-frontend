@@ -23,7 +23,7 @@ export async function getServerSideProps({params, query}){
         await apolloClient.query({
             query: TAG_EXISTS_QUERY,
             variables: { tagSlug: tagSlug },
-        })
+        }).catch(error => console.warn(error.message))
     }
 
     return addApolloState(apolloClient, {

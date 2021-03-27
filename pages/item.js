@@ -17,7 +17,7 @@ export async function getServerSideProps(context) {
         await apolloClient.query({
             query: SINGLE_ITEM_QUERY,
             variables: { itemId: id },
-        })
+        }).catch(error => console.warn(error.message))
     }
   
     return addApolloState(apolloClient, {

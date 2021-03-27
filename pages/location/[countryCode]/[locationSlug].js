@@ -24,7 +24,7 @@ export async function getServerSideProps({params, query}){
         await apolloClient.query({
             query: LOCATION_EXISTS_QUERY,
             variables: { locationSlug: locationSlug, countryCode: countryCode },
-        })
+        }).catch(error => console.warn(error.message))
     }
 
     return addApolloState(apolloClient, {
