@@ -1,62 +1,21 @@
-// import { gql, useQuery } from '@apollo/client';
-// import Link from 'next/link';
-
-// const GET_TAG_QUERY = gql`
-//     query GET_TAG_QUERY($name: String!){
-//         tag(name: $name){
-//             id
-//             name
-//         }
-//     }
-// `;
-
-// function Index(props) {
-//     const { loading, error, data } = useQuery(GET_TAG_QUERY, { variables: { name: "test" } });
-  
-//     if (loading) return 'Loading...';
-//     if (error) return `Error! ${error.message}`;
-  
-//     return (
-//         <div>
-//             <p>Home: this is the tag: {data.tag.name}</p>
-//             <Link href="/hello"><a>to hello page</a></Link>
-//         </div>
-//     );
-// }
-
-// export default Index;
-
-
-
-// import { initializeApollo, addApolloState } from '../lib/apollo';
-// import { CURRENT_USER_QUERY } from '../components/context/UserContext';
+import { initializeApollo, addApolloState } from '../lib/apollo';
+import { MOST_VOTED_ITEMS_QUERY, RECENT_ITEMS_QUERY } from '../components/Home';
 import Home from '../components/Home';
 
 
-const Index = props => (
-    <>
-        <Home />
-    </>
-)
+const Index = props => <Home />
 
-// export async function getStaticProps() {
+// this function only runs on the server by Next.js
+// then run TAG_EXISTS_QUERY with that page query
+export async function getServerSideProps({params, query}){
+    const apolloClient = initializeApollo()
 
-//     console.log('hello from inside index page')
+    await apolloClient.query({ query: RECENT_ITEMS_QUERY }).catch(error => console.warn(error.message))
+    await apolloClient.query({ query: MOST_VOTED_ITEMS_QUERY }).catch(error => console.warn(error.message))
 
-//     const apolloClient = initializeApollo()
-  
-//     await apolloClient.query({
-//         query: CURRENT_USER_QUERY,
-//         //variables: allPostsQueryVars,
-//     })
-  
-//     return addApolloState(apolloClient, {
-//         props: {
-//             //initialApolloState: apolloClient.cache.extract(),
-//             test: [],
-//         },
-//         revalidate: 1,
-//     })
-// }
+    return addApolloState(apolloClient, {
+        props: {},
+    })
+}
 
 export default Index;

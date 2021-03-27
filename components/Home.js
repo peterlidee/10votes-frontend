@@ -58,3 +58,4 @@ const Home = props => (
 )
 
 export default Home;
+export { MOST_VOTED_ITEMS_QUERY, RECENT_ITEMS_QUERY };
