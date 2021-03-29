@@ -9,7 +9,7 @@ import { SINGLE_ITEM_QUERY } from '../item/SingleItem';
 import MetaTitle from '../snippets/MetaTitle';
 import Loader from '../snippets/Loader';
 import Error from '../snippets/Error';
-import NoData from './snippets/NoData';
+import NoData from '../snippets/NoData';
 import FormRow from '../formParts/FormRow';
 import InputSuggestion from './InputSuggestion';
 import FormButton from '../formParts/FormButton';
