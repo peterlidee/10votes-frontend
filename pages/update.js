@@ -4,7 +4,7 @@ import UpdateItem from '../components/item/UpdateItem';
 // use these for SSR of the item
 import { SINGLE_ITEM_QUERY } from '../components/item/SingleItem';
 import { initializeApollo, addApolloState } from '../lib/apollo';
-import CurrentUserItems from '../components/item/CurrentUserItems';
+import CurrentUserItems from '../components/items/CurrentUserItems';
 
 const Update = props => {
     return(
