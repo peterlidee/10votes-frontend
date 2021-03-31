@@ -60,7 +60,7 @@
 // on mobile, .search__container sits on its own line, 800+ tucked in between logo and menu
 //
 
-.search__container{
+.main-search__container{
     order: 4; // 1 is logo, 2 is button, 3 is site__menu and 4 is .search__container
     flex: 0 0 100%;
     margin: 1em 0 0 0;
@@ -69,7 +69,7 @@
 }
 
 @media screen and (min-width: 800px){
-    .search__container{
+    .main-search__container{
         order: 0; //reset
         flex: 0 1 600px;
         margin: 0 1em 0 1em;
@@ -77,13 +77,13 @@
     }
 }
 
-.search__input{
+.main-search__input{
     @include input-with-loader;
 }
 
 // loader see loader .scss
 
-.dropdown{
+.main-search__dropdown{
     background: #fff;
     box-sizing: border-box;
     border-left: 1px solid $dimmedBorder;
