@@ -1,7 +1,14 @@
 import Link from 'next/link';
 
 import Nav from './Nav';
-import Search from './Search';
+
+// this prevents an issue with different ids on the server and client on the downshift useCombobox element
+// https://github.com/vercel/next.js/issues/12863#issuecomment-628660240
+import dynamic from "next/dynamic";
+const Search = dynamic(
+    () => import('./Search'),
+    { ssr: false }
+)
 
 // progressbar config
 import Router from 'next/router';

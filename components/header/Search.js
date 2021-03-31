@@ -1,3 +1,6 @@
+// warn: Search needs to be loaded using dynamic, to prevent issue with id's not matching
+// see Header.js to see it in action
+
 //import gql from 'graphql-tag';
 //import { gql } from '@apollo/client';
 import Downshift, { resetIdCounter } from 'downshift';
