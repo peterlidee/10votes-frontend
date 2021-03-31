@@ -22,9 +22,9 @@
   },
   "homepage": "https://github.com/peterlidee/10votes-frontend#readme",
   "dependencies": {
-    "@apollo/client": "^3.3.5",
+    "@apollo/client": "^3.3.13",
     "babel-core": "^6.26.3",
-    "date-fns": "^2.16.1",
+    "date-fns": "^2.19.0",
     "deepmerge": "^4.2.2",
     "downshift": "^5.4.7",
     "graphql": "^14.7.0",
@@ -36,12 +36,12 @@
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-transition-group": "^4.4.1",
-    "sass": "^1.30.0",
+    "sass": "^1.32.8",
     "waait": "^1.0.5"
   },
   "devDependencies": {
     "babel-jest": "^25.5.1",
-    "babel-plugin-module-resolver": "^4.0.0",
+    "babel-plugin-module-resolver": "^4.1.0",
     "casual": "^1.6.2",
     "graphql-tools": "^4.0.8",
     "jest": "^25.5.4",
