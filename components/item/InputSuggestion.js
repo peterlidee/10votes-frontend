@@ -41,7 +41,7 @@ function InputSuggestion(props) {
         debounceGetLazyData.current = debounce(getLazyData, 400);
     }
 
-    // this bit prevents the combobox from clearing it's value if esc is pushed
+    // this bit prevents the combobox from clearing its value if esc is pushed
     // cause it is possible that a user inputs a new value, that is one not in db
     // https://github.com/downshift-js/downshift/tree/master/src/hooks/useCombobox#statereducer
     // https://stackoverflow.com/questions/58299322/react-downshift-how-to-prevent-clear-by-escape-key
