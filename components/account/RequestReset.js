@@ -6,7 +6,7 @@ import FormRow from '../formParts/FormRow';
 import InputContainer from '../formParts/InputContainer';
 import FormButton from '../formParts/FormButton';
 import Error from '../snippets/Error';
-import NoData from './snippets/NoData';
+import NoData from '../snippets/NoData';
 
 const REQUEST_RESET_MUTATION = gql`
     mutation REQUEST_RESET_MUTATION($email: String!){
