@@ -16,7 +16,7 @@ function AdminGate(props){
     const { loading, error, data } = useContext(UserContext);
     if(loading) return <Loader containerClass="items-loader" />
     if(error) return <Error error={error} />
-    if(!data || !data.me) return <NoData>Something went wrong. :/</NoData>
+    if(!data || !data.me) return <NoData>You need to be logged in.</NoData>
     if(checkForPermission(data.me.permissions, 'ADMIN')){
         return props.children;
     }
