@@ -1,8 +1,10 @@
-function Admin(){
+import AdminGate from "../../components/admin/AdminGate";
+
+function Admin(props){
     return(
-        <div>
-            hello from admin page
-        </div>
+        <AdminGate>
+            admin dashboard
+        </AdminGate>
     )
 }
 
