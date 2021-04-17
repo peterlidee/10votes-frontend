@@ -139,7 +139,8 @@ function CreateItem(props){
                             handleSetState={handleSetState} 
                             value={location}
                             type="locations" 
-                            id="location" />
+                            id="location" 
+                            required={true} />
                     </FormRow>
 
                     <FormRow 
@@ -159,7 +160,8 @@ function CreateItem(props){
                                 handleSetState={handleSetState} 
                                 value={tag || ""}
                                 type="tags" 
-                                id={`tag-${i}`} />
+                                id={`tag-${i}`} 
+                                required={false} />
                         ))}
                     </FormRow>
 

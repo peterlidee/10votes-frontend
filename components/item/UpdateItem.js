@@ -211,7 +211,8 @@ function UpdateItemComponent(props){
                     // use the DB version, edited version
                     value={locationEdit ? location : props.item.location.name}
                     type="locations" 
-                    id="location" />
+                    id="location" 
+                    required={true} />
             </FormRow>
 
             <FormRow 
@@ -234,7 +235,8 @@ function UpdateItemComponent(props){
                         //or "" if there was no tag in db
                         value={tagsEdit[i] ? tags[i] : props.item.tags[i] ? props.item.tags[i].name : ""}
                         type="tags" 
-                        id={`tag-${i}`} />
+                        id={`tag-${i}`} 
+                        required={false} />
                 ))}
             </FormRow>
 
