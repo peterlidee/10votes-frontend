@@ -84,14 +84,14 @@ function UpdateItemComponent(props){
     // the function makes the form inputs controlled inputs
     // the form inits with the data from SINGLE_ITEM_QUERY
     // when a change is made, it flips a boolean and the change is stored in state
-    const handleSetState = (newState, index = null) => {
+    const handleSetState = (newState, index = -1) => {
         // if there is a location value?
-        if( newState.location || newState.location == '' ){ // TODO: do we need locationEdit????
+        if( newState.location || newState.location == '' ){
             setLocation(newState.location);
             setLocationEdit(true);
         }
         // if there is a tag value
-        if( index ){
+        if( index >= 0 ){
             const tagsCopy = [...tags];
             const tagsEditCopy = [...tagsEdit]
             tagsCopy[index] = newState.tag;
@@ -198,7 +198,7 @@ function UpdateItemComponent(props){
                     text: "Location (BE only for now)", 
                     required: true,
                     html: true,
-                    for: "input-suggestion__location",
+                    for: "input-suggestion__locations--1",
                 }}
                 valid={{
                     // if the location was edited, then validate location, else it's from DB and valid by default
@@ -207,12 +207,13 @@ function UpdateItemComponent(props){
                 }}
             >
                 <InputSuggestion 
-                    handleSetState={handleSetState}
                     // use the DB version, edited version
                     value={locationEdit ? location : props.item.location.name}
+                    index={-1}
                     type="locations" 
-                    id="location" 
-                    required={true} />
+                    required={true}
+                    handleSetState={handleSetState}
+                    handleSelection={handleSetState} />
             </FormRow>
 
             <FormRow 
@@ -229,14 +230,15 @@ function UpdateItemComponent(props){
                 {tags.map((tag, i) => (
                     <InputSuggestion 
                         key={i}
-                        handleSetState={handleSetState} 
                         // if the current tags[i] was edited, pass it, 
-                        //if not, see if there was an item from DB data.items.tag[i] and use that 
-                        //or "" if there was no tag in db
+                        // if not, see if there was an item from DB data.items.tag[i] and use that 
+                        // or "" if there was no tag in db
                         value={tagsEdit[i] ? tags[i] : props.item.tags[i] ? props.item.tags[i].name : ""}
+                        index={i}
                         type="tags" 
-                        id={`tag-${i}`} 
-                        required={false} />
+                        required={false}
+                        handleSetState={handleSetState}
+                        handleSelection={handleSetState} />
                 ))}
             </FormRow>
 

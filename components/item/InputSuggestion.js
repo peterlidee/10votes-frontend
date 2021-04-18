@@ -3,6 +3,14 @@
 // 2. an clearbutton
 // 3. a dropdown with suggestions
 
+// it takes as props:
+// value: the value of the input field
+// index: if the value is fed from an array, array[index], else -1
+// type: what we are looking for, locations, tags of users
+// handleSetState: handler for onchange
+// handleSelection: handler for select
+// required: is the input required or not
+
 import { useRef } from 'react';
 import { useCombobox } from 'downshift';
 import { useLazyQuery } from '@apollo/client';
@@ -79,20 +87,20 @@ function InputSuggestion(props) {
             debounceGetLazyData.current(inputValue)
         },
         // this makes dropdown a controlled input
-        // it inherits state (inputValue) and handleSetState from a parent (createItem, updateItem)
+        // it inherits state (inputValue) and handleSetState from a parent (createItem, updateItem,...)
         onStateChange: (changes) => {
             if(changes.type == useCombobox.stateChangeTypes.InputChange){
                 props.handleSetState(
                     { [props.type.slice(0,-1)]: changes.inputValue, }, 
-                    props.type == 'locations' ? null : props.id.split('-')[1] // index todo change
+                    props.index
                 )
             }
         },
         // this handles the selection of a dropdown item
         onSelectedItemChange: (changes) => {
-            props.handleSetState(
+            props.handleSelection(
                 { [props.type.slice(0,-1)]: changes.selectedItem && changes.selectedItem.name ? changes.selectedItem.name : "", }, 
-                props.type == 'locations' ? null : props.id.split('-')[1] // index todo change
+                props.index,
             )
         },
         // on select, what is the actual value if the item is an object
@@ -107,17 +115,16 @@ function InputSuggestion(props) {
                 <input 
                     {...getInputProps()}
                     placeholder={`Enter a ${props.type.slice(0,-1)}`}
-                    id={`input-suggestion__${props.id}`}
+                    id={`input-suggestion__${props.type}-${props.index}`}
                     className="form-part__input input-suggestion__input"
                     minlenght="2"
                     required={props.required}
                 />
                 {loading && <Loader containerClass="input-suggestion__loader" />}
                 <button type="button" className="clear-button" onClick={() => {
-                        props.handleSetState({
-                                [props.type.slice(0,-1)]: '',
-                            },
-                            props.type == 'locations' ? null : props.id.split('-')[1] // index for tag todo change
+                        props.handleSetState(
+                            {[props.type.slice(0,-1)]: ''},
+                            props.index 
                         )
                     }} 
                     disabled={!inputValue}
@@ -161,11 +168,12 @@ function InputSuggestion(props) {
 }
 
 InputSuggestion.propTypes = {
-    handleSetState: PropTypes.func.isRequired,
-    type: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired,
-    required: PropTypes.bool.isRequired,
     //value: PropTypes.string.isRequired, // can be null!
+    index: PropTypes.number.isRequired,
+    type: PropTypes.string.isRequired,
+    required: PropTypes.bool.isRequired,
+    handleSetState: PropTypes.func.isRequired,
+    handleSelection: PropTypes.func.isRequired,
 }
 
 export default InputSuggestion;

@@ -44,10 +44,12 @@ function CreateItem(props){
     const [image, setImage] = useState('');
     const [largeImage, setLargeImage] = useState('');
     const [location, setLocation] = useState('');
-    const [tags, setTags] = useState([null, null, null]);
+    const [tags, setTags] = useState([null, null, null]); //todo "" instead of null?
 
-    const handleSetState = (newState, index = null) => {
-        // console.log('res from child comps', newState)
+    // takes 2 arguments:
+    // newState = { small && large || location || tag }
+    // index: -1 if none, else, an index 0 - 2 (to set an index in an array)
+    const handleSetState = (newState, index = -1) => {
         // the manageUpload component returns { small: url, large: url }
         // so we know to set the image and largeImage when there's a small property
         if(newState.small || newState.small == ''){
@@ -128,7 +130,7 @@ function CreateItem(props){
                             text: "Add a location (BE only for now)", 
                             required: true,
                             html: true,
-                            for: "input-suggestion__location",
+                            for: "input-suggestion__locations--1",
                         }}
                         valid={{ 
                             field: location && location.length >= 2, 
@@ -136,11 +138,13 @@ function CreateItem(props){
                         }}
                     >
                         <InputSuggestion 
-                            handleSetState={handleSetState} 
                             value={location}
+                            index={-1}
                             type="locations" 
-                            id="location" 
-                            required={true} />
+                            required={true} 
+                            handleSetState={handleSetState} 
+                            handleSelection={handleSetState} />
+
                     </FormRow>
 
                     <FormRow 
@@ -157,11 +161,12 @@ function CreateItem(props){
                         {tags.map((tag, i) => (
                             <InputSuggestion 
                                 key={i}
-                                handleSetState={handleSetState} 
                                 value={tag || ""}
+                                index={i}
                                 type="tags" 
-                                id={`tag-${i}`} 
-                                required={false} />
+                                required={false}
+                                handleSetState={handleSetState} 
+                                handleSelection={handleSetState} />
                         ))}
                     </FormRow>
 
