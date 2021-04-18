@@ -3,13 +3,15 @@ import SearchCreateType from "./SearchCreateType";
 
 function DashBoard(){
     return(
-        <div>
+        <>
             <MetaTitle>Admin dashboard</MetaTitle>
-            <h1 className="title title--large">Admin dashboard</h1>
-            <div>users</div>
-            <SearchCreateType type="location" />
-            <div>tags</div>
-        </div>
+            <h1 className="title title--large title--large--admin">Admin dashboard</h1>
+            <div className="admin-dash">
+                <div>users</div>
+                <SearchCreateType type="location" />
+                <div>tags</div>
+            </div>
+        </>
     )
 }
 
