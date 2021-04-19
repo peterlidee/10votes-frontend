@@ -47,7 +47,7 @@ function CreateItem(props){
     const [tags, setTags] = useState([null, null, null]); //todo "" instead of null?
 
     // takes 2 arguments:
-    // newState = { small && large || location || tag }
+    // newState = { small && large || locations || tags }
     // index: -1 if none, else, an index 0 - 2 (to set an index in an array)
     const handleSetState = (newState, index = -1) => {
         // the manageUpload component returns { small: url, large: url }
@@ -56,12 +56,12 @@ function CreateItem(props){
             setImage(newState.small);
             setLargeImage(newState.large);
         }
-        if(newState.location || newState.location == ''){
-            setLocation(newState.location);
+        if(newState.locations || newState.locations == ''){
+            setLocation(newState.locations);
         }
-        if(newState.tag || newState.tag == ''){
+        if(newState.tags || newState.tags == ''){
             const tagsCopy = [...tags];
-            tagsCopy[index] = newState.tag;
+            tagsCopy[index] = newState.tags;
             setTags(tagsCopy);
         }
     }

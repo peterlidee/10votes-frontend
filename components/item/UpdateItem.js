@@ -86,15 +86,15 @@ function UpdateItemComponent(props){
     // when a change is made, it flips a boolean and the change is stored in state
     const handleSetState = (newState, index = -1) => {
         // if there is a location value?
-        if( newState.location || newState.location == '' ){
-            setLocation(newState.location);
+        if( newState.locations || newState.locations == '' ){
+            setLocation(newState.locations);
             setLocationEdit(true);
         }
         // if there is a tag value
         if( index >= 0 ){
             const tagsCopy = [...tags];
             const tagsEditCopy = [...tagsEdit]
-            tagsCopy[index] = newState.tag;
+            tagsCopy[index] = newState.tags;
             tagsEditCopy[index] = true;
             setTags(tagsCopy);
             setTagsEdit(tagsEditCopy);
