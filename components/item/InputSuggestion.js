@@ -77,18 +77,34 @@ function InputSuggestion(props) {
         inputValue,
     } = useCombobox({
         items: data && data[props.type] ? data[props.type] :  [], // these are the results from the apollo query
-        inputValue: props.value, // this is the state it inherits from createItem
+        inputValue: props.value, // this is the state it inherits from parent component
         stateReducer, // see above, prevent esc
 
         // this function handles the apollo query that populates the dropdown
-        onInputValueChange: ({ inputValue }) => {
-            // call getLazyData with current inputValue
-            // goes through the debounceGetLazyData ref
-            debounceGetLazyData.current(inputValue)
+        onInputValueChange: (changes) => {
+            console.log('changes from onInputValueChange',changes)
+            // todo will this work on user query?
+            // if there is no selected item yet, call lazyquery to make suggestions
+            // if there is a selected item but the selected item does not equal the 
+            // inputvalue (an item was selected and after that the input was changed)
+            // then call lazyquery also cause user didn't find what he was looking for
+            // all this code prevents a query from being made if the user makes a selection
+            if(
+                (changes.selectedItem && changes.selectedItem.name.toLowerCase() !== changes.inputValue.toLowerCase()) || 
+                !changes.selectedItem
+            ){
+                console.log('calling lazy',)
+                // call getLazyData with current inputValue
+                // goes through the debounceGetLazyData ref
+                debounceGetLazyData.current(changes.inputValue)
+
+            }
+
         },
         // this makes dropdown a controlled input
         // it inherits state (inputValue) and handleSetState from a parent (createItem, updateItem,...)
         onStateChange: (changes) => {
+            //console.log('changes from onStateChange',changes)
             if(changes.type == useCombobox.stateChangeTypes.InputChange){
                 props.handleSetState(
                     { [props.type]: changes.inputValue, }, 
@@ -98,6 +114,7 @@ function InputSuggestion(props) {
         },
         // this handles the selection of a dropdown item
         onSelectedItemChange: (changes) => {
+            //console.log('changes from onSelectedItemChange',changes)
             props.handleSelection(
                 { [props.type]: changes.selectedItem && changes.selectedItem.name ? changes.selectedItem.name : "", }, 
                 props.index,
