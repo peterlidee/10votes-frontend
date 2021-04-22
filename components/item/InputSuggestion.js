@@ -82,7 +82,6 @@ function InputSuggestion(props) {
 
         // this function handles the apollo query that populates the dropdown
         onInputValueChange: (changes) => {
-            console.log('changes from onInputValueChange',changes)
             // todo will this work on user query?
             // if there is no selected item yet, call lazyquery to make suggestions
             // if there is a selected item but the selected item does not equal the 
@@ -93,11 +92,9 @@ function InputSuggestion(props) {
                 (changes.selectedItem && changes.selectedItem.name.toLowerCase() !== changes.inputValue.toLowerCase()) || 
                 !changes.selectedItem
             ){
-                console.log('calling lazy',)
                 // call getLazyData with current inputValue
                 // goes through the debounceGetLazyData ref
                 debounceGetLazyData.current(changes.inputValue)
-
             }
 
         },

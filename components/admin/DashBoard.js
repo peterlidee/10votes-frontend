@@ -8,7 +8,7 @@ function DashBoard(){
             <h1 className="title title--large title--large--admin">Admin dashboard</h1>
             <div className="admin-dash">
                 <div>users</div>
-                <SearchCreateType type="location" />
+                <SearchCreateType type="locations" />
                 <div>tags</div>
             </div>
         </>
