@@ -110,10 +110,15 @@ function InputSuggestion(props) {
             }
         },
         // this handles the selection of a dropdown item
+        // it calls the onSelectHandler with 2 parameters:
+        // { [props.type]: name, id: 123456 } of the selected item
+        // the index or -1 if none (to set the state if it's an array)
         onSelectedItemChange: (changes) => {
-            //console.log('changes from onSelectedItemChange',changes)
             props.handleSelection(
-                { [props.type]: changes.selectedItem && changes.selectedItem.name ? changes.selectedItem.name : "", }, 
+                { 
+                    [props.type]: changes.selectedItem && changes.selectedItem.name ? changes.selectedItem.name : "", 
+                    id: changes.selectedItem && changes.selectedItem.id ? changes.selectedItem.id : "" 
+                }, 
                 props.index,
             )
         },
