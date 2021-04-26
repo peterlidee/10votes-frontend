@@ -1,7 +1,11 @@
-.admin-dash{
+.admin-dashboard{
     display: grid;
-    grid-template-columns: repeat( auto-fit, minmax(320px, 1fr) );
+    grid-template-columns: repeat( auto-fit, minmax(290px, 1fr) );
     gap: 1em;
 }
 
 .title--large--admin{ grid-column: 1/-1; color: $admin; }
+
+.admin-dashboard__section{
+    .form-part__button{ background: $admin; }
+}
