@@ -15,6 +15,7 @@ import { useRef } from 'react';
 import { useCombobox } from 'downshift';
 import { useLazyQuery } from '@apollo/client';
 import { SEARCH_LOCATIONS_QUERY, SEARCH_TAGS_QUERY } from '../header/Search';
+import { SEARCH_USERS_QUERY } from '../admin/usersQuery';
 
 import debounce from 'lodash.debounce';
 import PropTypes from 'prop-types';
@@ -24,9 +25,13 @@ import Loader from '../snippets/Loader';
 
 function InputSuggestion(props) {
     // what query to make?
-    const query = props.type == 'locations' ? SEARCH_LOCATIONS_QUERY : SEARCH_TAGS_QUERY;
+    const query = {
+        tags: SEARCH_TAGS_QUERY,
+        locations: SEARCH_LOCATIONS_QUERY,
+        users: SEARCH_USERS_QUERY,
+    }
     // apollo lazy query, this fetches either tags or locations depending on props.type
-    const [getData, { error, loading, data }] = useLazyQuery(query);
+    const [getData, { error, loading, data }] = useLazyQuery(query[props.type]);
 
     const getLazyData = (inputValue) => {
         // clean up value
@@ -34,14 +39,11 @@ function InputSuggestion(props) {
         // don't query empty value or value shorter then 3
         if(value.length > 2){
             // make the query
-            getData({ 
-                variables: { search: value },
-                // fetchPolicy: 'network-only', // we should't have to do this, handy on f.e. on back // TODO
-            })
+            getData({ variables: { search: value }, })
         }   
     };
 
-    // in order for debouncing to work, we need an var that persists, so we use useRef
+    // in order for debouncing to work, we need a var that persists, so we use useRef
     // https://github.com/downshift-js/downshift/issues/347#issuecomment-469531762
     const debounceGetLazyData = useRef(null);
     // if there's no .current, we add debounced getLazyData
@@ -82,6 +84,7 @@ function InputSuggestion(props) {
 
         // this function handles the apollo query that populates the dropdown
         onInputValueChange: (changes) => {
+            // console.log('changes',changes)
             // todo will this work on user query?
             // if there is no selected item yet, call lazyquery to make suggestions
             // if there is a selected item but the selected item does not equal the 
@@ -89,19 +92,21 @@ function InputSuggestion(props) {
             // then call lazyquery also cause user didn't find what he was looking for
             // all this code prevents a query from being made if the user makes a selection
             if(
-                (changes.selectedItem && changes.selectedItem.name.toLowerCase() !== changes.inputValue.toLowerCase()) || 
+                // selectedItem.name is not the same as the inputValue
+                (changes.selectedItem && changes.selectedItem.name && changes.selectedItem.name.toLowerCase() !== changes.inputValue.toLowerCase()) || 
+                // selectedItem.email is not the same as the inputValue
+                (changes.selectedItem && changes.selectedItem.email && changes.selectedItem.email.toLowerCase() !== changes.inputValue.toLowerCase()) || 
+                // there is no selectedItem
                 !changes.selectedItem
             ){
                 // call getLazyData with current inputValue
                 // goes through the debounceGetLazyData ref
                 debounceGetLazyData.current(changes.inputValue)
             }
-
         },
         // this makes dropdown a controlled input
         // it inherits state (inputValue) and handleSetState from a parent (createItem, updateItem,...)
         onStateChange: (changes) => {
-            //console.log('changes from onStateChange',changes)
             if(changes.type == useCombobox.stateChangeTypes.InputChange){
                 props.handleSetState(
                     { [props.type]: changes.inputValue, }, 
@@ -111,19 +116,19 @@ function InputSuggestion(props) {
         },
         // this handles the selection of a dropdown item
         // it calls the onSelectHandler with 2 parameters:
-        // { [props.type]: name, id: 123456 } of the selected item
+        // { [props.type]: name || email (for users), id: 123456 } of the selected item
         // the index or -1 if none (to set the state if it's an array)
         onSelectedItemChange: (changes) => {
             props.handleSelection(
                 { 
-                    [props.type]: changes.selectedItem && changes.selectedItem.name ? changes.selectedItem.name : "", 
+                    [props.type]: (props.type == "users" ? changes.selectedItem?.email : changes.selectedItem?.name ) || "",
                     id: changes.selectedItem && changes.selectedItem.id ? changes.selectedItem.id : "" 
                 }, 
                 props.index,
             )
         },
         // on select, what is the actual value if the item is an object
-        itemToString: (item) => item?.name || '',
+        itemToString: (item) => (props.type == "users" ? item?.email : item?.name) || '',
 
         // TODO: reset data when a new query is made ??
     })
@@ -133,7 +138,7 @@ function InputSuggestion(props) {
             <div className="input-suggestion__input-container" {...getComboboxProps()}>
                 <input 
                     {...getInputProps()}
-                    placeholder={`Enter a ${props.type.slice(0,-1)}`}
+                    placeholder={props.type == 'users' ? 'Enter a user email' : `Enter a ${props.type.slice(0,-1)}`}
                     id={`input-suggestion__${props.type}-${props.index}`}
                     className="form-part__input input-suggestion__input"
                     minlenght="2"
@@ -164,7 +169,7 @@ function InputSuggestion(props) {
                             .slice(0, 10) // limit to 10 results
                             .map((item, index) => (
                                 <div 
-                                    key={item.slug}
+                                    key={item.id}
                                     className="input-suggestion__result"
                                     style={{
                                         paddingLeft: (index === highlightedIndex) ? ".85em": ".5em", 
@@ -173,7 +178,7 @@ function InputSuggestion(props) {
                                     }}
                                     {...getItemProps({ item, index })}
                                 >
-                                    {item.name} 
+                                    {props.type == "users" ? item.email : item.name } 
                                     {props.type == 'locations' && 
                                         <span className="input-suggestion__result__countryCode">be</span>}
                                 </div>
