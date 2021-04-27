@@ -1,6 +1,11 @@
+import AdminGate from "../../components/admin/AdminGate";
+import EditUser from "../../components/admin/EditUser";
+
 function Users(){
     return(
-        <div>Hello from users admin page</div>
+        <AdminGate>
+            <EditUser />
+        </AdminGate>
     )
 }
 

@@ -1,6 +1,11 @@
+import AdminGate from "../../components/admin/AdminGate";
+import EditLocation from "../../components/admin/EditLocation";
+
 function Locations(){
     return(
-        <div>Hello from locations admin page</div>
+        <AdminGate>
+            <EditLocation />
+        </AdminGate>
     )
 }
 
