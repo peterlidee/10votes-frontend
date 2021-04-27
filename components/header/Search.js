@@ -8,27 +8,14 @@ import debounce from 'lodash.debounce';
 import { useCombobox } from 'downshift';
 import Loader from '../snippets/Loader';
 
-const SEARCH_TAGS_QUERY = gql`
-    query SEARCH_TAGS_QUERY($search: String!){
-        tags( nameContains: $search ){
-            id
-            name
-            slug
-        }
-    }
-`;
+import { LOCATIONS_QUERY } from '../../queriesAndMutations/locations/locationQueries'
 
-const SEARCH_LOCATIONS_QUERY = gql`
-    query SEARCH_LOCATIONS_QUERY($search: String!){
-        locations( nameContains: $search ){
+const SEARCH_TAGS_QUERY = gql`
+    query SEARCH_TAGS_QUERY($nameContains: String!){
+        tags( nameContains: $nameContains ){
             id
             name
             slug
-            country{
-                id
-                name
-                countryCode
-            }
         }
     }
 `;
@@ -51,7 +38,7 @@ function Search() {
     // setup the 2 lazy queries
     const [getLocationsData, { 
         error: locationsError, loading: locationsLoading, data: locationsData, called: locationsCalled
-    }] = useLazyQuery(SEARCH_LOCATIONS_QUERY);
+    }] = useLazyQuery(LOCATIONS_QUERY);
     const [getTagsData, { 
         error: tagsError, loading: tagsLoading, data: tagsData, called: tagsCalled 
     }] = useLazyQuery(SEARCH_TAGS_QUERY);
@@ -74,8 +61,8 @@ function Search() {
         // don't query empty value or value shorter then 3
         if(value.length > 2){
             // make the query
-            getTagsData({ variables: { search: value } })
-            getLocationsData({ variables: { search: value } })
+            getTagsData({ variables: { nameContains: value } })
+            getLocationsData({ variables: { nameContains: value } })
         }   
     };
 
@@ -183,4 +170,4 @@ function Search() {
 }
 
 export default Search;
-export { SEARCH_LOCATIONS_QUERY, SEARCH_TAGS_QUERY };
+export { SEARCH_TAGS_QUERY };

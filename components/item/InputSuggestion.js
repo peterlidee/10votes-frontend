@@ -15,6 +15,7 @@ import { useRef } from 'react';
 import { useCombobox } from 'downshift';
 import { useLazyQuery } from '@apollo/client';
 import { SEARCH_LOCATIONS_QUERY, SEARCH_TAGS_QUERY } from '../header/Search';
+import { LOCATIONS_QUERY } from '../../queriesAndMutations/locations/locationQueries'
 import { SEARCH_USERS_QUERY } from '../admin/usersQuery';
 
 import debounce from 'lodash.debounce';
@@ -27,7 +28,7 @@ function InputSuggestion(props) {
     // what query to make?
     const query = {
         tags: SEARCH_TAGS_QUERY,
-        locations: SEARCH_LOCATIONS_QUERY,
+        locations: LOCATIONS_QUERY,
         users: SEARCH_USERS_QUERY,
     }
     // apollo lazy query, this fetches either tags or locations depending on props.type
@@ -39,7 +40,7 @@ function InputSuggestion(props) {
         // don't query empty value or value shorter then 3
         if(value.length > 2){
             // make the query
-            getData({ variables: { search: value }, })
+            getData({ variables: { nameContains: value }, })
         }   
     };
 
