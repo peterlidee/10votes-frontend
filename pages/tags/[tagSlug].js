@@ -3,7 +3,7 @@
 import { initializeApollo, addApolloState } from '../../lib/apollo';
 import verifyOrderParam from '../../lib/verifyOrderParam'
 import SingleTaxonomyExists  from '../../components/items/SingleTaxonomyExists';
-import { TAG_EXISTS_QUERY } from '../../components/items/SingleTaxonomyQueries';
+import { SINGLE_TAG_QUERY } from '../../queriesAndMutations/tags/tagQueries';
 
 const Tagpage = props => (
     <SingleTaxonomyExists type="tag" {...props} />
@@ -11,7 +11,7 @@ const Tagpage = props => (
 
 // this function only runs on the server by Next.js
 // first get the page query
-// then run TAG_EXISTS_QUERY with that page query
+// then run SINGLE_TAG_QUERY with that page query
 export async function getServerSideProps({params, query}){
     const apolloClient = initializeApollo()
 
@@ -21,7 +21,7 @@ export async function getServerSideProps({params, query}){
 
     if(tagSlug){
         await apolloClient.query({
-            query: TAG_EXISTS_QUERY,
+            query: SINGLE_TAG_QUERY,
             variables: { tagSlug: tagSlug },
         }).catch(error => console.warn(error.message))
     }

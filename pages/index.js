@@ -6,7 +6,6 @@ import Home from '../components/Home';
 const Index = props => <Home />
 
 // this function only runs on the server by Next.js
-// then run TAG_EXISTS_QUERY with that page query
 export async function getServerSideProps({params, query}){
     const apolloClient = initializeApollo()
 

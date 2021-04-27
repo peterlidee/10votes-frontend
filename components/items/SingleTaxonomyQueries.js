@@ -6,16 +6,6 @@ import {gql} from '@apollo/client';
 import { ITEM_FIELDS_FRAGMENT } from '../../gqlFragments/itemFragment';
 import { perPage } from '../../config';
 
-const TAG_EXISTS_QUERY = gql`
-    query TAG_EXISTS_QUERY($tagSlug: String!){
-        tag( tagSlug: $tagSlug ){
-            id
-            name
-            slug
-        }
-    }
-`;
-
 const TAG_COUNT_QUERY = gql`
     query TAG_COUNT_QUERY($tagSlug: String!){
         itemsConnection( tagSlug: $tagSlug ){
@@ -134,7 +124,6 @@ const COUNTRY_ITEMS_QUERY = gql`
 `;
 
 export { 
-    TAG_EXISTS_QUERY,
     TAG_COUNT_QUERY,
     TAG_ITEMS_QUERY,
     LOCATION_EXISTS_QUERY,
