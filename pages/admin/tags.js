@@ -6,7 +6,7 @@ import EditTag from "../../components/admin/EditTag"
 function TagsPage(props){
     return(
         <AdminGate>
-            <EditTag tagId={props.tagId} />
+            <EditTag tagId={props.tagId} type="tags" />
         </AdminGate>
     )
 }
@@ -15,7 +15,6 @@ function TagsPage(props){
 // this will make a server-side request 
 export async function getServerSideProps(context) {
     const apolloClient = initializeApollo()
-
     const id = context.query.id || "";
 
     if(id){

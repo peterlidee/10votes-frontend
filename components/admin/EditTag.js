@@ -4,7 +4,7 @@ import Loader from '../snippets/Loader';
 import Error from '../snippets/Error';
 import NoData from '../snippets/NoData';
 
-const EditTag = (props) => { // props: tagId
+const EditTag = (props) => { // props: tagId and type (locations, tags, users)
     if(!props.tagId) return <NoData>No tag found.</NoData>
     // make the query
     const { loading, error, data } = useQuery(SINGLE_TAG_QUERY, { variables: { tagId: props.tagId }});
