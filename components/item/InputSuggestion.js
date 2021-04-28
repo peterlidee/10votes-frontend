@@ -16,7 +16,7 @@ import { useCombobox } from 'downshift';
 import { useLazyQuery } from '@apollo/client';
 import { TAGS_QUERY } from '../../queriesAndMutations/tags/tagQueries'
 import { LOCATIONS_QUERY } from '../../queriesAndMutations/locations/locationQueries'
-import { SEARCH_USERS_QUERY } from '../admin/usersQuery';
+import { USERS_QUERY } from '../../queriesAndMutations/users/userQueries'
 
 import debounce from 'lodash.debounce';
 import PropTypes from 'prop-types';
@@ -29,7 +29,7 @@ function InputSuggestion(props) {
     const query = {
         tags: TAGS_QUERY,
         locations: LOCATIONS_QUERY,
-        users: SEARCH_USERS_QUERY,
+        users: USERS_QUERY,
     }
     // apollo lazy query, this fetches either tags or locations depending on props.type
     const [getData, { error, loading, data }] = useLazyQuery(query[props.type]);
@@ -39,8 +39,14 @@ function InputSuggestion(props) {
         const value = inputValue.trim();
         // don't query empty value or value shorter then 3
         if(value.length > 2){
+            const variables = {}
+            if(props.type == 'users'){
+                variables.emailContains = value;
+            }else{ // locations and tags
+                variables.nameContains = value;
+            }
             // make the query
-            getData({ variables: { nameContains: value }, })
+            getData({ variables: variables })
         }   
     };
 
