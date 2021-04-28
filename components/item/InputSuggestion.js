@@ -14,7 +14,7 @@
 import { useRef } from 'react';
 import { useCombobox } from 'downshift';
 import { useLazyQuery } from '@apollo/client';
-import { SEARCH_LOCATIONS_QUERY, SEARCH_TAGS_QUERY } from '../header/Search';
+import { TAGS_QUERY } from '../../queriesAndMutations/tags/tagQueries'
 import { LOCATIONS_QUERY } from '../../queriesAndMutations/locations/locationQueries'
 import { SEARCH_USERS_QUERY } from '../admin/usersQuery';
 
@@ -27,7 +27,7 @@ import Loader from '../snippets/Loader';
 function InputSuggestion(props) {
     // what query to make?
     const query = {
-        tags: SEARCH_TAGS_QUERY,
+        tags: TAGS_QUERY,
         locations: LOCATIONS_QUERY,
         users: SEARCH_USERS_QUERY,
     }

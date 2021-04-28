@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-// used by /tags/tagname and /admin/tags/tagname
+// used by /tags/tagslug and /admin/tags/tagid
 const SINGLE_TAG_QUERY = gql`
     query($tagSlug: String, $tagId: ID){
         tag( tagSlug: $tagSlug, tagId: $tagId ){
@@ -11,6 +11,18 @@ const SINGLE_TAG_QUERY = gql`
     }
 `;
 
+// used by search and inputsuggestion
+const TAGS_QUERY = gql`
+    query($nameContains: String!){
+        tags( nameContains: $nameContains ){
+            id
+            name
+            slug
+        }
+    }
+`;
+
 export {
-    SINGLE_TAG_QUERY
+    SINGLE_TAG_QUERY,
+    TAGS_QUERY,
 };

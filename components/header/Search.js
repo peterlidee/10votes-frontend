@@ -3,22 +3,13 @@
 
 import { useRef } from 'react';
 import Router from 'next/router';
-import { useLazyQuery, gql } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 import debounce from 'lodash.debounce';
 import { useCombobox } from 'downshift';
 import Loader from '../snippets/Loader';
 
 import { LOCATIONS_QUERY } from '../../queriesAndMutations/locations/locationQueries'
-
-const SEARCH_TAGS_QUERY = gql`
-    query SEARCH_TAGS_QUERY($nameContains: String!){
-        tags( nameContains: $nameContains ){
-            id
-            name
-            slug
-        }
-    }
-`;
+import { TAGS_QUERY } from '../../queriesAndMutations/tags/tagQueries'
 
 // [1,2,3] and [a,b,c] becomes [1,a,2,b,3,c]
 // [] and [1,2,3] becomes [1,2,3]
@@ -41,7 +32,7 @@ function Search() {
     }] = useLazyQuery(LOCATIONS_QUERY);
     const [getTagsData, { 
         error: tagsError, loading: tagsLoading, data: tagsData, called: tagsCalled 
-    }] = useLazyQuery(SEARCH_TAGS_QUERY);
+    }] = useLazyQuery(TAGS_QUERY);
 
     // we will have 2 data streams: tagsData and locationData
     // we shuffle them together so we get one stream even if one of both are empty
@@ -170,4 +161,3 @@ function Search() {
 }
 
 export default Search;
-export { SEARCH_TAGS_QUERY };
