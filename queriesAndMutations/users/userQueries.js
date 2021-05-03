@@ -12,6 +12,7 @@ const SINGLE_USER_QUERY = gql`
             votes{
                 id
             }
+            permissions
         }
     }
 `;
