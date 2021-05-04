@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import SingleTaxonomyQuery from './SingleTaxonomyQuery';
 
 const EditLocation = (props) => ( // props: locationId and type (locations, tags, users)
@@ -12,5 +13,10 @@ const EditLocation = (props) => ( // props: locationId and type (locations, tags
         }}
     </SingleTaxonomyQuery>
 )
+
+EditLocation.propTypes = {
+    locationId: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+};
 
 export default EditLocation;

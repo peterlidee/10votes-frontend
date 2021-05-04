@@ -7,6 +7,7 @@ import { useQuery } from '@apollo/client';
 import { SINGLE_TAG_QUERY } from '../../queriesAndMutations/tags/tagQueries';
 import { SINGLE_LOCATION_QUERY } from '../../queriesAndMutations/locations/locationQueries';
 import { SINGLE_USER_QUERY } from '../../queriesAndMutations/users/userQueries';
+import PropTypes from 'prop-types';
 import Loader from '../snippets/Loader';
 import Error from '../snippets/Error';
 import NoData from '../snippets/NoData';
@@ -30,6 +31,10 @@ const SingleTaxonomyQuery = (props) => { // props: tagId and type (locations, ta
     if(error) return <Error error={error} />
     if(!data || !data[props.type.slice(0,-1)]) return <NoData>No tag found.</NoData>
     return props.children(data);
+}
+
+SingleTaxonomyQuery.propTypes = {
+    type: PropTypes.string.isRequired,
 }
 
 export default SingleTaxonomyQuery;

@@ -1,5 +1,4 @@
-
-
+import PropTypes from 'prop-types';
 import SingleTaxonomyQuery from './SingleTaxonomyQuery';
 
 const EditTag = (props) => ( // props: tagId and type (locations, tags, users)
@@ -14,5 +13,10 @@ const EditTag = (props) => ( // props: tagId and type (locations, tags, users)
         }}
     </SingleTaxonomyQuery>
 )
+
+EditTag.propTypes = {
+    tagId: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+};
 
 export default EditTag;

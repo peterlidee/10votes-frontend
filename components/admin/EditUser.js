@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import SingleTaxonomyQuery from './SingleTaxonomyQuery';
 
 const EditUser = (props) => ( // props: userId and type (locations, tags, users)
@@ -12,5 +13,10 @@ const EditUser = (props) => ( // props: userId and type (locations, tags, users)
         }}
     </SingleTaxonomyQuery>
 )
+
+EditUser.propTypes = {
+    userId: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+};
 
 export default EditUser;
