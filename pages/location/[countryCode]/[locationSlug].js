@@ -6,7 +6,7 @@ import SingleTaxonomyExists from '../../../components/items/SingleTaxonomyExists
 import { LOCATIONS_QUERY } from '../../../queriesAndMutations/locations/locationQueries'
 
 const LocationPage = props => (
-    <SingleTaxonomyExists type="location" {...props} />
+    <SingleTaxonomyExists type="locations" {...props} />
 )
 
 // this function only runs on the server by Next.js

@@ -6,7 +6,7 @@ import SingleTaxonomyExists  from '../../components/items/SingleTaxonomyExists';
 import { SINGLE_TAG_QUERY } from '../../queriesAndMutations/tags/tagQueries';
 
 const Tagpage = props => (
-    <SingleTaxonomyExists type="tag" {...props} />
+    <SingleTaxonomyExists type="tags" {...props} />
 )
 
 // this function only runs on the server by Next.js
