@@ -1,11 +1,35 @@
-.admin-dashboard{
+.admin-dashboard__overview{
     display: grid;
     grid-template-columns: repeat( auto-fit, minmax(290px, 1fr) );
     gap: 1em;
 }
 
-.title--large--admin{ grid-column: 1/-1; color: $admin; }
+.title--admin{ color: $admin; }
 
-.admin-dashboard__section{
+.admin-dashboard__search-create-section{
     .form-part__button{ background: $admin; }
+}
+
+.admin-dashboard__taxonomy{
+    &-section{
+
+    }
+}
+
+.admin-dashboard{
+    &__taxonomy-header{
+        text-align: center;
+        margin-bottom: 1em;
+        &__description{
+            font-variant: small-caps;
+            opacity: .55;
+        }
+        &__link{
+            color: $font;
+        }
+    }
+    &__taxonomy-title{
+        margin: 0;
+        font-size: 2.5em;
+    }
 }

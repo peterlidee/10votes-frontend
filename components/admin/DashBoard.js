@@ -5,8 +5,8 @@ function DashBoard(){
     return(
         <>
             <MetaTitle>Admin dashboard</MetaTitle>
-            <h1 className="title title--large title--large--admin">Admin dashboard</h1>
-            <div className="admin-dashboard">
+            <h1 className="title title--large title--admin">Admin dashboard</h1>
+            <div className="admin-dashboard__overview">
                 <SearchCreateType type="users" />
                 <SearchCreateType type="locations" />
                 <SearchCreateType type="tags" />
