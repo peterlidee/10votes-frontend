@@ -57,7 +57,7 @@ function Search() {
         }   
     };
 
-    // in order for debouncing to work, we need an var that persists, so we use useRef
+    // in order for debouncing to work, we need a var that persists, so we use useRef
     // https://github.com/downshift-js/downshift/issues/347#issuecomment-469531762
     const debounceGetLazyData = useRef(null);
     // if there's no .current, we add debounced getLazyData
@@ -70,15 +70,13 @@ function Search() {
         if(!item){
             return null;
         }
-        let hrefPath, asPath;
+        let url;
         if(item.__typename === "Tag"){
-            hrefPath = '/tags/[tagSlug]';
-            asPath = `/tags/${item.slug}`;
+            url = `/tags/${item.slug}`;
         }else if(item.__typename === "Location"){
-            hrefPath = '/location/[countryCode]/[place]';
-            asPath = `/location/${item.country.countryCode}/${item.name}`;
+            url = `/location/${item.country.countryCode}/${item.name}`;
         }
-        Router.push(hrefPath, asPath);
+        Router.push(url);
     }
 
     // call useComboBox
