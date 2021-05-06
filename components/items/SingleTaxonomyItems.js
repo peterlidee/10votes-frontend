@@ -3,7 +3,8 @@
 // f.e. all item with tag 'test' or all items in location 'x'
 
 import Link from "next/link";
-import getQueriesVariablesPathsFromType from '../../lib/getQueriesVariablesPathsFromType';
+import getQueriesAndVariables from '../../lib/getQueriesAndVariables';
+
 import { useQuery } from "@apollo/client";
 import { perPage } from '../../config';
 import PropTypes from 'prop-types';
@@ -14,10 +15,9 @@ import NoData from "../snippets/NoData";
 import Item from "../item/Item";
 
 function SingleTaxonomyItems(props){ // props: type
-    // get query and variables to feed to useQuery
-    const { query, variables } = getQueriesVariablesPathsFromType(
-        { queryType: 'queryRequest', taxonomyType: props.type, gqlType: 'items' }, props.data
-    );
+
+    const { query, variables } = getQueriesAndVariables(props.type, "items", props.data);
+
     // add additional parameters to variables
     variables.orderBy = props.orderBy;
     variables.skip = props.page * perPage - perPage || 0;
