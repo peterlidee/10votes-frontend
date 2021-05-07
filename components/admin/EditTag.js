@@ -3,17 +3,18 @@ import PropTypes from 'prop-types';
 
 import SingleTaxonomyAdmin from '../taxonomy/SingleTaxonomyAdmin'
 import MetaTitle from '../snippets/MetaTitle'
+import GetItemsCount from '../items/GetItemsCount'
 
 const EditTag = (props) => ( // props: tagId and type (locations, tags, users)
     <SingleTaxonomyAdmin {...props}>
-        {({ tag }) => {
-            console.log('data',tag)
+        {( data ) => {
+            console.log('data',data)
             return(
                 <>
-                    <MetaTitle>{"Edit tag #" + tag.name}</MetaTitle>
+                    <MetaTitle>{"Edit tag #" + data.tag.name}</MetaTitle>
                     <div className="admin-dashboard__taxonomy-header"> 
                         <span className="admin-dashboard__taxonomy-header__description">edit tag</span>
-                        <h1 className="title title--large title--admin admin-dashboard__taxonomy-title">#{tag.name}</h1>
+                        <h1 className="title title--large title--admin admin-dashboard__taxonomy-title">#{data.tag.name}</h1>
                         <Link href="/admin" >
                             <a className="admin-dashboard__taxonomy-header__link">&lt; back to admin</a>
                         </Link>
@@ -23,7 +24,18 @@ const EditTag = (props) => ( // props: tagId and type (locations, tags, users)
                         <div className="admin-dashboard__section">
                             tag summary
                             tag: 
-                            <Link href={`/tag/${tag.slug}`}><a>items with tag</a></Link> {tag.name}: 
+                            <Link href={`/tag/${data.tag.slug}`}><a>items with tag</a></Link> {data.tag.name}: 
+                            <GetItemsCount type={props.type} data={data}>
+                                {({ data: countData }) => {
+                                    const count = countData.itemsConnection.aggregate.count;
+                                    return(
+                                        <div className="taxonomy-count">
+                                            <span className="taxonomy-count__number">{count}</span>
+                                            <span className="taxonomy-count__label">{count === 1 ? 'pic' : "pics"}</span>
+                                        </div>
+                                    )
+                                }}
+                            </GetItemsCount>
                         </div>
                         <div className="admin-dashboard__section">
                             change to a new tag or merge with existing tag
