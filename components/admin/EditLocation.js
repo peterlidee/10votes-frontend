@@ -1,8 +1,8 @@
-import PropTypes from 'prop-types';
-import SingleTaxonomyQuery from './SingleTaxonomyQuery';
+import PropTypes from 'prop-types'
+import SingleTaxonomyAdmin from '../taxonomy/SingleTaxonomyAdmin'
 
 const EditLocation = (props) => ( // props: locationId and type (locations, tags, users)
-    <SingleTaxonomyQuery {...props}>
+    <SingleTaxonomyAdmin {...props}>
         {(data) => {
             console.log('data',data)
             return(
@@ -11,7 +11,7 @@ const EditLocation = (props) => ( // props: locationId and type (locations, tags
                 </div>
             )
         }}
-    </SingleTaxonomyQuery>
+    </SingleTaxonomyAdmin>
 )
 
 EditLocation.propTypes = {

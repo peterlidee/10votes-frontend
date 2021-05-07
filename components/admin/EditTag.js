@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 
-import SingleTaxonomyQuery from './SingleTaxonomyQuery';
-import MetaTitle from '../snippets/MetaTitle';
+import SingleTaxonomyAdmin from '../taxonomy/SingleTaxonomyAdmin'
+import MetaTitle from '../snippets/MetaTitle'
 
 const EditTag = (props) => ( // props: tagId and type (locations, tags, users)
-    <SingleTaxonomyQuery {...props}>
+    <SingleTaxonomyAdmin {...props}>
         {({ tag }) => {
             console.log('data',tag)
             return(
@@ -37,7 +37,7 @@ const EditTag = (props) => ( // props: tagId and type (locations, tags, users)
                 </>
             )
         }}
-    </SingleTaxonomyQuery>
+    </SingleTaxonomyAdmin>
 )
 
 EditTag.propTypes = {

@@ -11,7 +11,7 @@ import Loader from '../snippets/Loader';
 import Error from '../snippets/Error';
 import NoData from '../snippets/NoData';
 
-const SingleTaxonomyQuery = (props) => { // props: tagId and type (locations, tags, users)
+const SingleTaxonomyAdmin = (props) => { // props: tagId and type (locations, tags, users)
     // construct the correct key from props.type, f.e. tagId or locationId or userId
     const key = `${props.type.slice(0,-1)}Id`;
     // check if there's an Id prop or if it's empty
@@ -29,8 +29,8 @@ const SingleTaxonomyQuery = (props) => { // props: tagId and type (locations, ta
     return props.children(data);
 }
 
-SingleTaxonomyQuery.propTypes = {
+SingleTaxonomyAdmin.propTypes = {
     type: PropTypes.string.isRequired,
 }
 
-export default SingleTaxonomyQuery;
+export default SingleTaxonomyAdmin;
