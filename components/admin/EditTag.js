@@ -23,7 +23,7 @@ const EditTag = (props) => ( // props: tagId and type (locations, tags, users)
                         <div className="admin-dashboard__section">
                             tag summary
                             tag: 
-                            <Link href={`/tags/${tag.slug}`}><a>items with tag</a></Link> {tag.name}: 
+                            <Link href={`/tag/${tag.slug}`}><a>items with tag</a></Link> {tag.name}: 
                         </div>
                         <div className="admin-dashboard__section">
                             change to a new tag or merge with existing tag

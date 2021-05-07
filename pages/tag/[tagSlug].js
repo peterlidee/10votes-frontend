@@ -1,4 +1,4 @@
-// displays tag, fe .../tags/test
+// displays tag, fe .../tag/test
 
 import { initializeApollo, addApolloState } from '../../lib/apollo';
 import verifyOrderParam from '../../lib/verifyOrderParam'

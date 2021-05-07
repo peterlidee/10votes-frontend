@@ -45,7 +45,7 @@ function Item2(props){ // props: item, showEdit, hideVote
                     {item.tags.length > 0 &&
                         <>
                             {item.tags.map(tag => (
-                                <Link key={tag.id} href="/tags/[tagSlug]" as={`/tags/${tag.slug}`}>
+                                <Link key={tag.id} href="/tag/[tagSlug]" as={`/tag/${tag.slug}`}>
                                     <a className="item__tag item__tag--tag">{tag.name}</a>
                                 </Link>
                             ))}
@@ -113,7 +113,7 @@ function Item(props){ // props: item, showEdit, hideVote, single
                     {item.tags.length > 0 &&
                         <>
                             {item.tags.map(tag => (
-                                <Link key={tag.id} href="/tags/[tagSlug]" as={`/tags/${tag.slug}`}>
+                                <Link key={tag.id} href="/tag/[tagSlug]" as={`/tag/${tag.slug}`}>
                                     <a className="item__tag item__tag--tag">{tag.name}</a>
                                 </Link>
                             ))}
