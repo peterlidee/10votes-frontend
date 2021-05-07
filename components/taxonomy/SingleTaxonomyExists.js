@@ -13,8 +13,8 @@ import NoData from '../snippets/NoData';
 import MetaTitle from '../snippets/MetaTitle';
 import FancyTitle from '../snippets/FancyTitle';
 import SingleTaxonomyItems from './SingleTaxonomyItems';
-import OrderItems from './OrderItems';
-import Pagination from './Pagination';
+import OrderItems from '../items/OrderItems';
+import Pagination from '../items/Pagination';
 
 function NoTaxonomyMessage(props){
     return <NoData>Hmmm, we don't have a {props.type} '<em>{props.children}</em>' in our database. Try another {props.type} :/</NoData>

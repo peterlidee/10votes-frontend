@@ -2,7 +2,7 @@
 
 import { initializeApollo, addApolloState } from '../../../lib/apollo';
 import verifyOrderParam from '../../../lib/verifyOrderParam'
-import SingleTaxonomyExists from '../../../components/items/SingleTaxonomyExists';
+import SingleTaxonomyExists from '../../../components/taxonomy/SingleTaxonomyExists';
 import { LOCATIONS_QUERY } from '../../../queriesAndMutations/locations/locationQueries'
 
 const LocationPage = props => (
