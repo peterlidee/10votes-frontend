@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 // find a single location by slug or id
-// used in /admin/locations?id=
+// used in /admin/location?id=
 const SINGLE_LOCATION_QUERY = gql`
     query($locationSlug: String, $locationId: ID){
         location(locationSlug: $locationSlug, locationId: $locationId){

@@ -70,7 +70,7 @@ function SearchCreateType(props){
         setValue(newState[props.type]);
         // //redirect to the selected item
         Router.push({
-            pathname: `/admin/${props.type}`,
+            pathname: `/admin/${props.type.slice(0,-1)}`,
             query: { id: newState.id },
         });
     }
@@ -88,7 +88,7 @@ function SearchCreateType(props){
         if(!res) return null;
         //redirect to the created type edit page, with id as query param ?id=123456
         Router.push({
-            pathname: `/admin/${props.type}`,
+            pathname: `/admin/${props.type.slice(0,-1)}`,
             query: { id: res.data[`create${capitalizeString(props.type).slice(0,-1)}`].id },
         });
     }
