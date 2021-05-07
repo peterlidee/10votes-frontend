@@ -3,7 +3,7 @@
 import { initializeApollo, addApolloState } from '../../../lib/apollo';
 import verifyOrderParam from '../../../lib/verifyOrderParam'
 import SingleTaxonomyExists from '../../../components/items/SingleTaxonomyExists';
-import { COUNTRY_EXISTS_QUERY } from '../../../components/items/SingleTaxonomyQueries';
+import { SINGLE_COUNTRY_QUERY } from '../../../queriesAndMutations/countries/countryQueries'
 
 const CountryPage = props => (
     <SingleTaxonomyExists type="country" {...props} />
@@ -11,7 +11,7 @@ const CountryPage = props => (
 
 // this function only runs on the server by Next.js
 // first get the page query
-// then run COUNTRY_EXISTS_QUERY with that page query
+// then run SINGLE_COUNTRY_QUERY with that page query
 export async function getServerSideProps({params, query}){
     const apolloClient = initializeApollo()
     
@@ -21,7 +21,7 @@ export async function getServerSideProps({params, query}){
     
     if(countryCode){
         await apolloClient.query({
-            query: COUNTRY_EXISTS_QUERY,
+            query: SINGLE_COUNTRY_QUERY,
             variables: { countryCode: countryCode },
         }).catch(error => console.warn(error.message))
     }
