@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { perPage } from '../../config';
-import getPaths from '../../lib/getPaths'
+import getPaths from '../../lib/getPathsAndQueries'
 import GetItemsCount from './GetItemsCount';
 
 const Pagination = (props) => { // props: type, data, page

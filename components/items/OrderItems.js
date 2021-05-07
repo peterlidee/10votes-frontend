@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import PropTypes from 'prop-types';
-import getPaths from '../../lib/getPaths';
+import getPaths from '../../lib/getPathsAndQueries';
 
 // takes orderParam and returns inverse sort
 // f.e. createdAt_DESC -> createdAt_ASC
