@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import PropTypes from 'prop-types';
-import getQueriesVariablesPathsFromType from '../../lib/getQueriesVariablesPathsFromType';
+import getPaths from '../../lib/getPaths';
 
 // takes orderParam and returns inverse sort
 // f.e. createdAt_DESC -> createdAt_ASC
@@ -20,10 +20,7 @@ const OrderItems = props => { // props: type, orderBy, data
 
     // get query and path to feed to Link
     // the link query will need an extra prop orderBy which we add later inside the loop
-    const { pathname, query } = getQueriesVariablesPathsFromType({
-        taxonomyType: props.type,
-        queryType: "linkQuery",
-    }, props.data);
+    const { pathname, query } = getPaths(props.type, props.data);
 
     return (
         <div className="items__order">

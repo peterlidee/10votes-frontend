@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { perPage } from '../../config';
+import getPaths from '../../lib/getPaths'
 import GetItemsCount from './GetItemsCount';
-import getQueriesVariablesPathsFromType from '../../lib/getQueriesVariablesPathsFromType';
 
 const Pagination = (props) => { // props: type, data, page
     return(
@@ -27,10 +27,7 @@ const Pagination = (props) => { // props: type, data, page
 
                 // get query and path to feed to Link
                 // the link query will need an extra prop orderBy which we add later inside the loop
-                const { pathname, query } = getQueriesVariablesPathsFromType({
-                    taxonomyType: props.type,
-                    queryType: "linkQuery",
-                }, props.data);
+                const { pathname, query } = getPaths(props.type, props.data);
 
                 // add orderBy to query, is constant
                 query.orderBy = props.orderBy;
