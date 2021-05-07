@@ -8,9 +8,8 @@ const Pagination = (props) => { // props: type, data, page
     return(
         // get the itemsCount for the type
         <GetItemsCount {...props}>
-            {({ loading, error, data: countData }) => {
-                if(loading || error || !countData) return null;
-                const itemsCount = countData.itemsConnection.aggregate.count;
+            {({ data }) => {
+                const itemsCount = data.itemsConnection.aggregate.count;
                 const totalPages = Math.ceil(itemsCount / perPage);
 
                 // no pagination when only one page
