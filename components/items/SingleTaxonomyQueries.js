@@ -48,16 +48,6 @@ const LOCATION_ITEMS_QUERY = gql`
     ${ITEM_FIELDS_FRAGMENT}
 `;
 
-const COUNTRY_EXISTS_QUERY = gql`
-    query COUNTRY_EXISTS_QUERY($countryCode: String!){
-        country( countryCode: $countryCode ){
-            id
-            name
-            countryCode
-        }
-    }
-`;
-
 const COUNTRY_ITEMS_QUERY = gql`
     query COUNTRY_ITEMS_QUERY(
             $countryCode: String!, 
@@ -80,6 +70,5 @@ const COUNTRY_ITEMS_QUERY = gql`
 export { 
     TAG_ITEMS_QUERY,
     LOCATION_ITEMS_QUERY,
-    COUNTRY_EXISTS_QUERY,
     COUNTRY_ITEMS_QUERY
 };
