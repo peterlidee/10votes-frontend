@@ -11,7 +11,7 @@ const LocationPage = props => (
 
 // this function only runs on the server by Next.js
 // first get the page query
-// then run COUNTRY_EXISTS_QUERY with that page query
+// then run LOCATIONS_QUERY with that page query
 export async function getServerSideProps({params, query}){
     const apolloClient = initializeApollo()
 
