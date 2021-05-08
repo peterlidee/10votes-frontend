@@ -2,9 +2,8 @@ import Link from 'next/link';
 import PropTypes from 'prop-types';
 
 import SingleTaxonomyAdmin from '../taxonomy/SingleTaxonomyAdmin'
-import MetaTitle from '../snippets/MetaTitle'
-import GetItemsCount from '../items/GetItemsCount'
 import EditHeader from './EditHeader'
+import GetItemsCount from '../items/GetItemsCount'
 
 const EditTag = (props) => ( // props: tagId and type (locations, tags, users)
     <SingleTaxonomyAdmin {...props}>

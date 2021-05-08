@@ -40,11 +40,18 @@
     }
 }
 
+// emails can be large
+.admin__taxonomy-header--users .taxonomy-header__title{
+    font-size: 1.5em;
+}
+
 @media screen and (min-width: 500px){
     .taxonomy-header{
         &__title{
             font-size: 2.5em;
         }
-
+    }
+    .admin__taxonomy-header--users .taxonomy-header__title{
+        font-size: 2em;
     }
 }

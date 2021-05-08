@@ -8,16 +8,15 @@ import MetaTitle from '../snippets/MetaTitle'
 const EditHeader = (props) => { // props: type (users, locations, tags) and data
     const typeSingular = props.type.slice(0,-1);
     const name = props.data[typeSingular].name || props.data[typeSingular].email;
+    console.log('name',name)
     return (
         <>
-            <MetaTitle>{"Edit tag #" + props.data[typeSingular].name}</MetaTitle>
-            <MetaTitle>{`Edit ${typeSingular} #` + props.type == 'users' ? 'user' : name }</MetaTitle>
+            <MetaTitle>{`Edit ${typeSingular} ${props.type == 'tags' ? '#' : ''}` + (props.type == 'users' ? '' : name) }</MetaTitle>
             <div className={`admin__taxonomy-header admin__taxonomy-header--${props.type}`}> 
                 <span className="taxonomy-header__label">edit {typeSingular}</span>
                 <h1 className="title title--admin taxonomy-header__title">
                     {props.type == 'tags' && "#" }
                     {props.type == 'locations' && <span className="taxonomy-header__icon"><IconPin /></span> }
-                    {props.type == 'users' && "@" }
                     {name}
                 </h1>
                 <Link href="/admin" >

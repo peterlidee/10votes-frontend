@@ -6,6 +6,7 @@ const SINGLE_USER_QUERY = gql`
     query($userId: ID){
         user(userId: $userId){
             id
+            email
             items{
                 id
             }
