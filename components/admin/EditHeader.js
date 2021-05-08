@@ -17,7 +17,7 @@ const EditHeader = (props) => { // props: type (users, locations, tags) and data
                 <h1 className="title title--admin taxonomy-header__title">
                     {props.type == 'tags' && "#" }
                     {props.type == 'locations' && <span className="taxonomy-header__icon"><IconPin /></span> }
-                    {props.type == 'users' && <span className="avatar avatar--small"><IconPin /></span> }
+                    {props.type == 'users' && "@" }
                     {name}
                 </h1>
                 <Link href="/admin" >
