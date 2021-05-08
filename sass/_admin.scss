@@ -1,4 +1,4 @@
-.admin-dashboard__overview{
+.admin__search-creates{
     display: grid;
     grid-template-columns: repeat( auto-fit, minmax(290px, 1fr) );
     gap: 1em;
@@ -6,30 +6,45 @@
 
 .title--admin{ color: $admin; }
 
-.admin-dashboard__search-create-section{
+.search-create{
     .form-part__button{ background: $admin; }
 }
 
-.admin-dashboard__taxonomy{
-    &-section{
+.admin__taxonomy-header{
+    text-align: center;
+    margin-bottom: 2em;
+}
 
+.taxonomy-header{
+    &__label{
+        font-variant: small-caps;
+        opacity: .55;
+    }
+    &__title{
+        margin: 0;
+        font-size: 2em;
+    }
+    &__icon{
+        width: 2em;
+        .pin__icon{
+            width: 1em;
+            height: 1em;
+            transform: translateY(3px);
+            path{
+                fill: $admin;
+            }
+        }
+    }
+    &__link{
+        color: $font;
     }
 }
 
-.admin-dashboard{
-    &__taxonomy-header{
-        text-align: center;
-        margin-bottom: 1em;
-        &__description{
-            font-variant: small-caps;
-            opacity: .55;
+@media screen and (min-width: 400px){
+    .taxonomy-header{
+        &__title{
+            font-size: 2.5em;
         }
-        &__link{
-            color: $font;
-        }
-    }
-    &__taxonomy-title{
-        margin: 0;
-        font-size: 2.5em;
+
     }
 }
