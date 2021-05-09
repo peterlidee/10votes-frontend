@@ -1,4 +1,5 @@
-import SingleItem, { SINGLE_ITEM_QUERY } from '../components/item/SingleItem';
+import SingleItem from '../components/item/SingleItem';
+import { SINGLE_ITEM_QUERY } from '../queriesAndMutations/items/itemQueries'
 import { initializeApollo, addApolloState } from '../lib/apollo';
 
 const ItemPage = (props) => {
