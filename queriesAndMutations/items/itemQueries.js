@@ -1,5 +1,6 @@
-import { gql } from '@apollo/client';
+import { gql } from '@apollo/client'
 import { ITEM_FIELDS_FRAGMENT } from '../fragments/itemFragment'
+import { perPage } from '../../config'
 
 // itemsConnection queries
 const ITEMS_CONNECTION_QUERY = gql`
@@ -27,7 +28,7 @@ const ITEMS_CONNECTION_QUERY = gql`
 `;
 
 const SINGLE_ITEM_QUERY = gql`
-    query SINGLE_ITEM_QUERY($itemId: ID!){
+    query($itemId: ID!){
         item( itemId: $itemId ){
             ...ItemFields
         }
@@ -35,4 +36,27 @@ const SINGLE_ITEM_QUERY = gql`
     ${ITEM_FIELDS_FRAGMENT}
 `;
 
-export { ITEMS_CONNECTION_QUERY, SINGLE_ITEM_QUERY }
+const ITEMS_QUERY = gql`
+    query(
+            $tagSlug: String,
+            $locationSlug: String, 
+            $countryCode: String, 
+            $orderBy: ItemOrderByInput, 
+            $skip: Int = 0, 
+            $first: Int = ${perPage}
+        ){
+        items(
+            tagSlug: $tagSlug,
+            locationSlug:$locationSlug,
+            countryCode: $countryCode,
+            orderBy: $orderBy,
+            skip: $skip,
+            first: $first
+        ){
+            ...ItemFields
+        }
+    }
+    ${ITEM_FIELDS_FRAGMENT}
+`;
+
+export { ITEMS_CONNECTION_QUERY, SINGLE_ITEM_QUERY, ITEMS_QUERY }

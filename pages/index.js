@@ -1,5 +1,5 @@
 import { initializeApollo, addApolloState } from '../lib/apollo';
-import { MOST_VOTED_ITEMS_QUERY, RECENT_ITEMS_QUERY } from '../components/Home';
+import { ITEMS_QUERY } from '../queriesAndMutations/items/itemQueries'
 import Home from '../components/Home';
 
 
@@ -8,9 +8,10 @@ const Index = props => <Home />
 // this function only runs on the server by Next.js
 export async function getServerSideProps({params, query}){
     const apolloClient = initializeApollo()
-
-    await apolloClient.query({ query: RECENT_ITEMS_QUERY }).catch(error => console.warn(error.message))
-    await apolloClient.query({ query: MOST_VOTED_ITEMS_QUERY }).catch(error => console.warn(error.message))
+    
+    // TODO: fix these queries, need vars?
+    await apolloClient.query({ query: ITEMS_QUERY }).catch(error => console.warn(error.message))
+    await apolloClient.query({ query: ITEMS_QUERY }).catch(error => console.warn(error.message))
 
     return addApolloState(apolloClient, {
         props: {},
