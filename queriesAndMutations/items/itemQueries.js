@@ -1,4 +1,5 @@
 import { gql } from '@apollo/client';
+import { ITEM_FIELDS_FRAGMENT } from '../fragments/itemFragment'
 
 // itemsConnection queries
 const ITEMS_CONNECTION_QUERY = gql`
@@ -25,4 +26,13 @@ const ITEMS_CONNECTION_QUERY = gql`
     }
 `;
 
-export { ITEMS_CONNECTION_QUERY }
+const SINGLE_ITEM_QUERY = gql`
+    query SINGLE_ITEM_QUERY($itemId: ID!){
+        item( itemId: $itemId ){
+            ...ItemFields
+        }
+    }
+    ${ITEM_FIELDS_FRAGMENT}
+`;
+
+export { ITEMS_CONNECTION_QUERY, SINGLE_ITEM_QUERY }
