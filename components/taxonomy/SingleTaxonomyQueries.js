@@ -2,11 +2,9 @@
 // for each there's a taxonomy[slug] exists
 // and a items where taxonomy[slug]
 
-import {gql} from '@apollo/client';
-import { ITEM_FIELDS_FRAGMENT } from '../../gqlFragments/itemFragment';
-import { perPage } from '../../config';
-
-
+import {gql} from '@apollo/client'
+import { ITEM_FIELDS_FRAGMENT } from '../../queriesAndMutations/fragments/itemFragment'
+import { perPage } from '../../config'
 
 const TAG_ITEMS_QUERY = gql`
     query TAG_ITEMS_QUERY(

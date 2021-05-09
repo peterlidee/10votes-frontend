@@ -1,5 +1,5 @@
-import { gql, useQuery } from '@apollo/client';
-import { ITEM_FIELDS_FRAGMENT } from '../../gqlFragments/itemFragment'
+import { gql, useQuery } from '@apollo/client'
+import { ITEM_FIELDS_FRAGMENT } from '../../queriesAndMutations/fragments/itemFragment'
 
 // query all items from current user
 const USER_ITEMS_QUERY = gql`

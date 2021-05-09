@@ -1,5 +1,5 @@
 import { useMutation, gql } from '@apollo/client'
-import { ITEM_FIELDS_FRAGMENT } from '../../gqlFragments/itemFragment'
+import { ITEM_FIELDS_FRAGMENT } from '../../queriesAndMutations/fragments/itemFragment'
 
 import Error from '../snippets/Error';
 import { USER_VOTES_QUERY } from '../context/UserVotesContext';

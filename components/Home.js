@@ -1,5 +1,5 @@
 import { useQuery, gql } from '@apollo/client';
-import { ITEM_FIELDS_FRAGMENT } from '../gqlFragments/itemFragment';
+import { ITEM_FIELDS_FRAGMENT } from '../queriesAndMutations/fragments/itemFragment'
 import { perPage } from '../config';
 
 import MetaTitle from './snippets/MetaTitle';
