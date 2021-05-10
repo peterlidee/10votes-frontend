@@ -1,18 +1,5 @@
-import { gql, useQuery } from '@apollo/client'
-import { ITEM_FIELDS_FRAGMENT } from '../../queriesAndMutations/fragments/itemFragment'
-
-// query all votes from current user
-const USER_VOTES_QUERY = gql`
-    query{
-        userVotes{
-            id
-            item{
-                ...ItemFields
-            }
-        }
-    }
-    ${ITEM_FIELDS_FRAGMENT}
-`;
+import { useQuery } from '@apollo/client'
+import { USER_VOTES_QUERY } from '../../queriesAndMutations/votes/voteQueries'
 
 // create context with default value
 const UserVotesContext = React.createContext({
@@ -34,4 +21,4 @@ const UserVotesContextProvider = props => {
 // look into this, TODO
 
 export default UserVotesContext;
-export { UserVotesContextProvider, USER_VOTES_QUERY };
+export { UserVotesContextProvider };

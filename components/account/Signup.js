@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 import { USER_LOGGED_IN_QUERY } from '../context/UserContext';
 import { USER_ITEMS_QUERY } from '../../queriesAndMutations/items/itemQueries'
-import { USER_VOTES_QUERY } from '../context/UserVotesContext';
+import { USER_VOTES_QUERY } from '../../queriesAndMutations/votes/voteQueries'
 
 import MetaTitle from '../snippets/MetaTitle';
 import Error from '../snippets/Error';

@@ -2,7 +2,7 @@ import { useMutation, gql } from '@apollo/client'
 import { ITEM_FIELDS_FRAGMENT } from '../../queriesAndMutations/fragments/itemFragment'
 
 import Error from '../snippets/Error';
-import { USER_VOTES_QUERY } from '../context/UserVotesContext';
+import { USER_VOTES_QUERY } from '../../queriesAndMutations/votes/voteQueries'
 
 const VOTE_MUTATION = gql`
     mutation VOTE_MUTATION($itemId: ID!){

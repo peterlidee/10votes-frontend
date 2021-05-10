@@ -1,6 +1,6 @@
 import { useMutation, gql } from '@apollo/client'
 import { ITEM_FIELDS_FRAGMENT } from '../../queriesAndMutations/fragments/itemFragment'
-import { USER_VOTES_QUERY } from '../context/UserVotesContext'
+import { USER_VOTES_QUERY } from '../../queriesAndMutations/votes/voteQueries'
 import Error from '../snippets/Error'
 
 const DELETE_VOTE_MUTATION = gql`
