@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import Router from 'next/router';
 import Link from 'next/link';
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 
 import { USER_ITEMS_QUERY } from '../../queriesAndMutations/items/itemQueries'
+import { CREATE_ITEM_MUTATION } from '../../queriesAndMutations/items/itemMutations'
 import { inputToString } from '../../lib/inputToString';
+
 import MetaTitle from '../snippets/MetaTitle';
 import FormRow from '../formParts/FormRow';
 import ManageUpload from './ManageUpload';
@@ -12,32 +14,6 @@ import InputSuggestion from './InputSuggestion';
 import FormButton from '../formParts/FormButton';
 import Error from '../snippets/Error';
 import NoData from '../snippets/NoData';
-
-const CREATE_ITEM_MUTATION = gql`
-    mutation CREATE_ITEM_MUTATION(
-        $image: String
-        $largeImage: String
-        $location: String
-        $tags: [String!]!
-    ){
-        createItem(
-            image: $image
-            largeImage: $largeImage
-            location: $location
-            tags: $tags
-        ){
-            id
-            location{
-                id
-                items{
-                    id
-                }
-            }
-        }
-    }
-`;
-
-// TODO: why are we asking for location?
 
 function CreateItem(props){
     // state hooks
