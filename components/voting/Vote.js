@@ -1,20 +1,9 @@
-import { useMutation, gql } from '@apollo/client'
-import { ITEM_FIELDS_FRAGMENT } from '../../queriesAndMutations/fragments/itemFragment'
+import { useMutation } from '@apollo/client'
+import { USER_VOTES_QUERY } from '../../queriesAndMutations/votes/voteQueries'
+import { VOTE_MUTATION } from '../../queriesAndMutations/votes/voteMutations'
 
 import Error from '../snippets/Error';
-import { USER_VOTES_QUERY } from '../../queriesAndMutations/votes/voteQueries'
 
-const VOTE_MUTATION = gql`
-    mutation VOTE_MUTATION($itemId: ID!){
-        castVote(itemId: $itemId){
-            id
-            item{
-                ...ItemFields
-            }
-        }
-    }
-    ${ITEM_FIELDS_FRAGMENT}
-`;
 
 function Vote(props){
     const [castVote, {error, data, loading}] = useMutation(VOTE_MUTATION, {

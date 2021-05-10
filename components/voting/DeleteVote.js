@@ -1,25 +1,10 @@
-import { useMutation, gql } from '@apollo/client'
-import { ITEM_FIELDS_FRAGMENT } from '../../queriesAndMutations/fragments/itemFragment'
+import { useMutation } from '@apollo/client'
 import { USER_VOTES_QUERY } from '../../queriesAndMutations/votes/voteQueries'
+import { DELETE_VOTE_MUTATION } from '../../queriesAndMutations/votes/voteMutations'
+
 import Error from '../snippets/Error'
 
-const DELETE_VOTE_MUTATION = gql`
-    mutation DELETE_VOTE_MUTATION(
-        $voteId: ID!
-        $itemId: ID!
-    ){
-        deleteVote(
-            voteId: $voteId
-            itemId: $itemId
-        ){
-            id
-            item{
-                ...ItemFields
-            }
-        }
-    }
-    ${ITEM_FIELDS_FRAGMENT}
-`;
+
 
 function DeleteVote(props){
     const [deleteVote, { error, loading }] = useMutation(DELETE_VOTE_MUTATION, {
