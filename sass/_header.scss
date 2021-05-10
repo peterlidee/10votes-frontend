@@ -143,9 +143,9 @@
     &--closed{
         display: none;
     }
-    &--open{
-        // display: flex;
-    }
+    // &--open{
+    //     // display: flex;
+    // }
 }
 
 .menu-toggle__button{
@@ -188,7 +188,7 @@
 
 
 
-@media screen and (min-width: 450px){
+@media screen and (min-width: 500px){
     .site__menu{
         flex-direction: row;
         > * {
@@ -268,5 +268,17 @@
     color: $font;
     &:focus{
         outline: none;
+    }
+}
+
+.menu-link__admin{ 
+    color: $admin; 
+    font-variant: small-caps;
+}
+
+@media screen and (min-width: 500px){
+    .menu-link__admin{ 
+        padding-right: .5em;
+        border-right: 1px solid $dimmedBorder;
     }
 }

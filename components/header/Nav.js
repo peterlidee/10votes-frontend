@@ -22,6 +22,9 @@ const Nav = () => {
             </button>
 
             <nav className={menuToggle ? "site__menu site__menu--open" : "site__menu site__menu--closed"}>
+                {data && data.me && data.me.permissions.includes('ADMIN') &&
+                    <Link href="/admin"><a className="menu-link__admin">admin</a></Link>
+                }
                 {data && data.me && !error && !loading &&
                     <CurrentItemsAndVotes />
                 }
