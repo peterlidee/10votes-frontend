@@ -2,26 +2,13 @@ import { useState } from "react";
 import Router from 'next/router';
 import { gql, useMutation } from "@apollo/client";
 
+import { CREATE_LOCATION_MUTATION } from '../../queriesAndMutations/locations/locationMutations'
+
 import capitalizeString from "../../lib/capitalizeString";
 import FormRow from "../formParts/FormRow"
 import InputSuggestion from "../item/InputSuggestion"
 import FormButton from "../formParts/FormButton"
 import Error from "../snippets/Error";
-
-const CREATE_LOCATION_MUTATION = gql`
-    mutation CREATE_LOCATION_MUTATION($name: String!, $countryCode: String!){
-        createLocation(name: $name, countryCode: $countryCode){
-            id
-            name
-            slug
-            country{
-                id
-                name
-                countryCode
-            }
-        }
-    }
-`;
 
 const CREATE_TAG_MUTATION = gql`
     mutation CREATE_TAG_MUTATION($name: String!){
