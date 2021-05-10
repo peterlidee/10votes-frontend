@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
 
-import { USER_LOGGED_IN_QUERY } from '../context/UserContext';
+import { USER_LOGGED_IN_QUERY } from '../../queriesAndMutations/users/userQueries'
 import { USER_ITEMS_QUERY } from '../../queriesAndMutations/items/itemQueries'
 import { USER_VOTES_QUERY } from '../../queriesAndMutations/votes/voteQueries'
 import { RESET_MUTATION } from '../../queriesAndMutations/users/userMutations'

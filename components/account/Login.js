@@ -1,10 +1,11 @@
 import { useState, useContext } from 'react';
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import Link from 'next/link';
 
-import UserContext, { USER_LOGGED_IN_QUERY } from '../context/UserContext'
+import UserContext from '../context/UserContext'
 import { USER_ITEMS_QUERY } from '../../queriesAndMutations/items/itemQueries'
 import { USER_VOTES_QUERY } from '../../queriesAndMutations/votes/voteQueries'
+import { USER_LOGGED_IN_QUERY } from '../../queriesAndMutations/users/userQueries'
 import { LOGIN_MUTATION } from '../../queriesAndMutations/users/userMutations'
 
 import Error from '../snippets/Error';

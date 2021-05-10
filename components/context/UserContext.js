@@ -1,16 +1,5 @@
-import { gql, useQuery } from '@apollo/client';
-
-const USER_LOGGED_IN_QUERY = gql`
-    query {
-        me {
-            id
-            email
-            permissions
-        }
-    }
-`;
-
-// TODO: remove email
+import { useQuery } from '@apollo/client';
+import { USER_LOGGED_IN_QUERY } from '../../queriesAndMutations/users/userQueries'
 
 // create context with default value
 const UserContext = React.createContext({
@@ -34,4 +23,4 @@ const UserContextProvider = props => {
 // look into this, TODO
 
 export default UserContext;
-export { UserContextProvider, USER_LOGGED_IN_QUERY };
+export { UserContextProvider };
