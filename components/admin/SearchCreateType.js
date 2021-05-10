@@ -1,24 +1,15 @@
 import { useState } from "react";
 import Router from 'next/router';
-import { gql, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 
 import { CREATE_LOCATION_MUTATION } from '../../queriesAndMutations/locations/locationMutations'
+import { CREATE_TAG_MUTATION } from '../../queriesAndMutations/tags/tagMutations'
 
 import capitalizeString from "../../lib/capitalizeString";
 import FormRow from "../formParts/FormRow"
 import InputSuggestion from "../item/InputSuggestion"
 import FormButton from "../formParts/FormButton"
 import Error from "../snippets/Error";
-
-const CREATE_TAG_MUTATION = gql`
-    mutation CREATE_TAG_MUTATION($name: String!){
-        createTag(name: $name){
-            id
-            name
-            slug
-        }
-    }
-`;
 
 function SearchCreateType(props){
     // set state to neutral value
