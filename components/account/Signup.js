@@ -1,10 +1,11 @@
 import {useState} from 'react';
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import Link from 'next/link';
 
 import { USER_LOGGED_IN_QUERY } from '../context/UserContext';
 import { USER_ITEMS_QUERY } from '../../queriesAndMutations/items/itemQueries'
 import { USER_VOTES_QUERY } from '../../queriesAndMutations/votes/voteQueries'
+import { SIGNUP_MUTATION } from '../../queriesAndMutations/users/userMutations'
 
 import MetaTitle from '../snippets/MetaTitle';
 import Error from '../snippets/Error';
@@ -12,15 +13,6 @@ import NoData from '../snippets/NoData';
 import FormRow from '../formParts/FormRow';
 import InputContainer from '../formParts/InputContainer';
 import FormButton from '../formParts/FormButton';
-
-const SIGNUP_MUTATION = gql`
-    mutation SIGNUP_MUTATION($email: String!, $password: String!){
-        signup(email: $email, password: $password){
-            id
-            email
-        }
-    }
-`;
 
 function Signup(){
     // react state hooks
