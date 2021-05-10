@@ -59,4 +59,17 @@ const ITEMS_QUERY = gql`
     ${ITEM_FIELDS_FRAGMENT}
 `;
 
-export { ITEMS_CONNECTION_QUERY, SINGLE_ITEM_QUERY, ITEMS_QUERY }
+// query all items from current user
+// this does NOT call items but a seperate userItems in the backend
+// because it gets the items of the current user
+// which is determined by a cookie sent along with the request
+const USER_ITEMS_QUERY = gql`
+    query{
+        userItems{
+            ...ItemFields
+        }
+    }
+    ${ITEM_FIELDS_FRAGMENT}
+`;
+
+export { ITEMS_CONNECTION_QUERY, SINGLE_ITEM_QUERY, ITEMS_QUERY, USER_ITEMS_QUERY }

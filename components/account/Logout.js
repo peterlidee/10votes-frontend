@@ -3,7 +3,7 @@
 
 import { gql, useMutation } from '@apollo/client';
 import { USER_LOGGED_IN_QUERY } from '../context/UserContext';
-import { USER_ITEMS_QUERY } from '../context/UserItemsContext';
+import { USER_ITEMS_QUERY } from '../../queriesAndMutations/items/itemQueries'
 import { USER_VOTES_QUERY } from '../context/UserVotesContext';
 
 const LOGOUT_MUTATION = gql`

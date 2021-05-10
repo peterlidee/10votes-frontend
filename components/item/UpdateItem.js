@@ -3,8 +3,7 @@ import PropTypes from 'prop-types'
 import Router from 'next/router';
 
 import { useQuery, useMutation, gql } from '@apollo/client';
-import { USER_ITEMS_QUERY } from '../context/UserItemsContext';
-import { SINGLE_ITEM_QUERY } from '../../queriesAndMutations/items/itemQueries'
+import { SINGLE_ITEM_QUERY, USER_ITEMS_QUERY } from '../../queriesAndMutations/items/itemQueries'
 
 import MetaTitle from '../snippets/MetaTitle';
 import Loader from '../snippets/Loader';

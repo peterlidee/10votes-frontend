@@ -1,7 +1,7 @@
 import { useMutation, gql } from '@apollo/client';
 import PropTypes from 'prop-types';
 
-import { USER_ITEMS_QUERY } from '../context/UserItemsContext';
+import { USER_ITEMS_QUERY } from '../../queriesAndMutations/items/itemQueries'
 import Error from '../snippets/Error';
 
 const DELETE_ITEM_MUTATION = gql`

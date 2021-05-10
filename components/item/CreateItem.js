@@ -3,7 +3,7 @@ import Router from 'next/router';
 import Link from 'next/link';
 import { gql, useMutation } from '@apollo/client';
 
-import { USER_ITEMS_QUERY } from '../context/UserItemsContext';
+import { USER_ITEMS_QUERY } from '../../queriesAndMutations/items/itemQueries'
 import { inputToString } from '../../lib/inputToString';
 import MetaTitle from '../snippets/MetaTitle';
 import FormRow from '../formParts/FormRow';

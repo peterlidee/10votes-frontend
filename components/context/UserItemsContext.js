@@ -1,15 +1,5 @@
-import { gql, useQuery } from '@apollo/client'
-import { ITEM_FIELDS_FRAGMENT } from '../../queriesAndMutations/fragments/itemFragment'
-
-// query all items from current user
-const USER_ITEMS_QUERY = gql`
-    query{
-        userItems{
-            ...ItemFields
-        }
-    }
-    ${ITEM_FIELDS_FRAGMENT}
-`;
+import { useQuery } from '@apollo/client'
+import { USER_ITEMS_QUERY } from '../../queriesAndMutations/items/itemQueries'
 
 // create context with default value
 const UserItemsContext = React.createContext({
@@ -31,4 +21,4 @@ const UserItemsContextProvider = props => {
 // look into this, TODO
 
 export default UserItemsContext;
-export { UserItemsContextProvider, USER_ITEMS_QUERY };
+export { UserItemsContextProvider };
