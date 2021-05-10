@@ -2,9 +2,10 @@ import { useState, useContext } from 'react';
 import { gql, useMutation } from '@apollo/client';
 import Link from 'next/link';
 
-import UserContext, { USER_LOGGED_IN_QUERY } from '../context/UserContext';
+import UserContext, { USER_LOGGED_IN_QUERY } from '../context/UserContext'
 import { USER_ITEMS_QUERY } from '../../queriesAndMutations/items/itemQueries'
 import { USER_VOTES_QUERY } from '../../queriesAndMutations/votes/voteQueries'
+import { LOGIN_MUTATION } from '../../queriesAndMutations/users/userMutations'
 
 import Error from '../snippets/Error';
 import MetaTitle from '../snippets/MetaTitle';
@@ -13,15 +14,6 @@ import NoData from '../snippets/NoData';
 import FormRow from '../formParts/FormRow';
 import InputContainer from '../formParts/InputContainer';
 import FormButton from '../formParts/FormButton';
-
-const LOGIN_MUTATION = gql`
-    mutation LOGIN_MUTATION($email: String!, $password: String!){
-        login(email: $email, password: $password){
-            id
-            email
-        }
-    }
-`;
 
 function Login(){
     // react hooks

@@ -1,17 +1,8 @@
-//import gql from 'graphql-tag';
-// TODO remove graphql tag? from package.json?
-
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { USER_LOGGED_IN_QUERY } from '../context/UserContext';
 import { USER_ITEMS_QUERY } from '../../queriesAndMutations/items/itemQueries'
 import { USER_VOTES_QUERY } from '../../queriesAndMutations/votes/voteQueries'
-const LOGOUT_MUTATION = gql`
-    mutation LOGOUT_MUTATION{
-        logout{
-            message
-        }
-    }
-`;
+import { LOGOUT_MUTATION } from '../../queriesAndMutations/users/userMutations'
 
 function Logout(){
     const [ logout ] = useMutation(LOGOUT_MUTATION, 

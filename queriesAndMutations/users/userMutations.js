@@ -18,6 +18,8 @@ const REQUEST_RESET_MUTATION = gql`
         }
     }
 `;
+
+// updateUser
 const RESET_MUTATION = gql`
     mutation($password: String!, $confirmPassword: String!, $resetToken: String!){
         resetPassword(password: $password, confirmPassword: $confirmPassword, resetToken: $resetToken){
@@ -26,4 +28,23 @@ const RESET_MUTATION = gql`
     }
 `;
 
-export { SIGNUP_MUTATION, RESET_MUTATION, REQUEST_RESET_MUTATION }
+//login
+const LOGIN_MUTATION = gql`
+    mutation($email: String!, $password: String!){
+        login(email: $email, password: $password){
+            id
+            email
+        }
+    }
+`;
+
+//logout
+const LOGOUT_MUTATION = gql`
+    mutation{
+        logout{
+            message
+        }
+    }
+`;
+
+export { SIGNUP_MUTATION, RESET_MUTATION, REQUEST_RESET_MUTATION, LOGIN_MUTATION, LOGOUT_MUTATION }
