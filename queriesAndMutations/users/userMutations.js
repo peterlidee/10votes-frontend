@@ -2,7 +2,7 @@ import { gql } from '@apollo/client'
 
 // createUser
 const SIGNUP_MUTATION = gql`
-    mutation SIGNUP_MUTATION($email: String!, $password: String!){
+    mutation($email: String!, $password: String!){
         signup(email: $email, password: $password){
             id
             email
@@ -10,4 +10,20 @@ const SIGNUP_MUTATION = gql`
     }
 `;
 
-export { SIGNUP_MUTATION }
+// updateUser
+const REQUEST_RESET_MUTATION = gql`
+    mutation($email: String!){
+        requestReset(email: $email){
+            message
+        }
+    }
+`;
+const RESET_MUTATION = gql`
+    mutation($password: String!, $confirmPassword: String!, $resetToken: String!){
+        resetPassword(password: $password, confirmPassword: $confirmPassword, resetToken: $resetToken){
+            id
+        }
+    }
+`;
+
+export { SIGNUP_MUTATION, RESET_MUTATION, REQUEST_RESET_MUTATION }

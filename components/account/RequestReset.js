@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
+
+import { REQUEST_RESET_MUTATION } from '../../queriesAndMutations/users/userMutations'
 
 import MetaTitle from '../snippets/MetaTitle';
 import FormRow from '../formParts/FormRow';
@@ -7,14 +9,6 @@ import InputContainer from '../formParts/InputContainer';
 import FormButton from '../formParts/FormButton';
 import Error from '../snippets/Error';
 import NoData from '../snippets/NoData';
-
-const REQUEST_RESET_MUTATION = gql`
-    mutation REQUEST_RESET_MUTATION($email: String!){
-        requestReset(email: $email){
-            message
-        }
-    }
-`;
 
 function RequestReset(){
     //react hooks

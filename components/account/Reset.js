@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { useRouter } from 'next/router';
 
 import { USER_LOGGED_IN_QUERY } from '../context/UserContext';
 import { USER_ITEMS_QUERY } from '../../queriesAndMutations/items/itemQueries'
 import { USER_VOTES_QUERY } from '../../queriesAndMutations/votes/voteQueries'
+import { RESET_MUTATION } from '../../queriesAndMutations/users/userMutations'
 
 import MetaTitle from '../snippets/MetaTitle';
 import FormRow from '../formParts/FormRow';
@@ -12,15 +13,6 @@ import InputContainer from '../formParts/InputContainer';
 import FormButton from '../formParts/FormButton';
 import Error from '../snippets/Error';
 import NoData from '../snippets/NoData';
-
-
-const RESET_MUTATION = gql`
-    mutation RESET_MUTATION($password: String!, $confirmPassword: String!, $resetToken: String!){
-        resetPassword(password: $password, confirmPassword: $confirmPassword, resetToken: $resetToken){
-            id
-        }
-    }
-`;
 
 function Reset(){
     // get the url query
