@@ -1,16 +1,9 @@
-import { useMutation, gql } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import PropTypes from 'prop-types';
 
 import { USER_ITEMS_QUERY } from '../../queriesAndMutations/items/itemQueries'
+import { DELETE_ITEM_MUTATION } from '../../queriesAndMutations/items/itemMutations'
 import Error from '../snippets/Error';
-
-const DELETE_ITEM_MUTATION = gql`
-    mutation DELETE_ITEM_MUTATION($id: ID!){
-        deleteItem(id: $id){
-            id
-        }
-    }
-`;
 
 function DeleteMyItem(props){
     const [deleteItem, { error }] = useMutation(DELETE_ITEM_MUTATION, { 

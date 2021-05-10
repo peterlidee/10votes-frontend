@@ -2,8 +2,9 @@ import { useState } from 'react';
 import PropTypes from 'prop-types'
 import Router from 'next/router';
 
-import { useQuery, useMutation, gql } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import { SINGLE_ITEM_QUERY, USER_ITEMS_QUERY } from '../../queriesAndMutations/items/itemQueries'
+import { UPDATE_ITEM_MUTATION } from '../../queriesAndMutations/items/itemMutations'
 
 import MetaTitle from '../snippets/MetaTitle';
 import Loader from '../snippets/Loader';
@@ -13,27 +14,6 @@ import FormRow from '../formParts/FormRow';
 import InputSuggestion from './InputSuggestion';
 import FormButton from '../formParts/FormButton';
 import { inputToString } from '../../lib/inputToString';
-
-
-const UPDATE_ITEM_MUTATION = gql`
-    mutation UPDATE_ITEM_MUTATION(
-        $id: ID!
-        $location: String
-        $newTagNames: [String]
-        $oldTagNames: [String]
-        $oldTagIds: [ID!]
-    ){
-        updateItem(
-            id: $id
-            location: $location
-            newTagNames: $newTagNames
-            oldTagNames: $oldTagNames
-            oldTagIds: $oldTagIds
-        ){
-            id
-        }
-    }
-`;
 
 // what we need to do first, in a seperate component, is:
 // 1. check if there's an ID

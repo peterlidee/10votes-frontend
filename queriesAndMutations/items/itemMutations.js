@@ -24,6 +24,34 @@ const CREATE_ITEM_MUTATION = gql`
     }
 `;
 
+const UPDATE_ITEM_MUTATION = gql`
+    mutation(
+        $id: ID!
+        $location: String
+        $newTagNames: [String]
+        $oldTagNames: [String]
+        $oldTagIds: [ID!]
+    ){
+        updateItem(
+            id: $id
+            location: $location
+            newTagNames: $newTagNames
+            oldTagNames: $oldTagNames
+            oldTagIds: $oldTagIds
+        ){
+            id
+        }
+    }
+`;
+
+const DELETE_ITEM_MUTATION = gql`
+    mutation($id: ID!){
+        deleteItem(id: $id){
+            id
+        }
+    }
+`;
+
 // TODO: why are we asking for location?
 
-export { CREATE_ITEM_MUTATION }
+export { CREATE_ITEM_MUTATION, UPDATE_ITEM_MUTATION, DELETE_ITEM_MUTATION }
