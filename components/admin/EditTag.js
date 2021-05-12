@@ -14,7 +14,8 @@ const EditTag = (props) => ( // props: tagId and type (locations, tags, users)
                     <EditHeader type={props.type} data={data} />
                     <section className="admin__taxonomy-sections admin__taxonomy-sections--tags">
                         <div className="admin__taxonomy-section">
-                            tag summary
+                            summary
+                            tag: #{data.tag.name}
                             tag: 
                             <Link href={`/tag/${data.tag.slug}`}><a>items with tag</a></Link> {data.tag.name}: 
                             <GetItemsCount type={props.type} data={data}>

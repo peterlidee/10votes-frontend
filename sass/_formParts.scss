@@ -6,8 +6,8 @@
     margin: 0 auto 2em auto;
 
     display: grid;
-    grid-template-columns: 28px 1fr;
-    grid-gap: 1em 1em;
+    grid-template-columns: 24px 1fr;
+    gap: 1em .75em;
 
     &__number{
         position: relative;
@@ -18,14 +18,14 @@
             height: calc(100% + 1em);
             background: $dimmedBorder;
             @include baseTransition(background-color);
-            position: absolute; top: 0; left: 13px;
+            position: absolute; top: 0; left: 11px;
         }
         &.validForm:after   { background: $blue; }
         &--last:after       { content: none; }
 
         &__inner{
-            width: 28px;
-            height: 28px;
+            width: 24px;
+            height: 24px;
             color: #fff;
             border-radius: 50%;
             // center align
@@ -89,8 +89,18 @@
     }
 }
 
-@media screen and (min-width: 500px){
+@media screen and (min-width: 400px){
     .form-part{
-        grid-gap: 1em 2em;
+        grid-template-columns: 28px 1fr;
+        gap: 1em 2em;
+        &__number{
+            &:after{ // the line that connects the numbers
+                left: 13px;
+            }
+            &__inner{
+                width: 28px;
+                height: 28px;
+            }
+        }
     }
 }
