@@ -1,14 +1,15 @@
-.admin__search-creates{
+.admin__search-creates-grid{
     display: grid;
     // grid-template-columns: repeat( auto-fit, minmax(250px, 1fr) );
     gap: 1em;
 }
 
 @media screen and (min-width: 700px){
-    .admin__search-creates{
+    .admin__search-creates-grid{
         display: grid;
         grid-template-columns: repeat( auto-fit, minmax(350px, 1fr) );
         gap: 1em;
+        max-width: 1600px;
     }
 }
 
@@ -65,8 +66,29 @@
 }
 
 .admin__taxonomy{
-    &-sections{
+    &-sections-grid{
         display: grid;
-
+        grid-template-columns: repeat( auto-fit, minmax(250px, 1fr));
+        max-width: 1600px;
+        gap: 1em 2em;
     }
+    &-section{
+
+        &__title{
+            font-variant: small-caps;
+            color: $font; color: $admin;
+            //opacity: .55;
+            text-align: center;
+        }
+    }
+}
+
+.taxonomy-summary{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    //justify-content: center;
+    gap: 0 1em;
+    //> * { background: red; }
+    &__label{ text-align: right; }
+    &__link{ color: $font }
 }

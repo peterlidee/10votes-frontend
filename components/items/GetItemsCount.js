@@ -10,7 +10,7 @@ const GetItemsCount = (props) => { // props: data and type
     // get query and variables to feed to useQuery
     const { query, variables } = getQueriesAndVariables(props.type, "connection", props.data);
     const { loading, error, data } = useQuery(query, { variables })
-    if(loading || error || !data || !data.itemsConnection) return null;  
+    if(loading || error || !data || !data.itemsConnection) return null;
     return props.children({data})
 }
 

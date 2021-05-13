@@ -8,7 +8,6 @@ import MetaTitle from '../snippets/MetaTitle'
 const EditHeader = (props) => { // props: type (users, locations, tags) and data
     const typeSingular = props.type.slice(0,-1);
     const name = props.data[typeSingular].name || props.data[typeSingular].email;
-    console.log('name',name)
     return (
         <>
             <MetaTitle>{`Edit ${typeSingular} ${props.type == 'tags' ? '#' : ''}` + (props.type == 'users' ? '' : name) }</MetaTitle>

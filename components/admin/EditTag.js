@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import SingleTaxonomyAdmin from '../taxonomy/SingleTaxonomyAdmin'
 import EditHeader from './EditHeader'
 import GetItemsCount from '../items/GetItemsCount'
+import TaxonomySummary from './TaxonomySummary'
 
 const EditTag = (props) => ( // props: tagId and type (locations, tags, users)
     <SingleTaxonomyAdmin {...props}>
@@ -12,31 +13,32 @@ const EditTag = (props) => ( // props: tagId and type (locations, tags, users)
             return(
                 <>
                     <EditHeader type={props.type} data={data} />
-                    <section className="admin__taxonomy-sections admin__taxonomy-sections--tags">
+                    <section className="admin__taxonomy-sections-grid admin__taxonomy-sections-grid--tags">
+                        {/*<div className="admin__taxonomy-section">
+                            <h3 className="admin__taxonomy-section__title">summary</h3>
+                            <div className="taxonomy-summary">
+                                <div className="taxonomy-summary__label">tag name:</div>
+                                <div>#{data.tag.name}</div>
+                                <Link href={`/tag/${data.tag.slug}`}>
+                                    <a className="taxonomy-summary__label taxonomy-summary__link">items with tag: </a>
+                                </Link>
+                                <GetItemsCount type={props.type} data={data}>
+                                    {({ data: countData }) => (
+                                        <div className="taxonomy-summary__count">{countData.itemsConnection.aggregate.count}</div>
+                                    )}
+                                </GetItemsCount>
+                            </div>
+                             
+                        </div>*/}
+                        <TaxonomySummary type={props.type} data={data} />
                         <div className="admin__taxonomy-section">
-                            summary
-                            tag: #{data.tag.name}
-                            tag: 
-                            <Link href={`/tag/${data.tag.slug}`}><a>items with tag</a></Link> {data.tag.name}: 
-                            <GetItemsCount type={props.type} data={data}>
-                                {({ data: countData }) => {
-                                    const count = countData.itemsConnection.aggregate.count;
-                                    return(
-                                        <div className="taxonomy-count">
-                                            <span className="taxonomy-count__number">{count}</span>
-                                            <span className="taxonomy-count__label">{count === 1 ? 'pic' : "pics"}</span>
-                                        </div>
-                                    )
-                                }}
-                            </GetItemsCount>
+                            <h3 className="admin__taxonomy-section__title">change or merge</h3>
+                            <p>Removes old tag and updates all items with the new or already existing tag.</p>
                         </div>
                         <div className="admin__taxonomy-section">
-                            change to a new tag or merge with existing tag
-                            (items with this tag will have the old tag removed and a new tag added, the old tag itself will be deleted.)
-                        </div>
-                        <div className="admin__taxonomy-section">
-                            delete tag
-                            (items with this tag will have the tag removed)
+                            <h3 className="admin__taxonomy-section__title">delete</h3>
+                            <p>The tag is removed from database and from all items.</p>
+                            <div><button>delete</button></div>
                         </div>
                     </section>
                 </>

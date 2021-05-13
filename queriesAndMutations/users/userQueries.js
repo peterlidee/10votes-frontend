@@ -9,6 +9,25 @@ const SINGLE_USER_QUERY = gql`
             email
             items{
                 id
+                image
+                tags{
+                    id
+                    name
+                    slug
+                }
+                location{
+                    id
+                    name
+                    slug
+                    country{
+                        id
+                        name
+                        countryCode
+                    }
+                }
+                votes{
+                    id
+                }
             }
             votes{
                 id
