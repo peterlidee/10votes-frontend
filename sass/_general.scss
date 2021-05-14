@@ -39,6 +39,7 @@ body{
 // .no-data is used for on <Query> when f.e. a query doesn't return a result
 .no-data{
     text-align: center;
+    &__link{ display: block; color: $font; }
 }
 .items__message{
     text-align: center;
