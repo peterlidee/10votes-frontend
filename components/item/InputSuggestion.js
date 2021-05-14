@@ -32,7 +32,7 @@ function InputSuggestion(props) {
         users: USERS_QUERY,
     }
     // apollo lazy query, this fetches either tags or locations depending on props.type
-    const [getData, { error, loading, data }] = useLazyQuery(query[props.type]);
+    const [getData, { error, loading, data }] = useLazyQuery(query[props.type], { fetchPolicy: "cache-and-network" });
 
     const getLazyData = (inputValue) => {
         // clean up value
