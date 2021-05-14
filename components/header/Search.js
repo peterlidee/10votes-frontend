@@ -29,10 +29,10 @@ function Search() {
     // setup the 2 lazy queries
     const [getLocationsData, { 
         error: locationsError, loading: locationsLoading, data: locationsData, called: locationsCalled
-    }] = useLazyQuery(LOCATIONS_QUERY);
+    }] = useLazyQuery(LOCATIONS_QUERY, { fetchPolicy: "cache-and-network" });
     const [getTagsData, { 
         error: tagsError, loading: tagsLoading, data: tagsData, called: tagsCalled 
-    }] = useLazyQuery(TAGS_QUERY);
+    }] = useLazyQuery(TAGS_QUERY, { fetchPolicy: "cache-and-network" });
 
     // we will have 2 data streams: tagsData and locationData
     // we shuffle them together so we get one stream even if one of both are empty
@@ -72,7 +72,7 @@ function Search() {
         }
         let url;
         if(item.__typename === "Tag"){
-            url = `/tags/${item.slug}`;
+            url = `/tag/${item.slug}`;
         }else if(item.__typename === "Location"){
             url = `/location/${item.country.countryCode}/${item.name}`;
         }
