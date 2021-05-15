@@ -76,9 +76,8 @@ function SearchCreateType(props){
         <div className="search-create">
             <h2 className="item-crud__title title">Find {props.type != "users" && "or create"} {props.type}</h2>
             <form 
-                onSubmit={handleSubmit} 
-                id={`searchCreate${props.type}Form`}
-                className="form-part form-part--search-create"
+                onSubmit={handleSubmit}
+                className="form-part"
             >
 
                 <FormRow 
