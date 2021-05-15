@@ -10,4 +10,12 @@ const CREATE_TAG_MUTATION = gql`
     }
 `;
 
-export { CREATE_TAG_MUTATION };
+const DELETE_TAG_MUTATION = gql`
+    mutation($tagId: ID!){
+        deleteTag(tagId: $tagId){
+            id
+        }
+    }
+`;
+
+export { CREATE_TAG_MUTATION, DELETE_TAG_MUTATION };
