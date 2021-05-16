@@ -10,8 +10,8 @@ const EditUser = (props) => ( // props: userId and type (locations, tags, users)
                 <div>
                     <EditHeader type={props.type} data={data} />
                     <section className="admin__taxonomy-sections-grid admin__taxonomy-sections-grid--tags">
-                        <div className="admin__taxonomy-section">
-                            <h3 className="admin__taxonomy-section__title">summary</h3>
+                        <div className="admin-section">
+                            <h2 className="item-crud__title title">Summary</h2>
                             <div className="taxonomy-summary">
                                 {/* name / email */}
                                 <div className="taxonomy-summary__label">user email:</div>

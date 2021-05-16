@@ -15,7 +15,7 @@
 
 .title--admin{ color: $admin; }
 
-.search-create{
+.admin-section{
     .form-part__button{ background: $admin; }
 }
 
@@ -86,9 +86,7 @@
 .taxonomy-summary{
     display: grid;
     grid-template-columns: 1fr 1fr;
-    //justify-content: center;
     gap: 0 1em;
-    //> * { background: red; }
     &__label{ text-align: right; }
     &__link{ color: $font }
 }

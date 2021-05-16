@@ -33,22 +33,13 @@ const DeleteTag = (props) => {
     }
 
     return(
-        <div className="admin__taxonomy-section">
-            <h3 className="admin__taxonomy-section__title">delete</h3>
+        <div className="admin-section">
+            <h2 className="item-crud__title title">Delete</h2>
+            <p className="crud-message">Remove the tag from database and from all items.</p>
             <form 
                 onSubmit={handleDelete} 
                 className="form-part"
             >
-                <FormRow 
-                    number={1}
-                    valid={{ 
-                        field: true, 
-                        form: true,
-                    }}
-                >
-                    <div className="crud-message">Removes the tag from database and all items.</div>
-                </FormRow>
-
                 {error && (
                     <FormRow valid={{ error: true, form: false }}>
                         <Error error={error} plain={true} />
@@ -56,7 +47,7 @@ const DeleteTag = (props) => {
                 )}
 
                 <FormRow 
-                    number={2}
+                    number={1}
                     extraClass="last" 
                     valid={{ 
                         field: true, 

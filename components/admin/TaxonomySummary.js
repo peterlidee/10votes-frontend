@@ -6,8 +6,8 @@ import GetItemsCount from '../items/GetItemsCount'
 // locations: name + countryname + #items
 
 const TaxonomySummary = (props) => ( // type, data
-    <div className="admin__taxonomy-section">
-        <h3 className="admin__taxonomy-section__title">summary</h3>
+    <div className="admin-section">
+        <h2 className="item-crud__title title">Summary</h2>
         <div className="taxonomy-summary">
             {/* name / email */}
             <div className="taxonomy-summary__label">{props.type.slice(0,-1)} name:</div>

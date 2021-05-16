@@ -73,7 +73,7 @@ function SearchCreateType(props){
 
     const formValid = value && value.length >= 2;
     return(
-        <div className="search-create">
+        <div className="admin-section">
             <h2 className="item-crud__title title">Find {props.type != "users" && "or create"} {props.type}</h2>
             <form 
                 onSubmit={handleSubmit}
