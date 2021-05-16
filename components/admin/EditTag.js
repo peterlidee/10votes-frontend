@@ -21,7 +21,7 @@ const EditTag = (props) => ( // props: tagId and type (locations, tags, users)
                         <TaxonomySummary type={props.type} data={data} />
                         
 
-                        <UpdateTag />
+                        <UpdateTag oldTagId={data.tag.id} />
 
                         <DeleteTag tagId={data.tag.id} />
 
