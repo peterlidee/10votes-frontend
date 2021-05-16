@@ -1,11 +1,11 @@
-.admin__search-creates-grid{
+.admin-grid{
     display: grid;
-    // grid-template-columns: repeat( auto-fit, minmax(250px, 1fr) );
     gap: 1em;
 }
+.admin-section .crud-message{ max-width: 500px; margin-left: auto; margin-right: auto; }
 
-@media screen and (min-width: 700px){
-    .admin__search-creates-grid{
+@media screen and (min-width: 500px){
+    .admin-grid{
         display: grid;
         grid-template-columns: repeat( auto-fit, minmax(350px, 1fr) );
         gap: 1em;
@@ -14,17 +14,9 @@
 }
 
 .title--admin{ color: $admin; }
-
-.admin-section{
-    .form-part__button{ background: $admin; }
-}
-
-.admin__taxonomy-header{
+.admin-header{
     text-align: center;
-    margin-bottom: 2em;
-}
-
-.taxonomy-header{
+    margin-bottom: 1.5em;
     &__label{
         font-variant: small-caps;
         opacity: .55;
@@ -32,55 +24,40 @@
     &__title{
         margin: 0;
         font-size: 2em;
-    }
-    &__icon{
-        width: 2em;
-        .pin__icon{
-            width: 1em;
-            height: 1em;
-            transform: translateY(3px);
-            path{
-                fill: $admin;
+        &__icon{
+            width: 2em;
+            .pin__icon{
+                width: 1em;
+                height: 1em;
+                transform: translateY(3px);
+                path{
+                    fill: $admin;
+                }
             }
         }
     }
     &__link{
         color: $font;
     }
-}
-
-// emails can be large
-.admin__taxonomy-header--users .taxonomy-header__title{
-    font-size: 1.5em;
+    // emails can be large
+    &--users .admin-header__title{
+        font-size: 1.5em;
+    }
 }
 
 @media screen and (min-width: 500px){
-    .taxonomy-header{
+    .admin-header{
         &__title{
             font-size: 2.5em;
         }
-    }
-    .admin__taxonomy-header--users .taxonomy-header__title{
-        font-size: 2em;
+        &--users .taxonomy-header__title{
+            font-size: 2em;
+        }
     }
 }
 
-.admin__taxonomy{
-    &-sections-grid{
-        display: grid;
-        grid-template-columns: repeat( auto-fit, minmax(250px, 1fr));
-        max-width: 1600px;
-        gap: 1em 2em;
-    }
-    &-section{
-
-        &__title{
-            font-variant: small-caps;
-            color: $font; color: $admin;
-            //opacity: .55;
-            text-align: center;
-        }
-    }
+.admin-section{
+    .form-part__button{ background: $admin; }
 }
 
 .taxonomy-summary{

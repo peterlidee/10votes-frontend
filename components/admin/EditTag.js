@@ -17,7 +17,7 @@ const EditTag = (props) => ( // props: tagId and type (locations, tags, users)
             return(
                 <>
                     <EditHeader type={props.type} data={data} />
-                    <section className="admin__taxonomy-sections-grid admin__taxonomy-sections-grid--tags">
+                    <section className="admin-grid">
                         <TaxonomySummary type={props.type} data={data} />
                         
 

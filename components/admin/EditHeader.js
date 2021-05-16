@@ -11,15 +11,15 @@ const EditHeader = (props) => { // props: type (users, locations, tags) and data
     return (
         <>
             <MetaTitle>{`Edit ${typeSingular} ${props.type == 'tags' ? '#' : ''}` + (props.type == 'users' ? '' : name) }</MetaTitle>
-            <div className={`admin__taxonomy-header admin__taxonomy-header--${props.type}`}> 
-                <span className="taxonomy-header__label">edit {typeSingular}</span>
-                <h1 className="title title--admin taxonomy-header__title">
+            <div className={`admin-header admin-header--${props.type}`}> 
+                <span className="admin-header__label">edit {typeSingular}</span>
+                <h1 className="title title--admin admin-header__title">
                     {props.type == 'tags' && "#" }
-                    {props.type == 'locations' && <span className="taxonomy-header__icon"><IconPin /></span> }
+                    {props.type == 'locations' && <span className="admin-header__title__icon"><IconPin /></span> }
                     {name}
                 </h1>
                 <Link href="/admin" >
-                    <a className="taxonomy-header__link">&lt; back to admin</a>
+                    <a className="admin-header__link">&lt; back to admin</a>
                 </Link>
             </div>
         </>
