@@ -35,7 +35,7 @@ const DeleteTag = (props) => {
     return(
         <div className="admin-section">
             <h2 className="item-crud__title title">Delete</h2>
-            <p className="crud-message">Remove the tag from database and from all items.</p>
+            <p className="crud-message">Remove the tag from the database and from all items.</p>
             <form 
                 onSubmit={handleDelete} 
                 className="form-part"

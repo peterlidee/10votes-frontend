@@ -1,8 +1,10 @@
 // produces header for edit tag, locations and user
 // includes also the meta title
 
-import Link from 'next/link';
-import IconPin from '../snippets/icons/IconPin';
+import PropTypes from 'prop-types';
+
+import Link from 'next/link'
+import IconPin from '../snippets/icons/IconPin'
 import MetaTitle from '../snippets/MetaTitle'
 
 const EditHeader = (props) => { // props: type (users, locations, tags) and data
@@ -25,5 +27,10 @@ const EditHeader = (props) => { // props: type (users, locations, tags) and data
         </>
     )
 }
+
+EditHeader.propTypes = {
+    data: PropTypes.object.isRequired,
+    type: PropTypes.string.isRequired,
+};
 
 export default EditHeader;

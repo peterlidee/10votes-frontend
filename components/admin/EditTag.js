@@ -6,29 +6,18 @@ import TaxonomySummary from './TaxonomySummary'
 import DeleteTag from './DeleteTag'
 import UpdateTag from './UpdateTag'
 
-// redirect, via router
-// refetch single query?
-
 const EditTag = (props) => ( // props: tagId and type (locations, tags, users)
     <SingleTaxonomyAdmin {...props}>
-        {( data ) => {
-            console.log('data',data)
-
-            return(
-                <>
-                    <EditHeader type={props.type} data={data} />
-                    <section className="admin-grid">
-                        <TaxonomySummary type={props.type} data={data} />
-                        
-
-                        <UpdateTag oldTagId={data.tag.id} />
-
-                        <DeleteTag tagId={data.tag.id} />
-
-                    </section>
-                </>
-            )
-        }}
+        {( data ) => (
+            <>
+                <EditHeader type={props.type} data={data} />
+                <section className="admin-grid">
+                    <TaxonomySummary type={props.type} data={data} />
+                    <UpdateTag oldTagId={data.tag.id} />
+                    <DeleteTag tagId={data.tag.id} />
+                </section>
+            </>
+        )}
     </SingleTaxonomyAdmin>
 )
 

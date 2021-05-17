@@ -14,7 +14,7 @@ import PropTypes from 'prop-types'
 const UpdateTag = (props) => {
     // init state
     const [newTagName, setNewTagName] = useState('');
-    const [succesMessage, setSuccesMessage] = useState('');
+
     // setup mutation
     const [updateTag, {loading, error, data}] = useMutation(UPDATE_TAG_MUTATION, { 
         variables: {
@@ -35,14 +35,10 @@ const UpdateTag = (props) => {
             .then(res => {
                 // either a new tag was made or the tag was merged
                 // we check this by comparing oldTagID with the id of the response
-                console.log('res',res)
                 setNewTagName('');
                 if(props.oldTagId == res.data.updateTag.id){ // the id is the same, so the tag just got updated
                     // stay on the page
-                    // set a message, updated succesfully
-                    // refetch?
                     // clear out the form
-                    setSuccesMessage('The tag was updated.')
                 }else{
                     // the 2 tag id's don't match
                     // this means the old tag got merged into an existing in
@@ -102,9 +98,6 @@ const UpdateTag = (props) => {
                 </FormRow>
 
             </form>
-
-            {succesMessage && <p className="succes-message">{succesMessage} &times;</p>}
-
         </div>
     )
 }
