@@ -74,7 +74,7 @@ function Search() {
         if(item.__typename === "Tag"){
             url = `/tag/${item.slug}`;
         }else if(item.__typename === "Location"){
-            url = `/location/${item.country.countryCode}/${item.name}`;
+            url = `/location/${item.country.countryCode}/${item.slug}`;
         }
         Router.push(url);
     }
