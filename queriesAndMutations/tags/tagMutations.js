@@ -24,6 +24,8 @@ const DELETE_TAG_MUTATION = gql`
     mutation($tagId: ID!){
         deleteTag(tagId: $tagId){
             id
+            name
+            slug
         }
     }
 `;

@@ -1,5 +1,6 @@
-import Router from 'next/router'
+// used in admin sections tags, locations, users
 
+import Router from 'next/router'
 import { useMutation } from '@apollo/client'
 import { DELETE_TAG_MUTATION } from '../../queriesAndMutations/tags/tagMutations'
 import { DELETE_LOCATION_MUTATION } from '../../queriesAndMutations/locations/locationMutations'

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import SingleTaxonomyAdmin from '../taxonomy/SingleTaxonomyAdmin'
+import DeleteTaxonomy from './DeleteTaxonomy'
 import EditHeader from './EditHeader'
 import TaxonomySummary from './TaxonomySummary'
 
@@ -10,8 +11,9 @@ const EditLocation = (props) => ( // props: locationId and type (locations, tags
             return(
                 <>
                     <EditHeader type={props.type} data={data} />
-                    <section className="admin__taxonomy-sections-grid admin__taxonomy-sections-grid--tags">
+                    <section className="admin-grid">
                         <TaxonomySummary type={props.type} data={data} />
+                        <DeleteTaxonomy type="locations" id={props.locationId} />
                     </section>
                 </>
             )
