@@ -129,15 +129,15 @@ function UpdateItemComponent(props){
             //console.log('calling mutation with vars', variables);
             const res = await updateItem({
                 variables
-            }).catch(error => {
-                console.log(error.message);
-            });
-            // route the user to the youritems page, just edited
-            if(res.data){
-                Router.push({
-                    pathname: '/youritems',
-                });
-            }// else, don't route, there was an error, stay on page
+            }).then(res => {
+                // route the user to the youritems page, just edited
+                if(res.data){
+                    Router.push({
+                        pathname: '/youritems',
+                    });
+                }// else, don't route, there was an error, stay on page
+            }).catch(error => console.log(error.message));
+
         }else{ // no changes made, route them back to youritems page
             Router.push({
                 pathname: '/youritems',
