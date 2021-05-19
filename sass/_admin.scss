@@ -2,7 +2,7 @@
     display: grid;
     gap: 1em;
 }
-.admin-section .crud-message{ max-width: 500px; margin-left: auto; margin-right: auto; text-align: center; }
+.admin-section p.crud-message{ max-width: 500px; margin-left: auto; margin-right: auto; text-align: center; }
 
 @media screen and (min-width: 500px){
     .admin-grid{
