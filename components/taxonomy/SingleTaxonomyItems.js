@@ -23,7 +23,10 @@ function SingleTaxonomyItems(props){ // props: type
     variables.skip = props.page * perPage - perPage || 0;
 
     // make query
-    const { loading, error, data } = useQuery(query, { variables });
+    const { loading, error, data } = useQuery(query, { 
+        variables, 
+        fetchPolicy: "cache-and-network",
+    });
 
     if(loading) return <Loader containerClass="items-loader" />
     if(error)   return <Error error={error} />
