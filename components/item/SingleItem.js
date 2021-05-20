@@ -11,7 +11,8 @@ import Item from './Item';
 function SingleItem(props){
     if(!props.itemId) return <NoData>No such picture found.</NoData>
     const { error, loading, data } = useQuery(SINGLE_ITEM_QUERY, {
-        variables: { itemId: props.itemId },
+        variables: { itemId: props.itemId }, 
+        fetchPolicy: "cache-and-network"
     });
     if(loading) return <Loader containerClass="items-loader" />
     if(error) return <Error error={error} />

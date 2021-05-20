@@ -1,49 +1,58 @@
 import Router from 'next/router'
-
 import { useState } from 'react'
 import { useMutation } from '@apollo/client'
 import { UPDATE_TAG_MUTATION } from '../../queriesAndMutations/tags/tagMutations'
+import { UPDATE_LOCATION_MUTATION } from '../../queriesAndMutations/locations/locationMutations'
+import PropTypes from 'prop-types'
+import capitalizeString from '../../lib/capitalizeString'
 
 import FormRow from '../formParts/FormRow'
 import FormButton from '../formParts/FormButton'
 import Error from '../snippets/Error'
 import InputSuggestion from '../item/InputSuggestion'
 
-import PropTypes from 'prop-types'
+const query = {
+    tags: UPDATE_TAG_MUTATION,
+    locations: UPDATE_LOCATION_MUTATION,
+}
 
 const UpdateTag = (props) => {
+    // we need variations on props.type
+    const singleType = props.type.slice(0,-1);
+    const capitalizedSingleType = capitalizeString(singleType);
+
     // init state
-    const [newTagName, setNewTagName] = useState('');
+    const [newName, setNewName] = useState('');
 
     // setup mutation
-    const [updateTag, {loading, error, data}] = useMutation(UPDATE_TAG_MUTATION, { 
+    const [updateTaxonomy, {loading, error, data}] = useMutation(query[props.type], { 
         variables: {
-            oldTagId: props.oldTagId,
-            newTagName: newTagName,
+            [`old${capitalizedSingleType}Id`]: props.id,
+            [`new${capitalizedSingleType}Name`]: newName,
         }
     });
 
     // called on inputchange and onselect for InputSuggestion
     const handleSetState = (newState, index) => {
-        setNewTagName(newState.tags);
+        setNewName(newState[props.type]);
     }
 
     // submit function
     const handleUpdate = (e) => {
         e.preventDefault();
-        updateTag()
+        updateTaxonomy()
             .then(res => {
                 // either a new tag was made or the tag was merged
                 // we check this by comparing oldTagID with the id of the response
-                setNewTagName('');
-                if(props.oldTagId == res.data.updateTag.id){ // the id is the same, so the tag just got updated
+                setNewName('');
+                if(props.id == res.data[`update${capitalizedSingleType}`].id){ // the id is the same, so the tag just got updated
                     // stay on the page
                     // clear out the form
                 }else{
                     // the 2 tag id's don't match
                     // this means the old tag got merged into an existing in
                     // push to that existing tag page
-                    Router.push(`/admin/tag?id=${res.data.updateTag.id}`);
+                    Router.push(`/admin/${singleType}?id=${res.data[`update${capitalizedSingleType}`].id}`);
                 }
             })
             .catch(error => console.log(error.message));
@@ -52,7 +61,7 @@ const UpdateTag = (props) => {
     return(
         <div className="admin-section">
             <h2 className="item-crud__title title">Update</h2>
-            <p className="crud-message">Enter a new tag or select an existing one.</p>
+            <p className="crud-message">Enter a new {singleType} or select an existing one.</p>
             <form 
                 onSubmit={handleUpdate} 
                 className="form-part"
@@ -60,20 +69,20 @@ const UpdateTag = (props) => {
                 <FormRow 
                     number={1}
                     label={{ 
-                        text: "Enter a tag", 
+                        text: `Enter a ${singleType}`, 
                         required: true,
                         html: true,
-                        for: "input-suggestion__locations--1", // ??
+                        for: "input-suggestion__locations--1", // TODO ??
                     }}
                     valid={{ 
-                        field: newTagName && newTagName.length >= 2, 
-                        form: newTagName && newTagName.length >= 2,
+                        field: newName && newName.length >= 2, 
+                        form: newName && newName.length >= 2,
                     }}
                 >
                     <InputSuggestion 
-                        value={newTagName}
+                        value={newName}
                         index={-1}
-                        type="tags" 
+                        type={props.type} 
                         required={true} 
                         handleSetState={handleSetState} 
                         handleSelection={handleSetState} />
@@ -90,11 +99,11 @@ const UpdateTag = (props) => {
                     number={2}
                     extraClass="last" 
                     valid={{ 
-                        field: newTagName && newTagName.length >= 2, 
-                        form: newTagName && newTagName.length >= 2,
+                        field: newName && newName.length >= 2, 
+                        form: newName && newName.length >= 2,
                     }}
                 >
-                    <FormButton loading={loading} formValid={!Boolean(newTagName.length >= 2)}>update</FormButton>
+                    <FormButton loading={loading} formValid={!Boolean(newName.length >= 2)}>update</FormButton>
                 </FormRow>
 
             </form>
@@ -103,7 +112,8 @@ const UpdateTag = (props) => {
 }
 
 UpdateTag.propTypes = {
-    oldTagId: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
 };
 
 export default UpdateTag;

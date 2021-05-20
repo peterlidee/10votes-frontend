@@ -2,7 +2,7 @@ import SingleTaxonomyAdmin from '../taxonomy/SingleTaxonomyAdmin'
 import EditHeader from './EditHeader'
 import TaxonomySummary from './TaxonomySummary'
 import DeleteTaxonomy from './DeleteTaxonomy'
-import UpdateTag from './UpdateTag'
+import UpdateTaxonomy from './UpdateTaxonomy'
 import PropTypes from 'prop-types'
 
 const EditTag = (props) => ( // props: tagId and type (locations, tags, users)
@@ -12,7 +12,7 @@ const EditTag = (props) => ( // props: tagId and type (locations, tags, users)
                 <EditHeader type={props.type} data={data} />
                 <section className="admin-grid">
                     <TaxonomySummary type={props.type} data={data} />
-                    <UpdateTag oldTagId={data.tag.id} />
+                    <UpdateTaxonomy type={props.type} id={data.tag.id} />
                     <DeleteTaxonomy id={data.tag.id} type="tags" />
                 </section>
             </>
