@@ -86,7 +86,8 @@ function SearchCreateType(props){
                         text: props.type == 'users' ? 'Find users' : `Enter a ${props.type.slice(0,-1)}`,
                         required: true,
                         html: true,
-                        for: "input-suggestion__locations--1",
+                        //for: "input-suggestion__locations--1",
+                        for: `input-suggestion__${props.type}--1`,
                     }}
                     valid={{ 
                         field: formValid, 

@@ -72,7 +72,7 @@ const UpdateTag = (props) => {
                         text: `Enter a ${singleType}`, 
                         required: true,
                         html: true,
-                        for: "input-suggestion__locations--1", // TODO ??
+                        for: `input-suggestion__${props.type}--1`,
                     }}
                     valid={{ 
                         field: newName && newName.length >= 2, 
