@@ -47,4 +47,14 @@ const LOGOUT_MUTATION = gql`
     }
 `;
 
-export { SIGNUP_MUTATION, RESET_MUTATION, REQUEST_RESET_MUTATION, LOGIN_MUTATION, LOGOUT_MUTATION }
+// update permissions
+const UPDATE_PERMISSIONS_MUTATION = gql`
+    mutation($admin: Boolean!, $userId: ID!){
+        updatePermissions(admin: $admin, userId: $userId){
+            id
+            permissions
+        }
+    }
+`;
+
+export { SIGNUP_MUTATION, RESET_MUTATION, REQUEST_RESET_MUTATION, LOGIN_MUTATION, LOGOUT_MUTATION, UPDATE_PERMISSIONS_MUTATION }
