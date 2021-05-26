@@ -57,4 +57,29 @@ const UPDATE_PERMISSIONS_MUTATION = gql`
     }
 `;
 
-export { SIGNUP_MUTATION, RESET_MUTATION, REQUEST_RESET_MUTATION, LOGIN_MUTATION, LOGOUT_MUTATION, UPDATE_PERMISSIONS_MUTATION }
+// delete user
+const DELETE_USER_MUTATION = gql`
+    mutation($userId: ID!){
+        deleteUser(userId: $userId){
+            id
+            email
+            votes{
+                id
+            }
+            items{
+                id
+            }
+            permissions
+        }
+    }
+`
+
+export { 
+    SIGNUP_MUTATION, 
+    RESET_MUTATION, 
+    REQUEST_RESET_MUTATION, 
+    LOGIN_MUTATION, 
+    LOGOUT_MUTATION, 
+    UPDATE_PERMISSIONS_MUTATION, 
+    DELETE_USER_MUTATION,
+}
