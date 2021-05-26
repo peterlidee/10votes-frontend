@@ -25,7 +25,6 @@ function SingleTaxonomyItems(props){ // props: type
     // make query
     const { loading, error, data } = useQuery(query, { 
         variables, 
-        fetchPolicy: "cache-and-network",
     });
 
     if(loading) return <Loader containerClass="items-loader" />
