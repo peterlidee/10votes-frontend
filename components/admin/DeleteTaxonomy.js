@@ -4,6 +4,7 @@ import Router from 'next/router'
 import { useMutation } from '@apollo/client'
 import { DELETE_TAG_MUTATION } from '../../queriesAndMutations/tags/tagMutations'
 import { DELETE_LOCATION_MUTATION } from '../../queriesAndMutations/locations/locationMutations'
+import { DELETE_USER_MUTATION }  from '../../queriesAndMutations/users/userMutations'
 
 import FormRow from '../formParts/FormRow'
 import FormButton from '../formParts/FormButton'
@@ -15,9 +16,10 @@ import capitalizeString from '../../lib/capitalizeString'
 const query = {
     tags: DELETE_TAG_MUTATION,
     locations: DELETE_LOCATION_MUTATION,
+    users: DELETE_USER_MUTATION,
 }
 
-const DeleteTag = (props) => {
+const DeleteTaxonomy = (props) => {
 
     const [deleteTaxonomy, { loading, error }] = useMutation(query[props.type], { 
         variables: { [`${props.type.slice(0,-1)}Id`]: props.id },
@@ -46,6 +48,7 @@ const DeleteTag = (props) => {
             <h2 className="item-crud__title title">Delete</h2>
             {props.type == "tags" && <p className="crud-message">Remove the tag from the database and from all items.</p>}
             {props.type == "locations" && <p className="crud-message">Remove the location from the database. You can only do this if the location has no items.</p>}
+            {props.type == "users" && <p className="crud-message">Remove the user and all the items and votes of this user.</p>}
             <form 
                 onSubmit={handleDelete} 
                 className="form-part"
@@ -72,9 +75,9 @@ const DeleteTag = (props) => {
     )
 }
 
-DeleteTag.propTypes = {
+DeleteTaxonomy.propTypes = {
     id: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
 };
 
-export default DeleteTag;
+export default DeleteTaxonomy;
