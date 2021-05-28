@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import SingleTaxonomyAdmin from '../taxonomy/SingleTaxonomyAdmin'
+import DeleteTaxonomy from './DeleteTaxonomy'
 import EditHeader from './EditHeader'
 import UserPermissions from './UserPermissions'
 import UserSummary from './UserSummary'
@@ -14,9 +15,8 @@ const EditUser = (props) => ( // props: userId and type (locations, tags, users)
                     <section className="admin-grid">
                         <UserSummary data={data} />
                         <UserPermissions data={data} />
+                        <DeleteTaxonomy type={props.type} id={data.user.id} />
                     </section>
-
-                    hello, i'm the {props.type.slice(0,-1)}: {data[props.type.slice(0,-1)]?.name || data[props.type.slice(0,-1)]?.id}
                 </div>
             )
         }}
