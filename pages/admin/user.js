@@ -1,11 +1,11 @@
 import { initializeApollo, addApolloState } from '../../lib/apollo'
 import AdminGate from "../../components/admin/AdminGate"
-import EditUser from "../../components/admin/EditUser"
+import EditTaxonomy from "../../components/admin/EditTaxonomy"
 
 function UsersPage(props){
     return(
         <AdminGate>
-            <EditUser userId={props.userId} type="users" />
+            <EditTaxonomy id={props.userId} type="users" />
         </AdminGate>
     )
 }

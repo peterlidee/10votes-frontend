@@ -16,7 +16,7 @@ const query = {
     locations: UPDATE_LOCATION_MUTATION,
 }
 
-const UpdateTag = (props) => {
+const UpdateTaxonomy = (props) => {
     // we need variations on props.type
     const singleType = props.type.slice(0,-1);
     const capitalizedSingleType = capitalizeString(singleType);
@@ -111,9 +111,9 @@ const UpdateTag = (props) => {
     )
 }
 
-UpdateTag.propTypes = {
+UpdateTaxonomy.propTypes = {
     type: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired,
 };
 
-export default UpdateTag;
+export default UpdateTaxonomy;

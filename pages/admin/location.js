@@ -1,12 +1,12 @@
 import { initializeApollo, addApolloState } from '../../lib/apollo'
 import { SINGLE_LOCATION_QUERY } from '../../queriesAndMutations/locations/locationQueries'
 import AdminGate from "../../components/admin/AdminGate"
-import EditLocation from "../../components/admin/EditLocation"
+import EditTaxonomy from "../../components/admin/EditTaxonomy"
 
 function LocationsPage(props){
     return(
         <AdminGate>
-            <EditLocation locationId={props.locationId} type="locations" />
+            <EditTaxonomy id={props.locationId} type="locations" />
         </AdminGate>
     )
 }

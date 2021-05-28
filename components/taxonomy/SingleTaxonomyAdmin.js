@@ -16,7 +16,7 @@ const SingleTaxonomyAdmin = (props) => { // props: tagId and type (locations, ta
     // construct the correct key from props.type, f.e. tagId or locationId or userId
     const key = `${props.type.slice(0,-1)}Id`;
     // check if there's an Id prop or if it's empty
-    if(!props[key]) return(
+    if(!props.id) return(
         <NoData>
             No {props.type.slice(0,-1)} found.
             <Link href="/admin" >
@@ -26,7 +26,7 @@ const SingleTaxonomyAdmin = (props) => { // props: tagId and type (locations, ta
     )
     
     // get the relevant query and variables
-    const { query, variables } = getQueriesAndVariables(props.type, 'single', {[key]: props[key]});
+    const { query, variables } = getQueriesAndVariables(props.type, 'single', {[key]: props.id});
     // make the query
     // variables f.e. { tagId: 123564 }
     const { loading, error, data } = useQuery(query, { variables });
@@ -46,6 +46,7 @@ const SingleTaxonomyAdmin = (props) => { // props: tagId and type (locations, ta
 }
 
 SingleTaxonomyAdmin.propTypes = {
+    id: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
 }
 

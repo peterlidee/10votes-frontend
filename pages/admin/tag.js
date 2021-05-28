@@ -1,12 +1,12 @@
 import { initializeApollo, addApolloState } from '../../lib/apollo'
 import { SINGLE_TAG_QUERY } from '../../queriesAndMutations/tags/tagQueries'
 import AdminGate from "../../components/admin/AdminGate"
-import EditTag from "../../components/admin/EditTag"
+import EditTaxonomy from "../../components/admin/EditTaxonomy"
 
 function TagsPage(props){
     return(
         <AdminGate>
-            <EditTag tagId={props.tagId} type="tags" />
+            <EditTaxonomy id={props.tagId} type="tags" />
         </AdminGate>
     )
 }
