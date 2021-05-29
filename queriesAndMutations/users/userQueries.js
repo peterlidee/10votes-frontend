@@ -31,6 +31,9 @@ const SINGLE_USER_QUERY = gql`
             }
             votes{
                 id
+                item{
+                    id
+                }
             }
             permissions
         }

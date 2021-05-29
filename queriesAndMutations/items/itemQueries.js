@@ -72,4 +72,15 @@ const USER_ITEMS_QUERY = gql`
     ${ITEM_FIELDS_FRAGMENT}
 `;
 
-export { ITEMS_CONNECTION_QUERY, SINGLE_ITEM_QUERY, ITEMS_QUERY, USER_ITEMS_QUERY }
+// query items that match [ID]
+// used in admin EditTaxonomy for user (the items the user voted for)
+const ITEMS_BY_IDS = gql`
+    query($ids: [ID!]!){
+        itemsByIds(ids: $ids){
+            ...ItemFields
+        }
+    }
+    ${ITEM_FIELDS_FRAGMENT}
+`;
+
+export { ITEMS_CONNECTION_QUERY, SINGLE_ITEM_QUERY, ITEMS_QUERY, USER_ITEMS_QUERY, ITEMS_BY_IDS }

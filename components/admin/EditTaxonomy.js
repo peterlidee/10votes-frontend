@@ -7,6 +7,8 @@ import UserSummary from './UserSummary'
 import UpdateTaxonomy from './UpdateTaxonomy'
 import UserPermissions from './UserPermissions'
 import DeleteTaxonomy from './DeleteTaxonomy'
+import UsersItems from './UsersItems'
+import UsersVotedItems from './UsersVotedItems'
 
 const EditTaxonomy = props => ( // props: id and type (locations, tags, users)
     <SingleTaxonomyAdmin {...props}>
@@ -28,6 +30,12 @@ const EditTaxonomy = props => ( // props: id and type (locations, tags, users)
                     )} 
                     <DeleteTaxonomy type={props.type} id={props.id} />
                 </section>
+                {props.type == "users" && (
+                    <>
+                        <UsersItems items={data.user.items} />
+                        <UsersVotedItems votes={data.user.votes} />
+                    </>
+                )} 
             </>
         )}
     </SingleTaxonomyAdmin>
