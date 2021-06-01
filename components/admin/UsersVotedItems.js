@@ -15,9 +15,10 @@ const UsersVotedItemsWrapper = props => (
 
 const UsersVotedItems = props => {
     const ids = props.votes.map(vote => vote.item.id);
-    const { loading, error, data } = useQuery(ITEMS_BY_IDS, { variables: {
-        ids: ids
-    }});
+    const { loading, error, data } = useQuery(ITEMS_BY_IDS, { 
+        variables: { ids: ids },
+        fetchPolicy: "cache-and-network",
+    });
     if(loading) return <Loader containerClass="items-loader" />
     if(error) return <Error error={error} />
     if(!data.itemsByIds) return <NoData>Uhm, something went wrong :/. Try reloading the page.</NoData>;

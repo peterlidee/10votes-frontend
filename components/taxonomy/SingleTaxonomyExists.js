@@ -27,7 +27,14 @@ function SingleTaxonomyExists(props){
         // if no f.e. props.tagSlug, it will have undefined as value
         { tagSlug: props.tagSlug, locationSlug: props.locationSlug, countryCode: props.countryCode }
     );
-    const { loading, error, data } = useQuery(query, { variables });
+    const { loading, error, data, previousData } = useQuery(query, { 
+        variables,
+        //fetchPolicy: "cache-and-network",
+    });
+
+    console.log('props',props)
+    console.log('data',data)
+    console.log('prevData',previousData)
 
     if(loading) return <Loader containerClass="items-loader" />;                
     if(error) return <Error error={error} />

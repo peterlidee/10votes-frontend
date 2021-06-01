@@ -9,7 +9,10 @@ import getQueriesAndVariables from '../../lib/getQueriesAndVariables'
 const GetItemsCount = (props) => { // props: data and type
     // get query and variables to feed to useQuery
     const { query, variables } = getQueriesAndVariables(props.type, "connection", props.data);
-    const { loading, error, data } = useQuery(query, { variables, fetchPolicy: "cache-and-network" })
+    const { loading, error, data } = useQuery(query, { 
+        variables, 
+        fetchPolicy: "cache-and-network" 
+    })
     if(loading || error || !data || !data.itemsConnection) return null;
     return props.children({data})
 }
