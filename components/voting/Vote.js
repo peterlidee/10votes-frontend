@@ -4,17 +4,15 @@ import { VOTE_MUTATION } from '../../queriesAndMutations/votes/voteMutations'
 
 import Error from '../snippets/Error';
 
+// TODO: add optimictic response
 
 function Vote(props){
-    const [castVote, {error, data, loading}] = useMutation(VOTE_MUTATION, {
+    const [castVote, {error, loading}] = useMutation(VOTE_MUTATION, {
         variables: { itemId: props.id },
         update (cache, { data }) {
+
             // the user just voted on an item, and the useMutation returned that vote
             // so we're gonna update the cache of USER_VOTES_QUERY with this vote
-            // as we asked no only for the vote but also for the item
-            // vote { id item { ... } }
-            // the SingleItem query also gets updated, 
-            // so we don't have to do that manually, yay for apollo
 
             // get the cache of USER_VOTES_QUERY
             const userVotesCache = cache.readQuery({

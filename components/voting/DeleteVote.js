@@ -4,14 +4,12 @@ import { DELETE_VOTE_MUTATION } from '../../queriesAndMutations/votes/voteMutati
 
 import Error from '../snippets/Error'
 
-
-
 function DeleteVote(props){
     const [deleteVote, { error, loading }] = useMutation(DELETE_VOTE_MUTATION, {
         variables: { voteId: props.voteId, itemId: props.itemId },
         update(cache, { data }){
             // a vote was just unmade, now we remove it from the cache of USER_VOTES_QUERY
-            // this should also update singleItem?
+            // this should also update singleItem????
             // TODO: check if it works on items
             // get the cache of USER_VOTES_QUERY
             const userVotesCache = cache.readQuery({
@@ -22,9 +20,6 @@ function DeleteVote(props){
                 // we update the cache by removing the data (a vote) returned from deleteVote from 
                 // the cache of USER_VOTES_QUERY
                 // construct the new cache array
-                // console.log('data',data)
-                // console.log('userVotesCache',userVotesCache)
-
                 const newUserVotes = userVotesCache.userVotes.filter(userVote => userVote.id != data.deleteVote.id);
                 //console.log('newUSerVotes',newUserVotes)
                 // and write it
