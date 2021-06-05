@@ -7,7 +7,6 @@ import Error from './snippets/Error';
 import NoData from './snippets/NoData';
 import Item from './item/Item';
 
-
 function DisplayHomeItemsWrap(props){
     return(
         <section>
@@ -21,23 +20,12 @@ function DisplayHomeItems(props){
     const { loading, error, data, previousData } = useQuery(ITEMS_QUERY, { 
         variables: { orderBy: props.orderBy },
         fetchPolicy: "cache-and-network",
+        nextFetchPolicy: "cache-first",
     });
-    //if(loading && !previousData) return <Loader containerClass="items-loader" />;
-    if(loading) return <Loader containerClass="items-loader" />;                
+    if(loading) return <Loader containerClass="items-loader" />;
     if(error) return <Error error={error} />
-
-    //if(!data || !previousData) return <NoData>Something went wrong</NoData>
-    if(!data) return <NoData>Something went wrong</NoData>
-    
-
-    //if(!data.items.length || !previousData.items.length) return <NoData>No items yet.</NoData>
+    if(!data || !data.items) return <NoData>Something went wrong</NoData>
     if(!data.items.length) return <NoData>No items yet.</NoData>
-    
-    // if(loading && previousData) return(
-    //     <div className="grid-items">
-    //         {previousData.items.map(item => <Item key={item.id} item={item} />)}
-    //     </div>
-    // );
     return(
         <div className="grid-items">
             {data.items.map(item => <Item key={item.id} item={item} />)}
