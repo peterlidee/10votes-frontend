@@ -1,7 +1,7 @@
 import PleaseSignin from '../components/account/PleaseSignin';
 import YourVotes from '../components/voting/YourVotes';
 
-const yourVotesPage = props => (
+const yourVotesPage = () => (
     <PleaseSignin>
         <YourVotes />
     </PleaseSignin>

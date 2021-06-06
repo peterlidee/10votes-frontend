@@ -1,7 +1,7 @@
 import PleaseSignin from '../components/account/PleaseSignin';
 import YourItems from '../components/items/YourItems';
 
-const yourItemsPage = props => (
+const yourItemsPage = () => (
     <PleaseSignin>
         <YourItems />
     </PleaseSignin>

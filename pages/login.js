@@ -1,5 +1,5 @@
 import Login from '../components/account/Login';
 
-const loginPage = props => <Login />
+const loginPage = () => <Login />
 
 export default loginPage;
