@@ -7,7 +7,6 @@ import PropTypes from 'prop-types';
 import getQueriesAndVariables from '../../lib/getQueriesAndVariables';
 import { useQuery } from '@apollo/client';
 
-import Loader from '../snippets/Loader';
 import Error from '../snippets/Error';
 import NoData from '../snippets/NoData';
 import MetaTitle from '../snippets/MetaTitle';
@@ -27,16 +26,14 @@ function SingleTaxonomyExists(props){
         // if no f.e. props.tagSlug, it will have undefined as value
         { tagSlug: props.tagSlug, locationSlug: props.locationSlug, countryCode: props.countryCode }
     );
-    const { loading, error, data, previousData } = useQuery(query, { 
+    const { loading, error, data } = useQuery(query, { 
         variables,
-        //fetchPolicy: "cache-and-network",
+        fetchPolicy: "cache-and-network",
+        nextFetchPolicy: "cache-only",
     });
 
-    console.log('props',props)
-    console.log('data',data)
-    console.log('prevData',previousData)
-
-    if(loading) return <Loader containerClass="items-loader" />;                
+    // we don't return a loading state for this component cause it would get too 'loady'               
+    if(loading) return null;
     if(error) return <Error error={error} />
 
     // check for tags, location and country if the slug returned data
