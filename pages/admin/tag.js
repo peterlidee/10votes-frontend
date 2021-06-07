@@ -1,5 +1,7 @@
 import { initializeApollo, addApolloState } from '../../lib/apollo'
-import { SINGLE_TAG_QUERY } from '../../queriesAndMutations/tags/tagQueries'
+
+//import { SINGLE_TAG_QUERY } from '../../queriesAndMutations/tags/tagQueries'
+
 import AdminGate from "../../components/admin/AdminGate"
 import EditTaxonomy from "../../components/admin/EditTaxonomy"
 
@@ -17,12 +19,12 @@ export async function getServerSideProps(context) {
     const apolloClient = initializeApollo()
     const id = context.query.id || "";
 
-    if(id){
-        await apolloClient.query({
-            query: SINGLE_TAG_QUERY,
-            variables: { tagId: id },
-        }).catch(error => console.warn(error.message))
-    }
+    // if(id){
+    //     await apolloClient.query({
+    //         query: SINGLE_TAG_QUERY,
+    //         variables: { tagId: id },
+    //     }).catch(error => console.warn(error.message))
+    // }
   
     return addApolloState(apolloClient, {
         props: { tagId: id },
