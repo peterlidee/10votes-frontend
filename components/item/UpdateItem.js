@@ -23,7 +23,8 @@ function UpdateItemGate(props){
     // gate the component if no id was given
     if(!props.itemId) return <NoData>You need to query a picture.</NoData>;
     const { loading, error, data } = useQuery(SINGLE_ITEM_QUERY, {
-        variables: { itemId: props.itemId }
+        variables: { itemId: props.itemId },
+        fetchPolicy: "cache-and-network",
     });
     if(loading) return <Loader containerClass="items-loader" />
     if(error)   return <Error error={error} />
