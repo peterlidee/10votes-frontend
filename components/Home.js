@@ -17,7 +17,7 @@ function DisplayHomeItemsWrap(props){
 }
 
 function DisplayHomeItems(props){
-    const { loading, error, data, previousData } = useQuery(ITEMS_QUERY, { 
+    const { loading, error, data } = useQuery(ITEMS_QUERY, { 
         variables: { orderBy: props.orderBy },
         fetchPolicy: "cache-and-network",
         nextFetchPolicy: "cache-first",
@@ -33,7 +33,7 @@ function DisplayHomeItems(props){
     )
 }
 
-const Home = props => (
+const Home = () => (
     <>
         <MetaTitle>Home</MetaTitle>
         <DisplayHomeItemsWrap title="Recent Items" orderBy="createdAt_DESC" />
