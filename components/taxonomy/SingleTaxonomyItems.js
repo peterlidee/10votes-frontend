@@ -23,30 +23,14 @@ function SingleTaxonomyItems(props){ // props: type
     variables.skip = props.page * perPage - perPage || 0;
 
     // make query
-    const { loading, error, data, previousData } = useQuery(query, { 
+    const { loading, error, data } = useQuery(query, { 
         variables, 
         fetchPolicy: "cache-and-network",
+        nextFetchPolicy: "cache-only",
     });
 
-    console.log('items data',data)
-    console.log('items previousData',previousData)
-
-    if(loading && !previousData) return <Loader containerClass="items-loader" />
+    if(loading ) return <Loader containerClass="items-loader" />
     if(error) return <Error error={error} />
-
-    if(previousData && !data){
-        if(!previousData.items) return <NoData>No pictures to display.</NoData>
-        if(previousData.items.length == 0 && props.page > 1) return <NoData>No more pictures to display.</NoData>
-        if(previousData.items.length == 0) return <NoData>No pictures yet for this {props.type}. Maybe you would like to <Link href="/addapicture"><a>add one</a></Link>?</NoData>
-        if(loading) return(
-            <div className="grid-items">
-                {previousData.items.map(item => 
-                    <Item key={item.id} item={item} />
-                )}
-            </div>
-        )
-    }
-
     if(!data || !data.items) return <NoData>No pictures to display.</NoData>
     if(data.items.length == 0 && props.page > 1) return <NoData>No more pictures to display.</NoData>
     if(data.items.length == 0) return <NoData>No pictures yet for this {props.type}. Maybe you would like to <Link href="/addapicture"><a>add one</a></Link>?</NoData>
