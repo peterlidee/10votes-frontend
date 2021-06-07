@@ -31,7 +31,6 @@ const SingleTaxonomyAdmin = (props) => { // props: tagId and type (locations, ta
     // variables f.e. { tagId: 123564 }
     const { loading, error, data } = useQuery(query, { 
         variables,
-        fetchPolicy: "cache-and-network",
     });
 
     if(loading) return <Loader containerClass="items-loader" />
