@@ -6,24 +6,6 @@ import UserContext from '../context/UserContext';
 import Vote from './Vote';
 import DeleteVote from './DeleteVote';
 
-// TODO: remove helper ft?
-// helper function
-// this function tests if the property of an object in an array
-// can also be found in the second array
-// if so, it returns the object's id
-// if not it returns false
-// function findDuplicate(arr1, arr2){
-//     let matchFound = false;
-//     // loop over all votes in item, foreach check if it matches any of the user's votes
-//     arr1.forEach(obj1 => {
-//         const index = arr2.findIndex(obj2 => obj2.id == obj1.id);
-//         if(index >= 0){
-//             matchFound = arr2[index].id
-//         }
-//     });
-//     return matchFound;
-// }
-
 // this function return null when not logged in or loading, else Voting
 // only show voting or unvoting when logged in
 function LoggedIn(props){

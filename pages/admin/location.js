@@ -1,5 +1,5 @@
 import { initializeApollo, addApolloState } from '../../lib/apollo'
-//import { SINGLE_LOCATION_QUERY } from '../../queriesAndMutations/locations/locationQueries'
+
 import AdminGate from "../../components/admin/AdminGate"
 import EditTaxonomy from "../../components/admin/EditTaxonomy"
 
@@ -16,13 +16,6 @@ function LocationsPage(props){
 export async function getServerSideProps(context) {
     const apolloClient = initializeApollo()
     const id = context.query.id || "";
-
-    // if(id){
-    //     await apolloClient.query({
-    //         query: SINGLE_LOCATION_QUERY,
-    //         variables: { locationId: id },
-    //     }).catch(error => console.warn(error.message))
-    // }
   
     return addApolloState(apolloClient, {
         props: { locationId: id },

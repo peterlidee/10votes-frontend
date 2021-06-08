@@ -4,8 +4,6 @@ import { VOTE_MUTATION } from '../../queriesAndMutations/votes/voteMutations'
 
 import Error from '../snippets/Error';
 
-// TODO: add optimictic response
-
 function Vote(props){
     const [castVote, {error, loading}] = useMutation(VOTE_MUTATION, {
         variables: { itemId: props.id },
