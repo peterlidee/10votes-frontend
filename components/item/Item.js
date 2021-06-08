@@ -26,18 +26,6 @@ function Item(props){ // props: item, showEdit, hideVote, single
                     </a>
                 </Link>
             }
-            {props.showEdit && 
-                <div className="item__edit">
-                    <Link
-                        href={{
-                            pathname: '/update',
-                            query: { id: item.id },
-                        }}>
-                        <a className="item__edit-link">edit item</a>
-                    </Link>
-                    <DeleteMyItem id={item.id}>&times; delete item</DeleteMyItem>
-                </div>
-            }
             <div className="item__meta">
                 <div className="item__tags">
                     {item.location && 
@@ -66,6 +54,18 @@ function Item(props){ // props: item, showEdit, hideVote, single
                 </div>
                 {!props.hideVote && <Voting currentItemId={item.id} currentItemVotes={item.votes} />}
             </div>
+            {props.showEdit && 
+                <div className="item__edit">
+                    <Link
+                        href={{
+                            pathname: '/update',
+                            query: { id: item.id },
+                        }}>
+                        <a className="item__edit-link">edit item</a>
+                    </Link>
+                    <DeleteMyItem id={item.id}>&times; delete item</DeleteMyItem>
+                </div>
+            }
         </article>
     )
 }
