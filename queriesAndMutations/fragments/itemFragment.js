@@ -24,5 +24,8 @@ export const ITEM_FIELDS_FRAGMENT =  gql`
             id
         }
         voteCount
+        user{
+            id
+        }
     }
 `;
