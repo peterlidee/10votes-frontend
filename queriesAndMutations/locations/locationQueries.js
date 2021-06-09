@@ -1,20 +1,15 @@
-import { gql } from '@apollo/client';
+import { gql } from '@apollo/client'
+import LOCATION_FIELDS_FRAGMENT from '../fragments/locationFragment'
 
 // find a single location by slug or id
 // used in /admin/location?id=
 const SINGLE_LOCATION_QUERY = gql`
     query($locationSlug: String, $locationId: ID){
         location(locationSlug: $locationSlug, locationId: $locationId){
-            id
-            name
-            slug
-            country{
-                id
-                name
-                countryCode
-            }
+            ...LocationFields
         }
     }
+    ${LOCATION_FIELDS_FRAGMENT}
 `;
 
 // for finding a location we use locationS query, 
@@ -24,16 +19,10 @@ const SINGLE_LOCATION_QUERY = gql`
 const LOCATIONS_QUERY = gql`
     query($locationSlug: String, $countryCode: String, $nameContains: String){
         locations( locationSlug: $locationSlug, countryCode: $countryCode, nameContains: $nameContains ){
-            id
-            name
-            slug
-            country{
-                id
-                name
-                countryCode
-            }
+            ...LocationFields
         }
     }
+    ${LOCATION_FIELDS_FRAGMENT}
 `;
 
 export {

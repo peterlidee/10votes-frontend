@@ -1,17 +1,5 @@
 import { gql } from '@apollo/client';
-
-const LOCATION_FIELDS_FRAGMENT =  gql`
-    fragment LocationFields on Location{
-        id
-        name
-        slug
-        country{
-            id
-            name
-            countryCode
-        }
-    }
-`;
+import LOCATION_FIELDS_FRAGMENT from '../fragments/locationFragment'
 
 const CREATE_LOCATION_MUTATION = gql`
     mutation($name: String!, $countryCode: String!){
