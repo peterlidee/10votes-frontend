@@ -1,4 +1,5 @@
 import { gql } from '@apollo/client';
+import { ITEM_FIELDS_FRAGMENT } from '../fragments/itemFragment'
 
 // get user by id
 // used in admin > EditUser
@@ -8,26 +9,7 @@ const SINGLE_USER_QUERY = gql`
             id
             email
             items{
-                id
-                image
-                tags{
-                    id
-                    name
-                    slug
-                }
-                location{
-                    id
-                    name
-                    slug
-                    country{
-                        id
-                        name
-                        countryCode
-                    }
-                }
-                votes{
-                    id
-                }
+                ...ItemFields
             }
             votes{
                 id
@@ -38,6 +20,7 @@ const SINGLE_USER_QUERY = gql`
             permissions
         }
     }
+    ${ITEM_FIELDS_FRAGMENT}
 `;
 
 // used in inputSuggestion (admin dash)
