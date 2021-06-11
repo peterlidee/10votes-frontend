@@ -1,19 +1,30 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
-import Router from 'next/router';
+import Router from 'next/router'
 
-import { useQuery, useMutation } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client'
 import { SINGLE_ITEM_QUERY, USER_ITEMS_QUERY } from '../../queriesAndMutations/items/itemQueries'
 import { UPDATE_ITEM_MUTATION } from '../../queriesAndMutations/items/itemMutations'
+import UserContext from '../context/UserContext'
 
-import MetaTitle from '../snippets/MetaTitle';
-import Loader from '../snippets/Loader';
-import Error from '../snippets/Error';
-import NoData from '../snippets/NoData';
-import FormRow from '../formParts/FormRow';
-import InputSuggestion from './InputSuggestion';
-import FormButton from '../formParts/FormButton';
-import { inputToString } from '../../lib/inputToString';
+import MetaTitle from '../snippets/MetaTitle'
+import Loader from '../snippets/Loader'
+import Error from '../snippets/Error'
+import NoData from '../snippets/NoData'
+import FormRow from '../formParts/FormRow'
+import InputSuggestion from './InputSuggestion'
+import FormButton from '../formParts/FormButton'
+import { inputToString } from '../../lib/inputToString'
+import DeleteItem from './DeleteItem'
+
+
+// we need to check if current user is admin to grant them permission
+function IsAdminGate(props){
+    // no loading or error, gets handled prior in other components
+    const { data: userData } = useContext(UserContext);
+    const isAdmin = userData?.me.permissions.includes('ADMIN');
+    return <UpdateItemGate {...props} isAdmin={isAdmin} />
+}
 
 // what we need to do first, in a seperate component, is:
 // 1. check if there's an ID
@@ -25,21 +36,26 @@ function UpdateItemGate(props){
     const { loading, error, data } = useQuery(SINGLE_ITEM_QUERY, {
         variables: { itemId: props.itemId },
         fetchPolicy: "cache-and-network",
+        nextFetchPolicy: "cache-only",
     });
     if(loading) return <Loader containerClass="items-loader" />
     if(error)   return <Error error={error} />
     // check if there is an item ( data: { item: null } )
     if(!data || !data.item) return <NoData>No picture found.</NoData>
 
-    // check if the user owns this item
+    // check if the user owns this item or user is admin
     const isItemInUsersItems = props.userItems.find(userItem => userItem.id == props.itemId);
-    if(!isItemInUsersItems) return <NoData>You can only edit your own items!</NoData> 
+    if(!isItemInUsersItems && !props.isAdmin) return <NoData>You can only edit your own items!</NoData> 
 
     return(
         <>
             <MetaTitle>Edit item</MetaTitle>
-            <h2 className="item-crud__title title">Edit your picture</h2>
-            <UpdateItemComponent item={data.item} />
+            <div className="update-item__header">
+                <h2 className="item-crud__title title">Edit {!props.isAdmin && 'your'} picture</h2>
+                <DeleteItem id={props.itemId} isAdmin={props.isAdmin} />
+            </div>
+            {/* TODO add link to edit user????? */}
+            <UpdateItemComponent item={data.item} isAdmin={props.isAdmin} />
         </>
     )
 }
@@ -131,20 +147,14 @@ function UpdateItemComponent(props){
             const res = await updateItem({
                 variables
             }).then(res => {
-                // route the user to the youritems page, just edited
                 if(res.data){
-                    Router.push({
-                        pathname: '/youritems',
-                    });
+                    Router.back()
                 }// else, don't route, there was an error, stay on page
             }).catch(error => console.log(error.message));
 
-        }else{ // no changes made, route them back to youritems page
-            Router.push({
-                pathname: '/youritems',
-            });
+        }else{ // no changes made, route them back
+            Router.back()
         }
-
     } // close handleUpdateItem
 
     // check if form is valid to pass to formRow
@@ -169,7 +179,6 @@ function UpdateItemComponent(props){
             >
                 <img src={props.item.image} alt="upload preview" className="manage-upload__image-preview" />
                 <div className="crud-message">You cannot edit the image.</div>
-                
             </FormRow>
 
             <FormRow 
@@ -236,11 +245,18 @@ function UpdateItemComponent(props){
                     form: formValid,
                 }}
             >
-                <FormButton loading={loading} formValid={!formValid}>save changes</FormButton>
+                <FormButton loading={loading} formValid={!formValid} isAdmin={props.isAdmin}>save changes</FormButton>
                 {// only show cancel button when changes were made
                 (locationEdit || tagsEdit.find(item => item)) &&
                     <>
-                        or <button type="button" onClick={handleCancelEdit} className="crud__cancel-button" disabled={loading}>cancel all changes</button>
+                        <span>or </span>
+                        <button 
+                            type="button" 
+                            onClick={handleCancelEdit} 
+                            className={`crud__cancel-button ${props.isAdmin ? 'crud__cancel-button--admin' : ''}`} 
+                            disabled={loading}>
+                                cancel all changes
+                        </button>
                     </>
                 }
             </FormRow>
@@ -253,4 +269,4 @@ UpdateItemComponent.propTypes = {
     item: PropTypes.object.isRequired,
 }
 
-export default UpdateItemGate;
+export default IsAdminGate;
