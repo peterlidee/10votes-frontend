@@ -26,6 +26,9 @@
     &[disabled]{
         opacity: $opacityDimmedFont;
     }
+    &--admin{
+        color: $admin;
+    }
 }
 
 // extra styling for the login form

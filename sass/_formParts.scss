@@ -72,6 +72,9 @@
             opacity: $opacityDimmedFont;
             cursor: not-allowed;
         }
+        &--admin{
+            background: $admin;
+        }
     }
     &__loader{
         display: inline-block;
