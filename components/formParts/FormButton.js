@@ -9,7 +9,7 @@ const FormButton = props => (
         <button  
             disabled={props.loading || props.formValid}
             type="submit" 
-            className="form-part__button"
+            className={`form-part__button ${props.isAdmin ? "form-part__button--admin" : ""}`}
         >
             {props.children}
         </button>
@@ -21,5 +21,9 @@ FormButton.propTypes = {
     loading: PropTypes.bool.isRequired,
     formValid: PropTypes.bool.isRequired,
 };
+
+FormButton.defaultProps = {
+    isAdmin: false,
+}
 
 export default FormButton;

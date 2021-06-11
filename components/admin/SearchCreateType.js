@@ -120,7 +120,13 @@ function SearchCreateType(props){
                             form: formValid,
                         }}
                     >
-                        <FormButton loading={loading} formValid={!formValid}>create a new {props.type.slice(0,-1)}</FormButton>
+                        <FormButton 
+                            loading={loading} 
+                            formValid={!formValid} 
+                            isAdmin={true}
+                        >
+                            create a new {props.type.slice(0,-1)}
+                        </FormButton>
                     </FormRow>
                 }
 
