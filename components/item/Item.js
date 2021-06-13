@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 
-import DeleteMyItem from './DeleteMyItem';
 import Voting from '../voting/Voting';
 import MetaTitle from '../snippets/MetaTitle';
+import ItemEdit from './ItemEdit';
 
-function Item(props){ // props: item, showEdit, hideVote, single
+function Item(props){ // props: item, hideVote, single
     const { item } = props;
     // construct a string we will use as alt and/or title: "Image in {location} {tags}"
     const tagsString = item.tags ? item.tags.map(tag => `#${tag.name}`).join(" ") : '';
@@ -26,6 +26,7 @@ function Item(props){ // props: item, showEdit, hideVote, single
                     </a>
                 </Link>
             }
+            <ItemEdit itemId={item.id} userId={item.user.id} />
             <div className="item__meta">
                 <div className="item__tags">
                     {item.location && 
@@ -54,18 +55,6 @@ function Item(props){ // props: item, showEdit, hideVote, single
                 </div>
                 {!props.hideVote && <Voting currentItemId={item.id} currentItemVotes={item.votes} />}
             </div>
-            {props.showEdit && 
-                <div className="item__edit">
-                    <Link
-                        href={{
-                            pathname: '/update',
-                            query: { id: item.id },
-                        }}>
-                        <a className="item__edit-link">edit item</a>
-                    </Link>
-                    <DeleteMyItem id={item.id}>&times; delete item</DeleteMyItem>
-                </div>
-            }
         </article>
     )
 }
@@ -77,7 +66,6 @@ Item.propTypes = {
 };
 
 Item.defaultProps = {
-    showEdit: false,
     hideVote: false,
     single: false,
 }
