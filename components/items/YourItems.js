@@ -40,7 +40,7 @@ function YourItems(){
                 <p className="items__message">{message} You have {10 - data.userItems.length} uploads left.</p>}
             {data.userItems.length > 0 &&
                 <div className="grid-items">
-                    {data.userItems.map(item => <Item key={item.id} item={item} showEdit={true} hideVote={true} /> )}
+                    {data.userItems.map(item => <Item key={item.id} item={item} hideVote={true} /> )}
                 </div>
             }
             {data.userItems.length < 10 &&

@@ -27,7 +27,7 @@ const UsersVotedItems = props => {
     }
     return(
         <div className="grid-items">
-            {data.itemsByIds.map(item => <Item key={item.id} item={item} showEdit={true} hideVote={true} /> )}
+            {data.itemsByIds.map(item => <Item key={item.id} item={item} hideVote={true} /> )}
         </div>
     )
 }
