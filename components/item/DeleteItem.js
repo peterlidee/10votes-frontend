@@ -15,7 +15,7 @@ function DeleteItem(props){
         update (cache, { data }){
 
             // only update cache if it is owner deleting items
-            if(!props.isAdmin){
+            if(!props.isAdmin){ // TODO what if owner removes his own???
                 // the user just deleted one of his own items, and the useMutation returned the id of that item
                 // let's update the user items query in the cache
     
