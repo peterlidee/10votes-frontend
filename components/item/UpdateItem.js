@@ -46,7 +46,6 @@ function UpdateItemGate(props){
     // check if the user owns this item or user is admin
     const ownsItem = props.userItems.findIndex(userItem => userItem.id == props.itemId) >= 0;
     if(!ownsItem && !props.isAdmin) return <NoData>You can only edit your own items!</NoData> 
-    console.log('ownsItem',ownsItem)
 
     return(
         <>
@@ -55,8 +54,7 @@ function UpdateItemGate(props){
                 <h2 className="item-crud__title title">Edit {!props.isAdmin && 'your'} picture</h2>
                 <DeleteItem id={props.itemId} isAdmin={props.isAdmin} ownsItem={ownsItem} />
             </div>
-            {/* TODO add link to edit user????? */}
-            <UpdateItemComponent item={data.item} isAdmin={props.isAdmin} />
+            <UpdateItemComponent item={data.item} isAdmin={props.isAdmin} ownsItem={ownsItem} />
         </>
     )
 }
@@ -246,7 +244,7 @@ function UpdateItemComponent(props){
                     form: formValid,
                 }}
             >
-                <FormButton loading={loading} formValid={!formValid} isAdmin={props.isAdmin}>save changes</FormButton>
+                <FormButton loading={loading} formValid={!formValid} isAdmin={props.isAdmin && !props.ownsItem}>save changes</FormButton>
                 {// only show cancel button when changes were made
                 (locationEdit || tagsEdit.find(item => item)) &&
                     <>
