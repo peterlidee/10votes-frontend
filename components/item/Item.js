@@ -59,8 +59,6 @@ function Item(props){ // props: item, hideVote, single
     )
 }
 
-
-
 Item.propTypes = {
     item: PropTypes.object.isRequired,
 };

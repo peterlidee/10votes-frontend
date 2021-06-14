@@ -67,7 +67,7 @@ const DeleteTaxonomy = (props) => {
                         form: true,
                     }}
                 >
-                    <FormButton loading={loading} formValid={false}>delete</FormButton>
+                    <FormButton loading={loading} formValid={false} isAdmin={true}>delete</FormButton>
                 </FormRow>
 
             </form>

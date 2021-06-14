@@ -103,7 +103,7 @@ const UpdateTaxonomy = (props) => {
                         form: newName && newName.length >= 2,
                     }}
                 >
-                    <FormButton loading={loading} formValid={!Boolean(newName.length >= 2)}>update</FormButton>
+                    <FormButton loading={loading} formValid={!Boolean(newName.length >= 2)} isAdmin={true}>update</FormButton>
                 </FormRow>
 
             </form>

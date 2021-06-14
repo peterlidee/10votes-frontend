@@ -72,7 +72,7 @@ const UserPermissions = props => {
                         form: true,
                     }}
                 >
-                    <FormButton loading={loading} formValid={isUserCurrAdmin}>update</FormButton>
+                    <FormButton loading={loading} formValid={isUserCurrAdmin} isAdmin={true}>update</FormButton>
                 </FormRow>
             </form>
 
