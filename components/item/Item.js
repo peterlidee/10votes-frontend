@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import Voting from '../voting/Voting';
 import MetaTitle from '../snippets/MetaTitle';
-import ItemEdit from './ItemEdit';
+import ItemEditLinks from './ItemEditLinks';
 
 function Item(props){ // props: item, hideVote, single
     const { item } = props;
@@ -26,7 +26,7 @@ function Item(props){ // props: item, hideVote, single
                     </a>
                 </Link>
             }
-            <ItemEdit itemId={item.id} userId={item.user.id} />
+            <ItemEditLinks itemId={item.id} userId={item.user.id} />
             <div className="item__meta">
                 <div className="item__tags">
                     {item.location && 
