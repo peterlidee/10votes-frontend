@@ -15,7 +15,7 @@ function DeleteItem(props){
         update (cache, { data }){
 
             // only update cache if it is owner deleting items
-            if(!props.isAdmin){ // TODO what if owner removes his own???
+            if(props.ownsItem){
                 // the user just deleted one of his own items, and the useMutation returned the id of that item
                 // let's update the user items query in the cache
     
@@ -46,7 +46,7 @@ function DeleteItem(props){
     })
     return(
         <>
-            <button className={`item__delete-button ${props.isAdmin ? 'item__delete-button--admin' : ''}`} onClick={() => {
+            <button className={`item__delete-button ${props.isAdmin && !props.ownsItem ? 'item__delete-button--admin' : ''}`} onClick={() => {
                 if(confirm('Are you sure you want to delete this item?')){
                     deleteItem().catch(error => console.error(error.message));
                 }
@@ -61,6 +61,7 @@ function DeleteItem(props){
 DeleteItem.propTypes = {
     id: PropTypes.string.isRequired,
     isAdmin: PropTypes.bool.isRequired,
+    ownsItem: PropTypes.bool.isRequired,
 };
 
 export default DeleteItem;

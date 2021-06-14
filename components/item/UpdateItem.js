@@ -44,15 +44,16 @@ function UpdateItemGate(props){
     if(!data || !data.item) return <NoData>No picture found.</NoData>
 
     // check if the user owns this item or user is admin
-    const isItemInUsersItems = props.userItems.find(userItem => userItem.id == props.itemId);
-    if(!isItemInUsersItems && !props.isAdmin) return <NoData>You can only edit your own items!</NoData> 
+    const ownsItem = props.userItems.findIndex(userItem => userItem.id == props.itemId) >= 0;
+    if(!ownsItem && !props.isAdmin) return <NoData>You can only edit your own items!</NoData> 
+    console.log('ownsItem',ownsItem)
 
     return(
         <>
             <MetaTitle>Edit item</MetaTitle>
             <div className="update-item__header">
                 <h2 className="item-crud__title title">Edit {!props.isAdmin && 'your'} picture</h2>
-                <DeleteItem id={props.itemId} isAdmin={props.isAdmin} />
+                <DeleteItem id={props.itemId} isAdmin={props.isAdmin} ownsItem={ownsItem} />
             </div>
             {/* TODO add link to edit user????? */}
             <UpdateItemComponent item={data.item} isAdmin={props.isAdmin} />
