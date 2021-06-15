@@ -30,47 +30,49 @@
 
 
 //
-// edit items, only shown in my pics part
+// edit delete button
 //
 
-.item__edit{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: baseline;
-}
-.item__edit-link{
-    color: $green;
-    // margin-right: .5em;
-    //margin-bottom: .5em;
-    .item__edit--admin &{
-        color: $admin;
-    }
-}
 .item__delete-button{
     @include button-reset($green);
     &--admin{
-        @include button-reset($admin);
-    }
-    .item__edit--admin &{
-        @include button-reset($admin); // todo what is this with these classes?
+        background: $admin;
     }
     padding: .25em .5em;
-    //margin: 0 0 .5em .35em;
     margin: 0 .5em .5em .5em;
 }
 
-.update-item__header{
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    margin: 2rem 0;
-    .title{
-        margin: 0 0 .5em 0;
-    }
-    .item__delete-button{
-        margin-left: 1.2em;
+//
+// edit items
+//
+
+.item{
+    position: relative;
+}
+.item__edit{
+    position: absolute;
+    top: -3px;
+    right: -5px;
+    padding-left: 3px;
+
+    &-link{
+        display: block;
+        color: $whiteback;
+        background: $green;
+        min-width: 6em;
+        padding: .25em 1em;
+        margin-bottom: 1px;
+        text-align: center;
+        border-left: 1px solid $whiteback;
+        border-bottom: 1px solid $whiteback;
+        text-decoration: none;
+
+        &--admin{ 
+            background: $admin;
+            margin-bottom: 2px;
+            border-bottom: none;
+            text-decoration: underline;
+        }
     }
 }
 
@@ -192,3 +194,20 @@
 }
 
 // for errors, see _errors.scss
+
+
+
+// todo wrong place, other file?
+.update-item__header{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem 0;
+    .title{
+        margin: 0 0 .5em 0;
+    }
+    .item__delete-button{
+        margin-left: 1.2em;
+    }
+}
