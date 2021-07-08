@@ -31,9 +31,10 @@ const TaxonomySummary = (props) => ( // type, data
                 </Link>
             )}
             <GetItemsCount type={props.type} data={props.data}>
-                {({ data: countData }) => (
-                    <div className="taxonomy-summary__count">{countData.itemsConnection.aggregate.count}</div>
-                )}
+                {({ loading, error, data: countData }) => {
+                    if(loading || error || !countData || !countData.itemsConnection) return null;
+                    return <div className="taxonomy-summary__count">{countData.itemsConnection.aggregate.count}</div>
+                }}
             </GetItemsCount>
 
         </div>

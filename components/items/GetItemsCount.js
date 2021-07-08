@@ -13,8 +13,8 @@ const GetItemsCount = (props) => { // props: data and type
         variables, 
         fetchPolicy: "cache-and-network" 
     })
-    if(loading || error || !data || !data.itemsConnection) return null;
-    return props.children({data})
+    //if(loading || error || !data || !data.itemsConnection) return null;
+    return props.children({loading, error, data})
 }
 
 GetItemsCount.propTypes = {
