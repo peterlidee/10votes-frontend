@@ -1,11 +1,11 @@
 .items__order{
     display: flex;
     justify-content: center;
-    margin: 1em 0;
+    margin: 0 0 2em 0;
 }
-@media screen and (min-width: 550px){
+@media screen and (min-width: 500px){
     .items__order{
-        margin: 2em 0;
+        margin: 0 0 3em 0;
     }
 }
 
@@ -51,10 +51,10 @@
         padding-left: 1.15em;
         &:before, &:after{ left: 0; }
     }
-    &--desc:before{ // when this sort order is active, hightlight triangle color
+    &--desc:before{ // when this sort order is active, highlight triangle color
         opacity: 1;
     }
-    &--asc:after{ // when this sort order is active, hightlight triangle color
+    &--asc:after{ // when this sort order is active, highlight triangle color
         opacity: 1;
     }
 

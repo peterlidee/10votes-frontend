@@ -14,7 +14,7 @@ function YourVotesWrap(){
     return(
         <section>
             <MetaTitle>Your votes</MetaTitle>
-            <h1 className="title">Your votes</h1>
+            <h1 className="title title--large">Your votes</h1>
             <YourVotes />
         </section>
     ) 

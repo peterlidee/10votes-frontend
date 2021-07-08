@@ -16,7 +16,7 @@ function YourItemsWrap(){
     return(
         <section>
             <MetaTitle>Your pics</MetaTitle>
-            <h1 className="title">Your pics</h1>
+            <h1 className="title title--large">Your pics</h1>
             <YourItems />
         </section>
     )
@@ -31,7 +31,7 @@ function YourItems(){
     if(!data.userItems.length){
         return <NoData>Looks like you haven't uploaded any pics yet. Maybe <Link href="/addapicture"><a>upload your first pic</a></Link>?</NoData>
     }
-    const message = "You can edit or delete your uploaded pics here."
+    const message = "Edit or delete your pics."
     return(
         <>
             {data.userItems.length == 10 && 

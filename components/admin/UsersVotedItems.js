@@ -7,7 +7,7 @@ import NoData from '../snippets/NoData'
 import Item from '../item/Item'
 
 const UsersVotedItemsWrapper = props => (
-    <section>
+    <section style={{marginBottom: '4em'}}>
         <h1 className="title">Users' votes</h1>
         <UsersVotedItems {...props} />
     </section>

@@ -10,7 +10,7 @@ import { useQuery } from '@apollo/client';
 import Error from '../snippets/Error';
 import NoData from '../snippets/NoData';
 import MetaTitle from '../snippets/MetaTitle';
-import FancyTitle from '../snippets/FancyTitle';
+import TaxonomyTitle from './TaxonomyTitle';
 import SingleTaxonomyItems from './SingleTaxonomyItems';
 import OrderItems from '../items/OrderItems';
 import Pagination from '../items/Pagination';
@@ -59,7 +59,8 @@ function SingleTaxonomyExists(props){
             {props.type == "tags"      && <MetaTitle>{`Pics with tag #${data.tag.name}`}</MetaTitle>}
             {props.type == "locations" && <MetaTitle>{`Pics in ${data.locations[0].name} - ${data.locations[0].country.name}`}</MetaTitle>}
             {props.type == "country"   && <MetaTitle>{`Pics in ${data.country.name}`}</MetaTitle>}
-            <FancyTitle {...propsToPass} />
+            
+            <TaxonomyTitle {...propsToPass} />
             <OrderItems {...propsToPass} />
             <SingleTaxonomyItems {...propsToPass} />
             <Pagination {...propsToPass} />

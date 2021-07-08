@@ -9,7 +9,7 @@ import Item from './item/Item';
 
 function DisplayHomeItemsWrap(props){
     return(
-        <section>
+        <section style={{marginBottom: "4em"}}>
             <h1 className="title title--large">{props.title}</h1>
             <DisplayHomeItems query={props.query} orderBy={props.orderBy} />
         </section>
