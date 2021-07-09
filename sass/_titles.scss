@@ -108,3 +108,17 @@
         }
     }
 }
+
+.update-item__header{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    margin: 2rem 0;
+    .title{
+        margin: 0 0 .5em 0;
+    }
+    .item__delete-button{
+        margin-left: 1.2em;
+    }
+}
