@@ -12,10 +12,9 @@ function Logout(){
     );
     return <button type="button" onClick={() => { 
         console.log('logging out')
-        logout();
+        logout()
+            .catch(error => console.log('loggin out error',error.message))        
     }} className="logout__button">log out</button>
 }
-// on logout, redirect? TODO?
-// TODO: check if this works in chrome
 
 export default Logout;

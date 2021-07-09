@@ -20,7 +20,7 @@ const UserContextProvider = props => {
 }
 
 // we are not gonna do SSR for USER_LOGGED_IN_QUERY cause it doesn't get cookie in middleware (backend)
-// look into this, TODO
+// TODO: better auth ?
 
 export default UserContext;
 export { UserContextProvider };
