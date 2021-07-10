@@ -49,7 +49,6 @@ function RequestReset(){
                 >
                     <InputContainer 
                         clearField={() => setEmail('')} 
-                        name="email" 
                         isEmpty={!email}
                     >
                         <input 

@@ -57,7 +57,6 @@ function Reset(){
                 >
                     <InputContainer 
                         clearField={() => setPassword('')} 
-                        name="password" 
                         isEmpty={!password}
                     >
                         <input 
@@ -87,7 +86,6 @@ function Reset(){
                 >
                     <InputContainer 
                         clearField={() => setConfirmPassword('')} 
-                        name="confirmPassword" 
                         isEmpty={!confirmPassword}
                     >
                         <input 

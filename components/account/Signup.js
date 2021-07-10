@@ -63,7 +63,6 @@ function Signup(){
                 >
                     <InputContainer 
                         clearField={() => setEmail('')} 
-                        name="email" 
                         isEmpty={!email}
                     >
                         <input 
@@ -92,7 +91,6 @@ function Signup(){
                 >
                     <InputContainer 
                         clearField={() => setPassword('')} 
-                        name="password" 
                         isEmpty={!password}
                     >
                         <input 

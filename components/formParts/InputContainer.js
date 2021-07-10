@@ -2,8 +2,7 @@
 // you pass is an input field as props.children
 // the button needs 
 // 1. a clear function (f.e. () => setEmail("") )
-// 2. name attribute (the field it is associated with) and an  //TODO???
-// 3. isEmpty as props: if isEmpty, it's hidden cause there is nothing to delete
+// 2. isEmpty as props: if isEmpty, it's hidden cause there is nothing to delete
 
 import PropTypes from 'prop-types';
 
@@ -23,7 +22,6 @@ const InputContainer = props => (
 
 InputContainer.propTypes = {
     clearField: PropTypes.func.isRequired,
-    name: PropTypes.string.isRequired,
     isEmpty: PropTypes.bool.isRequired,
 };
 
