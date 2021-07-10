@@ -18,7 +18,7 @@ const UserVotesContextProvider = props => {
 }
 
 // we are not gonna do SSR for USER_VOTES_QUERY cause it doesn't get cookie in middleware (backend)
-// look into this, TODO
+// todo find better auth method?
 
 export default UserVotesContext;
 export { UserVotesContextProvider };
