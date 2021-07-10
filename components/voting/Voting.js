@@ -33,7 +33,6 @@ function Voting(props){
     if(data.userVotes.length >= 10){
         return null;
     }
-    // TODO test with vote limit
 
     // else, the user is logged in 
     // the user has votes left
