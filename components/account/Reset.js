@@ -80,7 +80,7 @@ function Reset(){
                         for: "confirmPassword",
                     }}
                     valid={{ 
-                        field: password, // TODO confirmPassword?
+                        field: confirmPassword && (password == confirmPassword),
                         form: password && confirmPassword,
                     }}
                 >
