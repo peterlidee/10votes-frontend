@@ -23,7 +23,7 @@ const SINGLE_USER_QUERY = gql`
     ${ITEM_FIELDS_FRAGMENT}
 `;
 
-// used in inputSuggestion (admin dash)
+// used in inputSuggestion (admin dashboard)
 const USERS_QUERY = gql`
     query($emailContains: String!){
         users( emailContains: $emailContains ){
@@ -44,8 +44,6 @@ const USER_LOGGED_IN_QUERY = gql`
         }
     }
 `;
-
-// TODO: remove email?
 
 export { 
     SINGLE_USER_QUERY,
