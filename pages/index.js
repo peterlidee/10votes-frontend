@@ -1,5 +1,5 @@
 import Home from '../components/Home';
 
-const Index = props => <Home />
+const Index = () => <Home />
 
 export default Index;

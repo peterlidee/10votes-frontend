@@ -2,7 +2,7 @@ import PleaseSignin from '../components/account/PleaseSignin';
 import CreateItem from '../components/item/CreateItem';
 import CurrentUserItems from '../components/items/CurrentUserItems';
 
-const AddAPicture = props => (
+const AddAPicture = () => (
     <PleaseSignin>
         <CurrentUserItems>
             <CreateItem />
