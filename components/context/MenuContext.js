@@ -1,7 +1,4 @@
 import { useState } from 'react';
-
-// testing all router click events
-// we will also need to handle redirects!?? DO WE? TODO
 import Router from 'next/router';
 
 // menu context handles the open or closed state of the menu,
