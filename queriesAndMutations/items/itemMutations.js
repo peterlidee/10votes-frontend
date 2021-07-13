@@ -14,12 +14,6 @@ const CREATE_ITEM_MUTATION = gql`
             tags: $tags
         ){
             id
-            location{
-                id
-                items{
-                    id
-                }
-            }
         }
     }
 `;
@@ -51,7 +45,5 @@ const DELETE_ITEM_MUTATION = gql`
         }
     }
 `;
-
-// TODO: why are we asking for location?
 
 export { CREATE_ITEM_MUTATION, UPDATE_ITEM_MUTATION, DELETE_ITEM_MUTATION }
