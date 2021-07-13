@@ -99,7 +99,7 @@
             cursor: pointer;
         }
         &--error{
-            color: #ff6c00;
+            color: $orange;
         }
         &:first-child{ border-top: 1px solid $dimmedBorder; } // this forms the top border of the dropbox
         &:last-child{ border-bottom: 1px solid $dimmedBorder; } // border-bottom of dropbox
