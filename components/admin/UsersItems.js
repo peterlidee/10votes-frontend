@@ -11,6 +11,4 @@ const UsersItems = props => (
     </section>
 )
 
-// todo update delete and edit items, needs refetching or something for admin
-
 export default UsersItems;
