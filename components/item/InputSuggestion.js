@@ -94,8 +94,6 @@ function InputSuggestion(props) {
 
         // this function handles the apollo query that populates the dropdown
         onInputValueChange: (changes) => {
-            // console.log('changes',changes)
-            // todo will this work on user query?
             // if there is no selected item yet, call lazyquery to make suggestions
             // if there is a selected item but the selected item does not equal the 
             // inputvalue (an item was selected and after that the input was changed)
@@ -140,7 +138,7 @@ function InputSuggestion(props) {
         // on select, what is the actual value if the item is an object
         itemToString: (item) => (props.type == "users" ? item?.email : item?.name) || '',
 
-        // TODO: reset data when a new query is made ??
+        // TODO: reset data when a new query is made, the old serps still showup
     })
 
     return (
