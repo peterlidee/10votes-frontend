@@ -20,7 +20,7 @@ function CreateItem(props){
     const [image, setImage] = useState('');
     const [largeImage, setLargeImage] = useState('');
     const [location, setLocation] = useState('');
-    const [tags, setTags] = useState([null, null, null]); //todo "" instead of null?
+    const [tags, setTags] = useState(["", "", ""]);
 
     // takes 2 arguments:
     // newState = { small && large || locations || tags }

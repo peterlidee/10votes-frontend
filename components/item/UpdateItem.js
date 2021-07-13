@@ -66,7 +66,8 @@ function UpdateItemComponent(props){
     // state
     const [location, setLocation] = useState('')
     const [locationEdit, setLocationEdit] = useState(false)
-    const [tags, setTags] = useState([null, null, null])
+    // const [tags, setTags] = useState([null, null, null])
+    const [tags, setTags] = useState(["", "", ""])
     const [tagsEdit, setTagsEdit] = useState([false, false, false])
     // mutation, we pass variables as we call the mutation
     const [updateItem, { loading, error }] = useMutation( UPDATE_ITEM_MUTATION, {
@@ -99,7 +100,7 @@ function UpdateItemComponent(props){
     const handleCancelEdit = () => {
         setLocation("");
         setLocationEdit(false);
-        setTags([null, null, null]);
+        setTags(["", "", ""]);
         setTagsEdit([false, false, false]);
     }
 
