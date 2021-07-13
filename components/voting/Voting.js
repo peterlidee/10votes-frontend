@@ -23,7 +23,7 @@ function Voting(props){
     if(loading || error || !data || !data.userVotes) return null;
 
     // check if any voted items correspond with currentItemId
-    const alreadyVotedIndex = data.userVotes.findIndex(userVote => userVote.item.id == props.currentItemId);
+    const alreadyVotedIndex = data.userVotes.findIndex(userVote => userVote?.item?.id == props.currentItemId);
 
     if(alreadyVotedIndex >= 0){        
         return <DeleteVote voteId={data.userVotes[alreadyVotedIndex].id} itemId={props.currentItemId} />
