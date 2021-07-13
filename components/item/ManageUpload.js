@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import validateFile from '../../lib/validateFile';
+import { validateFile } from '../../lib/helpers';
 
 import IconUpload from '../snippets/icons/IconUpload';
 import Loader from '../snippets/Loader';

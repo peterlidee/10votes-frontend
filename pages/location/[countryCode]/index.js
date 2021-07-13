@@ -1,7 +1,7 @@
 // displays country, fe .../location/be
 
 import { initializeApollo, addApolloState } from '../../../lib/apollo'
-import verifyOrderParam from '../../../lib/verifyOrderParam'
+import { verifyOrderParam } from '../../../lib/helpers'
 import SingleTaxonomyExists from '../../../components/taxonomy/SingleTaxonomyExists'
 
 const CountryPage = props => (

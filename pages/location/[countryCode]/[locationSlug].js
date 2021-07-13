@@ -1,7 +1,7 @@
 // displays location, fe .../location/be/gent
 
 import { initializeApollo, addApolloState } from '../../../lib/apollo'
-import verifyOrderParam from '../../../lib/verifyOrderParam'
+import { verifyOrderParam } from '../../../lib/helpers'
 import SingleTaxonomyExists from '../../../components/taxonomy/SingleTaxonomyExists'
 
 const LocationPage = props => (

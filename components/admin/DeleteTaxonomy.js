@@ -11,7 +11,7 @@ import FormButton from '../formParts/FormButton'
 import Error from '../snippets/Error'
 
 import PropTypes from 'prop-types'
-import capitalizeString from '../../lib/capitalizeString'
+import { capitalizeString } from '../../lib/helpers'
 
 const query = {
     tags: DELETE_TAG_MUTATION,
@@ -32,7 +32,7 @@ const DeleteTaxonomy = (props) => {
         if(confirm(`Are you sure you want to delete this ${props.type.slice(0,-1)}?`)){
             deleteTaxonomy()
                 .then(res => {
-                    console.log('res',res)
+                    //console.log('res',res)
                     // delete tag was succesfull
                     if(res.data[`delete${capitalizeString(props.type.slice(0,-1))}`]){
                         // redirect

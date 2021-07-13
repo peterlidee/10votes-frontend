@@ -14,7 +14,7 @@ import NoData from '../snippets/NoData'
 import FormRow from '../formParts/FormRow'
 import InputSuggestion from './InputSuggestion'
 import FormButton from '../formParts/FormButton'
-import { inputToString } from '../../lib/inputToString'
+import { inputToString } from '../../lib/helpers'
 import DeleteItem from './DeleteItem'
 
 

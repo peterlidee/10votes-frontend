@@ -1,7 +1,7 @@
 // displays tag, fe .../tag/test
 
 import { initializeApollo, addApolloState } from '../../lib/apollo';
-import verifyOrderParam from '../../lib/verifyOrderParam'
+import { verifyOrderParam } from '../../lib/helpers'
 import SingleTaxonomyExists  from '../../components/taxonomy/SingleTaxonomyExists';
 
 const Tagpage = props => (

@@ -5,7 +5,7 @@ import { useMutation } from "@apollo/client";
 import { CREATE_LOCATION_MUTATION } from '../../queriesAndMutations/locations/locationMutations'
 import { CREATE_TAG_MUTATION } from '../../queriesAndMutations/tags/tagMutations'
 
-import capitalizeString from "../../lib/capitalizeString";
+import { capitalizeString } from "../../lib/helpers";
 import FormRow from "../formParts/FormRow"
 import InputSuggestion from "../item/InputSuggestion"
 import FormButton from "../formParts/FormButton"
@@ -86,7 +86,6 @@ function SearchCreateType(props){
                         text: props.type == 'users' ? 'Find users' : `Enter a ${props.type.slice(0,-1)}`,
                         required: true,
                         html: true,
-                        //for: "input-suggestion__locations--1",
                         for: `input-suggestion__${props.type}--1`,
                     }}
                     valid={{ 

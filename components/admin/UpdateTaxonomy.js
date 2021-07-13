@@ -3,13 +3,14 @@ import { useState } from 'react'
 import { useMutation } from '@apollo/client'
 import { UPDATE_TAG_MUTATION } from '../../queriesAndMutations/tags/tagMutations'
 import { UPDATE_LOCATION_MUTATION } from '../../queriesAndMutations/locations/locationMutations'
-import PropTypes from 'prop-types'
-import capitalizeString from '../../lib/capitalizeString'
 
 import FormRow from '../formParts/FormRow'
 import FormButton from '../formParts/FormButton'
 import Error from '../snippets/Error'
 import InputSuggestion from '../item/InputSuggestion'
+import { capitalizeString } from '../../lib/helpers'
+
+import PropTypes from 'prop-types'
 
 const query = {
     tags: UPDATE_TAG_MUTATION,

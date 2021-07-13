@@ -5,7 +5,7 @@ import { useMutation } from '@apollo/client';
 
 import { USER_ITEMS_QUERY } from '../../queriesAndMutations/items/itemQueries'
 import { CREATE_ITEM_MUTATION } from '../../queriesAndMutations/items/itemMutations'
-import { inputToString } from '../../lib/inputToString';
+import { inputToString } from '../../lib/helpers';
 
 import MetaTitle from '../snippets/MetaTitle';
 import FormRow from '../formParts/FormRow';
