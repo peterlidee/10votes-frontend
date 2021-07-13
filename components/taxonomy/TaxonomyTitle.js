@@ -4,39 +4,17 @@ import { useContext } from 'react';
 import UserContext from '../context/UserContext'
 import GetItemsCount from '../items/GetItemsCount'
 
-
-
-// the html for TaxonomyTitleCount
-const TitleCountHTML = (props) => <span className="title__count">{props.children}</span>;
-
 function TaxonomyTitleCount(props){
     return(
-        <GetItemsCount type={props.type} data={props.data}>
-            {({ loading, error, data }) => {
-                if(loading || error || !data || !data.itemsConnection) return <TitleCountHTML>_ pics</TitleCountHTML>
-                const count = data.itemsConnection.aggregate.count;
-                return <TitleCountHTML>{count} {count === 1 ? "pic" : "pics"}</TitleCountHTML>
-            }}
-        </GetItemsCount>
-    )
-}
-
-
-
-function EditLink2(props){
-    if(props.type == 'country') return null;
-    const { loading, error, data } = useContext(UserContext);
-    if(loading || error || !data || !data.me) return null;
-    const isAdmin = data.me.permissions.includes('ADMIN');
-    if(!isAdmin) return null;
-    const id = props.type == 'tags' ? props.data.tag.id : props.data.locations[0].id;
-    return(
-        <Link href={{
-            pathname: `/admin/${props.type.slice(0,-1)}`,
-            query: { id: id },
-        }}>
-            <a className="fancy-title__admin-link">edit</a>
-        </Link>
+        <span className="title__count">
+            <GetItemsCount type={props.type} data={props.data}>
+                {({ loading, error, data }) => {
+                    if(loading || error || !data || !data.itemsConnection) return "_ pics";
+                    const count = data.itemsConnection.aggregate.count;
+                    return <>{count} {count === 1 ? "pic" : "pics"}</>
+                }}
+            </GetItemsCount>
+        </span>
     )
 }
 
