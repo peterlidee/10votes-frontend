@@ -31,7 +31,6 @@ function ManageUpload(props){
                 body: data
             });
             const file = await res.json();
-            //console.log('file after upload?', file)
 
             // send data to createItem component
             props.handleImageSelection({
@@ -43,7 +42,6 @@ function ManageUpload(props){
             setLoading(false);
 
         }catch(error){
-            // console.log('error', error)
             cancelUpload(`${error.message}, please try again`);
         }
 

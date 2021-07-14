@@ -143,7 +143,6 @@ function UpdateItemComponent(props){
 
         // only call mutations when changes are in variables
         if(locationEdit || tagsEdit.includes(true)){
-            //console.log('calling mutation with vars', variables);
             const res = await updateItem({
                 variables
             }).then(res => {

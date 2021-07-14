@@ -19,7 +19,6 @@ function DeleteVote(props){
                 // the cache of USER_VOTES_QUERY
                 // construct the new cache array
                 const newUserVotes = userVotesCache.userVotes.filter(userVote => userVote.id != data.deleteVote.id);
-                //console.log('newUSerVotes',newUserVotes)
                 // and write it
                 cache.writeQuery({
                     query: USER_VOTES_QUERY,
