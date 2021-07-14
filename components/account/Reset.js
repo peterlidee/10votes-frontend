@@ -82,6 +82,7 @@ function Reset(){
                     valid={{ 
                         field: confirmPassword && (password == confirmPassword),
                         form: password && confirmPassword,
+                        error: password && confirmPassword && (password !== confirmPassword),
                     }}
                 >
                     <InputContainer 
