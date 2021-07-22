@@ -1,36 +1,58 @@
+import MetaTitle from "../snippets/MetaTitle";
+
 const About = () => (
     <>
-    <h1 className="title title--large">About</h1>
-    <div className="flat-text">
-<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboris nisi ut aliquip ex ea commodo consequat. Quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Animi, id est laborum et dolorum fuga. Quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. <strong> Fugiat quo voluptas nulla pariatur?</strong> <em> Quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</em> Cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia.</p>
-<h2>Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.</h2>
-<p>Excepteur sint occaecat cupidatat non proident, sunt in culpa. Cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia. Ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat. Duis aute irure dolor in reprehenderit in voluptate velit. Quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Itaque earum rerum hic tenetur a sapiente delectus. At vero eos et accusamus.</p>
-<ol>
+            <h1 className="title title--large">About</h1>
+        <div className="flat-text">
 
-    <li>Ut enim ad minim veniam, quis nostrud exercitation ullamco.</li><li>Do eiusmod tempor incididunt ut labore et dolore magna aliqua.</li><li>Corrupti quos dolores et quas molestias excepturi sint occaecati.</li>
+            <MetaTitle>About</MetaTitle>
+            <p>Dit is een <strong>portfolio project</strong>. Het is een weergave van mijn kennis van React en GraphQL.</p>
 
-</ol>
+            <h3>Webapp</h3>
 
-<h3>Laboris nisi ut aliquip ex ea commodo consequat.</h3>
-<p>Duis aute irure dolor in reprehenderit in voluptate velit. Quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Itaque earum rerum hic tenetur a sapiente delectus. At vero eos et accusamus.</p>
-<ul>
+            <p><span className="tenvotes"><span className="ten">10</span> <span className="votes">votes</span></span> is een photo app. Je browset door foto's via locaties of tags. Door te registreren en in te loggen kan je zelf foto's uploaden of updaten, locaties of tags toevoegen en op foto's van anderen stemmen.</p>
+            <p>Daarnaast is er ook nog een backend deel waar administrators gebruikers, locaties, tags en foto's kunnen aanmaken, aanpassen of verwijderen.</p>
 
-    <li>Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat.</li><li>Qui officia deserunt mollit anim id est laborum.</li><li>Facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.</li>
+            <h3>Doel</h3>
 
-</ul>
+            <p>Het idee om 10 votes te maken kwam tijdens het volgen van de cursus <a href="https://advancedreact.com/">Fullstack Advanced React &amp; GraphQL</a> van Wes Bos. (Ondertussen heeft dze cursus een update gekregen maar ik werkte op basis van de eerste versie.) In deze cursus leer je een kleine webshop bouwen.</p>
 
-<p>Inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat. Corrupti quos dolores et quas molestias excepturi sint occaecati.</p>
-<p>Qui officia deserunt mollit anim id est laborum. Fugiat quo voluptas nulla pariatur? At vero eos et accusamus. Do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat.</p>
-<p>Do eiusmod tempor incididunt ut labore et dolore magna aliqua. Animi, id est laborum et dolorum fuga. Et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque. Sed ut perspiciatis unde omnis iste natus error sit voluptatem.</p>
-<p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit. Eaque ipsa quae ab illo inventore veritatis et quasi. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat.</p>
-<p>Do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia.</p>
-<p>Cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia. Itaque earum rerum hic tenetur a sapiente delectus. Itaque earum rerum hic tenetur a sapiente delectus. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat.</p>
-<p>Animi, id est laborum et dolorum fuga. Ut enim ad minim veniam, quis nostrud exercitation ullamco. Do eiusmod tempor incididunt ut labore et dolore magna aliqua. Et harum quidem rerum facilis est et expedita distinctio.</p>
-<p>Totam rem aperiam. Esse cillum dolore eu fugiat nulla pariatur. At vero eos et accusamus. Facere possimus, omnis voluptas assumenda est, omnis dolor repellendus.</p>
-<p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit. Do eiusmod tempor incididunt ut labore et dolore magna aliqua. Fugiat quo voluptas nulla pariatur? Itaque earum rerum hic tenetur a sapiente delectus.</p>
-<p>Duis aute irure dolor in reprehenderit in voluptate velit. Totam rem aperiam. Nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam. Excepteur sint occaecat cupidatat non proident, sunt in culpa.</p>
-<p>Fugiat quo voluptas nulla pariatur? Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit. Non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
-    </div>
+            <p>Met 10 votes wou ik mijn kennis verbeteren en vergroten. Ik gebruikte dezelfde stack maar bouwde er iets nieuw mee.</p>
+
+            <h3>Nieuw</h3>
+
+            <p>Het oorspronkelijk project uit de cursus draaide rond producten, users en een winkelkarretje. Ik voegde nieuwe elementen toe:</p>
+
+            <ul>
+                <li>Locatie en tags taxonomie.</li>
+                <li>Sorteeropties.</li>
+                <li>Mogelijkheid om te stemmen.</li>
+                <li>Admin gedeelte om inhoud en gebruikers te beheren.</li>
+            </ul>
+
+            <h3>Backend <a href="https://github.com/peterlidee/10votes-backend" className="flat-text__title-link">code op github</a></h3>
+
+            <p>De backend stack bestaat uit GraphQL, <a href="https://www.prisma.io/">Prisma</a> en <a href="https://www.apollographql.com/docs/apollo-server/v2">Apollo</a>. Ik voerde een major update door van Apollo Server 1 naar 2 met bijhorende configuratie. Het datamodel, schema en de resolvers zijn volledig nieuw. Het login gedeelte nam ik grotendeels over.</p>
+
+            <p>De backend server wordt gehost op <a href="https://www.heroku.com/">Heroku</a>. De database en Prisma schema's staan op <a href="https://www.prisma.io/">Prisma</a> en de afbeeldingen worden op <a href="https://cloudinary.com/">Cloudinary</a> gehost.</p>
+
+            <h3>Frontend <a href="https://github.com/peterlidee/10votes-frontend" className="flat-text__title-link">code op github</a></h3>
+
+            <p>De frontend bestaat uit <a href="https://www.apollographql.com/docs/react/">Apollo Client (react)</a> + <a href="https://nextjs.org/">Next.js</a> en wordt op <a href="https://www.heroku.com/">Heroku</a> gehost. Ik maakte de overschakeling van graphql-yoga (apollo client 2) naar <a href="https://www.npmjs.com/package/@apollo/client">@apollo/client 3</a> (major update) en <a href="https://www.npmjs.com/package/apollo-server-express">apollo-server-express</a>.</p>
+            <p>Nieuwe elementen zijn:</p>
+            <ul>
+                <li>Dynamic routes voor taxonomie.</li>
+                <li>Url query parameters voor sorteren.</li>
+                <li>Apollo hooks.</li>
+                <li>React hooks en context.</li>
+                <li>100% nieuwe interface.</li>
+            </ul>
+
+            <h3>Work in progress</h3>
+
+            <p>Dit project is niet af. Er zitten fouten in, problemen, dingen die beter kunnen of ontbreken. Maar het is een functionerende fullstack webapp.</p> 
+
+        </div>
     </>
 );
 
