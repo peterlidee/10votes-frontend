@@ -24,7 +24,7 @@ const Footer = () => (
             <a href="https://www.prisma.io/" className="footer__link">Prisma</a>
             <a href="https://www.apollographql.com/" className="footer__link">Apollo GraphQL</a>
             <a href="https://nextjs.org/" className="footer__link">next.js</a>
-            <Link href="/about"><a className="footer__link">more about stack</a></Link>
+            <Link href="/about"><a className="footer__link">read more</a></Link>
         </div>
 
         <div className="footer__section--source">

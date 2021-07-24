@@ -18,14 +18,6 @@
 
 }
 
-/* hold a single item view */
-.grid-single-item{
-    display: grid;
-    grid-template-columns: 1fr;
-    justify-content: center;
-    margin: 5em 0;
-}
-
 .form-grid{ // for user forms
     display: grid;
     justify-content: center;
