@@ -1,2 +1,2 @@
 # 10votes-frontend
-Frontend for 10votes
+Finished version of the Frontend for 10votes
