@@ -79,6 +79,9 @@
 
 .main-search__input{
     @include input-with-loader;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 }
 
 // loader see loader .scss
