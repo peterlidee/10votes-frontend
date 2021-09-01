@@ -177,6 +177,12 @@
   input { /* 1 */
     overflow: visible;
   }
+
+  input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
   
   /**
    * Remove the inheritance of text transform in Edge, Firefox, and IE.
