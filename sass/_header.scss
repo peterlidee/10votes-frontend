@@ -79,6 +79,7 @@
 
 .main-search__input{
     @include input-with-loader;
+    // avoid weird styling with round corners and inset on border or bg
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
