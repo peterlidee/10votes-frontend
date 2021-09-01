@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Router from 'next/router';
 
 // menu context handles the open or closed state of the menu,

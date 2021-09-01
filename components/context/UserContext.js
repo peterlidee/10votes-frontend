@@ -1,3 +1,4 @@
+import React from 'react';
 import { useQuery } from '@apollo/client';
 import { USER_LOGGED_IN_QUERY } from '../../queriesAndMutations/users/userQueries'
 

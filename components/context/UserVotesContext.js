@@ -1,3 +1,4 @@
+import React from 'react'
 import { useQuery } from '@apollo/client'
 import { USER_VOTES_QUERY } from '../../queriesAndMutations/votes/voteQueries'
 

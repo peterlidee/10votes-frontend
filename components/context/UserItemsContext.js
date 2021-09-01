@@ -1,3 +1,4 @@
+import React from 'react'
 import { useQuery } from '@apollo/client'
 import { USER_ITEMS_QUERY } from '../../queriesAndMutations/items/itemQueries'
 

@@ -4,7 +4,7 @@
 // if no items, []
 // if no user, [null]
 
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 
 import UserItemsContext from '../context/UserItemsContext';
 import Loader from "../snippets/Loader";
