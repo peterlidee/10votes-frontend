@@ -36,7 +36,6 @@ const Footer = () => (
         <div className="footer__section--contact">
             <h3 className="footer__title">contact</h3>
             <a href="mailto:peter@lidee.be" className="footer__link">peter@lidee.be</a>
-            <a href="https://www.twitter.com/lideebe" className="footer__link">twitter @lideebe</a>
         </div>
 
     </footer>
