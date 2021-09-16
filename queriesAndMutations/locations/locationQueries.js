@@ -16,6 +16,14 @@ const SINGLE_LOCATION_QUERY = gql`
 // for finding a location we use locationS query, with slug as parameter
 // cause that is the only way we can also give it a countrycode as param
 // we then call it locations[0]
+const LOCATION_EXISTS_QUERY = gql`
+    query($locationSlug: String, $countryCode: String){
+        locationExists( locationSlug: $locationSlug, countryCode: $countryCode ){
+            ...LocationFields
+        }
+    }
+    ${LOCATION_FIELDS_FRAGMENT}
+`;
 
 // used in <inputSuggestion>, search
 // for finding locations that match search string,
@@ -31,5 +39,6 @@ const LOCATIONS_QUERY = gql`
 
 export {
     SINGLE_LOCATION_QUERY,
+    LOCATION_EXISTS_QUERY,
     LOCATIONS_QUERY,
 };

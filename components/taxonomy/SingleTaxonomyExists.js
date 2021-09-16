@@ -39,12 +39,16 @@ function SingleTaxonomyExists(props){
     // check for tags, location and country if the slug returned data
     if(props.type == 'tags' && (!data || !data.tag)) 
         return <NoTaxonomyMessage type={props.type.slice(0,-1)}>{props.tagSlug}</NoTaxonomyMessage>;
-    if(props.type == 'locations' && (!data || !data.locations[0])) 
+    if(props.type == 'locations' && (!data || !data.locationExists[0])) 
         return <NoTaxonomyMessage type={props.type.slice(0,-1)}>{props.locationSlug} - {props.countryCode}</NoTaxonomyMessage>;
     if(props.type == 'country' && (!data || !data.country)) 
         return <NoTaxonomyMessage type={props.type}>{props.countryCode}</NoTaxonomyMessage>;
     // fall through option
     if(!data) return <NoData>No data found</NoData>
+
+    // we now have data.country and data.tags but also data.locationExists
+    // this is a problem because we use data[props.type] a lot which doesn't work with locationExists
+    const newData = data.locationExists ? { locations: data.locationExists } : data;
 
     // at this point, we have a valid slug for the taxonomy, so start loading components
     // construct props for child components
@@ -52,12 +56,12 @@ function SingleTaxonomyExists(props){
         type: props.type,
         page: props.page,
         orderBy: props.orderBy,
-        data: data,
+        data: newData,
     }
     return( 
         <section>
             {props.type == "tags"      && <MetaTitle>{`Pics with tag #${data.tag.name}`}</MetaTitle>}
-            {props.type == "locations" && <MetaTitle>{`Pics in ${data.locations[0].name} - ${data.locations[0].country.name}`}</MetaTitle>}
+            {props.type == "locations" && <MetaTitle>{`Pics in ${data.locationExists[0].name} - ${data.locationExists[0].country.name}`}</MetaTitle>}
             {props.type == "country"   && <MetaTitle>{`Pics in ${data.country.name}`}</MetaTitle>}
             
             <TaxonomyTitle {...propsToPass} />
