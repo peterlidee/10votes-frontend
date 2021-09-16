@@ -12,10 +12,14 @@ const SINGLE_LOCATION_QUERY = gql`
     ${LOCATION_FIELDS_FRAGMENT}
 `;
 
-// for finding a location we use locationS query, 
+// used in /locations/[locationSlug]
+// for finding a location we use locationS query, with slug as parameter
 // cause that is the only way we can also give it a countrycode as param
 // we then call it locations[0]
-// used in /locations/[locationSlug], <inputSuggestion>, search
+
+// used in <inputSuggestion>, search
+// for finding locations that match search string,
+// parameter is nameContains
 const LOCATIONS_QUERY = gql`
     query($locationSlug: String, $countryCode: String, $nameContains: String){
         locations( locationSlug: $locationSlug, countryCode: $countryCode, nameContains: $nameContains ){
