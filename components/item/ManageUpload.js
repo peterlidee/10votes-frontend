@@ -34,8 +34,8 @@ function ManageUpload(props){
 
             // send data to createItem component
             props.handleImageSelection({
-                small: file.secure_url,
-                large: file.eager[0].secure_url,
+                large: file.secure_url,
+                small: file.eager[0].secure_url,
             })
             // reset error to ""
             setErrorMessage('');
