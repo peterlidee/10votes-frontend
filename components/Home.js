@@ -36,8 +36,8 @@ function DisplayHomeItems(props){
 const Home = () => (
     <>
         <MetaTitle>Home</MetaTitle>
-        <DisplayHomeItemsWrap title="Recent Items" orderBy="createdAt_DESC" />
         <DisplayHomeItemsWrap title="Popular items" orderBy="voteCount_DESC" />
+        <DisplayHomeItemsWrap title="Recent Items" orderBy="createdAt_DESC" />
     </>
 )
 
